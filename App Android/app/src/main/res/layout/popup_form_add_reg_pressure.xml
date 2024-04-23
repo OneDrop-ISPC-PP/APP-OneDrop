@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:id="@+id/layout_edit_reg_pressure"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:padding="10dp">
+
+        <ImageView
+            android:id="@+id/imageView3"
+            android:layout_width="155dp"
+            android:layout_height="87dp"
+            android:layout_gravity="right"
+            app:srcCompat="@drawable/onedrop" />
+
+        <TextView
+            android:id="@+id/textView7"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:fontFamily="sans-serif-condensed"
+            android:text="@string/add_reg_weight_date"
+            android:textColor="@color/blueonedrop"
+            android:textSize="24dp"
+            android:textStyle="bold" />
+
+        <EditText
+            android:id="@+id/add_date_pressure"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:ems="10"
+            android:textColor="@color/blackonedrop"
+            android:textStyle="bold"
+            android:hint="(Opcional)"
+            android:inputType="datetime"
+            android:paddingBottom="30dp" />
+
+        <TextView
+            android:id="@+id/add_reg_pressure_value"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:fontFamily="sans-serif-condensed"
+            android:paddingTop="30dp"
+            android:text="@string/add_reg_pressure_value"
+            android:textColor="@color/blueonedrop"
+            android:textSize="24dp"
+            android:textStyle="bold" />
+
+        <EditText
+            android:id="@+id/add_value_pressure"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:ems="10"
+            android:textColor="@color/blackonedrop"
+            android:textStyle="bold"
+            android:hint="@string/add_reg_pressure_value_placeholder"
+            android:inputType="numberDecimal"
+            android:paddingBottom="30dp" />
+
+        <TextView
+            android:id="@+id/textView6"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:fontFamily="sans-serif-condensed"
+            android:paddingTop="30dp"
+            android:text="@string/add_reg_pressure_notes"
+            android:textColor="@color/blueonedrop"
+            android:textSize="24dp"
+            android:textStyle="bold" />
+
+        <EditText
+            android:id="@+id/add_notes_pressure"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:ems="10"
+            android:gravity="start|top"
+            android:textColor="@color/blackonedrop"
+            android:textStyle="bold"
+            android:hint="@string/add_reg_weight_notes_placeholder"
+            android:inputType="textMultiLine"
+            android:paddingBottom="30dp" />
+
+
+    </LinearLayout>
+
+    </ScrollView>
+
+</LinearLayout>

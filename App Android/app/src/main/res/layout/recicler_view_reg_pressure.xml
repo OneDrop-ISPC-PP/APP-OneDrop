@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:gravity="center|top">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/background_grey"
+        android:dividerPadding="10sp"
+        android:gravity="center|top"
+        android:orientation="vertical"
+        android:outlineAmbientShadowColor="#FFFFFFFF"
+        android:padding="5dp"
+        android:showDividers="end">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:orientation="horizontal"
+            android:outlineAmbientShadowColor="#E81212">
+
+            <TextView
+                android:id="@+id/recycler_reg_pressure_date"
+                android:layout_width="0dp"
+                android:layout_height="50dp"
+                android:layout_weight="2"
+                android:fontFamily="sans-serif-condensed"
+                android:gravity="center"
+                android:text="Fecha"
+                android:textAlignment="center"
+                android:textSize="18dp"
+                android:textColor="@color/blackonedrop"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/recycler_reg_pressure_value"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:fontFamily="sans-serif-condensed"
+                android:gravity="center"
+                android:paddingEnd="20dp"
+                android:text="160/80"
+                android:textAlignment="center"
+                android:textSize="30sp"
+                android:textColor="@color/blackonedrop"
+                android:textStyle="bold"/>
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/recycler_reg_pressure_note"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="sans-serif-condensed"
+            android:gravity="center"
+            android:paddingStart="10dp"
+            android:paddingBottom="10dp"
+            android:textColor="@color/blackonedrop"
+            android:textStyle="bold"
+            android:text="notas del registro..."
+            android:textSize="16sp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start"
+            android:orientation="horizontal"
+            android:paddingEnd="1dp">
+
+            <Button
+                android:id="@+id/recycler_btn_edit_reg_pressure"
+                android:layout_width="0dp"
+                android:layout_height="50dp"
+                android:layout_gravity="clip_horizontal"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="5dp"
+                android:layout_weight="1"
+                android:backgroundTint="@color/blueonedrop"
+                android:fontFamily="sans-serif-condensed"
+                android:text="Editar"
+                android:textSize="24dp"
+                android:textStyle="bold" />
+
+            <Button
+                android:id="@+id/recycler_btn_delete_reg_pressure"
+                android:layout_width="0dp"
+                android:layout_height="50dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="5dp"
+                android:layout_weight="1"
+                android:backgroundTint="@color/pinkonedrop"
+                android:fontFamily="sans-serif-condensed"
+                android:text="Borrar"
+                android:textSize="24dp" />
+
+        </LinearLayout>
+
+        <View
+            android:id="@+id/divider"
+            android:layout_width="match_parent"
+            android:layout_height="10dp"
+            android:background="?android:attr/listDivider" />
+
+    </LinearLayout>
+
+</LinearLayout>
