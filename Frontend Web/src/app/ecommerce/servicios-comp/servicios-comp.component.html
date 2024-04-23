@@ -1,0 +1,46 @@
+<div class="div0"></div>
+<div class="container">
+  
+        
+    <!--///////////  HERO  ////////////-->
+    <!--///////////  HERO  ////////////-->
+
+    <div class="hero grid-container cuerpo banner">
+        <div class="row align-items-center hero-sub"> 
+            <div class="col"> 
+                    <h1 class="encabezado ">Nuestros Servicios</h1>
+            </div>
+        </div>
+    </div>
+
+    <!--///////////  SECCION PRINCIPAL  ////////////-->
+    <!--///////////  SECCION PRINCIPAL  ////////////-->
+    <!-- se hace la estructura con BOOTSTRAP    -->
+    <section class="grid-container">
+        <div class="row">
+    
+
+        
+        <!--    SERVICIOS   -->
+    <div class="grid-container col-lg-12 seccion">
+        <div class="row justify-content-evenly ">
+
+       <div class="items card cajas card2 "  *ngFor="let servicio of servicios, let i=index"> 
+          <img src="../../../assets/cardio.jpg" class="card-img-top" alt="Pilares-tratamiento-diabetes">
+          <div class="info card-body">
+             <h3  class="card-title">{{servicio.nombre_servicio}}</h3>
+             <p >{{servicio.descripcion_servicio}}</p>
+             
+          </div>
+         </div>
+            </div>
+        </div>
+
+
+        
+
+    </div>
+</section>
+
+
+

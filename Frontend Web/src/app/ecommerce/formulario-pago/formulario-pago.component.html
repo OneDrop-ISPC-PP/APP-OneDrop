@@ -1,0 +1,123 @@
+<link href="assets/img/favicon.png" rel="icon">
+
+<section class="section-princ">
+  <section class="container cont-form text-bg-light text-center my-4 borde shadow-lg form">
+    <h1 class="margin titulo">DATOS DE PAGO</h1>
+    <h5 class="margin">Ingresa los datos de tu tarjeta</h5>
+    <div class="row justify-content-center">
+      <div class="col-lg-8 col-md-12">
+        <div class="row justify-content-between">
+          <div class="col-auto">
+            <img src="assets/metodos-pago.webp" alt="tarjetas" class="tarjeta-img">
+          </div>
+        </div>
+      </div>
+    </div>
+    <form [formGroup]="formPOSTPago" (ngSubmit)="enviarDatosFormPago()">
+
+      <div class="row g-3 align-items-center margin campo-input borde campo-email borde_validacion">
+        <div class="col-lg-3 col-md-12 align-self-start">
+          <label for="tarjeta" class="col-form-label">Numero de Tarjeta</label>
+        </div>
+        <div class="col-lg-8 col-md-12 align-self-start">
+          <input formControlName="tarjeta" id="tarjeta" type="text" class="form-control sub-campo-input" placeholder="1234 5678 1234 5678">
+          <div *ngIf="tarjeta_GET?.invalid && (tarjeta_GET?.dirty || tarjeta_GET?.touched)" class="text-danger">
+            <div *ngIf="tarjeta_GET?.errors?.['required']">
+              Complete este campo.
+            </div>
+            <div *ngIf="tarjeta_GET?.errors?.['pattern']">
+              Ingrese los 16 dígitos de su tarjeta.
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row g-3 align-items-center margin campo-input borde campo-email borde_validacion">
+        <div class="col-lg-3 col-md-12 align-self-start">
+          <label for="titular" class="col-form-label">Nombre del titular</label>
+        </div>
+        <div class="col-lg-8 col-md-12 align-self-start">
+          <input formControlName="titular" id="titular" type="text" class="form-control sub-campo-input" placeholder="Tal como figura en la tarjeta">
+          <div *ngIf="titular_GET?.invalid && (titular_GET?.dirty || titular_GET?.touched)" class="text-danger">
+            <div *ngIf="titular_GET?.errors?.['required']">
+              Complete este campo.
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row g-3 align-items-center margin campo-input borde campo-email borde_validacion">
+        <div class="col-lg-3 col-md-12 align-self-start">
+          <label for="vencimiento" class="col-form-label">Fecha de vencimiento</label>
+        </div>
+        <div class="col-lg-8 col-md-12 align-self-start">
+          <input formControlName="vencimiento" id="vencimiento" type="text" class="form-control sub-campo-input" placeholder="mm/yyyy">
+          <div *ngIf="vencimiento_GET?.invalid && (vencimiento_GET?.dirty || vencimiento_GET?.touched)" class="text-danger">
+            <div *ngIf="vencimiento_GET?.errors?.['required']">
+              Complete este campo.
+            </div>
+            <div *ngIf="vencimiento_GET?.errors?.['pattern']">
+              Ingrese una fecha de vencimiento válida.
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row g-3 align-items-center margin campo-input borde campo-email borde_validacion">
+        <div class="col-lg-3 col-md-12 align-self-start">
+          <label for="codigoSeguridad" class="col-form-label">Codigo de Seguridad</label>
+        </div>
+        <div class="col-lg-8 col-md-12 align-self-start">
+          <input formControlName="codigoSeguridad" id="codigoSeguridad" type="text" class="form-control sub-campo-input" placeholder="3 últimos números que figuran al dorso" (keypress)="validarNumeros($event)">
+          <div *ngIf="codigoSeguridad_GET?.invalid && (codigoSeguridad_GET?.dirty || codigoSeguridad_GET?.touched)" class="text-danger">
+            <div *ngIf="codigoSeguridad_GET?.errors?.['required']">
+              Complete este campo.
+            </div>
+            <div *ngIf="codigoSeguridad_GET?.errors?.['pattern']">
+              Ingrese los 3 dígitos que figuran al dorso de su tarjeta.
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row g-3 align-items-center margin campo-input borde campo-email borde_validacion">
+        <div class="col-lg-3 col-md-12 align-self-start">
+          <label for="dniTitular" class="col-form-label">DNI del titular</label>
+        </div>
+        <div class="col-lg-8 col-md-12 align-self-start">
+          <input formControlName="dniTitular" id="dniTitular" type="text" class="form-control sub-campo-input" placeholder="Documento Nacional de Identidad" (keypress)="validarNumeros($event)">
+          <div *ngIf="dniTitular_GET?.invalid && (dniTitular_GET?.dirty || dniTitular_GET?.touched)" class="text-danger">
+            <div *ngIf="dniTitular_GET?.errors?.['required']">
+              Complete este campo.
+            </div>
+            <div *ngIf="dniTitular_GET?.errors?.['pattern']">
+              Ingrese solo números en este campo.
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <section class="m-4">
+        <h5>Servicios seleccionados:</h5>
+        <div  *ngFor="let nota of items; let i=index">
+          <p class="m-0">{{nota.nombre_servicio}}  ${{nota.precio_servicio}}</p>
+
+        </div>
+      </section>
+      <div class="row justify-content-evenly mx-4">
+        <button type="submit" class="col-lg-4 btn btn-primary m-1 p-2" [disabled]="!formPOSTPago.valid">Confirmar Compra</button>
+
+        <button routerLink="/auth/dash_user" type="submit" class="m-1 p-2 col-lg-4 btn btn-success">Volver</button>
+      </div>
+
+    </form>
+
+    <div *ngIf="mostrarMensajeExito" class="row justify-content-center">
+      <div class="col-lg-8 col-md-12">
+        <div class="alert alert-success my-4">
+          ¡La compra se realizó con éxito!
+        </div>
+      </div>
+    </div>
+  </section>
+</section>

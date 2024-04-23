@@ -1,0 +1,129 @@
+
+ 
+ @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,200;1,500&display=swap');
+ * {
+     margin: 0;
+     padding: 0;
+     box-sizing: border-box;
+     font-family: Poppins, sans-serif; 
+     /*outline: solid 1px tomato !important;*/
+ }
+ 
+ 
+ /*------Navbar-------*/
+ 
+ /*.container {
+     position: relative;
+     z-index: -10;
+     display: flex;
+     justify-content: space-between;
+     align-items: center; 
+     float:left;
+     box-sizing: border-box;
+ }*/
+ 
+ a {
+     color: white;
+     font-weight: bold;
+     padding: 10px;
+     font-size: 15px;
+     text-decoration: none;
+ }
+ 
+ .navbar {
+     background-color: white !important;
+     width: 100%;
+     position: absolute;
+     right: 0;
+     display: flex;
+     justify-content: flex-start;
+     z-index: 10;
+ }
+ 
+ .nav-link {
+     color:#333333 !important;
+ }
+ 
+ .nav-item {
+     margin-left: 10px;
+ }
+ 
+ 
+ /*------Banner-------*/
+ 
+ .banner {
+     position: absolute;
+     right: 0;
+     width: 100%;
+     min-height: 100vh;
+     padding: 150px;
+     display: flex;
+     justify-content: flex-start;
+     align-items: center;
+     background: #EDF5FC;
+     transition: 0.5s;
+ }
+ @media screen and (max-width: 768px) {
+    .banner {
+        padding: 100px 50px;
+    }
+}
+ 
+ /*------Container-------*/
+ div.container2 {
+     position: center;
+     justify-content: center;
+     text-align: center;
+     padding-top: 5%;
+     padding-left: 10%;
+     padding-right: 10%;
+     padding-bottom: 1px;
+ }
+ 
+ .grid-container {
+     display: flex;
+     align-items: center;
+     justify-content: center;
+     position: relative;
+ }
+ 
+ /*------Cuerpo-------*/
+ 
+ .cuerpo {
+    position: relative;
+ }
+ 
+ .cuerpo h1 {
+    font-size: 6em;
+    font-weight: 800;
+    color: #1A609F;
+    line-height: 1em;
+ }
+
+ @media screen and (max-width: 768px) {
+    .cuerpo h1 {
+        font-size: 3em;
+    }
+}
+ 
+ .cuerpo p {
+    position: relative;
+    font-size: 1.1em;
+    margin: 20px 0;
+    font-weight: 400;
+    max-width: 700px;
+    color: #333333;
+ }
+ @media screen and (max-width: 768px) {
+    .cuerpo p {
+        font-size: 1em;
+        max-width: 500px;
+        margin: 10px 0;
+    }
+}
+ 
+ .seccion1 {
+    height: 100vp; 
+    padding: 0;
+    /*background: ; */
+ }

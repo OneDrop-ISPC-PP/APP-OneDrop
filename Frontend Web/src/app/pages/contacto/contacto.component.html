@@ -1,0 +1,105 @@
+<div class="div0"></div>
+
+<!-- Empieza Hero -->
+<section class="grid-container banner seccion1" id="grid-container banner seccion1">
+    <!--video autoplay muted loop><source src="assets/img/video_index.mp4"></video>
+            <div class="overlay" id="overlay"></div-->
+    <!-- Restyling: definir si usamos el video o la imagen de fondo + overlay o queda solo con color de fondo -->
+    <div class="cuerpo" id="cuerpo">
+        <h1> Contactate con nosotros </h1>
+    </div>
+</section>
+
+
+<div class="d-flex justify-content-center ">
+    <form [formGroup]="profileForm" action="" class="formularioC container contact-form m-4 p-4 degradado3" id="formularioC">
+
+        <!-- NOMBRE -->
+        <div class="row p-4">
+            <div class="form-grupo col-lg-4 m-1" id="grupo-nombreFC">
+                <label for="nombreFC" class="form-label">Nombre</label>
+                <div class="form-grupo-input">
+                    <!-- Input e icono -->
+                    <input formControlName="nombre" type="text" class="form-input" name="nombreFC" id="nombreFC" placeholder="  Ingresa tu nombre">
+                    <div *ngIf="nombre_GET.invalid && (nombre_GET.dirty || nombre_GET.touched)"
+                    class="text-danger msj-verificacion col-lg-12 col-md-12 align-self-start">
+                
+                        <div *ngIf="nombre_GET.errors?.['required']">
+                          Complete este campo.
+                        </div>
+                </div>
+                 
+                </div>
+                
+            </div>
+
+
+            <!-- EMAIL -->
+            <div class="form-grupo col-lg-6 m-1" id="grupo-emailFC">
+                <label for="emailFC" class="form-label">Email</label>
+                <div class="form-grupo-input">
+                    <!-- Input e icono -->
+                    <input formControlName="email" type="email" class="form-input" name="emailFC" id="emailFC" placeholder="  Ingresa tu email">
+                    <!-- verificacion -->
+        <div *ngIf="email_GET.invalid && (email_GET.dirty || email_GET.touched)"
+        class="text-danger msj-verificacion col-lg-12 col-md-12 align-self-start">
+    
+            <div *ngIf="email_GET.errors?.['required']">
+              Complete este campo.
+            </div>
+            <div *ngIf="email_GET.errors?.['email']">
+              Ingrese un email con formato correcto.
+            </div>
+    </div>
+                </div>
+                
+            </div>
+
+            <!-- MENSAJE -->
+            <div class="form-grupo col-lg-12" id="grupo-mensajeFC">
+                <label for="mensajeFC" class="form-label">Mensaje</label>
+                <div class="form-grupo-input">
+                    <!-- Input e icono -->
+                    <textarea type="text" cols="30" rows="10"  formControlName="mensaje" type="text" class="form-input" name="mensajeFC" id="mensajeFC" placeholder="  Ingresa tu mensaje">
+                    </textarea>
+                  <!-- verificacion -->
+        <div *ngIf="mensaje_GET.invalid && (mensaje_GET.dirty || mensaje_GET.touched)"
+        class="text-danger msj-verificacion col-lg-12 col-md-12 align-self-start">
+    
+            <div *ngIf="mensaje_GET.errors?.['required']">
+              Complete este campo.
+            </div>
+            
+    </div>  
+                </div>
+                
+            </div>
+
+
+            <!-- Boton -->
+            <div class="form-grupo col-lg-6">
+                <button class="btn botonFC bg-primary" type="submit" (click)="verificacionContacto()">Enviar</button>
+                
+            </div>
+
+            <!-- Mensaje Error -->
+            <div class="form-mensaje">
+                <div class=" col-lg-6 d-flex justify-content-center align-items-center p-4" id=" form-mensaje">
+                    <p><b>Error:</b> Porfavor, rellenar todos los campos</p>
+                </div>
+            </div>
+
+        </div>
+    </form>
+</div>
+<!-- Termina Hero -->
+    <!-- Termina Hero -->
+    <!-- VER secciones para el proximo sprint! Tienen errores -->    
+    <!-- EMPIEZA FORMULARIO -->
+    <!-- TERMINA FORMULARIO -->
+
+    <!-- EMPIEZA MAPA -->
+    <!-- TERMINA MAPA -->
+
+    <!-- SECCION DE PROMOCION DE LA APP MOBILE-->
+    <!-- FIN PROMOCION DE LA APP MODILE-->

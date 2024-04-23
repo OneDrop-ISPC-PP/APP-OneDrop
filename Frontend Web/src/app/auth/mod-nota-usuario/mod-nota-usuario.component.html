@@ -1,0 +1,25 @@
+
+<form class="form-register  bg-light">
+    <h2 class="titulo text-center">EDITAR REGISTRO</h2>
+  <div class="p-4 container">
+    <div class="row">
+      <div class="p-2  col-lg-6">
+        <label for="valor-glucemia" class="form-label">Valor Glucemia</label>
+        <input [(ngModel)]="nota.valor_glucemia"  [ngModelOptions]="{standalone: true}" type="number" class="form-control" id="valor-glucemia">
+      </div>
+
+      <div class="p-2 col-lg-12">
+        <label class="form-label">Comentario del registro</label>
+        <textarea [(ngModel)]="nota.comentario_registro"  [ngModelOptions]="{standalone: true}" name="" id="" cols="30" rows="5"
+          class="form-control"></textarea>
+      </div>
+
+      <button (click)="update()" type="submit" class="m-1 col-lg-4 btn btn-success">Modificar Nota</button>
+      <button routerLink="/auth/dash_user" type="submit" class="m-1 col-lg-4 btn btn-danger">Volver</button>
+      
+    </div>
+   
+  </div>
+</form>
+
+

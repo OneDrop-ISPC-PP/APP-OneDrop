@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+<html lang="es">
+
+<!-- Empieza Head -->
+
+<head>
+    <!-- Fontawesome CDN Link -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" />
+
+    <!-- Css -->
+    <!-- <link rel="stylesheet" type="text/css" media="all" href="assets/css/style.css"> -->
+
+    <!--    -->
+
+    <!-- Título -->
+    <title>OneDrop</title>
+
+    <!-- Description -->
+    <meta name="description" content="One Drop es la plataforma de control de la diabetes líder en el mundo. Con una aplicación móvil galardonada, que provee educación sobre diabetes personalizada, asesoramiento sobre salud, la mejor tecnología de salud y bienestar de su clase, lo ayudamos a lograr sus objetivos.">
+
+    <!-- Keywords -->
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="md:locale" content="es_es" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="keywords" content="salud, diabetes, educacion en diabetes, bienestar, asesoramiento sobre salud, control de glucemia">
+    <meta name="origen" content="OneDrop" />
+    <meta name="author" content="Grupo 30 - OneDrop" />
+    <meta name="copyright" content="&copy; 2022 OneDrop" />
+    <meta name="locality" content="CÓRDOBA, Argentina" />
+    <meta name="language" content="es" />
+    <meta name="revisit-after" content="1 days" />
+    <meta name="robots" content="index, follow" />
+    <meta name="googlebot" content="index, follow" />
+
+    <!-- Favicons -->
+
+    <link href="assets/img/favicon.png" rel="icon">
+    <!--link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon"-->
+
+</head>
+<!-- Termina Head -->
+
+<!-- Empieza Body -->
+
+<body>
+    <!-- Scroll Back To Top Button -->
+        <!--  
+    <button onclick="topFunction()" id="myBtn" title="Go to top">Volver Arriba</button>
+      -->
+  <!-- Empieza Navbar -->
+  <div id="inicio"></div>
+
+
+<!--  ////////////////////////////////////////////////////////////////  -->
+
+
+<nav class="navbar  navbar-expand-lg bg-body-tertiary">
+  <div class="container-fluid ">
+    <a class="navbar-brand" href="#">OneDrop</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class=" flex-padre collapse navbar-collapse   " id="navbarNav">
+        
+      <ul class="navbar-nav">
+        <li class="nav-item active botones" id="nav-item">
+            <a class="nav-link" id="nav-link" routerLink="home"> Inicio <span class="sr-only">Inicio</span></a>
+        </li>
+
+        <li class="nav-item botones" id="nav-item">
+            <a class="nav-link" id="nav-link" routerLink="nosotros" > Nosotros </a>
+        </li>
+        <li class="nav-item botones" id="nav-item">
+            <a class="nav-link " id="nav-link" routerLink="soporte"> Soporte </a>
+        </li>
+        
+        <li class="nav-item botones" id="nav-item">
+            <a target="_blank" class="nav-link" id="nav-link" href="https://fedesp.es/blog/"> Blog</a>
+        </li>
+
+        <li class="nav-item botones" id="nav-item">
+          <a class="nav-link" id="nav-link" routerLink="ecommerce/servicios"> Servicios </a>
+      </li>
+
+        <li class="nav-item botones" id="nav-item">
+            <a class="nav-link" id="nav-link" routerLink="contacto"> Contacto </a>
+        </li>
+
+
+
+
+        <div >
+          <ul class="navbar-nav me-auto mb-2 mb-md-0">
+            <li class="nav-item botones" id="nav-item">
+              <a class="nav-link" id="nav-link" routerLink="auth/registrarse"> Registrarse</a>
+          </li>
+          
+          <li class="nav-item botones boton1" id="nav-item">
+               <a class="nav-link boton1bis" id="nav-link" routerLink="auth/login"> Ingresar</a>
+          </li>
+          </ul>
+    
+
+          </div>
+          <!--
+          <div>
+          <ul class="navbar-nav me-auto mb-2 mb-md-0" *ngIf="authenticated">
+            <li class="nav-item botones boton1" id="nav-item">
+              <a routerLink="auth/ingresar" class="nav-link  boton1bis" (click)="logout()">Cerrar Sesion</a>
+            </li>
+          </ul>
+        </div>-->
+
+
+
+
+
+
+      </ul>
+    </div>
+  </div>
+</nav>
+
+
+{{message}}
+
+<router-outlet></router-outlet>
+<app-scroll-back-to-top-button></app-scroll-back-to-top-button>
+<app-footer></app-footer>
+
+</body>
+</html>

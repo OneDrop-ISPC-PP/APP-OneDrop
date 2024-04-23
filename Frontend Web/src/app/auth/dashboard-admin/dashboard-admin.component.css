@@ -1,0 +1,172 @@
+/* ESTILOS PAGINA DASHBOARD DE ADMINISTRADOR */
+/* DEFINICION DE COLORES EN VARIABLES */
+:root {
+    --primary: #0b234b;
+    --light: #ffffff;
+    --light-blue:#f5f6fa;
+    --grey: #eff2f7;
+    
+  }
+  
+  
+  :root{
+      --primary: #3155e7;
+      --primary-dark: #2845d6;
+      --black: #010101;
+      --gray-1:#788190;
+      --gray-2:#d3d4db;
+      --white:#ffffff;
+      --body:#fefefe;
+  }
+  
+  
+  html{
+    scroll-behavior: smooth;
+    margin: 0rem;
+    padding: 0rem;
+  }
+
+  /* COLOR DE SIDEBAR Y NAV DEL DASHBOARD*/
+  .bg-info {
+    background-color: #1A609F !important;
+  }
+  .text-info{
+    color:#1A609F!important;
+  }
+  /* --- SIDE BAR DEL ADMINISTRADOR --- */
+  #sidebar-container{
+    min-height: 90vh;
+    
+  }
+  #sidebar-container .logo{
+    padding: 1rem 1.25rem;
+    font-size: 1.2rem;
+  }
+  #sidebar-container .menu {
+    width: 15rem;
+  }
+  
+  #sidebar-container-NOF{
+    min-height: 50vh;
+    max-height: 80vh; 
+  }
+  #sidebar-container-NOF .logo{
+    padding: 1rem 1.25rem;
+    font-size: 1.2rem;
+  }
+  #sidebar-container-NOF .menu {
+    width: 15rem;
+  }
+  
+  /* CONTENIDO EN LA SECCION DE ESTADISTICAS*/
+  /* CONTENIDO EN LA SECCION DE ESTADISTICAS*/
+  /* CONTENIDO EN LA SECCION DE ESTADISTICAS*/
+  .da-sect1{
+    padding:1rem;
+    margin-top: 1rem;
+    margin-bottom: 2rem;
+
+
+  }
+  .da-sec-t1{
+    margin-left:2rem;
+    margin-bottom: 2rem;
+   
+  }
+
+
+  /*Seccion Cantidad de pacientes con diabetes*/
+  /*Seccion Cantidad de pacientes con diabetes*/
+
+  .da-serv-cont-marg{
+    margin-top: 1rem;
+  }
+  .borde-top{
+    margin-top:1.5rem;
+  }
+  /* Seccion Servicios FORMULARIO*/
+
+
+
+
+
+  /* Seccion Servicios FORMULARIO*/
+  * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+  }
+  
+  * .form-register {
+      background: #fcfdfd;
+      margin: auto;
+      border-radius: 4px;
+      font-family: 'calibri';
+      color: rgb(7, 7, 7);
+  }
+  
+  .form-register h4 {
+      font-size: 22px;
+      margin-bottom: 20px;
+  }
+  
+  .controls {
+      width: 100%;
+      padding: 10px;
+      border-radius: 4px;
+      margin-bottom: 16px;
+      border: 1px solid #788190;
+      font-family: 'calibri';
+      font-size: 18px;
+      color: white;
+  }
+  
+  .form-register p {
+      height: 40px;
+      text-align: center;
+      font-size: 18px;
+      line-height: 40px;
+  }
+  
+  .form-register a {
+      color: white;
+      text-decoration: none;
+  }
+  
+  .form-register a:hover {
+      color: white;
+      text-decoration: underline;
+  }
+  
+  .form-register .botons {
+      width: 100%;
+      background: #788190;
+      border: none;
+      padding: 12px;
+      color: white;
+      margin: 16px 0;
+      font-size: 16px;
+  }
+  
+
+
+
+  /*  ESTILOS DE REGISTRO DE SERVICIOS */
+  .regist-servicios{
+    height: 4rem;
+  }
+
+  .segunda-seccion{
+    padding: 1rem;
+    padding-bottom: 2rem;
+
+  }
+
+/*    VARIOS    */
+.borde{
+  border: 1px solid black;
+}
+
+.b-radius{
+  border-radius: .3rem;
+}

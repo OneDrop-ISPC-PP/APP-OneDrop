@@ -1,0 +1,248 @@
+<link href="assets/img/favicon.png" rel="icon">
+
+
+<!--//////////////////////////////    FOMRULARIO    /////////////////////////////////////-->
+<!--//////////////////////////////    FOMRULARIO    /////////////////////////////////////-->
+<!--//////////////////////////////    FOMRULARIO    /////////////////////////////////////-->
+
+<section class="section-princ" >
+<section class="container cont-form text-bg-light text-center my-4 borde shadow-lg form">
+  <h3 class=" margin titulo">Ficha Médica</h3>
+  <h6 class=" margin">Ya falta menos para tener tu cuenta. Completá tus datos para que podamos brindarte una mejor atención.</h6>
+
+  <form  [formGroup]="formPOSTRegistro3Usuarios" (submit)=" enviarDatosRegistroTRES()">
+
+
+
+  <!-- ////////////////////////////  TIPO DIABETES //////////////////////////////  -->
+<div class="row g-3 align-items-center margin campo-input borde campo-email borde_validacion">
+  <!--  label  -->
+  <div class="col-lg-3 col-md-12 align-self-start">
+    <label for="exampleFormControlInput1" class="col-form-label">Tipo Diabetes</label>
+  </div>
+  <!--  input  -->
+  <div class="col-lg-8 col-md-12 align-self-start">
+    <div class="btn-group" data-toggle="buttons">
+      <label class="btn btn-secondary">
+        <input type="radio" formControlName="tipo_diabetes" value="TIPO_1" autocomplete="off">Tipo 1
+      </label>
+      <label class="btn btn-secondary">
+        <input type="radio" formControlName="tipo_diabetes" value="TIPO_2" autocomplete="off">Tipo 2
+      </label>
+      <label class="btn btn-secondary">
+        <input type="radio" formControlName="tipo_diabetes" value="TIPO_3" autocomplete="off"> Tipo 3
+      </label>
+
+    </div>
+          <!--  validacion  -->
+          <div *ngIf="tipo_diabetes_GET.invalid && (tipo_diabetes_GET.dirty || tipo_diabetes_GET.touched)" class="text-danger">
+            <div *ngIf="tipo_diabetes_GET.errors?.['required']">
+              Seleccione una opcion.
+            </div>
+          </div>
+    </div>
+  </div>
+
+  <!-- ////////////////////////////  TERAPIA INSULINA //////////////////////////////  -->
+  <div class="row g-3 align-items-center margin campo-input borde campo-email borde_validacion">
+    <!--  label  -->
+    <div class="col-lg-3 col-md-12 align-self-start">
+      <label for="exampleFormControlInput1" class="col-form-label">Terapia Insulina</label>
+    </div>
+    <!--  input  -->
+    <div class="col-lg-8 col-md-12 align-self-start">
+      <div class="btn-group" data-toggle="buttons">
+        <label class="btn btn-secondary">
+          <input type="radio" formControlName="terapia_insulina" value="TIPO_A" autocomplete="off">Dosis Basal
+        </label>
+        <label class="btn btn-secondary">
+          <input type="radio" formControlName="terapia_insulina" value="TIPO_B" autocomplete="off">Dosis en Bolo
+        </label>
+        <label class="btn btn-secondary">
+          <input type="radio" formControlName="terapia_insulina" value="TIPO_C" autocomplete="off"> No Uso/Otros
+        </label>
+      </div>
+            <!--  validacion  -->
+            <div *ngIf="terapia_insulina_GET.invalid && (terapia_insulina_GET.dirty || terapia_insulina_GET.touched)" class="text-danger">
+              <div *ngIf="terapia_insulina_GET.errors?.['required']">
+                Seleccione una opcion.
+              </div>
+            </div>
+      </div>
+    </div>
+
+     <!-- ////////////////////////////  TERAPIA PASTILLAS //////////////////////////////  -->
+  <div class="row g-3 align-items-center margin campo-input borde campo-email borde_validacion">
+    <!--  label  -->
+    <div class="col-lg-3 col-md-12 align-self-start">
+      <label for="exampleFormControlInput1" class="col-form-label">Terapia Pastillas</label>
+    </div>
+    <!--  input  -->
+    <div class="col-lg-8 col-md-12 align-self-start">
+      <div class="btn-group" data-toggle="buttons">
+        <label class="btn btn-secondary">
+          <input type="radio" formControlName="terapia_pastillas" value="TIPO_1" autocomplete="off">Tolbutamida
+        </label>
+        <label class="btn btn-secondary">
+          <input type="radio" formControlName="terapia_pastillas" value="TIPO_2" autocomplete="off">Glimepirida
+        </label>
+        <label class="btn btn-secondary">
+          <input type="radio" formControlName="terapia_pastillas" value="TIPO_3" autocomplete="off"> Glipizida
+        </label>
+      </div>
+            <!--  validacion  -->
+            <div *ngIf="terapia_pastillas_GET.invalid && (terapia_pastillas_GET.dirty || terapia_pastillas_GET.touched)" class="text-danger">
+              <div *ngIf="terapia_pastillas_GET.errors?.['required']">
+                Seleccione una opcion.
+              </div>
+            </div>
+      </div>
+    </div>
+
+         <!-- ////////////////////////////  TIPO GLUCOMETRO //////////////////////////////  -->
+  <div class="row g-3 align-items-center margin campo-input borde campo-email borde_validacion">
+    <!--  label  -->
+    <div class="col-lg-3 col-md-12 align-self-start">
+      <label for="exampleFormControlInput1" class="col-form-label">Tipo Glucometro</label>
+    </div>
+    <!--  input  -->
+    <div class="col-lg-8 col-md-12 align-self-start">
+      <div class="btn-group" data-toggle="buttons">
+        <label class="btn btn-secondary">
+          <input type="radio" formControlName="tipo_glucometro" value="TIPO_1" autocomplete="off">Medidor Capilar
+        </label>
+        <label class="btn btn-secondary">
+          <input type="radio" formControlName="tipo_glucometro" value="TIPO_2" autocomplete="off">Medidor Continuo (MCG)
+        </label>
+        <label class="btn btn-secondary">
+          <input type="radio" formControlName="tipo_glucometro" value="TIPO_3" autocomplete="off">Medidor Tipo Flash
+        </label>
+
+      </div>
+            <!--  validacion  -->
+            <div *ngIf="tipo_glucometro_GET.invalid && (tipo_glucometro_GET.dirty || tipo_glucometro_GET.touched)" class="text-danger">
+              <div *ngIf="tipo_glucometro_GET.errors?.['required']">
+                Seleccione una opcion.
+              </div>
+            </div>
+      </div>
+    </div>
+
+             <!-- ////////////////////////////  TIPO SENSOR //////////////////////////////  -->
+  <div class="row g-3 align-items-center margin campo-input borde campo-email borde_validacion">
+    <!--  label  -->
+    <div class="col-lg-3 col-md-12 align-self-start">
+      <label for="exampleFormControlInput1" class="col-form-label">Tipo Sensor</label>
+    </div>
+    <!--  input  -->
+    <div class="col-lg-8 col-md-12 align-self-start">
+      <div class="btn-group" data-toggle="buttons">
+        <label class="btn btn-secondary">
+          <input type="radio" formControlName="tipo_sensor" value="NO" autocomplete="off">FreeStyle Libre de Abbott®
+        </label>
+        <label class="btn btn-secondary">
+          <input type="radio" formControlName="tipo_sensor" value="TIPO_2" autocomplete="off">Guardian Connect de Medtronic®
+        </label>
+        <label class="btn btn-secondary">
+          <input type="radio" formControlName="tipo_sensor" value="TIPO_3" autocomplete="off"> No uso
+        </label>
+        <label class="btn btn-secondary">
+          <input type="radio" formControlName="tipo_sensor" value="OTRO_TIPO" autocomplete="off"> No uso
+        </label>
+      </div>
+            <!--  validacion  -->
+            <div *ngIf="tipo_sensor_GET.invalid && (tipo_sensor_GET.dirty || tipo_sensor_GET.touched)" class="text-danger">
+              <div *ngIf="tipo_sensor_GET.errors?.['required']">
+                Seleccione una opcion.
+              </div>
+            </div>
+      </div>
+    </div>
+<!-- ////////////////////////////  COMORBILIDADES //////////////////////////////  -->
+<div class="row g-3 align-items-center  margin campo-input borde campo-email borde_validacion " >
+  <!--  label  -->
+   <div class="col-lg-3 col-md-12 align-self-start ">
+       <label for="exampleFormControlInput1" class="col-form-label">Comorbilidades</label>
+   </div>
+   <!--  input  -->
+   <div class="col-lg-8 col-md-12 align-self-start  ">
+     <input formControlName="comorbilidades" id="last_name" type="text" class="form-control sub-campo-input" id="exampleFormControlInput1" placeholder="">
+     <!--  validacion  -->
+     <div *ngIf="comorbilidades_GET.invalid && (comorbilidades_GET.dirty || comorbilidades_GET.touched)"
+     class="text-danger">
+
+         <div *ngIf="comorbilidades_GET.errors?.['required']">
+           Complete este campo.
+         </div>
+     </div>
+   </div>
+
+</div>
+
+<!-- ////////////////////////////  ID PACIENTE //////////////////////////////  
+<div class="row g-3 align-items-center  margin campo-input borde campo-email borde_validacion " >
+  <!--  label  
+   <div class="col-lg-3 col-md-12 align-self-start ">
+       <label for="exampleFormControlInput1" class="col-form-label">id</label>
+   </div>
+
+   <div class="col-lg-8 col-md-12 align-self-start  ">
+     <input formControlName="id_paciente" id="last_name" type="text" class="form-control sub-campo-input" id="exampleFormControlInput1" placeholder="">
+
+     <div *ngIf="id_paciente_GET.invalid && (id_paciente_GET.dirty || id_paciente_GET.touched)"
+     class="text-danger">
+
+         <div *ngIf="id_paciente_GET.errors?.['required']">
+           Complete este campo.
+         </div>
+     </div>
+   </div>
+
+</div>
+
+-->
+
+
+
+<!-- ////////////////////////////  OBJETIVO GLUCOSA //////////////////////////////  -->
+<div class="row g-3 align-items-center  margin campo-input borde campo-email borde_validacion " >
+  <!--  label  -->
+   <div class="col-lg-3 col-md-12 align-self-start ">
+       <label for="exampleFormControlInput1" class="col-form-label">Objetivo de Glucosa</label>
+   </div>
+   <!--  input  -->
+   <div class="col-lg-8 col-md-12 align-self-start  ">
+     <input formControlName="objetivo_glucosa" id="last_name" type="text" class="form-control sub-campo-input" id="exampleFormControlInput1" placeholder="">
+     <!--  validacion  -->
+     <div *ngIf="objetivo_glucosa_GET.invalid && (objetivo_glucosa_GET.dirty || objetivo_glucosa_GET.touched)"
+     class="text-danger">
+
+         <div *ngIf="objetivo_glucosa_GET.errors?.['required']">
+           Complete este campo.
+         </div>
+     </div>
+   </div>
+
+</div>
+
+
+
+
+
+
+    <!--  ////////////////////////////////// BOTONES //////////////////////////////   -->
+
+      <div class="row  justify-content-evenly mx-4 ">
+
+        <button  class="btn btn-primary mx-4 py-2 px-4">Enviar datos</button>
+
+      </div>
+    
+
+
+
+
+  </form>
+</section>
+</section>
+

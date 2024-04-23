@@ -1,0 +1,654 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;500;700&display=swap');
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+:root{
+    scroll-behavior: smooth;
+}
+
+
+/*  ESPECIFICO DASHBOARD PACIENTE  */ 
+.dashboardUser{
+    background-color:#ffffff;
+}
+
+
+.dashboardUser .headerDashboard{
+  background: rgb(26,96,159);
+  background: linear-gradient(90deg, rgba(26,96,159,1) 40%, rgba(164,233,246,1) 100%);
+}
+/*
+.dashboardPaciente .headerDashboard img{
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    margin: 10px;
+    object-fit: cover;
+    text-align: right;
+}*/
+.dashboardUser .headerDashboard div{
+    margin-left: 10px;
+    text-align: center;
+}
+.dashboardUser .headerDashboard p{
+    font-size:1.2rem;
+    color: white;
+}
+
+.dashboardUser .headerDashboard .nombreUsuario{
+    font-size: 2.5rem;
+    font-weight: 600;
+}
+
+.dashboardUser .contenedorGrafico{
+    color:rgb(3, 79, 108);
+}
+.dashboardUser .contenedorGrafico p{
+    font-size: 1.2rem;
+    margin-left: 5px;
+}
+.dashboardUser .contenedorGrafico .botoneraPeriodo{
+    display: flex;
+    justify-content: space-around;
+    width: 350px;
+}
+.dashboardUser .contenedorGrafico .botoneraPeriodo button{
+    border-radius: 10px;
+    width: 80px;
+    border: none;
+    margin-bottom: 10px;
+    background-color:white;
+    border: 1px solid gray;
+}
+.dashboardUser .contenedorGrafico .botoneraPeriodo button:hover{
+    color: white;
+    background-color:rgb(3, 79, 108);
+    transform: scale(1.05);
+}
+.dashboardUser .contenedorGrafico .grafico{
+   margin: auto;
+}
+
+/* boton nuevo registro   */
+.dashboardUser .btnAgregar{
+    position: sticky;
+    top: 90vh;
+    border: none;
+    border-radius: 50%;
+    padding: 3px;
+    margin: 10px;
+    margin-top: 30px;
+    margin-left:calc(100vw - 100px);
+    z-index: 100;
+    background-color: rgba(8, 197, 43, 0.755);
+}
+.dashboardUser .btnAgregar img{
+    width: 40px;
+    border-radius: 50%;
+}
+.dashboardUser .btnAgregar:hover{
+    background-color: rgb(4, 125, 6);
+}
+
+/* modal nuevo registro   */
+.dashboardUser #nuevoRegistroGlucemia label{
+    margin-bottom: 5px;
+}
+.dashboardUser #nuevoRegistroGlucemia  input{
+    margin-bottom: 15px;
+}
+.dashboardUser #nuevoRegistroGlucemia .fechaActual{
+    text-align: right;
+    width: 100%;
+}
+
+/* listado de registros   */
+.dashboardUser .registros .registro{
+  /*  background: -webkit-linear-gradient(left, #001e4db2, #1a619f86);*/
+  background: -webkit-linear-gradient(left, #a345b292, #fa42989e);
+  padding: 5px;
+  margin: 10px auto;
+  width: calc(25% - 20px);
+  max-width: 350px;
+  border-radius: 1rem;
+  border-color: #1a609f;
+  border-style:groove;
+}
+.dashboardUser .registros .registro:hover{
+  transform: scale(1.02);
+}
+
+.dashboardUser .registros {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+.dashboardUser .registros p{
+  margin: 1rem;
+  font-size: 1.25rem;
+  font-weight: 500;
+  line-height: 1.2;
+}
+.dashboardUser .registros .registro p{
+    margin: 0;
+}
+
+.dashboardUser .registros .registro .fecha{
+   
+    font-weight: 300;
+}
+.dashboardUser .registros .registro .glucemia{
+    font-weight: 500;
+    font-size: 1.1rem;
+}
+.dashboardUser .titulo {
+  text-align: center;
+  margin-top: 20px;
+  font-size: 24px;
+  font-weight: bold;
+}
+.titulo{
+  text-align: center;
+    color: #1A609F;
+    margin: 1%;
+    margin-top: 6rem;
+    line-height: 2.5;
+}
+
+  
+  /*  ESTILOS DE LOS SERVICIOS */
+  .servicios{
+    margin: 0rem;
+  }
+  
+  .cont-serv {
+    background-color: #edf5fc;
+  }
+  
+  
+  
+  
+  /* ESTILOS DE USO */
+  
+  .text-center{
+    text-align: center;
+  
+  }
+  .borde{
+    border: 1px solid blue;
+  }
+
+
+  /* Estilos generales del nav */
+
+.container {
+    background-color: #f5f3f3;
+    max-width: 100%;
+    margin: 0 auto;
+  }
+  
+  .container nav {
+    display: flex;
+    justify-content: flex-end;
+    padding: 15px;
+    background-color: #fff;
+    color: #001d4d;
+  }
+  
+  .nav-compras {
+    display: none;
+  }
+  
+  .container nav button {
+    display: none;
+    z-index: 1;
+  }
+  
+  .nav-compras li {
+    list-style: none;
+    padding: 1rem;
+    font-weight: bold;
+    z-index: 1;
+  }
+  
+  .container nav i:hover > .compras {
+    width: 400px;
+    height: 400px;
+    position: absolute;
+    right: 0;
+    background-color: #ffff;
+    z-index: 1;
+  }
+  
+  .container nav i:hover .nav-compras {
+    font-size: 10px;
+    display: flex;
+    justify-content: space-between;
+    margin: 0 10px 0 10px;
+    border-bottom: solid thin #e1e1e1;
+  }
+  
+  .container nav i:hover .compras > button {
+    display: block;
+    width: 90%;
+    padding: 1rem;
+    font-size: 10px;
+    margin: 10px auto;
+    background-color: transparent;
+    border: solid thin #e1e1e1;
+    border: solid thin #1A609F;
+    color: #1A609F;
+    cursor: pointer;
+  }
+  
+  .container nav i:hover .compras > button:hover {
+    border: solid thin #1A609F;
+    transition: all 4s;
+  }
+  
+  .fa-solid {
+    font-size: 2rem;
+    cursor: pointer;
+  }
+  
+  .items {
+    background-color: #fff;
+    border: solid thin #e1e1e1;
+  }
+  
+  .items img {
+    width: 100%;
+    height: 50%;
+  }
+  
+  .precio {
+    display: flex;
+    justify-content: center;
+    font-weight: bolder;
+  }
+  
+  .precio p {
+    font-size: 1.8rem;
+  }
+  
+  .info button {
+    padding: 1rem;
+    width: 100%;
+    background-color: #33c3f0;
+    border: none;
+    outline: none;
+    color: #ffff;
+    text-transform: uppercase;
+    font-size: 1.1rem;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-bottom: 5px;
+  }
+  
+  .info button:hover {
+    background-color: #2da0c3;
+    transition: all 0.3s;
+  }
+  
+  /*------Banner--------*/
+  
+  .banner {
+    position: absolute;
+    right: 0;
+    max-width: 100%;
+    min-height: 100vh;
+    padding: 150px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    background: #edf5fc;
+    transition: 0.5s;
+  }
+  
+  
+  /*------Cuerpo--------*/
+  
+  .cuerpo {
+    position: relative;
+  }
+  
+  .cuerpo h1 {
+    font-size: 6em;
+    font-weight: 800;
+    color: #1a609f;
+    line-height: 1em;
+    text-align: center;
+    margin-left: 100px;
+  }
+  
+  .cuerpo p {
+    position: relative;
+    font-size: 0.9em;
+    margin: 20px 0;
+    font-weight: 400;
+    max-width: 700px;
+    color: #333333;
+  }
+  
+  /*------Cards--------*/
+  
+  .card-body {
+    background: transparent;
+    margin: 5%;
+  }
+  
+  .card-body p {
+    background: transparent;
+    text-align: center;
+  }
+  
+  .card2 {
+    background: transparent;
+    margin: 1%;
+    border: none;
+    height: 35rem;
+  }
+  
+  .card {
+    background: transparent;
+    margin: 1%;
+    border: none;
+    height: 35rem;
+  }
+  
+  
+  .cajas {
+    width: 33.3%;
+    border-radius: 5px;
+    box-shadow: 0 0 5px #000;
+    color: #000;
+    font-size: 16px;
+    font-weight: 500;
+    background: #0000;
+    border: 0px solid;
+    border-color: #1a609f;
+    position: relative;
+  }
+  .cajas:hover {
+    color: #000;
+    box-shadow: 0 4px 16px #000;
+    transition: all 0.2s ease;
+  }
+  
+  
+  .card-title {
+    text-align: center;
+    color: #1a609f;
+    font-size: 1.5rem;
+  }
+  
+  .card-text {
+    text-align: center;
+    display: block;
+    margin-block-start: 1em;
+    margin-block-end: 1em;
+    margin-inline-start: 2px;
+    margin-inline-end: 2px;
+    margin-top: 3rem;
+    line-height: 2;
+    font-family: Poppins, sans-serif;
+  }
+  
+  /*------Seccion--------*/
+  
+  .seccion {
+    max-width: 80%;
+    margin: 0 auto;
+    padding: 1%;
+  }
+  .row{
+    margin: 0 auto;
+  }
+  .img-act {
+    width: 40%;
+    margin: auto;
+    display: block;
+    margin-top: 3%;
+  }
+  
+  .texto1 {
+    text-align: center;
+    color: #1a609f;
+    margin: 1%;
+    line-height: 2.5;
+  }
+  
+  .texto2 {
+    text-align: center;
+    color: #333333;
+    margin: 2% 10%;
+    line-height: 2.5;
+  }
+  
+  
+  
+  .bordex {
+    border: 1px solid black;
+    margin: 0rem;
+    padding: 0rem;
+  }
+  
+  /* Responsividad */
+  
+  @media screen and (max-width: 1200px) {
+    .banner {
+      padding: 120px;
+    }
+    .dashboardUser .headerDashboard .nombreUsuario {
+      font-size: 2rem;
+  }
+
+  .dashboardUser .contenedorGrafico p {
+      font-size: 1rem;
+  }
+
+  .dashboardUser .contenedorGrafico .botoneraPeriodo {
+      width: 280px;
+  }
+
+  .dashboardUser .contenedorGrafico .grafico {
+      width: 90%;
+  }
+
+  .dashboardUser .btnAgregar {
+      margin-left: calc(100vw - 60px);
+  }
+
+  .dashboardUser .registros .registro {
+      width: 100%;
+      max-width: none;
+      margin: 10px auto;
+  }
+  
+  }
+  
+  @media screen and (max-width: 992px) {
+    .banner {
+      padding: 80px;
+    }
+    
+  
+    
+    .cuerpo h1 {
+      font-size: 4em;
+      margin-left: 0;
+    }
+    
+    .cuerpo p {
+      font-size: 1em;
+    }
+    
+    .card2,
+    .card {
+      height: auto;
+    }
+    
+    .items img {
+      height: 100%;
+    }
+    
+    .precio p {
+      font-size: 1.4rem;
+    }
+    
+    .info button {
+      font-size: 1rem;
+    }
+    .carrito h4{
+      font-weight: 400;
+      font-size: 1.5rem;
+      }
+      .cajas {
+        width: 100%;
+        font-size: 10px;
+      }
+      .dashboardUser .headerDashboard .nombreUsuario {
+        font-size: 1.8rem;
+    }
+
+    .dashboardUser .contenedorGrafico .botoneraPeriodo {
+        width: 320px;
+    }
+
+    .dashboardUser .registros .registro {
+        width: calc(50% - 20px);
+        margin-left: 10px;
+        margin-right: 10px;
+    }
+  }
+  
+  @media screen and (max-width: 768px) {
+    .banner {
+      padding: 40px;
+    }
+    
+    .cajas {
+      width: 50%;
+      font-size: 15px;
+    }
+    
+    .cuerpo h1 {
+      font-size: 3em;
+      margin-left: 0;
+    }
+    
+    .cuerpo p {
+      font-size: 0.9em;
+    }
+    
+    .card3 {
+      height: auto;
+    }
+    .carrito h4{
+      font-weight: 400;
+      font-size: 1rem;
+      }
+      .dashboardUser .headerDashboard .nombreUsuario {
+        font-size: 1.5rem;
+    }
+
+    .dashboardUser .contenedorGrafico .botoneraPeriodo {
+        width: 260px;
+    }
+
+    .dashboardUser .registros .registro {
+        width: 100%;
+        max-width: none;
+    }
+  }
+  
+  @media screen and (max-width: 576px) {
+    .banner {
+      padding: 20px;
+    }
+    
+    .cajas {
+      width: 100%;
+      font-size: 15px;
+    }
+    
+    .cuerpo h1 {
+      font-size: 3em;
+      margin-left: 0;
+    }
+    
+    .cuerpo p {
+      font-size: 0.8em;
+    }
+    
+    .seccion1,
+    .seccion {
+      padding: 5%;
+    }
+    .carrito h4{
+      font-weight: 400;
+      font-size: 0.5rem;
+      }
+      .dashboardUser .headerDashboard .nombreUsuario {
+        font-size: 1.2rem;
+    }
+
+    .dashboardUser .contenedorGrafico p {
+        font-size: 1rem;
+    }
+
+    .dashboardUser .contenedorGrafico .botoneraPeriodo {
+        width: 200px;
+    }
+
+    .dashboardUser .registros .registro {
+        width: 100%;
+        max-width: none;
+    }
+  }
+
+
+
+  /*  ESTILOS DEL CARRITO */
+
+.carrito{
+  margin-top: 1.5%;
+  margin-bottom: 1.5%;
+  background-color:#c0d5cc;
+  border: 1px solid #7a978b;
+  box-shadow: 0 0 16px rgba(0, 0, 0, 1);
+  border-radius: 5px;
+  padding: 1%;
+}
+.carrito h4{
+text-align: center;
+font-weight: 800;
+font-size: 2rem;
+color: #1a609f;
+}
+
+.car-desc{
+  border-bottom:1px solid #7a978b ;
+  margin: .5rem;
+
+}
+
+.carr-cont-serv{
+  background-color:#d6e4de;
+  margin: .5rem;
+  border-radius: .5rem;
+  
+  margin: 0rem;
+  margin-bottom: .5rem;
+
+}
+.boton-carr{
+  margin: .1rem;
+}
+
+
+

@@ -1,0 +1,266 @@
+<!-- Favicons -->
+
+<link href="assets/img/favicon.png" rel="icon">
+
+
+<!--//////////////////////////////    FOMRULARIO    /////////////////////////////////////-->
+<!--//////////////////////////////    FOMRULARIO    /////////////////////////////////////-->
+<!--//////////////////////////////    FOMRULARIO    /////////////////////////////////////-->
+
+<section class="section-princ" >
+<section class="container cont-form text-bg-light text-center my-4 borde shadow-lg form">
+  <h1 class=" margin titulo">REGISTRO </h1>
+  <h5 class=" margin">Ingresa tus datos y obtene tu cuenta
+  <span class="onedrop">One</span><span class="onedrop2">Drop</span> </h5>
+
+  
+  <form  [formGroup]="formPOSTRegistroUsuario"  (submit)="enviarDatosRegistroInicial()">
+
+    <!-- ////////////////////////////  EMAIL  //////////////////////////////  -->
+    <div class="row g-3 align-items-center  margin campo-input borde campo-email borde_validacion " >
+       <!--  label  -->
+        <div class="col-lg-3 col-md-12 align-self-start ">
+            <label for="exampleFormControlInput1" class="col-form-label">Email</label>
+        </div>
+        <!--  input  -->
+        <div class="col-lg-8 col-md-12 align-self-start  ">
+          <input formControlName="email" id="email" type="email" class="form-control sub-campo-input" id="exampleFormControlInput1" placeholder="usuario@ejemplo.com">
+          <!--  validacion  -->
+          <div *ngIf="email_GET.invalid && (email_GET.dirty || email_GET.touched)"
+          class="text-danger">
+              <div *ngIf="email_GET.errors?.['required']">
+                Complete este campo.
+              </div>
+              <div *ngIf="email_GET.errors?.['email']">
+                Ingrese una casilla de correo correcta.
+              </div>
+          </div>
+        </div>
+    </div>
+
+    <!--  /////////////////////////// CONTRASEÑA ////////////////////////////////   -->
+    <div class="row g-3 align-items-center margin  campo-input borde campo-email">
+       <!--  label  -->
+      <div class="col-lg-3 align-self-start ">
+        <label for="inputPassword6" class="col-form-label sub-campo-input">Contraseña</label>
+      </div>
+        <!--  input  -->
+      <div class="col-lg-8 align-self-start ">
+        <input formControlName="password1" name="" id="pass"
+        type="password" id="inputPassword6" class="form-control sub-campo-input" aria-labelledby="passwordHelpInline" placeholder="ejemplocontraseña1234">
+        <!--  validacion  -->
+            <div *ngIf="password_GET.invalid && (password_GET.dirty || password_GET.touched)"
+              class="text-danger">
+          
+                  <div *ngIf="password_GET.errors?.['required']">
+                    Complete este campo.
+                  </div>
+                  <div *ngIf="password_GET.errors?.['minlength']">
+                    Ingrese una contraseña de mas de 9 caracteres.
+                  </div>
+            </div>
+      </div> 
+
+
+    </div>
+
+
+    <!--  /////////////////////////// CONTRASEÑA 2 ////////////////////////////////   -->
+    <div class="row g-3 align-items-center margin  campo-input borde campo-email">
+      <!--  label  -->
+     <div class="col-lg-3 align-self-start ">
+       <label for="inputPassword6" class="col-form-label sub-campo-input">Repita lo contraseña</label>
+     </div>
+       <!--  input  -->
+     <div class="col-lg-8 align-self-start ">
+       <input formControlName="password2" name="" id="password2"
+       type="password" id="inputPassword6" class="form-control sub-campo-input" aria-labelledby="passwordHelpInline" placeholder="ejemplocontraseña1234">
+       <!--  validacion  -->
+           <div *ngIf="password2_GET.invalid && (password2_GET.dirty || password2_GET.touched)"
+             class="text-danger">
+         
+                 <div *ngIf="password2_GET.errors?.['required']">
+                   Complete este campo.
+                 </div>
+                 <div *ngIf="password2_GET.errors?.['minlength']">
+                   Ingrese una contraseña de mas de 9 caracteres.
+                 </div>
+           </div>
+     </div> 
+
+
+   </div>
+
+ <!-- ////////////////////////////  USERNAME  //////////////////////////////  -->
+  <div class="row g-3 align-items-center  margin campo-input borde campo-email borde_validacion " >
+    <!--  label  -->
+    <div class="col-lg-3 col-md-12 align-self-start ">
+        <label for="exampleFormControlInput1" class="col-form-label">Username / Alias</label>
+    </div>
+    <!--  input  -->
+    <div class="col-lg-8 col-md-12 align-self-start  ">
+      <input formControlName="username" id="username" type="text" class="form-control sub-campo-input" id="exampleFormControlInput1" placeholder="ejemploNombre-19">
+      <!--  validacion  -->
+      <div *ngIf="username_GET.invalid && (username_GET.dirty || username_GET.touched)"
+      class="text-danger">
+
+          <div *ngIf="username_GET.errors?.['required']">
+            Complete este campo.
+          </div>
+
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ////////////////////////////  NOMBRE  //////////////////////////////  -->
+ <div class="row g-3 align-items-center  margin campo-input borde campo-email borde_validacion " >
+  <!--  label  -->
+   <div class="col-lg-3 col-md-12 align-self-start ">
+       <label for="exampleFormControlInput1" class="col-form-label">Nombre</label>
+   </div>
+   <!--  input  -->
+   <div class="col-lg-8 col-md-12 align-self-start  ">
+     <input formControlName="nombre" id="name" type="text" class="form-control sub-campo-input" id="exampleFormControlInput1" placeholder="ingrese su nombre">
+     <!--  validacion  -->
+     <div *ngIf="name_GET.invalid && (name_GET.dirty || name_GET.touched)"
+     class="text-danger">
+
+         <div *ngIf="name_GET.errors?.['required']">
+           Complete este campo.
+         </div>
+     </div>
+   </div>
+
+  </div>
+<!-- ////////////////////////////  APELLIDO //////////////////////////////  -->
+<div class="row g-3 align-items-center  margin campo-input borde campo-email borde_validacion " >
+  <!--  label  -->
+   <div class="col-lg-3 col-md-12 align-self-start ">
+       <label for="exampleFormControlInput1" class="col-form-label">Apellido</label>
+   </div>
+   <!--  input  -->
+   <div class="col-lg-8 col-md-12 align-self-start  ">
+     <input formControlName="apellido" id="last_name" type="text" class="form-control sub-campo-input" id="exampleFormControlInput1" placeholder="ingrese su apellido">
+     <!--  validacion  -->
+     <div *ngIf="last_name_GET.invalid && (last_name_GET.dirty || last_name_GET.touched)"
+     class="text-danger">
+
+         <div *ngIf="last_name_GET.errors?.['required']">
+           Complete este campo.
+         </div>
+     </div>
+   </div>
+
+</div>
+
+<!-- ////////////////////////////  TELEFONO //////////////////////////////  -->
+<div class="row g-3 align-items-center  margin campo-input borde campo-email borde_validacion " >
+  <!--  label  -->
+   <div class="col-lg-3 col-md-12 align-self-start ">
+       <label for="exampleFormControlInput1" class="col-form-label">Telefono</label>
+   </div>
+   <!--  input  -->
+   <div class="col-lg-8 col-md-12 align-self-start  ">
+     <input formControlName="telefono" id="phone" type="number" class="form-control sub-campo-input" id="exampleFormControlInput1" placeholder="351 555 66666">
+          <!--  validacion  -->
+          <div *ngIf="phone_GET.invalid && (phone_GET.dirty || phone_GET.touched)"
+          class="text-danger">
+          
+              <div *ngIf="phone_GET.errors?.['required']">
+                Complete este campo.
+              </div>
+
+
+              
+            </div>
+   </div>
+
+  </div>
+
+
+<!-- ////////////////////////////  FECHA DE NACIMIENTO //////////////////////////////  -->
+<div class="row g-3 align-items-center  margin campo-input borde campo-email borde_validacion " >
+  <!--  label  -->
+   <div class="col-lg-3 col-md-12 align-self-start ">
+       <label for="exampleFormControlInput1" class="col-form-label">Fecha de Nacimiento</label>
+   </div>
+   <!--  input  -->
+   <div class="col-lg-8 col-md-12 align-self-start  ">
+     <input formControlName="nacimiento" id="birthday" type="date" class="form-control sub-campo-input" id="exampleFormControlInput1" placeholder="14/02/1952">
+        <!--  validacion  -->
+        <div *ngIf="birthday_GET.invalid && (birthday_GET.dirty || birthday_GET.touched)"
+      class="text-danger">
+      
+          <div *ngIf="birthday_GET.errors?.['required']">
+            Complete este campo.
+          </div>
+        </div>
+   </div>
+
+</div>
+
+<!-- ////////////////////////////  SEXO //////////////////////////////  -->
+<div class="row g-3 align-items-center margin campo-input borde campo-email borde_validacion">
+  <!--  label  -->
+  <div class="col-lg-3 col-md-12 align-self-start">
+    <label for="exampleFormControlInput1" class="col-form-label">Sexo</label>
+  </div>
+  <!--  input  -->
+  <div class="col-lg-8 col-md-12 align-self-start">
+    <div class="btn-group" data-toggle="buttons">
+      <label class="btn btn-secondary">
+        <input type="radio" formControlName="sexo" value="masculino" autocomplete="off"> M
+      </label>
+      <label class="btn btn-secondary">
+        <input type="radio" formControlName="sexo" value="femenino" autocomplete="off"> F
+      </label>
+      <label class="btn btn-secondary">
+        <input type="radio" formControlName="sexo" value="otro" autocomplete="off"> Otro
+      </label>
+    </div>
+          <!--  validacion  -->
+          <div *ngIf="sex_GET.invalid && (sex_GET.dirty || sex_GET.touched)" class="text-danger">
+            <div *ngIf="sex_GET.errors?.['required']">
+              Seleccione una opcion.
+            </div>
+          </div>
+  </div>
+</div>
+
+
+<!-- ////////////////////////////  DNI  //////////////////////////////  -->
+<div class="row g-3 align-items-center  margin campo-input borde campo-email borde_validacion " >
+  <!--  label  -->
+   <div class="col-lg-3 col-md-12 align-self-start ">
+       <label for="exampleFormControlInput1" class="col-form-label">DNI</label>
+   </div>
+   <!--  input  -->
+   <div class="col-lg-8 col-md-12 align-self-start  ">
+     <input formControlName="dni" id="dni" type="number" class="form-control sub-campo-input" id="exampleFormControlInput1" placeholder="34012034">
+
+          <div *ngIf="dni_GET.invalid && (dni_GET.dirty || dni_GET.touched)"
+          class="text-danger">
+          
+              <div *ngIf="dni_GET.errors?.['required']">
+                Complete este campo.
+              </div>
+            </div>
+   </div>
+
+  </div>
+
+
+
+
+
+    <!--  ////////////////////////////////// BOTONES //////////////////////////////   -->
+      <div class="row  justify-content-evenly mx-4 ">
+
+        <button  class="btn btn-primary mx-4 py-2 px-4">REGISTRARSE</button>
+
+      </div>
+
+  </form>
+</section>
+</section>

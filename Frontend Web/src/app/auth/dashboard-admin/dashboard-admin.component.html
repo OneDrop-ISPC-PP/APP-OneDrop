@@ -1,0 +1,197 @@
+
+      <!-- CANTIDAD DE PACIENTES CON DIABETES -->
+      <!-- CANTIDAD DE PACIENTES CON DIABETES -->
+      <!-- CANTIDAD DE PACIENTES CON DIABETES       
+      <section class=" da-sect1  ">
+
+          <h4 class="da-sec-t1 logo "> Cantidad de pacientes con diabetes</h4>
+
+        <div  class="grid-container ">
+          <div class="row justify-content-evenly ">
+            <div *ngFor="let estadistica of estadisticas_admins" class="bg-light border border-primary col-lg-2 col-md-3 p-4 m-2 b-radius ">
+              <h5>{{estadistica.cantidad}}</h5>
+              <small>{{estadistica.tipo}}</small>
+            </div>
+          </div>
+        </div>
+      </section>
+      -->
+
+      <!-- PACIENTES REGISTRADOS -->
+      <!-- PACIENTES REGISTRADOS -->
+      <!-- PACIENTES REGISTRADOS -->
+      <section class=" da-sect1 bg-light border border-secondary-subtle ">
+      
+        <h4 class="da-sec-t1 logo "> Pacientes Registrados</h4>
+        <div  class="grid-container ">
+          <div class="row  justify-content-evenly">
+
+            <!-- tarjeta 1 -->
+            <div class="col-lg-3 col-md-6 bg-white border border-secondary-subtle p-4 m-2 b-radius"  *ngFor="let usuario of usuarios">
+              <div class="card3" >
+                <div class="card-body">
+                  <h4 class="mb-1 text-center"> {{usuario.nombre_paciente}} {{usuario.apellido_paciente}} </h4>
+                  <p class=" text-muted ">Telefono:  {{usuario.telefono_paciente}}</p>
+                  <p class=" text-muted ">Fecha Nacimiento: {{usuario.fecha_nacimiento}}</p>
+                  <p class=" text-muted ">Sexo:  {{usuario.sexo_paciente}}</p>            
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+      <!-- SERVICIOS DISPONIBLES -->
+      <!-- SERVICIOS DISPONIBLES -->
+      <!-- SERVICIOS DISPONIBLES -->
+      <section class=" da-sect1 ">
+        <h4  class="da-sec-t1 logo "> Servicios Disponibles</h4>
+        <div class=" grid-container  " *ngFor="let servicio of servicios_admins">
+
+          <div class="row b-radius border border-primary bg-light justify-content-evenly align-items-center p-4 m-4    ">
+            <div class="col-lg-4 bg-white  border border-secondary-subtle  m-2 p-4">
+              <h5 class="text-center">Nombre Servicio</h5>
+              <p class="text-center">{{servicio.nombre_servicio}}</p>
+            </div>
+            <div class="col-lg-4 bg-white  border border-secondary-subtle m-2 p-4">
+              <h5 class="text-center">Monto</h5>
+              <p  class="text-center">{{servicio.precio_servicio}}</p>
+            </div>
+
+            <div class="col-lg-12 bg-white  border border-secondary-subtle m-2 p-4">
+              <h5 class="text-center">Descripción</h5>
+              <p class="text-center">{{servicio.descripcion_servicio}}</p>
+            </div>
+
+            <div class="col-lg-12 bg-white  border border-secondary-subtle m-2 p-4">
+              <h5 class="text-center">Comentarios</h5>
+              <p class="text-center">{{servicio.comentarios_servicio}}</p>
+            </div>
+            <button routerLink="/auth/edit_servicio/{{servicio.id}}" type="submit" class="m-1 p-2 col-lg-4 btn btn-success">Editar</button>
+            <button (click)="eliminar(servicio.id)" type="button" class="m-1 p-2 btn btn-danger col-lg-4">Eliminar</button>
+
+
+
+
+          </div>
+
+        </div>
+      </section>
+      <!-- REGISTRO DE SERVICIOS -->
+      <!-- REGISTRO DE SERVICIOS -->
+      <!-- REGISTRO DE SERVICIOS -->
+      <section  class="da-sect1 bg-success border border-secondary-subtle">
+        
+        <form class="form-register  bg-success " [formGroup]="formPOSTRegistroServicio" (submit)="enviarDatosDeServicio()">
+          <h3 id="servicios" class="da-sec-t1 logo text-center">Formularios para el registro de servicios</h3>
+          <div class="grid-container">
+            <div class="row  b-radius border border-secondary-subtle bg-light justify-content-evenly align-items-center p-4 m-4" >
+
+
+      <!-- INPUTS -->
+
+          <div class="col-lg-3 bg-white  border border-secondary-subtle m-2 p-4">
+            <h5 class="text-center">Nombre del Servicio</h5>
+            <input formControlName="nombre_servicio" class="controls text-dark" type="text" name="nombres" id="nombres"
+            > 
+        <!-- verificacion -->
+        <div *ngIf="nombre_servicio_GET.invalid && (nombre_servicio_GET.dirty || nombre_servicio_GET.touched)"
+        class="text-danger msj-verificacion col-lg-12 col-md-12 align-self-start">
+    
+            <div *ngIf="nombre_servicio_GET.errors?.['required']">
+              Complete este campo.
+            </div>
+
+        </div> 
+            
+            
+
+          </div>
+
+
+          <div class="col-lg-4 bg-white  border border-secondary-subtle  m-2 p-4">
+            <h5 class="text-center">Precio</h5>
+            <input formControlName="precio_servicio" class="controls text-dark" type="number" name="nombres" id="nombres">
+            
+                    <!-- verificacion -->
+                  <div *ngIf="precio_servicio_GET.invalid && (precio_servicio_GET.dirty || precio_servicio_GET.touched)"
+                    class="text-danger msj-verificacion col-lg-12 col-md-12 align-self-start">
+                
+                        <div *ngIf="precio_servicio_GET.errors?.['required']">
+                          Complete este campo.
+                        </div>
+                       
+                </div> 
+
+
+          </div>
+
+          <div class="col-lg-12 bg-white  border border-secondary-subtle  m-2 p-4">
+            <h5 class="text-center">Descripcion</h5>
+            <input formControlName="descripcion_servicio" class="controls text-dark" type="text" name="nombres" id="nombres">
+            
+                  <!-- verificacion -->
+                  <div *ngIf="descripcion_servicio_GET.invalid && (descripcion_servicio_GET.dirty || descripcion_servicio_GET.touched)"
+                  class="text-danger msj-verificacion col-lg-12 col-md-12 align-self-start">
+              
+                      <div *ngIf="descripcion_servicio_GET.errors?.['required']">
+                        Complete este campo.
+                      </div>
+
+              </div>   
+
+
+          </div>
+
+          <div class="col-lg-12 bg-white  border border-secondary-subtle  m-2 p-4">
+            <h5 class="text-center">Comentarios</h5>
+            <input formControlName="comentarios_servicio" class="controls text-dark" type="text" name="nombres" id="nombres">
+            
+                    <!-- verificacion -->
+                    <div *ngIf="comentarios_servicio_GET.invalid && (comentarios_servicio_GET.dirty || comentarios_servicio_GET.touched)"
+                    class="text-danger msj-verificacion col-lg-12 col-md-12 align-self-start">
+                
+                        <div *ngIf="comentarios_servicio_GET.errors?.['required']">
+                          Complete este campo.
+                        </div>
+                        
+                </div> 
+
+
+          </div>
+ 
+  
+          <button  class="btn btn-success py-2 px-4">Registrar Servicio</button>
+          
+        </div>
+        </div>
+        </form>
+      </section>
+
+      <!-- INGRESOS POR PERIODO -->
+      <!-- INGRESOS POR PERIODO -->
+      <!-- INGRESOS POR PERIODO 
+      <section class=" da-sect1">
+
+        <h4 id="ingresos" class="da-sec-t1 logo"> Ingresos por periodo</h4>
+        <div  class="grid-container" >
+
+          <div class="row justify-content-evenly align-items-center  " >
+            <div class="border border-primary bg-light m-2 col-lg-2 col-md-6 p-4 b-radius" *ngFor="let ingresos of ingresos_admins">
+
+            <div>
+              <h5>${{ingresos.monto}}</h5>
+
+            </div>
+            <div>
+              <small>{{ingresos.tipo}}</small>
+            </div>
+            
+          </div>
+        </div>
+        </div>
+
+      </section>
+    -->
+

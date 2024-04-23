@@ -1,0 +1,134 @@
+<!-- Empieza Dashboard Usuario -->
+<div class="dashboardUser">
+  <div class="headerDashboard">
+    <!--  <img src="../assets/images/sinFotoPerfil.jpg"> -->
+    <div>
+      <p class="nombreUsuario">Paciente</p>
+    </div>
+  </div>
+
+  <!-- ///////////////////////// SECCION DE NOTAS ///////////////////////////// -->
+  <!-- ///////////////////////// SECCION DE NOTAS ///////////////////////////// -->
+  <!-- ///////////////////////// SECCION DE NOTAS ///////////////////////////// -->
+
+  <!-- /////////////////// FORMULARIO DE INGRESO DE NOTAS //////////////////////// -->
+  <h2 class="titulo">NUEVO REGISTRO</h2>
+  <form class="form-register bg-success" [formGroup]="formNotasPOST" (submit)="agregarNota()">
+    <div class="p-4 container">
+      <div class="row">
+        <div class="p-2 col-lg-4">
+          <label for="fecha-registro" class="form-label">Fecha Registro</label>
+          <input formControlName="fecha_registro" type="datetime-local" class="form-control" id="efecha-registro"
+            aria-describedby="emailHelp">
+        </div>
+
+        <div class="p-2  col-lg-6">
+          <label for="valor-glucemia" class="form-label">Valor Glucemia</label>
+          <input formControlName="valor_glucemia" type="number" class="form-control" id="valor-glucemia">
+        </div>
+
+        <div class="p-2 col-lg-12">
+          <label class="form-label">Comentario del registro</label>
+          <textarea formControlName="comentario_registro" name="" id="" cols="30" rows="5"
+            class="form-control"></textarea>
+        </div>
+
+        <button type="submit" class="col-lg-4 btn btn-primary">Registrar nota</button>
+      </div>
+    </div>
+  </form>
+
+  <!--/////////////////////  ULTIMOS REGISTROS  //////////////////////-->
+
+  <!-- Modal -->
+  <h2 class="titulo">ULTIMOS REGISTROS</h2>
+  <div class="registros">
+    <div class="bg-light col-lg-4 col-md-6 p-4 registro" *ngFor="let nota of notas_glucemia">
+      <p class="fecha">Fecha: {{nota.fecha_registro}}ml</p>
+      <p class="glucemia">Glucemia:{{nota.valor_glucemia}}</p>
+      <p class="notas">Notas:{{nota.comentario_registro}}</p>
+      <button routerLink="/auth/edit_nota/{{nota.id}}" type="submit" class="m-1 p-2 col-lg-4 btn btn-success">Editar</button>
+      <button (click)="eliminar(nota.id)" type="button" class="m-1 p-2 col-lg-4 btn btn-danger">Eliminar</button>
+    </div>
+  </div>
+</div>
+
+<!--/////////////////////  SECCION DE SERVICIOS  //////////////////////-->
+<!--/////////////////////  SECCION DE SERVICIOS  //////////////////////-->
+<!--/////////////////////  SECCION DE SERVICIOS  //////////////////////-->
+
+<!-- se hace la estructura con BOOTSTRAP    -->
+<section class="container">
+  <div class="row">
+    <!-- SERVICIOS -->
+    <h2 class="titulo">CONTRATA NUESTROS SERVICIOS</h2>
+    <div class="grid-container col-lg-8 seccion">
+      <div class="row cont-serv justify-content-evenly ">
+        <div class="items card cajas card2 col-lg-3 col-md-4 col-sm-6" *ngFor="let servicio of servicios; let i=index">
+          <img src="../../../assets/cardio.jpg" class="card-img-top" alt="Pilares-tratamiento-diabetes">
+          <div class="info card-body">
+            <h3 class="card-title">{{servicio.nombre_servicio}}</h3>
+            <p>{{servicio.descripcion_servicio}}</p>
+            <div class="precio">
+              <p>${{servicio.precio_servicio}}</p>
+            </div>
+            <button (click)="agregarCarrito(servicio);agregarNombre(servicio.nombre_servicio);agregarMonto(servicio.precio_servicio);agregarAlCarrito()">Agregar al carrito</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CARRITO -->
+    <div class="carrito col-lg-4 py-4">
+      <h4 class="text-center">CARRITO DE COMPRAS</h4>
+
+      <!-- Descripcion lista de servicios -->
+      <div class="row justify-content-evenly car-desc">
+        <div class="col-lg-4 m-1 col-md-3 col-sm-3 text-center">
+          <h5>Servicio</h5>
+        </div>
+        <div class="col-lg-4 m-1 col-md-3 col-sm-3 text-center">
+          <h5>Monto</h5>
+        </div>
+        <div class="col-lg-3 m-1 col-md-3 col-sm-3 text-center">
+          <!-- Espacio en blanco -->
+        </div>
+      </div>
+
+    <!-- Servicios en el carrito -->
+    <div class="row align-items-center justify-content-evenly grid-container p-2 carr-cont-serv" *ngFor="let servicio of serviciosCarrito; let i=index">
+      <div class="col-lg-4 col-md-3 col-sm-3 text-center m-1">
+        <h6>{{ servicio.nombre_servicio }}</h6>
+      </div>
+      <div class="col-lg-4 col-md-3 col-sm-3 text-center">
+        <h6>${{servicio.precio_servicio }}</h6>
+      </div>
+      <div class="col-lg-3 col-md-3 col-sm-3 text-center row">
+
+
+        <button class="btn btn-danger boton-carr col-lg-12" (click)="eliminarServ(servicio.id)">
+          <i class="fa-regular fa-trash-can"></i>
+        </button>
+      </div>
+    </div>
+    <div class="row justify-content-end mt-2">
+      <div class="col-lg-8">
+        <h5 class="text-end">Total: ${{calcularMontoTotal()}}</h5>
+      </div>
+    </div>
+
+      <div>
+        <button class="m-1 px-3 p-1 btn btn-primary boton-carr" (click)="comprar()">Comprar</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Javascript -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
+  integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
+<!-- scrip chart js-->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"
+  integrity="sha512-ElRFoEQdI5Ht6kZvyzXhYG9NqjtkmlkfYk0wr6wHxU9JEHakS7UJZNeml5ALk+8IKlU6iRJHn3Db3mOXSYXbUQ=="
+  crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<!-- script de app -->

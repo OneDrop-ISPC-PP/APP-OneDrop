@@ -1,0 +1,169 @@
+{
+  "estadisticas_admins": [
+    {
+      "tipo": "Diabetes Tipo 1",
+      "cantidad": 200
+    },
+    {
+      "tipo": "Diabetes Tipo 2",
+      "cantidad": 230
+    },
+    {
+      "tipo": "Diabetes LADA",
+      "cantidad": 189
+    },
+    {
+      "tipo": "Diabetes Gestacional",
+      "cantidad": 34
+    },
+    {
+      "tipo": "Diabetes MOBY",
+      "cantidad": 19
+    }
+  ],
+  "estadisticas_comorbilidades_admins": [
+    {
+      "tipo": "Hipertension",
+      "porcentaje": 52
+    },
+    {
+      "tipo": "Dislipemia",
+      "porcentaje": 18
+    },
+    {
+      "tipo": "Sobrepeso y Obesidad",
+      "porcentaje": 16
+    },
+    {
+      "tipo": "Insuficiencia Cardíaca",
+      "porcentaje": 3
+    },
+    {
+      "tipo": "Retinopatia Diabetica",
+      "porcentaje": 3
+    },
+    {
+      "tipo": "Nefropatia Diabetica",
+      "porcentaje": 8
+    }
+  ],
+  "ingresos_admins": [
+    {
+      "tipo": "Ingresos Diarios",
+      "monto": 40000
+    },
+    {
+      "tipo": "Ingresos Semanales",
+      "monto": 300000
+    },
+    {
+      "tipo": "Ingresos Quincenales",
+      "monto": 750000
+    },
+    {
+      "tipo": "Ingresos Mensuales",
+      "monto": 1500000
+    }
+  ],
+  "SERVICIOS": [
+    {
+      "id": "99",
+      "nombre_servicio": "Analisis Clinicos",
+      "descripcion_servicio": "Turno para extraccion de sangre para analisis clinicos",
+      "precio_servicio": "4300",
+      "comentarios_servicio": "Esto es un comentario sobre los analisis clinicos",
+      "prestador": "21",
+      "sede_servicio": "Catamarca"
+    },
+    {
+      "nombre_servicio": "Consulta Diabetologo",
+      "descripcion_servicio": "Consulta con un diabetologo",
+      "precio_servicio": 3999,
+      "comentarios_servicio": "Comentarios sobre el servicio de diabetologia",
+      "id": "R0xK46v"
+    }
+  ],
+  "hola": [
+    "////////////// DATOS DE FORMULARIO DE REGISTRO /////////////////"
+  ],
+  "REGISTRO_INICIAL": [
+    {
+      "email": "vege@gmail.com",
+      "password": "123123123",
+      "username": "vege77",
+      "id": 1
+    }
+  ],
+  "REGISTRO_DATOS_PERSONALES": [
+    {
+      "nombre_paciente": "Isaias",
+      "apellido_paciente": "Gatti",
+      "telefono_paciente": 3543673137,
+      "fecha_nacimiento": "1987-07-05",
+      "sexo_paciente": "masculino",
+      "id": 1
+    },
+    {
+      "nombre_paciente": "Valentina",
+      "apellido_paciente": "Lopez",
+      "telefono_paciente": 351678453,
+      "fecha_nacimiento": "1992-01-16",
+      "sexo_paciente": "femenino",
+      "id": 1
+    }
+  ],
+  "REGISTRO_DATOS_FICHA_MEDICA": [
+    {
+      "tipo_diabetes": "tipo 1",
+      "terapia_insulina": "terapia 2",
+      "terapia_pastillas": "terapia 2",
+      "tipo_glucometro": "glucometro 2",
+      "tipo_sensor": "otro / no uso",
+      "objetivo_glucosa": "normal",
+      "comorbilidades": "alergia a la leche ",
+      "id": 1
+    }
+  ],
+  "CARRITO": [
+    {
+      "nombre_servicio": "Consulta Diabetologo",
+      "descripcion_servicio": "Consulta con un diabetologo",
+      "precio_servicio": 3999,
+      "comentarios_servicio": "Comentarios sobre el servicio de diabetologia",
+      "id": "R0xK46v"
+    },
+    {
+      "id": "99",
+      "nombre_servicio": "Analisis Clinicos",
+      "descripcion_servicio": "Turno para extraccion de sangre para analisis clinicos",
+      "precio_servicio": "4300",
+      "comentarios_servicio": "Esto es un comentario sobre los analisis",
+      "prestador": "21",
+      "sede_servicio": "Catamarca"
+    }
+  ],
+  "hola2": [
+    "////////////// DATOS DEL DASHBORAD DEL USUARIO /////////////////"
+  ],
+  "notas_usuarios": [
+    {
+      "fecha_registro": "2023-06-02T12:43",
+      "valor_glucemia": 1.5,
+      "comentario_registro": "Desayune cafe con mafaldas",
+      "id": 3
+    },
+    {
+      "fecha_registro": "2023-06-06T12:53",
+      "valor_glucemia": 1.4,
+      "comentario_registro": "Durante el almuerzo tome mucha coca-cola",
+      "id": 4
+    },
+    {
+      "fecha_registro": "2023-06-08T12:34",
+      "valor_glucemia": 0.9,
+      "comentario_registro": "Merende mate con medialunas",
+      "id": 5
+    }
+  ],
+  "datos_pago": []
+}

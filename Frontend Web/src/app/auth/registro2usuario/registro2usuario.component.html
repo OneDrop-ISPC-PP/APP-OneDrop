@@ -1,0 +1,150 @@
+<!-- Favicons -->
+
+<link href="assets/img/favicon.png" rel="icon">
+
+
+<!--//////////////////////////////    FOMRULARIO    /////////////////////////////////////-->
+<!--//////////////////////////////    FOMRULARIO    /////////////////////////////////////-->
+<!--//////////////////////////////    FOMRULARIO    /////////////////////////////////////-->
+
+<section class="section-princ" >
+<section class="container cont-form text-bg-light text-center my-4 borde shadow-lg form">
+  <h3 class=" margin titulo">Registro de datos personales</h3>
+  <h6 class=" margin">Estas muy cerca de tener tu cuenta. Completá tus datos para que podamos brindarte una mejor atención.</h6>
+
+  <form  [formGroup]="formPOSTRegistro2Usuarios" (submit)=" enviarDatosRegistroDOS()">
+
+ <!-- ////////////////////////////  NOMBRE  //////////////////////////////  -->
+ <div class="row g-3 align-items-center  margin campo-input borde campo-email borde_validacion " >
+  <!--  label  -->
+   <div class="col-lg-3 col-md-12 align-self-start ">
+       <label for="exampleFormControlInput1" class="col-form-label">Nombre</label>
+   </div>
+   <!--  input  -->
+   <div class="col-lg-8 col-md-12 align-self-start  ">
+     <input formControlName="name" id="name" type="text" class="form-control sub-campo-input" id="exampleFormControlInput1" placeholder="ingrese su nombre">
+     <!--  validacion  -->
+     <div *ngIf="name_GET.invalid && (name_GET.dirty || name_GET.touched)"
+     class="text-danger">
+
+         <div *ngIf="name_GET.errors?.['required']">
+           Complete este campo.
+         </div>
+     </div>
+   </div>
+
+  </div>
+<!-- ////////////////////////////  APELLIDO //////////////////////////////  -->
+<div class="row g-3 align-items-center  margin campo-input borde campo-email borde_validacion " >
+  <!--  label  -->
+   <div class="col-lg-3 col-md-12 align-self-start ">
+       <label for="exampleFormControlInput1" class="col-form-label">Apellido</label>
+   </div>
+   <!--  input  -->
+   <div class="col-lg-8 col-md-12 align-self-start  ">
+     <input formControlName="last_name" id="last_name" type="text" class="form-control sub-campo-input" id="exampleFormControlInput1" placeholder="ingrese su apellido">
+     <!--  validacion  -->
+     <div *ngIf="last_name_GET.invalid && (last_name_GET.dirty || last_name_GET.touched)"
+     class="text-danger">
+
+         <div *ngIf="last_name_GET.errors?.['required']">
+           Complete este campo.
+         </div>
+     </div>
+   </div>
+
+</div>
+
+<!-- ////////////////////////////  TELEFONO //////////////////////////////  -->
+<div class="row g-3 align-items-center  margin campo-input borde campo-email borde_validacion " >
+  <!--  label  -->
+   <div class="col-lg-3 col-md-12 align-self-start ">
+       <label for="exampleFormControlInput1" class="col-form-label">Telefono</label>
+   </div>
+   <!--  input  -->
+   <div class="col-lg-8 col-md-12 align-self-start  ">
+     <input formControlName="phone" id="phone" type="number" class="form-control sub-campo-input" id="exampleFormControlInput1" placeholder="351 555 66666">
+          <!--  validacion  -->
+          <div *ngIf="phone_GET.invalid && (phone_GET.dirty || phone_GET.touched)"
+          class="text-danger">
+          
+              <div *ngIf="phone_GET.errors?.['required']">
+                Complete este campo.
+              </div>
+            </div>
+   </div>
+
+  </div>
+
+
+<!-- ////////////////////////////  FECHA DE NACIMIENTO //////////////////////////////  -->
+<div class="row g-3 align-items-center  margin campo-input borde campo-email borde_validacion " >
+  <!--  label  -->
+   <div class="col-lg-3 col-md-12 align-self-start ">
+       <label for="exampleFormControlInput1" class="col-form-label">Fecha de Nacimiento</label>
+   </div>
+   <!--  input  -->
+   <div class="col-lg-8 col-md-12 align-self-start  ">
+     <input formControlName="birthday" id="birthday" type="date" class="form-control sub-campo-input" id="exampleFormControlInput1" placeholder="14/02/1952">
+        <!--  validacion  -->
+        <div *ngIf="birthday_GET.invalid && (birthday_GET.dirty || birthday_GET.touched)"
+      class="text-danger">
+      
+          <div *ngIf="birthday_GET.errors?.['required']">
+            Complete este campo.
+          </div>
+        </div>
+   </div>
+
+</div>
+
+<!-- ////////////////////////////  SEXO //////////////////////////////  -->
+<div class="row g-3 align-items-center margin campo-input borde campo-email borde_validacion">
+  <!--  label  -->
+  <div class="col-lg-3 col-md-12 align-self-start">
+    <label for="exampleFormControlInput1" class="col-form-label">Sexo</label>
+  </div>
+  <!--  input  -->
+  <div class="col-lg-8 col-md-12 align-self-start">
+    <div class="btn-group" data-toggle="buttons">
+      <label class="btn btn-secondary">
+        <input type="radio" formControlName="sex" value="masculino" autocomplete="off"> M
+      </label>
+      <label class="btn btn-secondary">
+        <input type="radio" formControlName="sex" value="femenino" autocomplete="off"> F
+      </label>
+      <label class="btn btn-secondary">
+        <input type="radio" formControlName="sex" value="otro" autocomplete="off"> Otro
+      </label>
+    </div>
+          <!--  validacion  -->
+          <div *ngIf="sex_GET.invalid && (sex_GET.dirty || sex_GET.touched)" class="text-danger">
+            <div *ngIf="sex_GET.errors?.['required']">
+              Seleccione una opcion.
+            </div>
+          </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+    <!--  ////////////////////////////////// BOTONES //////////////////////////////   -->
+
+      <div class="row  justify-content-evenly mx-4 ">
+
+        <button  class="btn btn-primary mx-4 py-2 px-4">Enviar datos</button>
+
+      </div>
+    
+
+
+
+
+  </form>
+</section>
+</section>
+

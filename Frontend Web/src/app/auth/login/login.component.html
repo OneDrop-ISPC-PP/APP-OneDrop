@@ -1,0 +1,100 @@
+
+  <!-- Favicons -->
+
+  <link href="assets/img/favicon.png" rel="icon">
+
+
+<!--//////////////////////////////    FOMRULARIO    /////////////////////////////////////-->
+<!--//////////////////////////////    FOMRULARIO    /////////////////////////////////////-->
+<!--//////////////////////////////    FOMRULARIO    /////////////////////////////////////-->
+
+<section class="section-princ" >
+<section class="container cont-form text-bg-light text-center my-4 borde shadow-lg form">
+  <h1 class=" margin titulo">LOGIN</h1>
+  
+  <form  [formGroup]="profileForm"  (submit)="submit2()" >
+
+    <!-- ////////////////////////////  EMAIL  //////////////////////////////  -->
+    <div class="row g-3 align-items-center  margin campo-input borde campo-email borde_validacion " >
+       <!--  label  -->
+        <div class="col-lg-3 col-md-12 align-self-start ">
+            <label for="exampleFormControlInput1" class="col-form-label sub-campo-input  ">Username</label>
+        </div>
+        <!--  input  -->
+        <div class="col-lg-8 col-md-12 align-self-start  ">
+          <input formControlName="username"  type="text" class="form-control sub-campo-input" id="exampleFormControlInput1" placeholder="nombre de usuario">
+
+        <!-- verificacion -->
+            <div *ngIf="username_GET.invalid && (username_GET.dirty || username_GET.touched)"
+                class="text-danger msj-verificacion col-lg-12 col-md-12 align-self-start">
+            
+                    <div *ngIf="username_GET.errors?.['required']">
+                      Complete este campo.
+                    </div>
+                    <div *ngIf="username_GET.errors?.['email']">
+                      Ingrese un email con formato correcto.
+                    </div>
+            </div>      
+      
+        </div>
+
+    </div>
+
+    <!--  /////////////////////////// CONTRASEÑA ////////////////////////////////   -->
+    <div class="row g-3 align-items-center margin  campo-input borde">
+       <!--  label  -->
+      <div class="col-lg-3 align-self-start ">
+        <label for="password" class="col-form-label sub-campo-input">Contraseña</label>
+      </div>
+        <!--  input   id="inputPassword6" -->
+      <div class="col-lg-8 align-self-start ">
+        <input formControlName="password" name="" id="password" 
+        type="password" class="form-control sub-campo-input" aria-labelledby="passwordHelpInline" placeholder="ejemplocontraseña1234">
+
+          <!--  validacion  -->
+        <div *ngIf="pass_GET.invalid && (pass_GET.dirty || pass_GET.touched)"
+        class="text-danger">
+    
+            <div *ngIf="pass_GET.errors?.['required']">
+              Complete este campo.
+            </div>
+            <div *ngIf="pass_GET.errors?.['minlength']">
+              Ingrese una contraseña de mas de 9 caracteres.
+            </div>
+      </div>
+
+      </div>
+
+        
+    </div>
+
+    <!--  ////////////////////////////////// BOTONES //////////////////////////////   -->
+    <div class="row justify-content-evenly mx-4 ">
+      <button type="submit" class="btn btn-primary m-2  col-lg-4">Ingresar</button>
+    </div>
+      
+      
+      
+      <!-- 
+       <button  type="button" class="btn btn-success m-2  col-lg-6" (click)="verificacionLoginAdmin()">
+         <a  class="text-white text-decoration-none" >Ingresar como administrador</a>
+         </button>
+ 
+ 
+     -->
+
+    
+
+
+
+
+  </form>
+</section>
+</section>
+
+
+
+
+
+
+

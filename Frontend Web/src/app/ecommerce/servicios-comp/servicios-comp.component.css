@@ -1,0 +1,450 @@
+/* Estilos generales del nav */
+
+.container {
+  background-color: #f5f3f3;
+  max-width: 100%;
+  margin: 0 auto;
+}
+
+.container nav {
+  display: flex;
+  justify-content: flex-end;
+  padding: 15px;
+  background-color: #fff;
+  color: #001d4d;
+}
+
+.nav-compras {
+  display: none;
+}
+
+.container nav button {
+  display: none;
+  z-index: 1;
+}
+
+.nav-compras li {
+  list-style: none;
+  padding: 1rem;
+  font-weight: bold;
+  z-index: 1;
+}
+
+.container nav i:hover > .compras {
+  width: 400px;
+  height: 400px;
+  position: absolute;
+  right: 0;
+  background-color: #ffff;
+  z-index: 1;
+}
+
+.container nav i:hover .nav-compras {
+  font-size: 10px;
+  display: flex;
+  justify-content: space-between;
+  margin: 0 10px 0 10px;
+  border-bottom: solid thin #e1e1e1;
+}
+
+.container nav i:hover .compras > button {
+  display: block;
+  width: 90%;
+  padding: 1rem;
+  font-size: 10px;
+  margin: 10px auto;
+  background-color: transparent;
+  border: solid thin #e1e1e1;
+  border: solid thin #1A609F;
+  color: #1A609F;
+  cursor: pointer;
+}
+
+.container nav i:hover .compras > button:hover {
+  border: solid thin #1A609F;
+  transition: all 4s;
+}
+
+.fa-solid {
+  font-size: 2rem;
+  cursor: pointer;
+}
+
+.items {
+  background-color: #fff;
+  border: solid thin #e1e1e1;
+}
+
+.items img {
+  width: 100%;
+  height: 50%;
+}
+
+.precio {
+  display: flex;
+  justify-content: center;
+  font-weight: bolder;
+}
+
+.precio p {
+  font-size: 1.8rem;
+}
+
+.info button {
+  padding: 1rem;
+  width: 100%;
+  background-color: #33c3f0;
+  border: none;
+  outline: none;
+  color: #ffff;
+  text-transform: uppercase;
+  font-size: 1.1rem;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-bottom: 5px;
+}
+
+.info button:hover {
+  background-color: #2da0c3;
+  transition: all 0.3s;
+}
+
+/*------Banner-------*/
+
+.banner {
+  position: absolute;
+  right: 0;
+  max-width: 100%;
+  min-height: 100vh;
+  padding: 150px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  background: #edf5fc;
+  transition: 0.5s;
+}
+
+
+/*------Cuerpo-------*/
+
+.cuerpo {
+  position: relative;
+}
+
+.cuerpo h1 {
+  font-size: 6em;
+  font-weight: 800;
+  color: #1a609f;
+  line-height: 1em;
+  text-align: center;
+  margin-left: 100px;
+}
+
+.cuerpo p {
+  position: relative;
+  font-size: 0.9em;
+  margin: 20px 0;
+  font-weight: 400;
+  max-width: 700px;
+  color: #333333;
+}
+
+/*------Cards--------*/
+
+.card-body {
+  background: transparent;
+  margin: 5%;
+}
+
+.card-body p {
+  background: transparent;
+  text-align: center;
+}
+
+.card2 {
+  background: transparent;
+  margin: 1%;
+  border: none;
+  height: 25rem;
+}
+
+.card {
+  background: transparent;
+  margin: 1%;
+  border: none;
+  height: 25rem;
+}
+
+
+.cajas {
+  width: 25%;
+  border-radius: 5px;
+  box-shadow: 0 0 5px #000;
+  color: #000;
+  font-size: 16px;
+  font-weight: 500;
+  background: #0000;
+  border: 0px solid;
+  border-color: #1a609f;
+  position: relative;
+}
+.cajas:hover {
+  color: #000;
+  box-shadow: 0 4px 16px #000;
+  transition: all 0.2s ease;
+}
+
+
+.card-title {
+  text-align: center;
+  color: #1a609f;
+  font-size: 1.5rem;
+}
+
+.card-text {
+  text-align: center;
+  display: block;
+  margin-block-start: 1em;
+  margin-block-end: 1em;
+  margin-inline-start: 2px;
+  margin-inline-end: 2px;
+  margin-top: 3rem;
+  line-height: 2;
+  font-family: Poppins, sans-serif;
+}
+
+/*------Seccion--------*/
+
+.seccion {
+  max-width: 80%;
+  margin: 0 auto;
+  padding: 1%;
+}
+.row{
+  margin: 0 auto;
+}
+.img-act {
+  width: 40%;
+  margin: auto;
+  display: block;
+  margin-top: 3%;
+}
+
+.texto1 {
+  text-align: center;
+  color: #1a609f;
+  margin: 1%;
+  line-height: 2.5;
+}
+
+.texto2 {
+  text-align: center;
+  color: #333333;
+  margin: 2% 10%;
+  line-height: 2.5;
+}
+
+
+
+.bordex {
+  border: 1px solid black;
+  margin: 0rem;
+  padding: 0rem;
+}
+
+/* Responsividad */
+
+@media screen and (max-width: 1200px) {
+  .banner {
+    padding: 120px;
+  }
+}
+
+@media screen and (max-width: 992px) {
+  .banner {
+    padding: 80px;
+  }
+  
+
+  
+  .cuerpo h1 {
+    font-size: 4em;
+    margin-left: 0;
+  }
+  
+  .cuerpo p {
+    font-size: 1em;
+  }
+  
+  .card2,
+  .card {
+    height: auto;
+  }
+  
+  .items img {
+    height: 100%;
+  }
+  
+  .precio p {
+    font-size: 1.4rem;
+  }
+  
+  .info button {
+    font-size: 1rem;
+  }
+  .carrito h4{
+    font-weight: 400;
+    font-size: 1.5rem;
+    }
+    .cajas {
+      width: 100%;
+      font-size: 10px;
+    }
+}
+
+@media screen and (max-width: 768px) {
+  .banner {
+    padding: 40px;
+  }
+  
+  .cajas {
+    width: 50%;
+    font-size: 15px;
+  }
+  
+  .cuerpo h1 {
+    font-size: 3em;
+    margin-left: 0;
+  }
+  
+  .cuerpo p {
+    font-size: 0.9em;
+  }
+  
+  .card3 {
+    height: auto;
+  }
+  .carrito h4{
+    font-weight: 400;
+    font-size: 1rem;
+    }
+}
+
+@media screen and (max-width: 576px) {
+  .banner {
+    padding: 20px;
+  }
+  
+  .cajas {
+    width: 100%;
+    font-size: 15px;
+  }
+  
+  .cuerpo h1 {
+    font-size: 3em;
+    margin-left: 0;
+  }
+  
+  .cuerpo p {
+    font-size: 0.8em;
+  }
+  
+  .seccion1,
+  .seccion {
+    padding: 5%;
+  }
+  .carrito h4{
+    font-weight: 400;
+    font-size: 0.5rem;
+    }
+}
+/*  /////////  NUEVOS ESTILO  /////////   */
+/*  /////////  NUEVOS ESTILO  /////////   */
+/*  /////////  NUEVOS ESTILO  /////////   */
+
+/*  ESTILO DEL HERO */
+.hero{
+  height: 95vh;
+  background-color: #edf5fc;
+
+}
+
+.hero-sub{
+  margin-top: -5rem;
+  height: inherit;
+}
+
+.encabezado{
+  font-size: 6rem;
+  font-weight: 800;
+  color: #1a609f;
+  line-height: 1em;
+  text-align: center;
+}
+
+
+/*  ESTILOS DEL CARRITO */
+
+.carrito{
+  margin-top: 1.5%;
+  margin-bottom: 1.5%;
+  background-color:#c0d5cc;
+  border: 1px solid #7a978b;
+  box-shadow: 0 0 16px rgba(0, 0, 0, 1);
+  border-radius: 5px;
+  padding: 1%;
+}
+.carrito h4{
+text-align: center;
+font-weight: 800;
+font-size: 2rem;
+color: #1a609f;
+}
+
+.car-desc{
+  border-bottom:1px solid #7a978b ;
+  margin: .5rem;
+
+}
+
+.carr-cont-serv{
+  background-color:#d6e4de;
+  margin: .5rem;
+  border-radius: .5rem;
+  
+  margin: 0rem;
+  margin-bottom: .5rem;
+
+}
+.boton-carr{
+  margin: .1rem;
+}
+
+
+
+
+
+/*  ESTILOS DE LOS SERVICIOS */
+.servicios{
+  margin: 0rem;
+}
+
+.cont-serv {
+  background-color: #edf5fc;
+  height: inherit;
+}
+
+
+
+
+/* ESTILOS DE USO */
+
+.text-center{
+  text-align: center;
+
+}
+.borde{
+  border: 1px solid blue;
+}
+
+

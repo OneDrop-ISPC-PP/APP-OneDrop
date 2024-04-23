@@ -1,0 +1,90 @@
+      <!-- REGISTRO DE SERVICIOS -->
+      <section  class="da-sect1 bg-light border border-secondary-subtle">
+        
+        <form class="form-register  bg-light ">
+          <h3 id="servicios" class=" p-4 da-sec-t1 logo text-center">Editar Servicio</h3>
+          <div class="grid-container">
+            <div class="row  b-radius border border-secondary-subtle bg-light justify-content-evenly align-items-center p-4 m-4" >
+
+
+      <!-- INPUTS -->
+
+          <div class="col-lg-3 bg-white  border border-secondary-subtle m-2 p-4">
+            <h5 class="text-center">Nombre del Servicio</h5>
+            <input  [(ngModel)]="servicio.nombre_servicio"  [ngModelOptions]="{standalone: true}" class="col-lg-12 controls text-dark" type="text" name="nombres" id="nombres"
+            > 
+        <!-- verificacion
+        <div *ngIf="nombre_servicio_GET.invalid && (nombre_servicio_GET.dirty || nombre_servicio_GET.touched)"
+        class="text-danger msj-verificacion col-lg-12 col-md-12 align-self-start">
+    
+            <div *ngIf="nombre_servicio_GET.errors?.['required']">
+              Complete este campo.
+            </div>
+
+        </div>  -->
+            
+            
+
+          </div>
+
+
+          <div class="col-lg-4 bg-white  border border-secondary-subtle  m-2 p-4">
+            <h5 class="text-center">Precio</h5>
+            <input  [(ngModel)]="servicio.precio_servicio"  [ngModelOptions]="{standalone: true}" class="col-lg-12 controls text-dark" type="number" name="nombres" id="nombres">
+            
+                    <!-- verificacion 
+                  <div *ngIf="precio_servicio_GET.invalid && (precio_servicio_GET.dirty || precio_servicio_GET.touched)"
+                    class="text-danger msj-verificacion col-lg-12 col-md-12 align-self-start">
+                
+                        <div *ngIf="precio_servicio_GET.errors?.['required']">
+                          Complete este campo.
+                        </div>
+                       
+                </div> -->
+
+
+          </div>
+
+          <div class="col-lg-12 bg-white  border border-secondary-subtle  m-2 p-4">
+            <h5 class="text-center">Descripcion</h5>
+            <input  [(ngModel)]="servicio.descripcion_servicio"  [ngModelOptions]="{standalone: true}" class="col-lg-12 controls text-dark" type="text" name="nombres" id="nombres">
+            
+                  <!-- verificacion 
+                  <div *ngIf="descripcion_servicio_GET.invalid && (descripcion_servicio_GET.dirty || descripcion_servicio_GET.touched)"
+                  class="text-danger msj-verificacion col-lg-12 col-md-12 align-self-start">
+              
+                      <div *ngIf="descripcion_servicio_GET.errors?.['required']">
+                        Complete este campo.
+                      </div>
+
+              </div>   -->
+
+
+          </div>
+
+          <div class="col-lg-12 bg-white  border border-secondary-subtle  m-2 p-4">
+            <h5 class="text-center">Comentarios</h5>
+            <input [(ngModel)]="servicio.comentarios_servicio"  [ngModelOptions]="{standalone: true}" class="col-lg-12 controls text-dark" type="text" name="nombres" id="nombres">
+            
+                    <!-- verificacion 
+                    <div *ngIf="comentarios_servicio_GET.invalid && (comentarios_servicio_GET.dirty || comentarios_servicio_GET.touched)"
+                    class="text-danger msj-verificacion col-lg-12 col-md-12 align-self-start">
+                
+                        <div *ngIf="comentarios_servicio_GET.errors?.['required']">
+                          Complete este campo.
+                        </div>
+                        
+                     </div> -->
+
+
+          </div>
+ 
+  
+          <button (click)="update()" type="submit" class="m-1 col-lg-4 btn btn-success">Modificar Servicio</button>
+          <button routerLink="/auth/dash_admin" type="submit" class="m-1 col-lg-4 btn btn-danger">Volver</button>
+          
+        </div>
+        </div>
+        </form>
+      
+      </section>
