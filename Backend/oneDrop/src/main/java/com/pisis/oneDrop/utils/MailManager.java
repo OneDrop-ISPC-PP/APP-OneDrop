@@ -1,4 +1,4 @@
-package com.Embarcadero.demo.utils;
+package com.pisis.oneDrop.utils;
 
 import jakarta.mail.internet.MimeMessage;
 import lombok.extern.log4j.Log4j2;
