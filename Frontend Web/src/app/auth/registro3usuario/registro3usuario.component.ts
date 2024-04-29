@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { AuthService } from 'src/app/servicios/auth.service';
+import { RegistroFichaMedicaService } from 'src/app/servicios/registro-ficha-medica.service';
+
 
 @Component({
   selector: 'app-registro3usuario',
@@ -20,14 +21,15 @@ export class Registro3usuarioComponent {
     this.formPOSTRegistro3Usuarios=this.formBuilder.group({
       
       // DATOS MEDICOS
-      id_paciente:[],
+      //id_paciente:["",[Validators.required]],
       tipo_diabetes:["",[Validators.required]],
       terapia_insulina:["",[Validators.required]],
       terapia_pastillas:["",[Validators.required]],
       tipo_glucometro:["",[Validators.required]],
       tipo_sensor:["",[Validators.required]],
-      comorbilidades:["",[Validators.required]],
       objetivo_glucosa:["",[Validators.required]],
+      comorbilidades:["",[Validators.required]],
+
     
     });
 
@@ -38,13 +40,14 @@ export class Registro3usuarioComponent {
   constructor(
     private formBuilder:FormBuilder,
     private router:Router,
-    private serv_Registro3Datos:AuthService){};
+    private serv_RegistroFichaMedica:RegistroFichaMedicaService){};
 
 //////////////////// METODOS GET //////////////////////
 
-   // get id_paciente_GET(){
-    //  return this.formPOSTRegistro3Usuarios.controls['id_paciente'];
-//}
+    /* get id_paciente_GET(){
+      return this.formPOSTRegistro3Usuarios.controls['id_paciente'];
+    }
+    */
     get tipo_diabetes_GET(){
       return this.formPOSTRegistro3Usuarios.controls['tipo_diabetes'];
     }
@@ -77,9 +80,10 @@ export class Registro3usuarioComponent {
         if(this.formPOSTRegistro3Usuarios.valid){
      //Envia datos de creacion FICHA MEDICA
 //     this.serv_Registro3Datos.POST('http://localhost:8000/api/paciente/ficha_medica/',{
-        this.serv_Registro3Datos.POST('http://localhost:8080/fichaMedica/',{
+        this.serv_RegistroFichaMedica.POST_REG_FICHA_MEDICA('http://localhost:8080/fichaMedica/',
+        {
             // esta funcion deberia llamarse post a secas, porque es polimorfica a cualquier post, osea no ahcce nada especial referido a que sea un post de registros de ususarios...
-            // id_paciente: this.formPOSTRegistro3Usuarios.value.id_paciente,
+            //id_paciente: this.formPOSTRegistro3Usuarios.value.id_paciente,
             tipo_diabetes:this.formPOSTRegistro3Usuarios.value.tipo_diabetes,
             terapia_insulina:this.formPOSTRegistro3Usuarios.value.terapia_insulina,
             terapia_pastillas:this.formPOSTRegistro3Usuarios.value.terapia_pastillas,
@@ -88,10 +92,11 @@ export class Registro3usuarioComponent {
             objetivo_glucosa:this.formPOSTRegistro3Usuarios.value.objetivo_glucosa,
             comorbilidades:this.formPOSTRegistro3Usuarios.value.comorbilidades,
           })
-          .subscribe((respuesta: any) => {
-
-          }
-        )
+          .subscribe(
+          // MANEJO DE SUSCRIPCIONES 
+            (data) => {console.log(data);},
+            (error) => {console.log(error);},
+          )
          // CODIGO QUE VALIDA, ES APARTE AL CONSUMO DEL SERVICIO
         this.router.navigateByUrl("/home")
         this.formPOSTRegistro3Usuarios.reset(); // SI VALIDA CORRECTAMENTE SE REINICIAN LOS VALORES DE LOS CAMPOS

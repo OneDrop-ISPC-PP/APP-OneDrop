@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { AuthService } from 'src/app/servicios/auth.service';
 import { loginInterface } from 'src/app/servicios/interfaces/loginInterface';
+import { RegistroFichaMedicaService } from 'src/app/servicios/registro-ficha-medica.service';
+
 
 
 
@@ -37,7 +38,7 @@ export class Registro2usuarioComponent implements OnInit{
   constructor(
     private formBuilder:FormBuilder,
     private router:Router,
-    private serv_Registro2Datos:AuthService){};
+    private serv_Registro2Datos:RegistroFichaMedicaService){};
 
 
 //////////////////// METODOS GET //////////////////////
@@ -72,7 +73,7 @@ export class Registro2usuarioComponent implements OnInit{
 
 
         //this.serv_Registro2Datos.POST('http://localhost:8000/api/paciente/',
-        this.serv_Registro2Datos.POST('http://localhost:8000/api/paciente/',
+        this.serv_Registro2Datos.POST_REG_FICHA_MEDICA('http://localhost:8080/paciente/',
           {
           // INFORMACION QUE VAMOS A PASAR
             nombre_paciente:this.formPOSTRegistro2Usuarios.value.name,

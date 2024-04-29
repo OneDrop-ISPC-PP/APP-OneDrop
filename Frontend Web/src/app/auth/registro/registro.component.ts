@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder,FormGroup,Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { AuthService } from 'src/app/servicios/auth.service';
+import { RegistroService } from 'src/app/servicios/registro-service';
 
 // SE USARAN FORMULARIOS REACTIVOS Y VALIDACIONES SINCRONICAS
 
@@ -43,7 +43,7 @@ export class RegistroComponent implements OnInit{
     constructor(
       private formBuilder:FormBuilder,
       private router:Router,
-      private serv_registro:AuthService){};
+      private serv_registro:RegistroService){};
 
 
   //////////// METODOS GET ///////////
@@ -89,9 +89,7 @@ export class RegistroComponent implements OnInit{
             // Envia los datos
             //this.serv_registro.POST( 'http://localhost:3000/REGISTRO_INICIAL',
             //this.serv_registro.POST( 'http://127.0.0.1:8080/auth/signup/',
-            console.log("Datos ingresados 01");
-            this.serv_registro.POST('http://localhost:8080/auth/register',
-            {
+            this.serv_registro.POST_REG_INICIAL({
               // INFORMACION QUE VAMOS A PASAR  
               username:this.formPOSTRegistroUsuario.value.username,
               password1:this.formPOSTRegistroUsuario.value.password1,
@@ -103,18 +101,15 @@ export class RegistroComponent implements OnInit{
               email:this.formPOSTRegistroUsuario.value.email,
               nacimiento:this.formPOSTRegistroUsuario.value.nacimiento,
               sexo:this.formPOSTRegistroUsuario.value.sexo,
-            }
-            
-            )
-            .subscribe((respuesta: any) => {
- 
             })
-            console.log("Datos ingresados");
-           
-            // ACA HAY QUE ESPERAR UNA RESPUESTA 201 SI SE CREO USUARIO, SINO ERROR
-                
+            .subscribe(
+            // MANEJO DE SUSCRIPCIONES 
+            (data) => {console.log("El token es: "), console.log(data);},
+            (error) => {console.log(error);}
+          ),
+            // ACA HAY QUE ESPERAR UNA RESPUESTA 201 SI SE CREO USUARIO, SINO ERROR                
             // CODIGO QUE VALIDA, ES APARTE AL CONSUMO DEL SERVICIO
-            this.router.navigateByUrl("/auth/registro3usuario")
+            this.router.navigateByUrl("/auth/login")
             this.formPOSTRegistroUsuario.reset(); // SI VALIDA CORRECTAMENTE SE REINICIAN LOS VALORES DE LOS CAMPOS
 
       } 

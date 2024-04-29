@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder,FormGroup,Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { HttpHeaders } from '@angular/common/http';
-import { AuthService } from 'src/app/servicios/auth.service';
+import { LoginService } from 'src/app/servicios/login-service';
 import { Emitters } from 'src/app/emitters/emitters';
 
 
@@ -38,53 +38,71 @@ export class LoginComponent implements OnInit{
     constructor(
       private formBuilder:FormBuilder,
       private router:Router,
-      private serv_login:AuthService,
+      private serv_login:LoginService,
       private http : HttpClient){};
 
 
 
-
-  ///// METODO DE SUBMIT DE LOGEO FUNCIONAL SIN CONSUMO DE SERVICIO /////
-    submit():void{
-      // IF para comprobar si el formulario es valido
-          if(this.profileForm.valid){
-
-                  this.http.post('http://localhost:8000/api/auth/login/', this.profileForm.getRawValue(), {withCredentials: true})
-
-                  .subscribe((data) =>{
-                  this.router.navigateByUrl("/")
-                  console.log("Los datos de logueo son:" + data);
-                });                
-                
-            this.router.navigateByUrl("/auth/registro2usuario")                
-                this.profileForm.reset(); // SI VALIDA CORRECTAMENTE SE REINICIAN LOS VALORES DE LOS CAMPOS
-          } 
-          else{
-
-            // SI NO VALIDA TODOS LOS CAMPOS QUEDAN MARCADO EN ROJO
-            this.profileForm.markAllAsTouched();
-            alert("No se ingresaron correctamente los datos o no se reconoce el usuario")
-          
-          }
-      }
-
+  ///// METODOS GET /////
+  get username_GET(){
+    return this.profileForm.controls.username;
+  }
+  get pass_GET(){
+    return this.profileForm.controls.password;
+  }
 
   ///// METODO DE SUBMIT DE LOGEO CON CONSUMO DE SERVICIO  /////
-
-  submit2():void{
+  submitLogin():void{
     // IF para comprobar si el formulario es valido
     
         if(this.profileForm.valid){
-              this.serv_login.POST('http://localhost:8000/auth/login/',{
+              this.serv_login.POST_LOGIN({
+                    username:this.profileForm.value.username,
                     password:this.profileForm.value.password,
-                    email:this.profileForm.value.username,
                   },)
-                  .subscribe((data) =>{
-                    console.log("Los datos de logueo son:" + data);
-                  });  
+                  .subscribe(
+                    (data:any) => {
+                      console.log("Los datos de logueo son"); console.log(data.token);
+                      this.serv_login.loginUser(data.token);
+                      console.log("Llego hasta el LOGIN USER (despues borrar)");
+                      
+                      /* CONSULTAMOS LOS DATOS DEL USUARIO QUE VIENEN EN EL TOKEN */
+                      this.serv_login.getCurrentUser()
+                        .subscribe((user:any)=>{
 
-                  this.router.navigateByUrl("/auth/dash_user")
-                  this.profileForm.reset(); // SI VALIDA CORRECTAMENTE SE REINICIAN LOS VALORES DE LOS CAMPOS
+                          //ESTABLECEMOS AL USUARIO EN EL LOCAL STIRAGE
+                          this.serv_login.setUser(user);
+
+                          // IMPRIMIMOS LOS DATOS DEL USER EN LA CONSOLA
+                          //console.log("Los datos de USER TOKEN son: ");
+                          //console.log(user);
+
+                          console.log("El role del USER es: ");
+                          console.log(this.serv_login.getUserRole());
+                          
+                          // CONTROL DE DIRECCION DEPENDIENDO DEL TIPO DE USUARIO
+                          if(this.serv_login.getUserRole() == "ADMIN"){
+
+                            // SE REDIRIGE EL DASHBOARD ADMIN
+                            this.router.navigateByUrl("auth/dash_admin");
+                            this.serv_login.loginStatusSubject.next(true);
+
+                          }else if(this.serv_login.getUserRole() == "USUARIO"){
+                            // SE REDIRIGE EL DASHBOARD USER
+                            this.router.navigateByUrl("auth/dash_user")
+                            this.serv_login.loginStatusSubject.next(true);
+
+                          }else{
+                            // SE CIERRA LA SESION
+                            //this.serv_login.logout();
+                          }
+                          
+                      })
+                    },
+                    (error:any) => {console.log("Ocurrio un error");console.log(error);}
+                );  
+                  //this.router.navigateByUrl("/auth/dash_user")
+                  //this.profileForm.reset(); // SI VALIDA CORRECTAMENTE SE REINICIAN LOS VALORES DE LOS CAMPOS
               } 
         else{
 
@@ -95,14 +113,6 @@ export class LoginComponent implements OnInit{
         }
     }
 
-
-  ///// METODOS GET /////
-    get username_GET(){
-      return this.profileForm.controls.username;
-    }
-    get pass_GET(){
-      return this.profileForm.controls.password;
-    }
 
 
 

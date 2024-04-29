@@ -166,7 +166,7 @@
    </div>
    <!--  input  -->
    <div class="col-lg-8 col-md-12 align-self-start  ">
-     <input formControlName="comorbilidades" id="last_name" type="text" class="form-control sub-campo-input" id="exampleFormControlInput1" placeholder="">
+     <input formControlName="comorbilidades" id="comorbilidades" type="text" class="form-control sub-campo-input" id="exampleFormControlInput1" placeholder="">
      <!--  validacion  -->
      <div *ngIf="comorbilidades_GET.invalid && (comorbilidades_GET.dirty || comorbilidades_GET.touched)"
      class="text-danger">
@@ -179,15 +179,15 @@
 
 </div>
 
-<!-- ////////////////////////////  ID PACIENTE //////////////////////////////  
+<!-- ////////////////////////////  ID PACIENTE ////////////////////////////// 
 <div class="row g-3 align-items-center  margin campo-input borde campo-email borde_validacion " >
-  <!--  label  
+
    <div class="col-lg-3 col-md-12 align-self-start ">
        <label for="exampleFormControlInput1" class="col-form-label">id</label>
    </div>
 
    <div class="col-lg-8 col-md-12 align-self-start  ">
-     <input formControlName="id_paciente" id="last_name" type="text" class="form-control sub-campo-input" id="exampleFormControlInput1" placeholder="">
+     <input formControlName="id_paciente" id="last_name" type="number" class="form-control sub-campo-input" id="exampleFormControlInput1" placeholder="">
 
      <div *ngIf="id_paciente_GET.invalid && (id_paciente_GET.dirty || id_paciente_GET.touched)"
      class="text-danger">
@@ -199,8 +199,7 @@
    </div>
 
 </div>
-
--->
+ -->
 
 
 
@@ -212,7 +211,7 @@
    </div>
    <!--  input  -->
    <div class="col-lg-8 col-md-12 align-self-start  ">
-     <input formControlName="objetivo_glucosa" id="last_name" type="text" class="form-control sub-campo-input" id="exampleFormControlInput1" placeholder="">
+     <input formControlName="objetivo_glucosa" id="objetivo_glucosa" type="text" class="form-control sub-campo-input" id="exampleFormControlInput1" placeholder="">
      <!--  validacion  -->
      <div *ngIf="objetivo_glucosa_GET.invalid && (objetivo_glucosa_GET.dirty || objetivo_glucosa_GET.touched)"
      class="text-danger">

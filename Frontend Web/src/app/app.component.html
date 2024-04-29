@@ -94,12 +94,24 @@
         <div >
           <ul class="navbar-nav me-auto mb-2 mb-md-0">
             <li class="nav-item botones" id="nav-item">
-              <a class="nav-link" id="nav-link" routerLink="auth/registrarse"> Registrarse</a>
+              <a class="nav-link" id="nav-link" routerLink="auth/registrarse"
+              > Registrarse</a>
+            </li>
+
+
+          <li class="nav-item botones" id="nav-item"  (click)="cerrarSesion()"  *ngIf = "login.verificacionLogeo()">
+            <a  class="nav-link" id="nav-link" > Cerrar Sesion</a>
           </li>
           
-          <li class="nav-item botones boton1" id="nav-item">
-               <a class="nav-link boton1bis" id="nav-link" routerLink="auth/login"> Ingresar</a>
+
+          <li class="nav-item botones boton1" id="nav-item"  *ngIf = "!login.verificacionLogeo()">
+               <a class="nav-link boton1bis" id="nav-link"  routerLink="auth/login" > Inciar Sesion</a>
           </li>
+
+          <li class="nav-item botones boton1" id="nav-item"  *ngIf = "login.verificacionLogeo()">
+            <a class="nav-link boton1bis" id="nav-link"> {{ login.getUser().username}}</a>
+          </li>
+
           </ul>
     
 
@@ -125,7 +137,6 @@
 
 
 {{message}}
-
 <router-outlet></router-outlet>
 <app-scroll-back-to-top-button></app-scroll-back-to-top-button>
 <app-footer></app-footer>

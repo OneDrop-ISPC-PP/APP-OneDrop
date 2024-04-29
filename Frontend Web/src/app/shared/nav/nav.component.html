@@ -30,9 +30,30 @@
             </li>
 
         </ul>
-        <button class="btn btn-primary boton1" id="btn btn-primary boton1" type="button"
-            onclick="btningresar()">Ingresar</button>
+        <!-- Empieza Navbar -->
+         <!--  onclick="btningresar()"-->
+        <button class="btn btn-primary boton1" id="btn btn-primary boton1" type="button" 
+        *ngIf = "!login.verificacionLogeo()"  onclick="iniciarSesion()">
+        Iniciar Sesion
+        </button>
+
+        <button class="btn btn-primary boton1" id="btn btn-primary boton1" type="button" 
+        *ngIf = "login.verificacionLogeo()" 
+            onclick="cerrarSesion()">Cerrar Sesion
+        </button>
+
+
+
     </div>
 </nav>
+
+
+
+
+
+
+
+
+
 
 <!-- <router-outlet></router-outlet> -->

@@ -9,6 +9,8 @@ import { Registro2usuarioComponent } from './registro2usuario/registro2usuario.c
 import { Registro3usuarioComponent } from './registro3usuario/registro3usuario.component';
 import { ModNotaUsuarioComponent } from './mod-nota-usuario/mod-nota-usuario.component';
 import { ModServicioAdminComponent } from './mod-servicio-admin/mod-servicio-admin.component';
+import { AdminGuard } from '../servicios/admin.guard';
+import { UserGuard } from '../servicios/user.guard';
 
 
 // RUTAS EXPORTADAS AL NAV
@@ -17,8 +19,8 @@ const routes:Routes=[
     children:[
         {path:'login', component:LoginComponent},
         {path:'registrarse', component:RegistroComponent},
-        {path:'dash_admin', component:DashboardAdminComponent},
-        {path:'dash_user', component:DashboardUsuarioComponent},
+        {path:'dash_admin', component:DashboardAdminComponent /* , canActivate:[AdminGuard]*/},
+    {path:'dash_user', component:DashboardUsuarioComponent/*, canActivate:[UserGuard]*/},
         {path:'registro2usuario', component:Registro2usuarioComponent},
         {path:'registro3usuario', component:Registro3usuarioComponent},
         {path:'edit_nota/:id', component:ModNotaUsuarioComponent},

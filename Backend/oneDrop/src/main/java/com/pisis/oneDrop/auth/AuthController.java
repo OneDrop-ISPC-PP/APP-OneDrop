@@ -25,6 +25,9 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/auth/")
 @RequiredArgsConstructor
+// AGREGO CROSSORIGIN MARTIN
+@CrossOrigin("*")
+//
 @Tag(name = "Authentication") // name of endpoint grup in swagger
 public class AuthController {
     @Autowired
