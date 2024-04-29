@@ -1,0 +1,16 @@
+package com.pisis.oneDrop.exceptions;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+public class ExceptionMessages {
+    public ExceptionMessages(String message2, int ordinal) {
+		// TODO Auto-generated constructor stub
+	}
+	private String message;
+    private Integer internalCode;
+}

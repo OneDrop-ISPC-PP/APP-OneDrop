@@ -1,0 +1,50 @@
+package com.pisis.oneDrop.model.dtos.fichaMedica;
+
+import com.pisis.oneDrop.auth.entities.User;
+import com.pisis.oneDrop.model.entities.enums.*;
+
+import jakarta.validation.constraints.Size;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import javax.validation.constraints.NotNull;
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
+public class FichaMedicaAddDto {
+    @NotNull(message = "El id no puede ser nulo")
+    @Size(min=2, max=30, message = "Username debe tener entre 2 y 30 caracteres")
+    private Integer id_paciente;
+    
+    @NotNull(message = "El tipo de diabetes no puede ser nulo")
+    @Size(min=2, max=30, message = "Username debe tener entre 2 y 30 caracteres")
+    private Tipo_diabetes tipo_diabetes;
+    
+    @NotNull(message = "La terapia de insulina no puede ser nulo")
+    @Size(min=2, max=30, message = "Username debe tener entre 2 y 30 caracteres")
+    private Terapia_insulina terapia_insulina;
+    
+    @NotNull(message = "La terapia de pastillas no puede ser nula")
+    @Size(min=2, max=30, message = "Username debe tener entre 2 y 30 caracteres")
+    private Terapia_pastillas terapia_pastillas;
+    
+    @NotNull(message = "El tipo de glucometro no puede ser nulo")
+    @Size(min=2, max=30, message = "Username debe tener entre 2 y 30 caracteres")
+    private Tipo_glucometro tipo_glucometro;
+    
+    @NotNull(message = "El tipo de sensor no puede ser nulo")
+    @Size(min=2, max=30, message = "Username debe tener entre 2 y 30 caracteres")
+    private Tipo_sensor tipo_sensor;
+
+    private String objetivo_glucosa;
+    @NotNull(message = "El tipo de sensor no puede ser nulo")
+    @Size(min=2, max=30, message = "Username debe tener entre 2 y 30 caracteres")
+    
+    private String comorbilidades;
+    @NotNull(message = "El tipo de sensor no puede ser nulo")
+    @Size(min=2, max=30, message = "Username debe tener entre 2 y 30 caracteres")
+}
