@@ -22,3 +22,4 @@ local.properties
 .metadata
 /Backend/.metadata/
 /Backend/oneDrop/.metadata
+/Backend/oneDrop/bin
