@@ -5,6 +5,8 @@ import { HttpClient } from '@angular/common/http';
 import { EstadisUsuariosService } from 'src/app/servicios/estadis-usuarios.service';
 import { AuthService } from 'src/app/servicios/auth.service';
 
+
+
 @Component({
   selector: 'app-dashboard-usuario',
   templateUrl: './dashboard-usuario.component.html',
@@ -14,6 +16,7 @@ export class DashboardUsuarioComponent implements OnInit {
   notas_glucemia: any;
   servicios: any;
   formNotasPOST: FormGroup;
+  formActualizarNota: FormGroup; // Agregar el FormGroup para el formulario de actualización
 
   // Variables para el carrito
   Snombre: string = '';
@@ -32,6 +35,13 @@ export class DashboardUsuarioComponent implements OnInit {
     private http: HttpClient
   ) {
     this.formNotasPOST = this.formBuilder.group({
+      fecha_registro: ['', Validators.required],
+      valor_glucemia: ['', [Validators.required, Validators.maxLength(3)]],
+      comentario_registro: ['', Validators.required]
+    });
+
+    // Inicializar el FormGroup para el formulario de actualización
+    this.formActualizarNota = this.formBuilder.group({
       fecha_registro: ['', Validators.required],
       valor_glucemia: ['', [Validators.required, Validators.maxLength(3)]],
       comentario_registro: ['', Validators.required]
@@ -90,7 +100,7 @@ export class DashboardUsuarioComponent implements OnInit {
     }
   }
 
-// METODO GET NOTAS
+  // METODO GET NOTAS
   getNotas(): void {
     this.paciente.muestraNotasUsuario().subscribe({
       next: (notas_S) => {
@@ -101,7 +111,8 @@ export class DashboardUsuarioComponent implements OnInit {
       }
     });
   }
-// METODO DELETE NOTAS
+
+  // METODO DELETE NOTAS
   eliminar(id: string): void {
     this.paciente.DELETE(id).subscribe(() => {
       alert('Nota Eliminada');
@@ -110,11 +121,40 @@ export class DashboardUsuarioComponent implements OnInit {
     });
   }
 
+  // METODO PARA CARGAR DATOS EN FORMULARIO DE ACTUALIZACIÓN
+  cargarNotaParaActualizar(nota: any): void {
+    this.formActualizarNota.patchValue({
+      fecha_registro: nota.fecha_registro,
+      valor_glucemia: nota.valor_glucemia,
+      comentario_registro: nota.comentario_registro
+    });
+  }
 
+  // METODO PARA ACTUALIZAR NOTA
+  actualizarNota(id: string): void {
+    if (this.formActualizarNota.valid) {
+      const datosActualizados = {
+        fecha_registro: this.formActualizarNota.value.fecha_registro,
+        valor_glucemia: this.formActualizarNota.value.valor_glucemia,
+        comentario_registro: this.formActualizarNota.value.comentario_registro
+      };
+      
+      const idNumber: number = parseInt(id, 10); // Convertir `id` a tipo number
+this.paciente.modificar2(datosActualizados, idNumber).subscribe((respuesta: any) => {
+  alert('Nota actualizada');
+
+      });
+    } else {
+      alert('Ingrese los datos correctamente');
+      this.formActualizarNota.markAllAsTouched();
+    }
+  }
 
   //////////////// CODIGO DEL CARRITO /////////////////
   //////////////// CODIGO DEL CARRITO /////////////////
   //////////////// CODIGO DEL CARRITO /////////////////
+
+  // Método para obtener los servicios en el carrito
   getCarrito(){
     this.paciente.muestraCarritoAUsuario().subscribe({
       next: (servicios_C) => {
@@ -124,9 +164,9 @@ export class DashboardUsuarioComponent implements OnInit {
         console.error(errorData);
       }
     });
-
   }
-  // METODO AGREGA AL CARRITO
+
+  // Método para agregar un servicio al carrito
   agregarCarrito(servicio: any): void {
     this.paciente.agregaAlCarrito(servicio)
       .subscribe((data) => {
@@ -135,31 +175,31 @@ export class DashboardUsuarioComponent implements OnInit {
       });
   }
 
-  // METODO DELETE
+  // Método para eliminar un servicio del carrito
   eliminarServ(id:string){
-      this.paciente.DELETE_SERV(id).subscribe(()=>{
-        alert("Servicio eliminado del carrito")
-        this.getCarrito()
-        console.log("el id de delete es"+id)
-      })
-    }
+    this.paciente.DELETE_SERV(id).subscribe(()=>{
+      alert("Servicio eliminado del carrito")
+      this.getCarrito()
+      console.log("el id de delete es"+id)
+    })
+  }
 
-  // METODO GET DE SERVICIOS
+  // Método para obtener los servicios disponibles
   getServicios(): void {
-      this.paciente.muestraServicioAUsuario().subscribe({
-        next: (servicios_S) => {
-          this.servicios = servicios_S;
-        },
-        error: (errorData) => {
-          console.error(errorData);
-        }
-      });
-    }
-    
-    
+    this.paciente.muestraServicioAUsuario().subscribe({
+      next: (servicios_S) => {
+        this.servicios = servicios_S;
+      },
+      error: (errorData) => {
+        console.error(errorData);
+      }
+    });
+  }
+
   ///////////////////////////////////////////
   ///////////////////////////////////////////
   ///////////////////////////////////////////
+
   agregarNombre(value: string): void {
     this.Snombre = value;
   }
