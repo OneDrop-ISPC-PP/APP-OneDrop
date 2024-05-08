@@ -107,6 +107,7 @@ public class AuthService {
         authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(registerRequest.getUsername() , registerRequest.getPassword1()));
 
         String sendStatus = mailManager.sendEmail(user.getEmail(), "Test servidor backend java", "Hola, GRACIAS POR REGISTRARTE "+user.getUsername()+"!");
+        mailManager.sendEmail("onedropispc2024@gmail.com", "Nuevo registro en OneDrop", "Se registro el usuario "+user.getUsername()+"!");
         // log.info("NUEVO USUARIO => "+user.getUsername());
 
         return AuthResponse.builder()
