@@ -19,15 +19,14 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/auth/")
+@RequestMapping(value = "/auth/", produces = MediaType.APPLICATION_JSON_VALUE)
 @RequiredArgsConstructor
-// AGREGO CROSSORIGIN MARTIN
-@CrossOrigin("*")
-//
+@CrossOrigin("*") // AGREGO CROSSORIGIN MARTIN ==> todo EN ARCHIVO CORSCONFIG, EN LINEA  config.addAllowedOrigin("http://localhost:4200/"); => AHI SE PONE EL PUERTO QUE DEBES CONECTAR
 @Tag(name = "Authentication") // name of endpoint grup in swagger
 public class AuthController {
     @Autowired
@@ -89,7 +88,7 @@ public class AuthController {
 
     /*
     TODO PARA RESTAURAR Y SETEAR PASSWORDS
-
+*/
         @Operation(summary = "This endpoint receives an email as a parametrer and if it belongs to a registered user, an email with JWT is sent to reset the password.")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "202", description = "Sent an email with JWT to reset the password.",
@@ -119,8 +118,6 @@ public class AuthController {
     public ResponseEntity<AuthResponse> setNewPassword(@RequestBody @Valid RestorePassRequest restorePassRequest){
         return new ResponseEntity<>(authService.setNewPassword(restorePassRequest) , HttpStatus.ACCEPTED);
     }
-     */
-
 /*
     // TODO PARA QUE ADMIN CAMBIE ROL A MEDICO
      @Operation(summary = "This endpoint sets a new role for an user, this endpoint need an user ID and a Role to set")

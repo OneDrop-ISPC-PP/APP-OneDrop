@@ -9,6 +9,7 @@ import com.pisis.oneDrop.exceptions.customsExceptions.AlreadyExistException;
 import com.pisis.oneDrop.exceptions.customsExceptions.InvalidJwtException;
 import com.pisis.oneDrop.exceptions.customsExceptions.InvalidValueException;
 import com.pisis.oneDrop.exceptions.customsExceptions.NotFoundException;
+import com.pisis.oneDrop.utils.MailManager;
 import com.pisis.oneDrop.utils.Validator;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,8 +36,8 @@ public class AuthService {
     @Autowired
     private JwtService jwtService;
 
-    // @Autowired
-    // private MailManager mailManager;
+    @Autowired
+    private MailManager mailManager;
     @Autowired
     private Validator validator;
 
@@ -105,7 +106,7 @@ public class AuthService {
 
         authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(registerRequest.getUsername() , registerRequest.getPassword1()));
 
-        // String sendStatus = mailManager.sendEmail(user.getEmail(), "Test servidor backend java", "Hola, GRACIAS POR REGISTRARTE "+user.getUsername()+"!");
+        String sendStatus = mailManager.sendEmail(user.getEmail(), "Test servidor backend java", "Hola, GRACIAS POR REGISTRARTE "+user.getUsername()+"!");
         // log.info("NUEVO USUARIO => "+user.getUsername());
 
         return AuthResponse.builder()
@@ -119,6 +120,10 @@ public class AuthService {
                 .findByUsername(loginRequest.getUsername())
                 .orElseThrow(()->new NotFoundException(("User not found")));
         String token = jwtService.getToken(userDetails);
+
+
+        // String sendStatus = mailManager.sendEmail(userDetails., "Test servidor backend one drop", "Hola, longggiiin ");
+
         return AuthResponse.builder()
                 .token(token)
                 .build();
