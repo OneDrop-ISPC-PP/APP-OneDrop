@@ -23,20 +23,24 @@ a {
 /*------Banner-------*/
 
 .banner {
-    position: absolute;
-    right: 0;
-    width: 100%;
-    min-height: 100vh;
-    padding: 150px;
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
-    background: #EDF5FC;
-    transition: 0.5s;
+  
+  right: 0;
+  width: 100%;
+  min-height: 100vh;
+  padding: 150px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  background-image: url(src/assets/images/fondoinicio.png);
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-attachment: fixed;
+  transition: 0.5s;
 }
-
 /*------Container-------*/
 div.container2 {
+  background-color: #ffc1de;
     position: center;
     justify-content: center;
     text-align: center;
@@ -345,11 +349,12 @@ div.container2 {
      padding: 50px;
    }
  
-   div.container2 {
+   div.container2 {    
      padding-top: 2%;
      padding-left: 5%;
      padding-right: 5%;
      padding-bottom: 1px;
+     
    }
  
    .grid-container {
