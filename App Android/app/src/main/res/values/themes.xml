@@ -1,0 +1,10 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme. -->
+    <style name="Base.Theme.One_drop_cruds" parent="Theme.Material3.DayNight.NoActionBar">
+        <!-- Customize your light theme here. -->
+        <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+        <item name="colorPrimaryDark" type="color">#F7429A</item>
+    </style>
+
+    <style name="Theme.One_drop_cruds" parent="Base.Theme.One_drop_cruds" />
+</resources>
