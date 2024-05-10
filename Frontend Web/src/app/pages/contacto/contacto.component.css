@@ -82,7 +82,7 @@
   font-size: 6em;
   font-weight: 800;
   color: #1A609F;
-  line-height: 7em;
+  line-height: 8em;
   text-align: left;
   }
  
@@ -102,7 +102,7 @@
     background-image: url(src/assets/images/contacto2.jpg);
     background-position: top;
     background-repeat: no-repeat;
-    background-size: contain;
+    background-size: cover;
     background-attachment: fixed;
     min-width: 250px;
 

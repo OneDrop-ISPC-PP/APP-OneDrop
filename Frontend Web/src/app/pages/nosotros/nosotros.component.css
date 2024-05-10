@@ -46,6 +46,12 @@ a {
     align-items: center;
     background: #EDF5FC;
     transition: 0.5s;
+    background-image: url(src/assets/images/quienessomos.jpeg);
+    background-position: top;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
+
 }
 
 /* Container */
