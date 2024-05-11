@@ -29,4 +29,5 @@ public class FichaMedicaAddDto {
 
     private String objetivo_glucosa;
     private String comorbilidades;
+    private Double peso;
 }

@@ -40,6 +40,7 @@ public class FichaMedica {
 
     private String objetivo_glucosa;
     private String comorbilidades;
+    private Double peso;
 
     @OneToMany(fetch = FetchType.LAZY)
     // @OrderBy("fecha_registro")

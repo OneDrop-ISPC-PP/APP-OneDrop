@@ -13,26 +13,28 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.one_drop_cruds.entities.DTOmedicalRecord;
+import com.example.one_drop_cruds.entities.user.LoguedUserDetails;
 import com.example.one_drop_cruds.utils.AdminSQLiteOpenHelper;
 import com.example.one_drop_cruds.utils.UserSessionManager;
 
 public class ProfileActivity extends AppCompatActivity {
     UserSessionManager userSessionManager;
-    AdminSQLiteOpenHelper admin;
+    // AdminSQLiteOpenHelper admin;
     EditText signup_name, signup_last_name, signup_age, signup_birth, signup_weight, signup_db_type, signup_db_therapy;
     Button edit_medical_data_button, selectImageButton;
     ImageView profileImage;
     private static final int PICK_IMAGE = 100;
     private Uri selectedImageUri = null; // Para almacenar la URI de la imagen seleccionada
 
+    LoguedUserDetails loguedUser;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
-
-        admin = new AdminSQLiteOpenHelper(this, "bd_one_drop", null, 1);
+        // admin = new AdminSQLiteOpenHelper(this, "bd_one_drop", null, 1);
         userSessionManager = new UserSessionManager(getApplicationContext());
-        userSessionManager.validateLoguedUser();
+
+        loguedUser = userSessionManager.getLoguedUserDetails();  // SI NO ESTA LOGUEADO, SE REDIRIGE A LOGIN
 
         signup_name = findViewById(R.id.signup_name);
         signup_last_name = findViewById(R.id.signup_last_name);
@@ -42,29 +44,31 @@ public class ProfileActivity extends AppCompatActivity {
         signup_db_type = findViewById(R.id.signup_db_type);
         signup_db_therapy = findViewById(R.id.signup_db_therapy);
 
-
-
         setTextsForm();
-
-
     }
 
-
-
-
-
     public void setTextsForm() {
-        DTOmedicalRecord medicalRecord = admin.getMedicalRecord(userSessionManager.getLoguedUsername());
-        signup_name.setText(medicalRecord.getName());
-        signup_last_name.setText(medicalRecord.getLast_name());
-        signup_age.setText(String.valueOf(medicalRecord.getAge()));
-        signup_birth.setText(medicalRecord.getBirth());
-        signup_weight.setText(String.valueOf(medicalRecord.getWeight()));
-        signup_db_type.setText(medicalRecord.getDbType());
-        signup_db_therapy.setText(medicalRecord.getDbTherapy());
+        // TODO ACA DEBO HACER LOGICA PARA PEDIR EL RESTO DE DATOS DEL USUARIO!
+        // DTOmedicalRecord medicalRecord = // admin.getMedicalRecord(loguedUser.getUsername());
+        signup_name.setText(loguedUser.getNombre());
+        signup_last_name.setText(loguedUser.getApellido());
+        // todo signup_age.setText(String.valueOf(loguedUser.getNacimiento())); ==> no lo recibo en loguedUserDetails, porque me da error al serializaro a json, porque es un array"!!! REVISAR LA LOGICA PARA OBTENR LA FECHA Y CASTEARLO CORRECTAMETNE, LUEGO HAY QUE HACER EL CALCULO DE FECHA ACTUAL MENOS EL NACIMIENTO PARA SABER LA EDAD
+        // todo signup_age.setText(String.valueOf(loguedUser.getNacimiento())); ==> no lo recibo en loguedUserDetails, porque me da error al serializaro a json, porque es un array"!!! REVISAR LA LOGICA PARA OBTENR LA FECHA Y CASTEARLO CORRECTAMETNE, LUEGO HAY QUE HACER EL CALCULO DE FECHA ACTUAL MENOS EL NACIMIENTO PARA SABER LA EDAD
+
+        // todo signup_birth.setText(loguedUser.getBirth()) ==> no lo recibo en loguedUserDetails, porque me da error al serializaro a json, porque es un array"!!! REVISAR LA LOGICA PARA OBTENR LA FECHA Y CASTEARLO CORRECTAMETNE, LUEGO HAY QUE HACER EL CALCULO DE FECHA ACTUAL MENOS EL NACIMIENTO PARA SABER LA EDAD
+        // todo signup_birth.setText(loguedUser.getBirth()) ==> no lo recibo en loguedUserDetails, porque me da error al serializaro a json, porque es un array"!!! REVISAR LA LOGICA PARA OBTENR LA FECHA Y CASTEARLO CORRECTAMETNE, LUEGO HAY QUE HACER EL CALCULO DE FECHA ACTUAL MENOS EL NACIMIENTO PARA SABER LA EDAD
+
+
+
+        // aca falta el endpoint que trae toda la info cree este endpoint http://localhost:8080/fichaMedica/user/1
+        // todo signup_weight.setText(String.valueOf(loguedUser.get()));
+        // todo signup_db_type.setText(loguedUser.getDbType());
+        // todo signup_db_therapy.setText(loguedUser.getDbTherapy());
+
     }
 
     public void updateMedicalRecord(View v) {
+        /*
         String name = signup_name.getText().toString();
         String last_name = signup_last_name.getText().toString();
         int age = Integer.parseInt(signup_age.getText().toString());
@@ -100,6 +104,8 @@ public class ProfileActivity extends AppCompatActivity {
                 Toast.makeText(this, "Error actualizando datos ficha medica", Toast.LENGTH_SHORT).show();
             }
         }
+
+         */
     }
 
     public void toHome(View v) {

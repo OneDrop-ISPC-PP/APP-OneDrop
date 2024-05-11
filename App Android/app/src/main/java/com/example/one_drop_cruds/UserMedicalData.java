@@ -11,6 +11,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.one_drop_cruds.entities.DTOmedicalRecord;
+import com.example.one_drop_cruds.entities.user.LoguedUserDetails;
 import com.example.one_drop_cruds.utils.AdminSQLiteOpenHelper;
 import com.example.one_drop_cruds.utils.UserSessionManager;
 
@@ -19,6 +20,7 @@ public class UserMedicalData extends AppCompatActivity {
     AdminSQLiteOpenHelper admin;
     EditText signup_name, signup_last_name, signup_age, signup_birth , signup_weight, signup_db_type, signup_db_therapy;
     Button signup_medical_data_button;
+    LoguedUserDetails loguedUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,7 +29,8 @@ public class UserMedicalData extends AppCompatActivity {
 
         admin = new AdminSQLiteOpenHelper(this, "bd_one_drop", null, 1); // version es para las futuras modificaciones de la estructura de la bd
         userSessionManager = new UserSessionManager(getApplicationContext());
-        userSessionManager.validateLoguedUser(); // SI NO ESTA LOGUEADO, SE REDIRIGE A LOGIN
+
+        loguedUser= userSessionManager.getLoguedUserDetails(); // SI NO ESTA LOGUEADO, SE REDIRIGE A LOGIN
 
         signup_name = findViewById(R.id.signup_name);
         signup_last_name = findViewById(R.id.signup_last_name);

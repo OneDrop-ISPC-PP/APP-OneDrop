@@ -29,13 +29,14 @@ public class SharedPrefManager {
         // serializar user details a json y guardarlo como cadena en shared pref..
         Gson gsonSerializer = new Gson();
         String userJson = gsonSerializer.toJson(userDetails);
-
-        System.out.println("GUARDANDO LOGUED USER =>"+userDetails.getUsername());
-        System.out.println("GUARDANDO LOGUED USER =>"+userDetails.getUsername());
-        System.out.println("GUARDANDO LOGUED USER =>"+userDetails.getUsername());
-
         this.sharedPrefEditor.putString("loguedUser", userJson);
         sharedPrefEditor.apply();
+    }
+    public LoguedUserDetails getLoguedUser() {
+        String userJson = this.sharedPref.getString("loguedUser", null);
+        Gson gsonSerializer = new Gson();
+        LoguedUserDetails loguedUserDetails = gsonSerializer.fromJson(userJson, LoguedUserDetails.class);
+        return loguedUserDetails;
     }
     public void clearLoguedUser() {
         this.sharedPrefEditor.remove("loguedUser");
@@ -49,9 +50,6 @@ public class SharedPrefManager {
     }
      */
 
-    public String getLoguedUsername() {
-        return this.sharedPref.getString("logued_username", null);
-    }
 
 
     // Otros métodos para guardar y recuperar datos

@@ -86,7 +86,6 @@ public class Home extends AppCompatActivity {
                             public void onClick(DialogInterface dialog, int which) {
                                 // Llama al método clearLoguedUser de SharedPrefManager para cerrar la sesión
                                 sharedPrefManager.clearLoguedUser();
-
                                 // Redirige al usuario a la actividad de inicio de sesión
                                 Intent loginIntent = new Intent(Home.this, UserLoginActivity.class);
                                 startActivity(loginIntent);
@@ -165,8 +164,8 @@ public class Home extends AppCompatActivity {
     }
 
     public void toProfile(View v) {
-        Intent pressure = new Intent(this, ProfileActivity.class);
-        startActivity(pressure);
+        Intent intent = new Intent(this, ProfileActivity.class);
+        startActivity(intent);
     }
 
     public void toContact(View v) {

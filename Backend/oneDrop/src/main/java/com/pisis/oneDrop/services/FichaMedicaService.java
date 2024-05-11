@@ -81,6 +81,15 @@ public class FichaMedicaService {
         if(ficha.isEmpty()) throw new NotFoundException("Ficha medica no encontrada por id: "+id);
         return ficha.get();
     }
+    public FichaMedicaReadDto findByUserId (Integer id){
+        return fichaMedicaMapper.toReadDto(getFichaMedicaByUserId(id));
+    }
+    public FichaMedica getFichaMedicaByUserId (Integer id){
+        User paciente = userRepository.findById(id).get();
+        Optional<FichaMedica> ficha = fichaMedicaRepository.findByPaciente(paciente);
+        if(ficha.isEmpty()) throw new NotFoundException("Ficha medica no encontrada para el usuario con id: "+id);
+        return ficha.get();
+    }
 
     public FichaMedicaReadDto deleteFichaMedica (Integer id){
         FichaMedica fichaABorrar = getFichaMedicaById(id);
