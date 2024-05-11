@@ -26,7 +26,7 @@
 
 
                 <EditText
-                    android:id="@+id/login_email"
+                    android:id="@+id/login_username"
                     android:layout_width="330dp"
                     android:layout_height="60dp"
                     android:layout_gravity="center"
@@ -35,7 +35,7 @@
                     android:drawableLeft="@drawable/baseline_email_24"
                     android:drawablePadding="6dp"
                     android:fontFamily="sans-serif-condensed"
-                    android:hint="Email"
+                    android:hint="Username"
                     android:padding="6dp"
                     android:textColor="@color/blackonedrop"
                     android:textSize="20dp"

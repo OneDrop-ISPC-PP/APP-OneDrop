@@ -58,7 +58,7 @@ public class UserSignupActivity extends AppCompatActivity {
                     Boolean insert = adminBD.createUser(email, password);
                     if (insert) {
                         Toast.makeText(UserSignupActivity.this, "¡Registro exitoso!", Toast.LENGTH_SHORT).show();
-                        sharedPrefManager.setLoguedUser(email);
+                        // todo => aqui se debe guardar un user details y no solo el email!!!!!  sharedPrefManager.setLoguedUser(email);
                         Intent intent = new Intent(getApplicationContext(), UserMedicalData.class);
                         startActivity(intent);
                     } else {
