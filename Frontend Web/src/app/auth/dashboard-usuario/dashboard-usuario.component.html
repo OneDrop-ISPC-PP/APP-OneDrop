@@ -13,8 +13,9 @@
 
   <!-- /////////////////// FORMULARIO DE INGRESO DE NOTAS //////////////////////// -->
   <h2 class="titulo">NUEVO REGISTRO</h2>
-  <form class="form-register bg-success" [formGroup]="formNotasPOST" (submit)="agregarNota()">
-    <div class="p-4 container">
+  <div class="p-4 container">
+    <button class="btn btn-primary mb-3" (click)="toggleForm()">Glucemia</button>
+    <form class="form-register bg-success" [formGroup]="formNotasPOST" *ngIf="showForm" (submit)="agregarNota()">
       <div class="row">
         <div class="p-2 col-lg-4">
           <label for="fecha-registro" class="form-label">Fecha Registro</label>
@@ -32,11 +33,10 @@
           <textarea formControlName="comentario_registro" name="" id="" cols="30" rows="5"
             class="form-control"></textarea>
         </div>
-
-        <button type="submit" class="col-lg-4 btn btn-primary">Registrar nota</button>
       </div>
-    </div>
-  </form>
+      <button type="submit" class="col-lg-4 btn btn-primary">Registrar nota</button>
+    </form>
+  </div> <!-- Cierre del div.container -->
 
   <!--/////////////////////  ULTIMOS REGISTROS  //////////////////////-->
 
@@ -47,7 +47,8 @@
       <p class="fecha">Fecha: {{nota.fecha_registro}}ml</p>
       <p class="glucemia">Glucemia:{{nota.valor_glucemia}}</p>
       <p class="notas">Notas:{{nota.comentario_registro}}</p>
-      <button routerLink="/auth/edit_nota/{{nota.id}}" type="submit" class="m-1 p-2 col-lg-4 btn btn-success">Editar</button>
+      <button routerLink="/auth/edit_nota/{{nota.id}}" type="submit"
+        class="m-1 p-2 col-lg-4 btn btn-success">Editar</button>
       <button (click)="eliminar(nota.id)" type="button" class="m-1 p-2 col-lg-4 btn btn-danger">Eliminar</button>
     </div>
   </div>
@@ -95,34 +96,33 @@
         </div>
       </div>
 
-    <!-- Servicios en el carrito -->
-    <div class="row align-items-center justify-content-evenly grid-container p-2 carr-cont-serv" *ngFor="let servicio of serviciosCarrito; let i=index">
-      <div class="col-lg-4 col-md-3 col-sm-3 text-center m-1">
-        <h6>{{ servicio.nombre_servicio }}</h6>
+      <!-- Servicios en el carrito -->
+      <div class="row align-items-center justify-content-evenly grid-container p-2 carr-cont-serv" *ngFor="let servicio of serviciosCarrito; let i=index">
+        <div class="col-lg-4 col-md-3 col-sm-3 text-center m-1">
+          <h6>{{ servicio.nombre_servicio }}</h6>
+        </div>
+        <div class="col-lg-4 col-md-3 col-sm-3 text-center">
+          <h6>${{servicio.precio_servicio }}</h6>
+        </div>
+        <div class="col-lg-3 col-md-3 col-sm-3 text-center row">
+          <button class="btn btn-danger boton-carr col-lg-12" (click)="eliminarServ(servicio.id)">
+            <i class="fa-regular fa-trash-can"></i>
+          </button>
+        </div>
       </div>
-      <div class="col-lg-4 col-md-3 col-sm-3 text-center">
-        <h6>${{servicio.precio_servicio }}</h6>
-      </div>
-      <div class="col-lg-3 col-md-3 col-sm-3 text-center row">
 
-
-        <button class="btn btn-danger boton-carr col-lg-12" (click)="eliminarServ(servicio.id)">
-          <i class="fa-regular fa-trash-can"></i>
-        </button>
+      <div class="row justify-content-end mt-2">
+        <div class="col-lg-8">
+          <h5 class="text-end">Total: ${{calcularMontoTotal()}}</h5>
+        </div>
       </div>
-    </div>
-    <div class="row justify-content-end mt-2">
-      <div class="col-lg-8">
-        <h5 class="text-end">Total: ${{calcularMontoTotal()}}</h5>
-      </div>
-    </div>
 
       <div>
         <button class="m-1 px-3 p-1 btn btn-primary boton-carr" (click)="comprar()">Comprar</button>
       </div>
-    </div>
-  </div>
-</section>
+    </div> <!-- Cierre del div.carrito -->
+  </div> <!-- Cierre del div.row -->
+</section> <!-- Cierre del section.container
 
 <!-- Javascript -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
