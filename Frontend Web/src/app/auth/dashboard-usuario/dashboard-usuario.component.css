@@ -73,6 +73,7 @@
    margin: auto;
 }
 
+
 /* boton nuevo registro   */
 .dashboardUser .btnAgregar{
     position: sticky;
@@ -650,5 +651,76 @@ color: #1a609f;
   margin: .1rem;
 }
 
+/* Estilos para la barra lateral */
+.sidebar {
+  height: 100%;
+  width: 250px;
+  position: fixed;
+  z-index: 1;
+  top: 85px;
+  left: 0;
+  background-color: #333; /* Color de la barra lateral */
+  overflow-x: hidden;
+  padding-top: 20px;
+}
 
+/* Estilos para el encabezado de la barra lateral */
+.sidebar-header {
+  padding: 10px;
+  text-align: center;
+  background-color: #444; /* Color del encabezado */
+}
 
+/* Estilos para los botones en la barra lateral */
+.sidebar-menu button {
+  display: block;
+  width: 100%;
+  padding: 10px;
+  text-align: left;
+  background-color: #555; /* Color de fondo de los botones */
+  border: none;
+  color: white;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+/* Cambio de color al pasar el mouse sobre los botones */
+.sidebar-menu button:hover {
+  background-color: #666;
+}
+
+/* Estilos generales del nav */
+.container {
+  background-color: #f5f3f3;
+  max-width: 100%;
+  margin: 0 auto;
+}
+
+.container nav {
+  display: flex;
+  justify-content: flex-end;
+  padding: 15px;
+  background-color: #fff;
+  color: #001d4d;
+}
+
+.nav-compras {
+  display: none;
+}
+
+.container nav button {
+  display: none;
+  z-index: 1;
+}
+
+.nav-compras li {
+  list-style: none;
+  padding: 1rem;
+  font-weight: bold;
+  z-index: 1;
+}
+
+/* Ajuste para mover hacia la derecha todos los contenedores excepto la barra lateral */
+.container .row > div:not(.sidebar) {
+  margin-left: 350px; /* Ajusta el margen izquierdo */
+}
