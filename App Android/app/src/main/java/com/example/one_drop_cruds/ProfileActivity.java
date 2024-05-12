@@ -38,7 +38,7 @@ public class ProfileActivity extends AppCompatActivity {
 
         signup_name = findViewById(R.id.signup_name);
         signup_last_name = findViewById(R.id.signup_last_name);
-        signup_age = findViewById(R.id.signup_age);
+        // signup_age = findViewById(R.id.signup_age);
         signup_birth = findViewById(R.id.signup_birth);
         signup_weight = findViewById(R.id.signup_weight);
         signup_db_type = findViewById(R.id.signup_db_type);
@@ -61,16 +61,8 @@ public class ProfileActivity extends AppCompatActivity {
         // todo signup_db_therapy.setText(loguedUser.getDbTherapy());
 
 
-        // todo backend:
-        // 3) jasper reports pdf
 
-        // todo app:
-        // 1) quitar a la mierda analisis clinicos!,
-        // 2) quitar EDAD ,
-        // 3) agregar comorbilidad, obj glucosa, terapia pastillas, tipo glucometro, y tipo de sensor
-        // 4) Agregar logica para request de ficha medica,
-        // 5) Hacer lista desplegable de los items que sean numerables ,
-        // 6) Solucionar fechas loguedUserDetails, serializacion JSON en app, toma la fecha como array,
+        // todo
 
 
     }

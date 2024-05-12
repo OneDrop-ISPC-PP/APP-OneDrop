@@ -98,22 +98,6 @@
                 android:textStyle="bold" />
 
             <EditText
-                android:id="@+id/signup_age"
-                android:layout_width="280dp"
-                android:layout_height="51dp"
-                android:layout_gravity="center"
-                android:layout_marginTop="10dp"
-                android:background="@drawable/lavender_border"
-                android:drawableLeft="@drawable/baseline_numbers_24"
-                android:drawablePadding="8dp"
-                android:fontFamily="sans-serif-condensed"
-                android:hint="@string/f_m_age"
-                android:padding="8dp"
-                android:textColor="@color/blackonedrop"
-                android:textSize="20dp"
-                android:textStyle="bold" />
-
-            <EditText
                 android:id="@+id/signup_birth"
                 android:layout_width="280dp"
                 android:layout_height="51dp"
