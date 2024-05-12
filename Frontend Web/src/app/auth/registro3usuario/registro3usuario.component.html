@@ -24,6 +24,9 @@
   <div class="col-lg-8 col-md-12 align-self-start">
     <div class="btn-group" data-toggle="buttons">
       <label class="btn btn-secondary">
+        <input type="radio" formControlName="tipo_diabetes" value="NO" autocomplete="off">No tengo
+      </label>
+      <label class="btn btn-secondary">
         <input type="radio" formControlName="tipo_diabetes" value="TIPO_1" autocomplete="off">Tipo 1
       </label>
       <label class="btn btn-secondary">
@@ -53,13 +56,13 @@
     <div class="col-lg-8 col-md-12 align-self-start">
       <div class="btn-group" data-toggle="buttons">
         <label class="btn btn-secondary">
-          <input type="radio" formControlName="terapia_insulina" value="TIPO_A" autocomplete="off">Dosis Basal
+          <input type="radio" formControlName="terapia_insulina" value="Dosis_Basal" autocomplete="off">Dosis Basal
         </label>
         <label class="btn btn-secondary">
-          <input type="radio" formControlName="terapia_insulina" value="TIPO_B" autocomplete="off">Dosis en Bolo
+          <input type="radio" formControlName="terapia_insulina" value="Dosis_en_Bolo" autocomplete="off">Dosis en Bolo
         </label>
         <label class="btn btn-secondary">
-          <input type="radio" formControlName="terapia_insulina" value="TIPO_C" autocomplete="off"> No Uso/Otros
+          <input type="radio" formControlName="terapia_insulina" value="No_Uso_Otros" autocomplete="off"> No Uso/Otros
         </label>
       </div>
             <!--  validacion  -->
@@ -81,13 +84,13 @@
     <div class="col-lg-8 col-md-12 align-self-start">
       <div class="btn-group" data-toggle="buttons">
         <label class="btn btn-secondary">
-          <input type="radio" formControlName="terapia_pastillas" value="TIPO_1" autocomplete="off">Tolbutamida
+          <input type="radio" formControlName="terapia_pastillas" value="Tolbutamida" autocomplete="off">Tolbutamida
         </label>
         <label class="btn btn-secondary">
-          <input type="radio" formControlName="terapia_pastillas" value="TIPO_2" autocomplete="off">Glimepirida
+          <input type="radio" formControlName="terapia_pastillas" value="Glimepirida" autocomplete="off">Glimepirida
         </label>
         <label class="btn btn-secondary">
-          <input type="radio" formControlName="terapia_pastillas" value="TIPO_3" autocomplete="off"> Glipizida
+          <input type="radio" formControlName="terapia_pastillas" value="Glipizida" autocomplete="off"> Glipizida
         </label>
       </div>
             <!--  validacion  -->
@@ -109,13 +112,13 @@
     <div class="col-lg-8 col-md-12 align-self-start">
       <div class="btn-group" data-toggle="buttons">
         <label class="btn btn-secondary">
-          <input type="radio" formControlName="tipo_glucometro" value="TIPO_1" autocomplete="off">Medidor Capilar
+          <input type="radio" formControlName="tipo_glucometro" value="Medidor_Capilar" autocomplete="off">Medidor Capilar
         </label>
         <label class="btn btn-secondary">
-          <input type="radio" formControlName="tipo_glucometro" value="TIPO_2" autocomplete="off">Medidor Continuo (MCG)
+          <input type="radio" formControlName="tipo_glucometro" value="Medidor_Continuo_MCG" autocomplete="off">Medidor Continuo (MCG)
         </label>
         <label class="btn btn-secondary">
-          <input type="radio" formControlName="tipo_glucometro" value="TIPO_3" autocomplete="off">Medidor Tipo Flash
+          <input type="radio" formControlName="tipo_glucometro" value="Medidor_Tipo_Flash" autocomplete="off">Medidor Tipo Flash
         </label>
 
       </div>
@@ -138,16 +141,13 @@
     <div class="col-lg-8 col-md-12 align-self-start">
       <div class="btn-group" data-toggle="buttons">
         <label class="btn btn-secondary">
-          <input type="radio" formControlName="tipo_sensor" value="NO" autocomplete="off">FreeStyle Libre de Abbott®
+          <input type="radio" formControlName="tipo_sensor" value="FreeStyle_Libre_de_Abbott" autocomplete="off">FreeStyle Libre de Abbott®
         </label>
         <label class="btn btn-secondary">
-          <input type="radio" formControlName="tipo_sensor" value="TIPO_2" autocomplete="off">Guardian Connect de Medtronic®
+          <input type="radio" formControlName="tipo_sensor" value="Guardian_Connect_de_Medtronic" autocomplete="off">Guardian Connect de Medtronic®
         </label>
         <label class="btn btn-secondary">
-          <input type="radio" formControlName="tipo_sensor" value="TIPO_3" autocomplete="off"> No uso
-        </label>
-        <label class="btn btn-secondary">
-          <input type="radio" formControlName="tipo_sensor" value="OTRO_TIPO" autocomplete="off"> No uso
+          <input type="radio" formControlName="tipo_sensor" value="No_uso" autocomplete="off"> No uso
         </label>
       </div>
             <!--  validacion  -->

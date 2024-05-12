@@ -48,22 +48,32 @@ public class ProfileActivity extends AppCompatActivity {
     }
 
     public void setTextsForm() {
-        // TODO ACA DEBO HACER LOGICA PARA PEDIR EL RESTO DE DATOS DEL USUARIO!
         // DTOmedicalRecord medicalRecord = // admin.getMedicalRecord(loguedUser.getUsername());
         signup_name.setText(loguedUser.getNombre());
         signup_last_name.setText(loguedUser.getApellido());
-        // todo signup_age.setText(String.valueOf(loguedUser.getNacimiento())); ==> no lo recibo en loguedUserDetails, porque me da error al serializaro a json, porque es un array"!!! REVISAR LA LOGICA PARA OBTENR LA FECHA Y CASTEARLO CORRECTAMETNE, LUEGO HAY QUE HACER EL CALCULO DE FECHA ACTUAL MENOS EL NACIMIENTO PARA SABER LA EDAD
-        // todo signup_age.setText(String.valueOf(loguedUser.getNacimiento())); ==> no lo recibo en loguedUserDetails, porque me da error al serializaro a json, porque es un array"!!! REVISAR LA LOGICA PARA OBTENR LA FECHA Y CASTEARLO CORRECTAMETNE, LUEGO HAY QUE HACER EL CALCULO DE FECHA ACTUAL MENOS EL NACIMIENTO PARA SABER LA EDAD
 
         // todo signup_birth.setText(loguedUser.getBirth()) ==> no lo recibo en loguedUserDetails, porque me da error al serializaro a json, porque es un array"!!! REVISAR LA LOGICA PARA OBTENR LA FECHA Y CASTEARLO CORRECTAMETNE, LUEGO HAY QUE HACER EL CALCULO DE FECHA ACTUAL MENOS EL NACIMIENTO PARA SABER LA EDAD
         // todo signup_birth.setText(loguedUser.getBirth()) ==> no lo recibo en loguedUserDetails, porque me da error al serializaro a json, porque es un array"!!! REVISAR LA LOGICA PARA OBTENR LA FECHA Y CASTEARLO CORRECTAMETNE, LUEGO HAY QUE HACER EL CALCULO DE FECHA ACTUAL MENOS EL NACIMIENTO PARA SABER LA EDAD
 
-
-
-        // aca falta el endpoint que trae toda la info cree este endpoint http://localhost:8080/fichaMedica/user/1
+        // TODO ACA DEBO HACER LOGICA PARA PEDIR EL RESTO DE DATOS DEL USUARIO, relacionado a la ficha medica http://localhost:8080/fichaMedica/user/1
         // todo signup_weight.setText(String.valueOf(loguedUser.get()));
         // todo signup_db_type.setText(loguedUser.getDbType());
         // todo signup_db_therapy.setText(loguedUser.getDbTherapy());
+
+
+        // todo backend:
+        // 1) Crear registros de TA y de
+        // PESO (copiar y pegar el de glucemias),
+        // 2) jasper reports pdf
+
+        // todo app:
+        // 1) quitar a la mierda analisis clinicos!,
+        // 2) quitar EDAD ,
+        // 2) agregar comorbilidad, obj glucosa, terapia pastillas, tipo glucometro, y tipo de sensor
+        // 3)Agregar logica para request de ficha medica,
+        // 4)Hacer lista desplegable de los items que sean numerables ,
+        // **)Solucionar fechas loguedUserDetails, serializacion JSON en app, toma la fecha como array,
+
 
     }
 

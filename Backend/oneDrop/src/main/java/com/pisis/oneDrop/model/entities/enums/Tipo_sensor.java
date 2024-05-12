@@ -1,8 +1,7 @@
 package com.pisis.oneDrop.model.entities.enums;
 
 public enum Tipo_sensor {
-    NO,
-    TIPO_2,
-    TIPO_3,
-    OTRO_TIPO
+    FreeStyle_Libre_de_Abbott,
+    Guardian_Connect_de_Medtronic,
+    No_uso
 }

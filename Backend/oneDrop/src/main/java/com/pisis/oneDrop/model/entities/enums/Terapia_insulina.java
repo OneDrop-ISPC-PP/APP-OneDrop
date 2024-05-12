@@ -1,7 +1,7 @@
 package com.pisis.oneDrop.model.entities.enums;
 
 public enum Terapia_insulina {
-    TIPO_A,
-    TIPO_B,
-    TIPO_C
+    Dosis_Basal,
+    Dosis_en_Bolo,
+    No_Uso_Otros
 }
