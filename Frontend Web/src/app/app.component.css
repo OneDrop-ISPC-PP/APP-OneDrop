@@ -36,12 +36,17 @@
 
 /* Estilos del brand OneDrop */
 
-.navbar-brand{
-    font-size: 1.7rem;
-    font-weight: 600;
+.navbar-brand {
+    background-image: url('../assets/images/dropLogo.png');
+    background-repeat: no-repeat;
+    background-size: contain; /* Ajusta automáticamente el tamaño de la imagen */
+    background-position: center; /* Centra la imagen vertical y horizontalmente */
+    width: 150px; /* Ancho de la imagen */
+    height: 50px; /* Altura de la imagen */
+    padding: 0; /* Elimina cualquier espacio de relleno */
+
+    
 }
-
-
 .borde{
     border: 1px solid blue;
 }

@@ -24,17 +24,17 @@ export class RegistroComponent implements OnInit{
     
     this.formPOSTRegistroUsuario= this.formBuilder.group({
 
-      username:["",[Validators.required]],
-      password1:["",[Validators.required,Validators.minLength(9)]],
-      password2:["",[Validators.required,Validators.minLength(9)]],
+      username:["",[Validators.required,Validators.minLength(2),Validators.maxLength(30)]],
+      password1:["",[Validators.required,Validators.minLength(5),Validators.maxLength(30)]], 
+      password2:["",[Validators.required,Validators.minLength(5),Validators.maxLength(30)]], 
       email:["",[Validators.required,Validators.email]],
   
-      nombre:["",[Validators.required]],
-      apellido:["",[Validators.required]],
+      nombre:["",[Validators.required,Validators.minLength(2),Validators.maxLength(30)]],
+      apellido:["",[Validators.required,Validators.minLength(2),Validators.maxLength(30)]],
       nacimiento:["",[Validators.required]],
       sexo:["",[Validators.required]],
-      dni:["",[Validators.required]],
-      telefono:["",[Validators.required]]
+      dni:["",[Validators.required,Validators.minLength(8),Validators.maxLength(10)]],
+      telefono:["",[Validators.required,Validators.minLength(9),Validators.maxLength(14)]],
     })
 
   }
