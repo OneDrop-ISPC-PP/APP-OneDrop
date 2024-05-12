@@ -27,6 +27,10 @@ import { CookieService } from "ngx-cookie-service";
 import { AuthService } from './servicios/auth.service';
 import { authInterceptorProviders } from './servicios/interceptors/auth.interceptor';
 
+// ANGULAR MATERIAL
+import {MatCardModule} from '@angular/material/card';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+
 
 @NgModule({
   declarations: [
@@ -40,7 +44,9 @@ import { authInterceptorProviders } from './servicios/interceptors/auth.intercep
     EcommerceModule,
     HttpClientModule,
     ReactiveFormsModule,
-    FormsModule
+    FormsModule,
+    MatSlideToggleModule,
+    MatCardModule
   ],
   providers: [CookieService,authInterceptorProviders],
   bootstrap: [AppComponent]
