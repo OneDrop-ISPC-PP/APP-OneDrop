@@ -56,7 +56,10 @@
                     Complete este campo.
                   </div>
                   <div *ngIf="password_GET.errors?.['minlength']">
-                    Ingrese una contraseña de mas de 9 caracteres.
+                    Ingrese una contraseña de más de 5 caracteres.
+                  </div>
+                  <div *ngIf="password_GET.errors?.['maxlength']">
+                    Ingrese una contraseña de menos de 30 caracteres.
                   </div>
             </div>
       </div> 
@@ -83,8 +86,11 @@
                    Complete este campo.
                  </div>
                  <div *ngIf="password2_GET.errors?.['minlength']">
-                   Ingrese una contraseña de mas de 9 caracteres.
+                   Ingrese una contraseña de más de 5 caracteres.
                  </div>
+                 <div *ngIf="password2_GET.errors?.['maxlength']">
+                  Ingrese una contraseña de menos de 30 caracteres.
+                </div>
            </div>
      </div> 
 
@@ -106,6 +112,12 @@
 
           <div *ngIf="username_GET.errors?.['required']">
             Complete este campo.
+          </div>
+          <div *ngIf="username_GET.errors?.['minlength']">
+            Ingrese un nombre de usuario de más de 2 caracteres.
+          </div>
+          <div *ngIf="username_GET.errors?.['maxlength']">
+            Ingrese un nombre de usuario de menos de 30 caracteres.
           </div>
 
       </div>
@@ -129,6 +141,12 @@
          <div *ngIf="name_GET.errors?.['required']">
            Complete este campo.
          </div>
+         <div *ngIf="name_GET.errors?.['minlength']">
+          Este campo debe tener más de 2 caracteres.
+        </div>
+        <div *ngIf="name_GET.errors?.['maxlength']">
+          Este campo debe tener menos de 30 caracteres.
+        </div>
      </div>
    </div>
 
@@ -149,6 +167,12 @@
          <div *ngIf="last_name_GET.errors?.['required']">
            Complete este campo.
          </div>
+         <div *ngIf="last_name_GET.errors?.['minlength']">
+          Este campo debe tener más de 2 caracteres.
+        </div>
+        <div *ngIf="last_name_GET.errors?.['maxlength']">
+          Este campo debe tener menos de 30 caracteres.
+        </div>
      </div>
    </div>
 
@@ -162,7 +186,7 @@
    </div>
    <!--  input  -->
    <div class="col-lg-8 col-md-12 align-self-start  ">
-     <input formControlName="telefono" id="phone" type="number" class="form-control sub-campo-input" id="exampleFormControlInput1" placeholder="351 555 66666">
+     <input formControlName="telefono" id="phone" type="tel" class="form-control sub-campo-input" id="exampleFormControlInput1" placeholder="351 555 66666">
           <!--  validacion  -->
           <div *ngIf="phone_GET.invalid && (phone_GET.dirty || phone_GET.touched)"
           class="text-danger">
@@ -170,8 +194,12 @@
               <div *ngIf="phone_GET.errors?.['required']">
                 Complete este campo.
               </div>
-
-
+              <div *ngIf="phone_GET.errors?.['minlength']">
+                Este campo debe tener más de 9 caracteres.
+              </div>
+              <div *ngIf="phone_GET.errors?.['maxlength']">
+                Este campo debe tener menos de 14 caracteres.
+              </div>
               
             </div>
    </div>
@@ -244,6 +272,12 @@
           
               <div *ngIf="dni_GET.errors?.['required']">
                 Complete este campo.
+              </div>
+              <div *ngIf="dni_GET.errors?.['minlength']">
+                Este campo debe tener más de 8 caracteres.
+              </div>
+              <div *ngIf="dni_GET.errors?.['maxlength']">
+                Este campo debe tener menos de 10 caracteres.
               </div>
             </div>
    </div>
