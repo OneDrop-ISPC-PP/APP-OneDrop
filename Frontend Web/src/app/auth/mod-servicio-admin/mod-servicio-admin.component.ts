@@ -30,25 +30,22 @@ export class ModServicioAdminComponent implements OnInit {
 
     })
 
-    this.serv_estadistica.modificar(this.dataid).subscribe((data)=>{
+    this.serv_estadistica.GET_DATOS(this.dataid).subscribe((data)=>{
       this.servicio=data;
 
     })
-
-    
   }
 ///////////////////////////////////////////////////////////////
 
   update(){
-    this.serv_estadistica.modificar2(this.servicio,this.dataid).subscribe(()=>{
-      this.router.navigate(["auth/dash_admin"])
+    this.serv_estadistica.UPDATE(this.servicio,this.dataid).subscribe(()=>{
+      this.router.navigate(["auth/dash_admin/info_services"])
 
     })
-
-
   }
 
 
+///////////////////////////////////////////////////////////////////
 
 
 

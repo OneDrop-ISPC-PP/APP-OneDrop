@@ -11,6 +11,9 @@ import { ModNotaUsuarioComponent } from './mod-nota-usuario/mod-nota-usuario.com
 import { ModServicioAdminComponent } from './mod-servicio-admin/mod-servicio-admin.component';
 import { AdminGuard } from '../servicios/admin.guard';
 import { UserGuard } from '../servicios/user.guard';
+import { InfoServicioDashAdminComponent } from './dashboard-admin/info-servicio-dash-admin/info-servicio-dash-admin.component';
+import { InfoUsuarioDashAdminComponent } from './dashboard-admin/info-usuario-dash-admin/info-usuario-dash-admin.component';
+import { BienvenidaDashAdminComponent } from './dashboard-admin/bienvenida-dash-admin/bienvenida-dash-admin.component';
 
 
 // RUTAS EXPORTADAS AL NAV
@@ -19,8 +22,25 @@ const routes:Routes=[
     children:[
         {path:'login', component:LoginComponent},
         {path:'registrarse', component:RegistroComponent},
-        {path:'dash_admin', component:DashboardAdminComponent /* , canActivate:[AdminGuard]*/},
-    {path:'dash_user', component:DashboardUsuarioComponent/*, canActivate:[UserGuard]*/},
+        
+
+        {path:'dash_admin',
+         component:DashboardAdminComponent,
+         canActivate:[AdminGuard],
+         children:[
+            {path:'info_users', component:InfoUsuarioDashAdminComponent},
+            {path:'info_services', component:InfoServicioDashAdminComponent},
+            {path:'bienvenida', component:BienvenidaDashAdminComponent},
+            {path:'**', redirectTo:'bienvenida'}
+            
+          ]
+
+        
+        },
+
+
+
+        {path:'dash_user', component:DashboardUsuarioComponent, canActivate:[UserGuard]},
         {path:'registro2usuario', component:Registro2usuarioComponent},
         {path:'registro3usuario', component:Registro3usuarioComponent},
         {path:'edit_nota/:id', component:ModNotaUsuarioComponent},
@@ -28,7 +48,7 @@ const routes:Routes=[
 
 
 
-        {path:'**', redirectTo:'login'}
+       {path:'**', redirectTo:'home'}
 
     ]
 }

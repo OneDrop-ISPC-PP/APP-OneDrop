@@ -15,17 +15,69 @@ export class EstadisAdminsService {
   //////////   URLS  --  solo hay que descomentar una y comentar la otra  //////////
     
   // URL DE SERVICIOS:
-  //url_SERVICIOS:string="http://localhost:8000/api/admin/servicios/";
-  url_SERVICIOS:string="http://localhost:3000/SERVICIOS/";
+  url_SERVICIOS:string="http://localhost:8080/servicios/";
+  //url_SERVICIOS:string="http://localhost:3000/SERVICIOS/";
 
   // URL DE PACIENTES:
-  //url_PACIENTES:string='http://localhost:8000/api/paciente/'
-  url_PACIENTES:string="http://localhost:3000/REGISTRO_DATOS_PERSONALES/"
+  url_PACIENTES:string='http://localhost:8080/auth/userDetails'
+  //url_PACIENTES:string="http://localhost:3000/REGISTRO_DATOS_PERSONALES/"
 
   // URL GENERAL DEL FRONT (TRANQUI DAVID):
   url:string="http://localhost:3000/"
 
-  
+
+
+/// CODIGO DE SERVICIOS 2024 ///
+/// CODIGO DE SERVICIOS 2024 ///
+/// CODIGO DE SERVICIOS 2024 ///
+
+// SERVICIOS DASHBOARD ADMIN //
+// SERVICIOS DASHBOARD ADMIN //
+
+  // METODO POST DE SERVICIOS
+  public POST(body: any){
+    return this.http.post(this.url_SERVICIOS,body)
+  }
+  // METODO PARA LISTAR SERVICIOS
+  public GET_SERVICIOS(){
+    return this.http.get(this.url_SERVICIOS)
+  }
+    // METODO PARA ELIMINAR SERVICIOS
+  public DELETE_SERVICIO(id:string){
+    return this.http.delete(this.url_SERVICIOS+id, {withCredentials: true})
+  }
+
+
+// MODIFICACION SERVICIOS DASHBOARD ADMIN //
+// MODIFICACION SERVICIOS DASHBOARD ADMIN //
+
+  // metodo para TRAER la informacion
+  public GET_DATOS(id:number){
+    return this.http.get(this.url_SERVICIOS+id, {withCredentials: true})
+  }
+  // metodo para MODIFICAR la informacion
+  public UPDATE(datos:any, id:number){
+    return this.http.put(this.url_SERVICIOS+id,datos, {withCredentials: true})
+  }
+
+
+// USUARIOS DASHBOARD ADMIN //
+// USUARIOS DASHBOARD ADMIN //
+
+
+
+
+
+// MODIFICACION USUARIOS DASHBOARD ADMIN //
+// MODIFICACION USUARIOS DASHBOARD ADMIN //
+
+
+
+
+
+///////////////////////////////////////////////////
+///////////////////////////////////////////////////
+///////////////////////////////////////////////////
 
   // METODO QUE MUESTRA USUARIOS
  muestraUsuarios( ){
@@ -42,21 +94,10 @@ export class EstadisAdminsService {
     return this.http.post(this.url_SERVICIOS,body, {withCredentials: true})
   }
 
-  // METODO PARA ELIMINAR SERVICIOS
-  DELETE(id:string){
-    return this.http.delete(this.url_SERVICIOS+id, {withCredentials: true})
-  }
+
 
   ///// MODIFICAR SERVICIOS /////
-  // metodo para TRAER la informacion
-  modificar(id:number){
-    return this.http.get(this.url_SERVICIOS+id, {withCredentials: true})
-  }
 
-  // metodo para MODIFICAR la informacion
-  modificar2(datos:any, id:number){
-    return this.http.put(this.url_SERVICIOS+id,datos, {withCredentials: true})
-  }
 
 
 /////////// METODOS QUE MUESTRAN COSAS QUE NO TENEMOS POR AHORA ////////////
