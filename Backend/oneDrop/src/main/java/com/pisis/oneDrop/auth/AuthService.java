@@ -13,6 +13,10 @@ import com.pisis.oneDrop.utils.MailManager;
 import com.pisis.oneDrop.utils.Validator;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpHeaders;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -55,7 +59,6 @@ public class AuthService {
             throw new NotFoundException("No se encontro usuario por ID: "+idUser);
         }
     }
-    /*
     public UserReadDtoArray getAllUsers (String dni, String fullName, Integer page, Integer size, String sortBy){
         Page<User> results;
         Sort sort = Sort.by(sortBy);
@@ -79,7 +82,29 @@ public class AuthService {
                 .sort_by(sortBy)
                 .build();
     }
-*/
+    public UserReadDtoArray getAllByRole (Role role, String dni, String fullName, Integer page, Integer size, String sortBy){
+        Page<User> results;
+        Sort sort = Sort.by(sortBy);
+        Pageable pageable = PageRequest.of(page, size, sort);
+
+        if (dni != null) {
+            results = userRepository.findAllByRoleAndDniContains(role,dni, pageable);
+        } else if (dni == null && !fullName.equals("")){
+            results = userRepository.getAllByRoleAndFullName(role,fullName, pageable);
+        } else {
+            results = userRepository.findAllByRole(role, pageable);
+        }
+        Page pagedResults = results.map(entity -> userMapper.toReadDto(entity));
+
+        return UserReadDtoArray.builder()
+                .users(pagedResults.getContent())
+                .total_results(pagedResults.getTotalElements())
+                .results_per_page(size)
+                .current_page(page)
+                .pages(pagedResults.getTotalPages())
+                .sort_by(sortBy)
+                .build();
+    }
     public AuthResponse register(RegisterRequest registerRequest) {
         if (! registerRequest.getPassword1().equals(registerRequest.getPassword2())) {
             throw new InvalidValueException("Passwords no coinciden!");

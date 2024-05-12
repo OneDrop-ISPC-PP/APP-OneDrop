@@ -118,6 +118,50 @@ public class AuthController {
     public ResponseEntity<AuthResponse> setNewPassword(@RequestBody @Valid RestorePassRequest restorePassRequest){
         return new ResponseEntity<>(authService.setNewPassword(restorePassRequest) , HttpStatus.ACCEPTED);
     }
+
+    // TODO ESTO SERA PARA QUE UN MEDICO VEA Y BUSQUE LOS PACIENTES
+    /*
+    @Operation(summary = "This endpoint returns a pageable List of users, accepts search by dni, name or lastname. And sort by fields, on other hand for Paginated results gets size and page number")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Returns List of all users, and page data.",
+                    content = { @Content(mediaType = "application/json",
+                            schema = @Schema(implementation = UserReadDtoArray.class)) }),
+            @ApiResponse(responseCode = "400", description = "Error as result of sending invalid data, for example sort by invaild field ",
+                    content = { @Content(mediaType = "application/json",
+                            schema = @Schema(implementation = ExceptionMessages.class)) }),
+            @ApiResponse(responseCode = "403", description = "Error as result of invalid credentials' ",
+                    content = { @Content(mediaType = "application/json",
+                            schema = @Schema(implementation = ExceptionMessages.class)) })
+    })
+     */
+    @SecurityRequirement(name = "Bearer Authentication")
+    @GetMapping("users")
+    public ResponseEntity<UserReadDtoArray> getAllUsers(@RequestParam(required = false) String dni,
+                                                        @RequestParam(required = false, defaultValue = "") String fullName,
+                                                        @RequestParam(required = false, defaultValue = "0") Integer page,
+                                                        @RequestParam(required = false, defaultValue = "10") Integer size,
+                                                        @RequestParam(required = false, defaultValue = "dni") String sortBy){
+        return new ResponseEntity<>(authService.getAllUsers(dni,fullName, page, size, sortBy), HttpStatus.OK);
+    }
+    @SecurityRequirement(name = "Bearer Authentication")
+    @GetMapping("users/pacientes")
+    public ResponseEntity<UserReadDtoArray> getAllPacientes(@RequestParam(required = false) String dni,
+                                                        @RequestParam(required = false, defaultValue = "") String fullName,
+                                                        @RequestParam(required = false, defaultValue = "0") Integer page,
+                                                        @RequestParam(required = false, defaultValue = "10") Integer size,
+                                                        @RequestParam(required = false, defaultValue = "dni") String sortBy){
+        return new ResponseEntity<>(authService.getAllByRole(Role.USUARIO, dni,fullName, page, size, sortBy), HttpStatus.OK);
+    }
+    @SecurityRequirement(name = "Bearer Authentication")
+    @GetMapping("users/medicos")
+    public ResponseEntity<UserReadDtoArray> getAllMedicos(@RequestParam(required = false) String dni,
+                                                            @RequestParam(required = false, defaultValue = "") String fullName,
+                                                            @RequestParam(required = false, defaultValue = "0") Integer page,
+                                                            @RequestParam(required = false, defaultValue = "10") Integer size,
+                                                            @RequestParam(required = false, defaultValue = "dni") String sortBy){
+        return new ResponseEntity<>(authService.getAllByRole(Role.MEDICO,dni,fullName, page, size, sortBy), HttpStatus.OK);
+    }
+
 /*
     // TODO PARA QUE ADMIN CAMBIE ROL A MEDICO
      @Operation(summary = "This endpoint sets a new role for an user, this endpoint need an user ID and a Role to set")
@@ -140,30 +184,5 @@ public class AuthController {
  */
 
 
-/*
-TODO ESTO SERA PARA QUE UN MEDICO VEA Y BUSQUE LOS PACIENTES
-
-    @Operation(summary = "This endpoint returns a pageable List of users, accepts search by dni, name or lastname. And sort by fields, on other hand for Paginated results gets size and page number")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Returns List of all users, and page data.",
-                    content = { @Content(mediaType = "application/json",
-                            schema = @Schema(implementation = UserReadDtoArray.class)) }),
-            @ApiResponse(responseCode = "400", description = "Error as result of sending invalid data, for example sort by invaild field ",
-                    content = { @Content(mediaType = "application/json",
-                            schema = @Schema(implementation = ExceptionMessages.class)) }),
-            @ApiResponse(responseCode = "403", description = "Error as result of invalid credentials' ",
-                    content = { @Content(mediaType = "application/json",
-                            schema = @Schema(implementation = ExceptionMessages.class)) })
-    })
-    @SecurityRequirement(name = "Bearer Authentication")
-    @GetMapping("users")
-    public ResponseEntity<UserReadDtoArray> getAllUsers(@RequestParam(required = false) String dni,
-                                                              @RequestParam(required = false, defaultValue = "") String fullName,
-                                                              @RequestParam(required = false, defaultValue = "0") Integer page,
-                                                              @RequestParam(required = false, defaultValue = "10") Integer size,
-                                                              @RequestParam(required = false, defaultValue = "dni") String sortBy){
-        return new ResponseEntity<>(authService.getAllUsers(dni,fullName, page, size, sortBy), HttpStatus.OK);
-    }
-*/
 
 }
