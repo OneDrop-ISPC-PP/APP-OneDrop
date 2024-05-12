@@ -43,7 +43,10 @@ public class FichaMedica {
     private Double peso;
 
     @OneToMany(fetch = FetchType.LAZY)
-    // @OrderBy("fecha_registro")
     private List<RegistroGlucemia> registros_glucemia = new ArrayList<>();
+    @OneToMany(fetch = FetchType.LAZY)
+    private List<RegistroPeso> registros_peso = new ArrayList<>();
+    @OneToMany(fetch = FetchType.LAZY)
+    private List<RegistroTensionArterial> registros_tension_arterial = new ArrayList<>();
 
 }

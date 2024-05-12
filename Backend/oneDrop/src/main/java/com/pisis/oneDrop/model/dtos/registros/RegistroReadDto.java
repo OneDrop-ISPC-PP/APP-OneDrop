@@ -10,7 +10,7 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class RegistroGlucemiaReadDto {
+public class RegistroReadDto {
     private Integer id;
     private Date fecha;
     private Double valor;

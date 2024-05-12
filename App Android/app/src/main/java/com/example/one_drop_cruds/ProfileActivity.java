@@ -62,17 +62,15 @@ public class ProfileActivity extends AppCompatActivity {
 
 
         // todo backend:
-        // 1) Crear registros de TA y de
-        // PESO (copiar y pegar el de glucemias),
-        // 2) jasper reports pdf
+        // 3) jasper reports pdf
 
         // todo app:
         // 1) quitar a la mierda analisis clinicos!,
         // 2) quitar EDAD ,
-        // 2) agregar comorbilidad, obj glucosa, terapia pastillas, tipo glucometro, y tipo de sensor
-        // 3)Agregar logica para request de ficha medica,
-        // 4)Hacer lista desplegable de los items que sean numerables ,
-        // **)Solucionar fechas loguedUserDetails, serializacion JSON en app, toma la fecha como array,
+        // 3) agregar comorbilidad, obj glucosa, terapia pastillas, tipo glucometro, y tipo de sensor
+        // 4) Agregar logica para request de ficha medica,
+        // 5) Hacer lista desplegable de los items que sean numerables ,
+        // 6) Solucionar fechas loguedUserDetails, serializacion JSON en app, toma la fecha como array,
 
 
     }

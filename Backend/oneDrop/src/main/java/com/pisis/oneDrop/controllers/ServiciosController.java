@@ -1,13 +1,9 @@
 package com.pisis.oneDrop.controllers;
 
 import com.pisis.oneDrop.model.dtos.RegistrosPaginadosReadDtoArray;
-import com.pisis.oneDrop.model.dtos.registros.RegistroGlucemiaAddDto;
-import com.pisis.oneDrop.model.dtos.registros.RegistroGlucemiaReadDto;
-import com.pisis.oneDrop.model.dtos.registros.RegistroGlucemiaUpdateDto;
 import com.pisis.oneDrop.model.dtos.servicios.ServicioAddDto;
 import com.pisis.oneDrop.model.dtos.servicios.ServicioReadDto;
 import com.pisis.oneDrop.model.dtos.servicios.ServicioUpdateDto;
-import com.pisis.oneDrop.services.RegistroGlucemiaService;
 import com.pisis.oneDrop.services.ServicioService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;

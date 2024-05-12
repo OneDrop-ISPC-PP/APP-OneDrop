@@ -4,15 +4,16 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
 import java.util.Date;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class RegistroGlucemiaUpdateDto {
+public class RegistroTensionReadDto {
+    private Integer id;
     private Date fecha;
-    private Double valor;
+    private Integer diastolica;
+    private Integer sistolica;
     private String comentario;
 }

@@ -6,9 +6,9 @@ import com.pisis.oneDrop.model.dtos.registros.RegistroAddDto;
 import com.pisis.oneDrop.model.dtos.registros.RegistroReadDto;
 import com.pisis.oneDrop.model.dtos.registros.RegistroUpdateDto;
 import com.pisis.oneDrop.model.entities.FichaMedica;
-import com.pisis.oneDrop.model.entities.RegistroGlucemia;
-import com.pisis.oneDrop.model.mappers.RegistroGlucemiaMapper;
-import com.pisis.oneDrop.model.repositories.RegistroGlucemiaRepository;
+import com.pisis.oneDrop.model.entities.RegistroPeso;
+import com.pisis.oneDrop.model.mappers.RegistroPesoMapper;
+import com.pisis.oneDrop.model.repositories.RegistroPesoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -19,32 +19,31 @@ import org.springframework.stereotype.Service;
 import java.util.Optional;
 
 @Service
-public class RegistroGlucemiaService {
+public class RegistroPesoService {
     @Autowired
-    RegistroGlucemiaRepository registroGlucemiaRepository;
-
+    RegistroPesoRepository registroPesoRepository;
     @Autowired
-    RegistroGlucemiaMapper registroGlucemiaMapper;
+    RegistroPesoMapper registroPesoMapper;
 
     @Autowired
     FichaMedicaService fichaMedicaService;
 
     // TODO validar datos de ficha medica
-    public RegistroReadDto addRegistro (Integer id, RegistroAddDto registroGlucemiaAddDto){
+    public RegistroReadDto addRegistro (Integer id, RegistroAddDto registroAddDto){
         FichaMedica fichaMedicaDeUsuario = fichaMedicaService.getFichaMedicaById(id);
         // TODO validar datos de ficha medica
         // TODO validar datos de ficha medica
-        RegistroGlucemia nuevoReg = registroGlucemiaMapper.toEntity(registroGlucemiaAddDto);
-        RegistroGlucemia regGuardado = registroGlucemiaRepository.save(nuevoReg);
-        fichaMedicaDeUsuario.getRegistros_glucemia().add(regGuardado);
+        RegistroPeso nuevoReg = registroPesoMapper.toEntity(registroAddDto);
+        RegistroPeso regGuardado = registroPesoRepository.save(nuevoReg);
+        fichaMedicaDeUsuario.getRegistros_peso().add(regGuardado);
         fichaMedicaService.fichaMedicaRepository.save(fichaMedicaDeUsuario);
-        return registroGlucemiaMapper.toReadDto(regGuardado);
+        return registroPesoMapper.toReadDto(regGuardado);
     }
 
 
     public RegistrosPaginadosReadDtoArray findAllRegistrosByIdUser(Integer id, Integer page, Integer size , String sortBy ){
 
-        Page<RegistroGlucemia> results;
+        Page<RegistroPeso> results;
         Sort sort = Sort.by(sortBy);
         Pageable pageable = PageRequest.of(page, size /* , sort */);
 
@@ -53,12 +52,12 @@ public class RegistroGlucemiaService {
         //todo PEDIENTEEEE
 
 
-        results = registroGlucemiaRepository.findAllRegistrosByIdUser(id, pageable);
+        results = registroPesoRepository.findAllRegistrosByIdUser(id, pageable);
         //todo PEDIENTEEEE
         //todo PEDIENTEEEE
         //todo PEDIENTEEEE
 
-        Page pagedResults = results.map(entity -> registroGlucemiaMapper.toReadDto(entity));
+        Page pagedResults = results.map(entity -> registroPesoMapper.toReadDto(entity));
         return RegistrosPaginadosReadDtoArray.builder()
                 .registros(pagedResults.getContent())
                 .total_results(pagedResults.getTotalElements())
@@ -70,37 +69,38 @@ public class RegistroGlucemiaService {
     }
 
     public RegistroReadDto findById (Integer id){
-        return registroGlucemiaMapper.toReadDto(getRegistroById(id));
+        return registroPesoMapper.toReadDto(getRegistroById(id));
     }
-    public RegistroGlucemia getRegistroById (Integer id){
-        Optional<RegistroGlucemia> reg = registroGlucemiaRepository.findById(id);
+    public RegistroPeso getRegistroById (Integer id){
+        Optional<RegistroPeso> reg = registroPesoRepository.findById(id);
         if(reg.isEmpty()) throw new NotFoundException("Registro no encontrado por id: "+id);
         return reg.get();
     }
 
     public RegistroReadDto deleteRegistroById (Integer id){
-        RegistroGlucemia regABorrar = getRegistroById(id);
-        registroGlucemiaRepository.deleteById(id);
-        return registroGlucemiaMapper.toReadDto(regABorrar);
+        RegistroPeso regABorrar = getRegistroById(id);
+        registroPesoRepository.deleteById(id);
+        return registroPesoMapper.toReadDto(regABorrar);
     }
 
     // todo VALIDAR DATO DE ACTUALIZACION
-    public RegistroReadDto editRegistroGlucemia(Integer id, RegistroUpdateDto registroGlucemiaUpdateDto){
-        Optional<RegistroGlucemia> registro = registroGlucemiaRepository.findById(id);
+    public RegistroReadDto editRegistro(Integer id, RegistroUpdateDto registroUpdateDto){
+        Optional<RegistroPeso> registro = registroPesoRepository.findById(id);
         if (registro.isEmpty()){
             throw new NotFoundException("NO SE ENCONTRO REGISTRO CON EL ID "+id);
         }
-        RegistroGlucemia regAEditar = registro.get();
-        if(registroGlucemiaUpdateDto.getFecha() != null){
-            regAEditar.setFecha(registroGlucemiaUpdateDto.getFecha());
+        RegistroPeso regAEditar = registro.get();
+        if(registroUpdateDto.getFecha() != null){
+            regAEditar.setFecha(registroUpdateDto.getFecha());
         }
-        if(registroGlucemiaUpdateDto.getValor() != null){
-            regAEditar.setValor(registroGlucemiaUpdateDto.getValor());
+        if(registroUpdateDto.getValor() != null){
+            regAEditar.setValor(registroUpdateDto.getValor());
         }
-        if(registroGlucemiaUpdateDto.getComentario() != null){
-            regAEditar.setComentario(registroGlucemiaUpdateDto.getComentario());
+        if(registroUpdateDto.getComentario() != null){
+            regAEditar.setComentario(registroUpdateDto.getComentario());
         }
-        return registroGlucemiaMapper.toReadDto(registroGlucemiaRepository.save(regAEditar));
+        return registroPesoMapper.toReadDto(registroPesoRepository.save(regAEditar));
     }
 
 }
+

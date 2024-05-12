@@ -13,12 +13,12 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class RegistroGlucemiaAddDto {
+public class RegistroAddDto {
     @NotNull
     private Date fecha;
 
-    @NotNull(message = "Glucemia no puede ser nula")
-    @PositiveOrZero(message = "El valor de glucemia debe ser mayor a 0")
+    @NotNull(message = "Valor no puede ser nulo")
+    @PositiveOrZero(message = "El valor de debe ser mayor a 0")
     private Double valor;
 
     private String comentario;
