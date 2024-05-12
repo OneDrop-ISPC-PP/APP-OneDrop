@@ -430,7 +430,10 @@ footer p {
 .pie {
     margin-top: 3%;
 }
-
+.col-lg-4 img {
+    width: 250px; /* Define el ancho deseado para la imagen */
+    height: auto; /* Esto permite que la altura se ajuste automáticamente según el ancho */
+}
 /*------Responsive-------*/
 
 @media (max-width:400px){
