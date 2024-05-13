@@ -3,39 +3,37 @@
     <div class="row">
 
       <!-- SIDEBAR -->
-      <div class="col-md-2 bg-light">
-        <div>
-          <h2 class="menu_text m-4">Menú</h2>
+      <div class="col-md-2 my-3">
+
+        <div class=" container bg-light sub_sidebar">
+
+          <div class="row m-2">
+
+              <div>
+                <h2 class="menu_text p-4 col-lg-12 menu_text">Menú</h2>
+              </div>
+
+              <div class="p-2">          
+                <button routerLink = "info_users" class="btn btn-light p-2 col-lg-12" >
+                Usuarios
+                </button>
+              </div>
+
+              <div class="p-2">
+                <button routerLink = "info_services" class="btn btn-light p-2 col-lg-12">
+                  Servicios
+                </button>
+              </div>
+
+          </div>
+
         </div>
 
-        <div class="menu_botones d-flex flex-column mb-3 align-items-center">
-
-          <div class="p-2">          
-            <button routerLink = "info_users" class="btn btn-light p-2" >
-            Usuarios
-            </button>
-          </div>
-
-          <div class="p-2">
-            <button routerLink = "info_services" class="btn btn-light p-2">
-              Servicios
-            </button>
-          </div>
-
-
-       </div>
-
-       
       </div>
-
       <!-- CONTENIDO -->
       <div class="col-md-10">
-
        <router-outlet></router-outlet>
-
-
       </div>
-
     </div>
   </div>
 </div>

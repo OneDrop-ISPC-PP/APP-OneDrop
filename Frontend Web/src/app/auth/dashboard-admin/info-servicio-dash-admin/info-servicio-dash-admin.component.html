@@ -1,56 +1,55 @@
-<div class="m-4">
+<section class="bg-light my-3 mx-0 p-4 borde_servicios ">
+<div >
     <h3 class="text_center">Servicios disponibles</h3>
 </div>
-        <section class="m-4">
-          <div class="container text-center">
-            <div class=" row">
 
-              <div class="m-2 p-2 col borde_servicios col-lg-2 "> <h6>Nombre </h6></div>
-              <div class="m-2 p-2 col borde_servicios col-lg-2 "> <h6>Precio </h6></div>
-              <div class="m-2 p-2 col borde_servicios col-lg-4 "> <h6>Descripcion </h6></div>
-              <div class="m-2 p-2 col  col-lg-2 "> </div>
-
-            </div>
-        </div>
+      <div class="my-4 contenedor_servicios">
+        <table class="table p-4">
+          <thead>
+            <tr>
+              <th scope="col">Nombre</th>
+              <th scope="col">Precio</th>
+              <th scope="col">Descripcion</th>
+              <th scope="col"></th>
 
 
-            <div  *ngFor="let s of listaDeServicios" class="container text-center">
-            <div class=" row">
-
-                <div class="m-2 p-2 col borde_servicios col-lg-2 "> <h6>{{s.nombre}} </h6></div>
-                <div class="m-2 p-2 col borde_servicios col-lg-2 "> <h6>${{s.precio}} </h6></div>
-                <div class="m-2 p-2 col borde_servicios col-lg-4 "> <h6>{{s.descripcion}} </h6></div>
-                <div class="m-2 p-2 col  col-lg-3 "> 
-                  <button  class="btn btn-success m-2 p-2" routerLink="/auth/edit_servicio/{{s.id}}">
-                    Editar</button>
-                  <button  class="btn btn-warning m-2 p-2" (click)="eliminar(s.id)"  >Eliminar</button>
-                </div>
-
-            </div>
-            </div>
-        </section>
+            </tr>
+          </thead>
+          <tbody  *ngFor="let s of listaDeServicios">
+            <tr>
+              <td>{{s.nombre}}</td>
+              <td>${{s.precio}}</td>
+              <td>{{s.descripcion}}</td>
+              <td> 
+                <button  class="btn bg_btn_edit px-4 p-2 m-2" routerLink="/auth/edit_servicio/{{s.id}}">
+                  Editar</button>
+                <button  class="btn bg_btn_elim px-4 p-2 m-2" (click)="eliminarUsuario(s.id)"  >Eliminar</button>
+              </td>
 
 
+            </tr>
+          </tbody>
+        </table>
+      </div>
 
+</section>
 
+<div class=""><br></div>
 
-<div>
-    <h3 class="text_center">Agregar servicio</h3>
-
-        <!-- REGISTRO DE SERVICIOS -->  
-      <section  class="da-sect1 bg-success border border-secondary-subtle">
-        
-        <form class="form-register  bg-success " [formGroup]="FormRegistroServicios"
+<!-- ////////// FORMULARIO //////////// -->
+<section class="bg-light my-3 mx-0 p-4 borde_servicios">
+  <div>
+    <h3 class="text_center">Formulario para agregar un nuevo servicio</h3>
+  </div>
+        <!-- REGISTRO DE SERVICIOS -->          
+        <form class="container" [formGroup]="FormRegistroServicios"
         (submit)="enviarDatosDeServicio()">
-          <h3 id="servicios" class="da-sec-t1 logo text-center">Formularios para el registro de servicios</h3>
-          <div class="grid-container">
-            <div class="row  b-radius border border-secondary-subtle bg-light justify-content-evenly align-items-center p-4 m-4" >
 
+        <div class="row  bg-light justify-content-evenly align-items-center p-4" >
 
-      <!-- INPUTS -->  
-
-          <div class="col-lg-3 bg-white  border border-secondary-subtle m-2 p-4">
-            <h5 class="text-center">Nombre del Servicio</h5>
+        <!-- NOMBRE SERVICIO -->  
+          <div class="col-lg-4 bg-light">
+            <h5 class="text-center p-3" >Nombre del Servicio</h5>
             <input formControlName="nombre" class="controls text-dark" type="text" name="nombres" id="nombres"
             > 
 
@@ -63,14 +62,12 @@
             </div>
 
         </div> 
-            
-            
-
+        
           </div>
 
-
-          <div class="col-lg-4 bg-white  border border-secondary-subtle  m-2 p-4">
-            <h5 class="text-center">Precio</h5>
+        <!-- PRECIO SERVICIO -->  
+          <div class="col-lg-4 bg-light">
+            <h5 class="text-center  p-3">Precio</h5>
             <input formControlName="precio" class="controls text-dark" type="number" name="nombres" id="nombres"   >         
                     <!-- verificacion -->  
                   <div *ngIf="precio_servicio_GET.invalid && (precio_servicio_GET.dirty || precio_servicio_GET.touched)"
@@ -81,12 +78,11 @@
                         </div>
                        
                 </div> 
-
-
           </div>
 
-          <div class="col-lg-12 bg-white  border border-secondary-subtle  m-2 p-4">
-            <h5 class="text-center">Descripcion</h5>
+        <!-- DESCRIPCION SERVICIO -->  
+          <div class="col-lg-12 bg-light ">
+            <h5 class="text-center p-3">Descripcion</h5>
             <input formControlName="descripcion" class="controls text-dark" type="text" name="nombres" id="nombres">
           
                   <!-- verificacion -->  
@@ -98,12 +94,12 @@
                       </div>
 
               </div>   
-
-
           </div>
 
-          <div class="col-lg-12 bg-white  border border-secondary-subtle  m-2 p-4">
-            <h5 class="text-center">Comentarios</h5>
+
+        <!-- COMENTARIO SERVICIO -->  
+          <div class="col-lg-12  bg-light ">
+            <h5 class="text-center p-3">Comentarios</h5>
             <input formControlName="comentarios" class="controls text-dark" type="text" name="nombres" id="nombres">
           
                     <!-- verificacion   --> 
@@ -112,22 +108,17 @@
                 
                         <div *ngIf="comentarios_servicio_GET.errors?.['required']">
                           Complete este campo.
-                        </div>
-                        
+                        </div> 
                 </div> 
-
-
           </div>
- 
   
-          <button  class="btn btn-success py-2 px-4">Registrar Servicio</button>
+          <button  class="btn bg_btn_edit m-2 col-lg-3 py-2 px-4">Registrar Servicio</button>
           
         </div>
-        </div>
+
         </form>
-        
+      
+ 
+  </section>
 
 
-      </section>
-
-</div>

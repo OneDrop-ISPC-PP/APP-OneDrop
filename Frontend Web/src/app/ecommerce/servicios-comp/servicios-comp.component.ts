@@ -7,22 +7,32 @@ import { EcommerceServiceService } from 'src/app/servicios/ecommerce-service.ser
   styleUrls: ['./servicios-comp.component.css']
 })
 export class ServiciosCompComponent implements OnInit {
-  servicios:any
+  listaServicios:any
 
 
-    constructor(private servicio:EcommerceServiceService){
+    constructor(private serv_eccomerce:EcommerceServiceService){
+      
+      //////// MUESTRA SERVICIOS ////////
 
-    //////// MUESTRA SERVICIOS ////////
-      this.servicio.muestraservicio().subscribe({
-        next:(servicios_S)=>{
-          this.servicios=servicios_S
-        },
-        error:(errorData)=>{
-          console.error(errorData);
-        }
-        
-      }
-         )
+    }
+
+    // NG ON INIT
+      ngOnInit():void{
+        this.serv_eccomerce.GET_SERVICIOS().subscribe(
+          (data:any)=>{
+            this.listaServicios = data.registros;
+            console.log("CARGA DE SERVICIOS EXITOSA LOS DATOS SON:")
+            console.log(data.registros);
+  
+          },
+          (error) => {
+            console.log("ERROR EN LA CARGA DE LOS SERVICIOS")
+            console.log(error);
+  
+          }
+
+        )
+
     }
 
 
@@ -57,7 +67,6 @@ export class ServiciosCompComponent implements OnInit {
 
 
 
-    ngOnInit():void{}
 }
 
 

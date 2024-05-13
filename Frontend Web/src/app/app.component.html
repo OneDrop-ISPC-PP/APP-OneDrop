@@ -65,26 +65,26 @@
     <div class=" flex-padre collapse navbar-collapse   " id="navbarNav">
         
       <ul class="navbar-nav">
-        <li class="nav-item active botones" id="nav-item">
+        <li class="nav-item active botones" id="nav-item" routerLink="home">
             <a class="nav-link" id="nav-link" routerLink="home"> Inicio <span class="sr-only">Inicio</span></a>
         </li>
 
-        <li class="nav-item botones" id="nav-item">
+        <li class="nav-item botones" id="nav-item"  routerLink="nosotros">
             <a class="nav-link" id="nav-link" routerLink="nosotros" > Nosotros </a>
         </li>
-        <li class="nav-item botones" id="nav-item">
+        <li class="nav-item botones" id="nav-item" routerLink="soporte">
             <a class="nav-link " id="nav-link" routerLink="soporte"> Soporte </a>
         </li>
         
-        <li class="nav-item botones" id="nav-item">
+        <li class="nav-item botones" id="nav-item"  href="https://www.diabetes.ascensia.es/blog/blog-overview/" >
             <a target="_blank" class="nav-link" id="nav-link" href="https://www.diabetes.ascensia.es/blog/blog-overview/" target="_blank">Blog</a>
         </li>
 
-        <li class="nav-item botones" id="nav-item">
-          <a class="nav-link" id="nav-link" routerLink="ecommerce/servicios"> Servicios </a>
+        <li class="nav-item botones" id="nav-item" routerLink="ecommerce/servicios" >
+          <a class="nav-link" id="nav-link"  routerLink="ecommerce/servicios"> Servicios </a>
       </li>
 
-        <li class="nav-item botones" id="nav-item">
+        <li class="nav-item botones" id="nav-item" routerLink="contacto">
             <a class="nav-link" id="nav-link" routerLink="contacto"> Contacto </a>
         </li>
 
@@ -93,24 +93,28 @@
 
         <div >
           <ul class="navbar-nav me-auto mb-2 mb-md-0">
-            <li class="nav-item botones" id="nav-item">
-              <a class="nav-link" id="nav-link" routerLink="auth/registrarse"
+            <li class="nav-item botones" id="nav-item" *ngIf = "!login.verificacionLogeo()" routerLink="auth/registrarse" >
+              <a class="nav-link" id="nav-link" routerLink="auth/registrarse" 
               > Registrarse</a>
             </li>
 
 
-          <li class="nav-item botones" id="nav-item"  (click)="cerrarSesion()"  *ngIf = "login.verificacionLogeo()">
-            <a  class="nav-link" id="nav-link" > Cerrar Sesion</a>
+          <li class="nav-item botones" id="nav-item" (click)="cerrarSesion()" *ngIf="login.verificacionLogeo()"routerLink="auth/home">
+            <a  class="nav-link" id="nav-link"  routerLink="auth/home"  > Cerrar Sesion</a>
           </li>
           
 
-          <li class="nav-item botones boton1" id="nav-item"  *ngIf = "!login.verificacionLogeo()">
-               <a class="nav-link boton1bis" id="nav-link"  routerLink="auth/login" > Inciar Sesion</a>
+          <li class="nav-item botones boton1" id="nav-item"   *ngIf = "!login.verificacionLogeo()"  routerLink="auth/login">
+               <a class="nav-link boton1bis" id="nav-link"  routerLink="auth/login"  > Inciar Sesion</a>
           </li>
 
-          <li class="nav-item botones boton1" id="nav-item"  *ngIf = "login.verificacionLogeo()">
-            <a class="nav-link boton1bis" id="nav-link"> {{ login.getUser().username}}</a>
+          <li class="nav-item botones boton1" id="nav-item" *ngIf = "login.verificacionLogeo()"   (click)="redireccionUsername()">
+            <a class="nav-link boton1bis" id="nav-link" (click)="redireccionUsername()"> {{ login.getUser().username}}</a>
           </li>
+
+          
+
+
 
           </ul>
     
