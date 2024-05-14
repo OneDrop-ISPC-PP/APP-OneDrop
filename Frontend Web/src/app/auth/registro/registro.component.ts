@@ -25,8 +25,8 @@ export class RegistroComponent implements OnInit{
     this.formPOSTRegistroUsuario= this.formBuilder.group({
 
       username:["",[Validators.required,Validators.minLength(2),Validators.maxLength(30)]],
-      password1:["",[Validators.required,Validators.minLength(5),Validators.maxLength(30)]], 
-      password2:["",[Validators.required,Validators.minLength(5),Validators.maxLength(30)]], 
+      password1:["",[Validators.required,Validators.minLength(9),Validators.maxLength(30)]], 
+      password2:["",[Validators.required,Validators.minLength(9),Validators.maxLength(30)]], 
       email:["",[Validators.required,Validators.email]],
   
       nombre:["",[Validators.required,Validators.minLength(2),Validators.maxLength(30)]],

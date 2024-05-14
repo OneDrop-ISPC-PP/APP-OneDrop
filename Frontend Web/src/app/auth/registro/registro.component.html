@@ -56,7 +56,7 @@
                     Complete este campo.
                   </div>
                   <div *ngIf="password_GET.errors?.['minlength']">
-                    Ingrese una contraseña de más de 5 caracteres.
+                    Ingrese una contraseña de más de 8 caracteres.
                   </div>
                   <div *ngIf="password_GET.errors?.['maxlength']">
                     Ingrese una contraseña de menos de 30 caracteres.
@@ -72,7 +72,7 @@
     <div class="row g-3 align-items-center margin  campo-input borde campo-email">
       <!--  label  -->
      <div class="col-lg-3 align-self-start ">
-       <label for="inputPassword6" class="col-form-label sub-campo-input">Repita lo contraseña</label>
+       <label for="inputPassword6" class="col-form-label sub-campo-input">Repita la contraseña</label>
      </div>
        <!--  input  -->
      <div class="col-lg-8 align-self-start ">
@@ -86,10 +86,10 @@
                    Complete este campo.
                  </div>
                  <div *ngIf="password2_GET.errors?.['minlength']">
-                   Ingrese una contraseña de más de 5 caracteres.
+                   Ingrese una contraseña de más de 8 caracteres.
                  </div>
                  <div *ngIf="password2_GET.errors?.['maxlength']">
-                  Ingrese una contraseña de menos de 30 caracteres.
+                  Ingrese una contraseña de menos de 31 caracteres.
                 </div>
            </div>
      </div> 
