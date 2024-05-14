@@ -59,6 +59,11 @@ public class AuthService {
             throw new NotFoundException("No se encontro usuario por ID: "+idUser);
         }
     }
+    public UserReadDto getUserById(Integer idUser){
+        Optional<User> user = userRepository.findById(idUser);
+        if (user.isEmpty()) throw new NotFoundException("No existe el usuario por ID "+idUser);
+        return userMapper.toReadDto(user.get());
+    }
     public UserReadDtoArray getAllUsers (String dni, String fullName, Integer page, Integer size, String sortBy){
         Page<User> results;
         Sort sort = Sort.by(sortBy);

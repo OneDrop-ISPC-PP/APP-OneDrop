@@ -119,8 +119,6 @@ public class AuthController {
         return new ResponseEntity<>(authService.setNewPassword(restorePassRequest) , HttpStatus.ACCEPTED);
     }
 
-    // TODO ESTO SERA PARA QUE UN MEDICO VEA Y BUSQUE LOS PACIENTES
-    /*
     @Operation(summary = "This endpoint returns a pageable List of users, accepts search by dni, name or lastname. And sort by fields, on other hand for Paginated results gets size and page number")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Returns List of all users, and page data.",
@@ -133,7 +131,6 @@ public class AuthController {
                     content = { @Content(mediaType = "application/json",
                             schema = @Schema(implementation = ExceptionMessages.class)) })
     })
-     */
     @SecurityRequirement(name = "Bearer Authentication")
     @GetMapping("users")
     public ResponseEntity<UserReadDtoArray> getAllUsers(@RequestParam(required = false) String dni,
@@ -146,10 +143,10 @@ public class AuthController {
     @SecurityRequirement(name = "Bearer Authentication")
     @GetMapping("users/pacientes")
     public ResponseEntity<UserReadDtoArray> getAllPacientes(@RequestParam(required = false) String dni,
-                                                        @RequestParam(required = false, defaultValue = "") String fullName,
-                                                        @RequestParam(required = false, defaultValue = "0") Integer page,
-                                                        @RequestParam(required = false, defaultValue = "10") Integer size,
-                                                        @RequestParam(required = false, defaultValue = "dni") String sortBy){
+                                                            @RequestParam(required = false, defaultValue = "") String fullName,
+                                                            @RequestParam(required = false, defaultValue = "0") Integer page,
+                                                            @RequestParam(required = false, defaultValue = "10") Integer size,
+                                                            @RequestParam(required = false, defaultValue = "dni") String sortBy){
         return new ResponseEntity<>(authService.getAllByRole(Role.USUARIO, dni,fullName, page, size, sortBy), HttpStatus.OK);
     }
     @SecurityRequirement(name = "Bearer Authentication")
@@ -162,8 +159,7 @@ public class AuthController {
         return new ResponseEntity<>(authService.getAllByRole(Role.MEDICO,dni,fullName, page, size, sortBy), HttpStatus.OK);
     }
 
-/*
-    // TODO PARA QUE ADMIN CAMBIE ROL A MEDICO
+
      @Operation(summary = "This endpoint sets a new role for an user, this endpoint need an user ID and a Role to set")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "202", description = "Returns updated data",
@@ -177,11 +173,29 @@ public class AuthController {
                             schema = @Schema(implementation = NotFoundException.class)) })
     })
     @SecurityRequirement(name = "Bearer Authentication")
-    @PutMapping("users/{idUser}")
+    @PutMapping("users/{idUser}") // TODO PARA QUE ADMIN CAMBIE ROL A MEDICO
     public ResponseEntity<UserReadDto> editUserRoleById (@PathVariable Integer idUser, @RequestParam Role newRole){
         return new ResponseEntity<>(authService.editUserRoleById(idUser, newRole), HttpStatus.ACCEPTED);
     }
- */
+    /*
+         @Operation(summary = "This endpoint sets a new role for an user, this endpoint need an user ID and a Role to set")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "202", description = "Returns updated data",
+                    content = { @Content(mediaType = "application/json",
+                            schema = @Schema(implementation = UserReadDto.class)) }),
+            @ApiResponse(responseCode = "400", description = "Error as result of sending invalid data, for example invaild field ",
+                    content = { @Content(mediaType = "application/json",
+                            schema = @Schema(implementation = ExceptionMessages.class)) }),
+            @ApiResponse(responseCode = "404", description = "Not found ",
+                    content = { @Content(mediaType = "application/json",
+                            schema = @Schema(implementation = NotFoundException.class)) })
+    })
+     */
+    @SecurityRequirement(name = "Bearer Authentication")
+    @GetMapping("users/{idUser}") // TODO PARA QUE ADMIN CAMBIE ROL A MEDICO
+    public ResponseEntity<UserReadDto> getUserById (@PathVariable Integer idUser){
+        return new ResponseEntity<>(authService.getUserById(idUser), HttpStatus.ACCEPTED);
+    }
 
 
 

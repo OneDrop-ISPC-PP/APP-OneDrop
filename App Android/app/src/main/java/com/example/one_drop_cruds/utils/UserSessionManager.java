@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.widget.Toast;
 
 import com.example.one_drop_cruds.UserLoginActivity;
+import com.example.one_drop_cruds.entities.user.FichaMedicaUsuario;
 import com.example.one_drop_cruds.entities.user.LoguedUserDetails;
 
 public class UserSessionManager {

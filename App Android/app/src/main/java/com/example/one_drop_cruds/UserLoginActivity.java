@@ -28,9 +28,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class UserLoginActivity extends AppCompatActivity {
     SharedPrefManager sharedPrefManager;
     ActivityUserLoginBinding binding;
-    // AdminSQLiteOpenHelper adminBD;
-
-    String baseUrl = "http://192.168.18.3:8080";
+    String baseUrl = "http://192.168.6.144:8080";// "http://192.168.18.3:8080";
 
     private void loginUserRequest(String username, String password){// logica de request
         HttpLoggingInterceptor logginInterceptor = new HttpLoggingInterceptor();
@@ -58,7 +56,6 @@ public class UserLoginActivity extends AppCompatActivity {
                     String token = response.body().getToken();
                     sharedPrefManager.setUserToken(token);
                     Intent intent = new Intent(getApplicationContext(), Home.class);
-                    //  intent.putExtra("token", token);
                     startActivity(intent);
                     Toast.makeText(getApplicationContext(), "Login exitoso!", Toast.LENGTH_LONG).show();
                 } else if (response.code()==400){

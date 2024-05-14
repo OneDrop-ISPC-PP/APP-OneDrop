@@ -47,7 +47,7 @@ public class Home extends AppCompatActivity {
     TextView textView_welcome;
     FilesManager filesManager;
     WebView webview;
-    String baseUrl = "http://192.168.18.3:8080";
+    String baseUrl = "http://192.168.6.144:8080";// "http://192.168.18.3:8080";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -132,9 +132,6 @@ public class Home extends AppCompatActivity {
                 if(response.isSuccessful() && response.body() != null){
                     // Obtener datos del usuario de la resp y guardarlo en shared pref como un objeto json
                     sharedPrefManager.setLoguedUser(response.body());
-                    System.out.println("******************** loguedUser **************************************************");
-                    System.out.println(response.body());
-                    System.out.println("**********************************************************************");
                     textView_welcome.setText("Bienvenido, " + response.body().getUsername());
                 } else if (response.code()==400){
                     sharedPrefManager.clearLoguedUser();

@@ -131,6 +131,22 @@
                 android:textStyle="bold" />
 
             <EditText
+                android:id="@+id/signup_objetivo_glucosa"
+                android:layout_width="280dp"
+                android:layout_height="51dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/lavender_border"
+                android:drawableLeft="@drawable/baseline_monitor_weight_24"
+                android:drawablePadding="8dp"
+                android:fontFamily="sans-serif-condensed"
+                android:hint="@string/f_m_objetivo_glucosa"
+                android:padding="8dp"
+                android:textColor="@color/blackonedrop"
+                android:textSize="20dp"
+                android:textStyle="bold" />
+
+            <EditText
                 android:id="@+id/signup_db_type"
                 android:layout_width="280dp"
                 android:layout_height="51dp"
@@ -145,6 +161,22 @@
                 android:textColor="@color/blackonedrop"
                 android:textSize="20dp"
                 android:textStyle="bold" />
+
+            <Spinner
+                android:padding="8dp"
+                android:textColor="@color/blackonedrop"
+                android:textSize="20dp"
+                android:textStyle="bold"
+                android:layout_width="280dp"
+                android:layout_height="51dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/lavender_border"
+                android:drawableLeft="@drawable/baseline_health_and_safety_24"
+                android:drawablePadding="8dp"
+                android:fontFamily="sans-serif-condensed"
+
+                android:id="@+id/spinner"/>
 
             <EditText
                 android:id="@+id/signup_db_therapy"
@@ -161,6 +193,11 @@
                 android:textColor="@color/blackonedrop"
                 android:textSize="20dp"
                 android:textStyle="bold" />
+
+
+
+
+            
 
             <LinearLayout
                 android:layout_width="wrap_content"

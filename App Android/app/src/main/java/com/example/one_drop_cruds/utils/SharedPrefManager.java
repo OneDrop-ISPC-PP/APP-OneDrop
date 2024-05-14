@@ -3,6 +3,7 @@ package com.example.one_drop_cruds.utils;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import com.example.one_drop_cruds.entities.user.FichaMedicaUsuario;
 import com.example.one_drop_cruds.entities.user.LoguedUserDetails;
 import com.google.gson.Gson;
 
@@ -32,6 +33,19 @@ public class SharedPrefManager {
         this.sharedPrefEditor.putString("loguedUser", userJson);
         sharedPrefEditor.apply();
     }
+    public void setFichaMedicaUser(FichaMedicaUsuario ficha) {
+        // serializar a json y guardarlo como cadena en shared pref..
+        Gson gsonSerializer = new Gson();
+        String fichaJson = gsonSerializer.toJson(ficha);
+        this.sharedPrefEditor.putString("fichaMedicaUsuario", fichaJson);
+        sharedPrefEditor.apply();
+    }
+    public FichaMedicaUsuario getFichaMedicaUser() {
+        String userJson = this.sharedPref.getString("fichaMedicaUsuario", null);
+        Gson gsonSerializer = new Gson();
+        FichaMedicaUsuario fichaMedica = gsonSerializer.fromJson(userJson, FichaMedicaUsuario.class);
+        return fichaMedica;
+    }
     public LoguedUserDetails getLoguedUser() {
         String userJson = this.sharedPref.getString("loguedUser", null);
         Gson gsonSerializer = new Gson();
@@ -39,9 +53,15 @@ public class SharedPrefManager {
         return loguedUserDetails;
     }
     public void clearLoguedUser() {
+        clearFichaMedica();
         this.sharedPrefEditor.remove("loguedUser");
         sharedPrefEditor.apply();
     }
+    public void clearFichaMedica() {
+        this.sharedPrefEditor.remove("fichaMedicaUsuario");
+        sharedPrefEditor.apply();
+    }
+
 
     /*
     public void setLoguedUser(String username) {

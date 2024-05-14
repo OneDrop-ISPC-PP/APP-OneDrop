@@ -1,7 +1,9 @@
 package com.example.one_drop_cruds.entities.user;
 import com.google.gson.annotations.SerializedName;
 
+import java.lang.reflect.Array;
 import java.time.LocalDate;
+import java.util.List;
 
 public class LoguedUserDetails {
     @SerializedName("token")
@@ -14,34 +16,33 @@ public class LoguedUserDetails {
     String dni;
     @SerializedName("email")
     String email;
-    // @SerializedName("role")
-    // String role;
+    @SerializedName("role")
+    Role role;
     @SerializedName("nombre")
     String nombre;
     @SerializedName("apellido")
     String apellido;
     @SerializedName("telefono")
     String telefono;
-
-    // @SerializedName("nacimiento")
-    // LocalDate nacimiento;
+    @SerializedName("nacimiento")
+    List<Integer> nacimiento; // Cambiado a List<LocalDate>
     @SerializedName("sexo")
     String sexo;
 
     public LoguedUserDetails() {
     }
 
-    public LoguedUserDetails(String token, Integer id, String username, String dni, String email /*, String role*/ , String nombre, String apellido, String telefono, /*LocalDate nacimiento,*/ String sexo) {
+    public LoguedUserDetails(String token, Integer id, String username, String dni, String email , Role role, String nombre, String apellido, String telefono, List<Integer> nacimiento, String sexo) {
         this.token = token;
         this.id = id;
         this.username = username;
         this.dni = dni;
         this.email = email;
-        // this.role = role;
+        this.role = role;
         this.nombre = nombre;
         this.apellido = apellido;
         this.telefono = telefono;
-        // this.nacimiento = nacimiento;
+        this.nacimiento = nacimiento;
         this.sexo = sexo;
     }
 
@@ -84,24 +85,20 @@ public class LoguedUserDetails {
     public void setEmail(String email) {
         this.email = email;
     }
-/*
-    public String getRole() {
+
+    public Role getRole() {
         return role;
     }
 
-    public void setRole(String role) {
+    public void setRole(Role role) {
         this.role = role;
     }
-
-    public LocalDate getNacimiento() {
+    public List<Integer> getNacimiento() {
         return nacimiento;
     }
-
-    public void setNacimiento(LocalDate nacimiento) {
+    public void setNacimiento(List<Integer> nacimiento) {
         this.nacimiento = nacimiento;
     }
-
- */
     public String getNombre() {
         return nombre;
     }
@@ -142,9 +139,11 @@ public class LoguedUserDetails {
                 ", username='" + username + '\'' +
                 ", dni='" + dni + '\'' +
                 ", email='" + email + '\'' +
+                ", role='" + role + '\'' +
                 ", nombre='" + nombre + '\'' +
                 ", apellido='" + apellido + '\'' +
                 ", telefono='" + telefono + '\'' +
+                ", nacimiento='" + nacimiento + '\'' +
                 ", sexo='" + sexo + '\'' +
                 '}';
     }

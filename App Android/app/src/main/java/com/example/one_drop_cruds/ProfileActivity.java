@@ -13,12 +13,28 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.one_drop_cruds.entities.DTOmedicalRecord;
+import com.example.one_drop_cruds.entities.user.FichaMedicaUsuario;
 import com.example.one_drop_cruds.entities.user.LoguedUserDetails;
+import com.example.one_drop_cruds.request.AuthRequests;
 import com.example.one_drop_cruds.utils.AdminSQLiteOpenHelper;
+import com.example.one_drop_cruds.utils.SharedPrefManager;
 import com.example.one_drop_cruds.utils.UserSessionManager;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.logging.HttpLoggingInterceptor;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ProfileActivity extends AppCompatActivity {
     UserSessionManager userSessionManager;
+    SharedPrefManager sharedPrefManager;
     // AdminSQLiteOpenHelper admin;
     EditText signup_name, signup_last_name, signup_age, signup_birth, signup_weight, signup_db_type, signup_db_therapy;
     Button edit_medical_data_button, selectImageButton;
@@ -27,11 +43,15 @@ public class ProfileActivity extends AppCompatActivity {
     private Uri selectedImageUri = null; // Para almacenar la URI de la imagen seleccionada
 
     LoguedUserDetails loguedUser;
+    FichaMedicaUsuario fichaMedicaUsuario;
+    String token;
+    String baseUrl = "http://192.168.6.144:8080";// "http://192.168.18.3:8080";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
-        // admin = new AdminSQLiteOpenHelper(this, "bd_one_drop", null, 1);
+        sharedPrefManager = new SharedPrefManager(getApplicationContext(), "oneDrop_shared_preferences");
+        token = sharedPrefManager.getUserToken();
         userSessionManager = new UserSessionManager(getApplicationContext());
 
         loguedUser = userSessionManager.getLoguedUserDetails();  // SI NO ESTA LOGUEADO, SE REDIRIGE A LOGIN
@@ -47,22 +67,89 @@ public class ProfileActivity extends AppCompatActivity {
         setTextsForm();
     }
 
+    private void getFichaMedicaUsuario(){
+        HttpLoggingInterceptor getDetailsUserInterceptor = new HttpLoggingInterceptor();
+        getDetailsUserInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+        OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
+        httpClient.addInterceptor(getDetailsUserInterceptor);
+
+        // todo el interceptor para agregar el token al header
+        httpClient.addInterceptor(chain -> {
+            Request originalRequest = chain.request();
+            Request.Builder builder = originalRequest.newBuilder();
+            if (token!= null &&!token.isEmpty()) {
+                builder.header("Authorization", "Bearer " + token);
+            }
+            return chain.proceed(builder.build());
+        }); //todo el interceptor para agregar el token al header
+
+
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(baseUrl)
+                .addConverterFactory(GsonConverterFactory.create())
+                .client(httpClient.build())
+                .build();
+        AuthRequests authRequest = retrofit.create(AuthRequests.class);
+        Call<FichaMedicaUsuario> call = authRequest.getFichaMedicaUsuario(loguedUser.getId());
+        call.enqueue(new Callback<FichaMedicaUsuario>() {
+            @Override
+            public void onResponse(Call<FichaMedicaUsuario> call, Response<FichaMedicaUsuario> response) {
+                if(response.isSuccessful() && response.body() != null){
+                    // Obtener datos de ficha medica y guardarlo en shared
+                    sharedPrefManager.setFichaMedicaUser(response.body());
+                    System.out.println("******************** FICHA MEDICA *************************************************");
+                    System.out.println(response.body());
+                    System.out.println("******************** FICHA MEDICA ******************************************************");
+                } else if (response.code()==400){
+                    System.out.println(" FICHA MEDICA response.code()==400 SI NO ESTA CARGADA LA FICHA, SE DEBERIA REDIRIGIR A ACTIVIY DE CARGA DE FICHA MEDICA *********");
+                    System.out.println(response.body());
+                    // TODO SI NO ESTA CARGADA LA FICHA, SE DEBERIA REDIRIGIR A ACTIVIY DE CARGA DE FICHA MEDICA
+                    // TODO SI NO ESTA CARGADA LA FICHA, SE DEBERIA REDIRIGIR A ACTIVIY DE CARGA DE FICHA MEDICA
+                    // TODO SI NO ESTA CARGADA LA FICHA, SE DEBERIA REDIRIGIR A ACTIVIY DE CARGA DE FICHA MEDICA
+                    System.out.println(" FICHA MEDICA response.code()==400 SI NO ESTA CARGADA LA FICHA, SE DEBERIA REDIRIGIR A ACTIVIY DE CARGA DE FICHA MEDICA *********");
+                }
+            }
+            @Override
+            public void onFailure(Call<FichaMedicaUsuario> call, Throwable t) {
+                System.out.println("******************** FICHA MEDICA Throwable t*************************************************");
+                System.out.println( t);
+                // TODO SI NO ESTA CARGADA LA FICHA, SE DEBERIA REDIRIGIR A ACTIVIY DE CARGA DE FICHA MEDICA
+                // TODO SI NO ESTA CARGADA LA FICHA, SE DEBERIA REDIRIGIR A ACTIVIY DE CARGA DE FICHA MEDICA
+                // TODO SI NO ESTA CARGADA LA FICHA, SE DEBERIA REDIRIGIR A ACTIVIY DE CARGA DE FICHA MEDICA
+                System.out.println("******************** FICHA MEDICA Throwable t******************************************************");
+            }
+        });
+    }
+
     public void setTextsForm() {
+        getFichaMedicaUsuario(); // Carga datos en fichaMedicaUsuario, o inicia activity para cargar datos de ficha medica
+
         // DTOmedicalRecord medicalRecord = // admin.getMedicalRecord(loguedUser.getUsername());
         signup_name.setText(loguedUser.getNombre());
         signup_last_name.setText(loguedUser.getApellido());
 
-        // todo signup_birth.setText(loguedUser.getBirth()) ==> no lo recibo en loguedUserDetails, porque me da error al serializaro a json, porque es un array"!!! REVISAR LA LOGICA PARA OBTENR LA FECHA Y CASTEARLO CORRECTAMETNE, LUEGO HAY QUE HACER EL CALCULO DE FECHA ACTUAL MENOS EL NACIMIENTO PARA SABER LA EDAD
-        // todo signup_birth.setText(loguedUser.getBirth()) ==> no lo recibo en loguedUserDetails, porque me da error al serializaro a json, porque es un array"!!! REVISAR LA LOGICA PARA OBTENR LA FECHA Y CASTEARLO CORRECTAMETNE, LUEGO HAY QUE HACER EL CALCULO DE FECHA ACTUAL MENOS EL NACIMIENTO PARA SABER LA EDAD
+        List<Integer> nac = loguedUser.getNacimiento();
+        signup_birth.setText(nac.get(2)+"/"+nac.get(1)+"/"+nac.get(0));
 
-        // TODO ACA DEBO HACER LOGICA PARA PEDIR EL RESTO DE DATOS DEL USUARIO, relacionado a la ficha medica http://localhost:8080/fichaMedica/user/1
-        // todo signup_weight.setText(String.valueOf(loguedUser.get()));
-        // todo signup_db_type.setText(loguedUser.getDbType());
-        // todo signup_db_therapy.setText(loguedUser.getDbTherapy());
+        fichaMedicaUsuario = sharedPrefManager.getFichaMedicaUser();
+        signup_weight.setText(fichaMedicaUsuario.getPeso().toString());
 
+        // TODO TRANSFORMAR A LISTA DESPLEGABLE EN ANDROID! y agregar , terapia pastillas, tipo glucometro, y tipo de sensor al perfil usuario
 
+        String insulina = fichaMedicaUsuario.getTerapia_insulina().name();
+        signup_db_therapy.setText(insulina);
 
-        // todo
+        String diabetes = fichaMedicaUsuario.getTipo_diabetes().name();
+        signup_db_type.setText(diabetes);
+
+        String objetivoGluco = fichaMedicaUsuario.getObjetivo_glucosa();
+        String terapiaPastillas = fichaMedicaUsuario.getTerapia_pastillas().name();
+        String tipoGlucometro = fichaMedicaUsuario.getTipo_glucometro().name();
+        String tipoSensor = fichaMedicaUsuario.getTipo_sensor().name();
+
+        System.out.println("====>>>>>>>>> "+objetivoGluco + terapiaPastillas + tipoGlucometro + tipoSensor);
+        // comorbilidad, obj glucosa
+
 
 
     }

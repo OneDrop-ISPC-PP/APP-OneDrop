@@ -72,6 +72,7 @@
     <string name="f_m_age">Edad</string>
     <string name="f_m_birthday">Fecha de nacimiento</string>
     <string name="f_m_weight">Peso (Kg) </string>
+    <string name="f_m_objetivo_glucosa">Objetivo glucosa </string>
     <string name="f_m_type_db">Tipo de diabetes</string>
     <string name="f_m_therapy_db">Terapia de insulina</string>
     <string name="title_activity_main">MainActivity</string>
