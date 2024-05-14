@@ -104,8 +104,8 @@ enviarDatosDeServicio(){
   
 }
 
-  // METODO DELETE
-  eliminar(id:string){
+  // METODO ELIMINAR USUARIO
+  eliminarUsuario(id:string){
     this.estad_admin.DELETE_SERVICIO(id).subscribe(()=>{
       alert("Servicio Eliminado")
 

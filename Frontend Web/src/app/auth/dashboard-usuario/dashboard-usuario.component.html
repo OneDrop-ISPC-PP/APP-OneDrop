@@ -1,9 +1,22 @@
 <!-- Empieza Dashboard Usuario -->
 <div class="dashboardUser">
+  
   <div class="headerDashboard">
-    <!--  <img src="../assets/images/sinFotoPerfil.jpg"> -->
     <div>
       <p class="nombreUsuario">Paciente</p>
+    </div>
+  </div>
+<!-- Barra lateral izquierda -->
+  <div class="sidebar">
+    <!-- Barra lateral con título y botones -->
+    <div class="sidebar-header">
+      <h3>MENU</h3>
+    </div>
+    <!-- Menú de botones -->
+    <div class="sidebar-menu">
+      <button class="btn btn-primary mb-3" (click)="toggleForm()">GLUCEMIA</button>
+      <button class="btn btn-primary mb-3" (click)="toggleFormTensionArterial()">TENSION ARTERIAL</button>
+      <button class="btn btn-primary mb-3" (click)="toggleFormRegistroPeso()">PESO</button>
     </div>
   </div>
 
@@ -14,12 +27,11 @@
   <!-- /////////////////// FORMULARIO DE INGRESO DE NOTAS //////////////////////// -->
   <h2 class="titulo">NUEVO REGISTRO</h2>
   <div class="p-4 container">
-    <button class="btn btn-primary mb-3" (click)="toggleForm()">Glucemia</button>
     <form class="form-register bg-success" [formGroup]="formNotasPOST" *ngIf="showForm" (submit)="agregarNota()">
       <div class="row">
         <div class="p-2 col-lg-4">
           <label for="fecha-registro" class="form-label">Fecha Registro</label>
-          <input formControlName="fecha_registro" type="datetime-local" class="form-control" id="efecha-registro"
+          <input formControlName="fecha_registro" type="datetime-local" class="form-control" id="fecha-registro"
             aria-describedby="emailHelp">
         </div>
 
@@ -34,7 +46,49 @@
             class="form-control"></textarea>
         </div>
       </div>
-      <button type="submit" class="col-lg-4 btn btn-primary">Registrar nota</button>
+      <button type="submit" class="col-lg-4 btn btn-primary">Registrar Glucemia</button>
+    </form>
+    
+    <!-- /////////////////// FORMULARIO DE INGRESO DE TENSIÓN ARTERIAL //////////////////////// -->
+    <form class="form-register bg-success" [formGroup]="formTensionArterial" *ngIf="showFormTensionArterial" (submit)="agregarTensionArterial()">
+      <div class="row">
+        <div class="p-2 col-lg-4">
+          <label for="fecha-registro-tension" class="form-label">Fecha Registro</label>
+          <input formControlName="fecha_registro_tension" type="datetime-local" class="form-control" id="fecha-registro-tension">
+        </div>
+        <div class="p-2 col-lg-4">
+          <label for="sistolica" class="form-label">Sistólica</label>
+          <input formControlName="sistolica" type="number" class="form-control" id="sistolica">
+        </div>
+        <div class="p-2 col-lg-4">
+          <label for="diastolica" class="form-label">Diastólica</label>
+          <input formControlName="diastolica" type="number" class="form-control" id="diastolica">
+        </div>
+        <div class="p-2 col-lg-12">
+          <label class="form-label">Comentario del registro</label>
+          <textarea formControlName="comentario_tension" class="form-control"></textarea>
+        </div>
+      </div>
+      <button type="submit" class="col-lg-4 btn btn-primary">Registrar Tensión Arterial</button>
+    </form>
+
+    <!-- /////////////////// FORMULARIO DE INGRESO DE PESO //////////////////////// -->
+    <form class="form-register bg-success" [formGroup]="formRegistroPeso" *ngIf="showFormRegistroPeso" (submit)="agregarRegistroPeso()">
+      <div class="row">
+        <div class="p-2 col-lg-4">
+          <label for="fecha-registro-peso" class="form-label">Fecha Registro</label>
+          <input formControlName="fecha_registro_peso" type="datetime-local" class="form-control" id="fecha-registro-peso">
+        </div>
+        <div class="p-2 col-lg-4">
+          <label for="valor-peso" class="form-label">Valor Peso</label>
+          <input formControlName="valor_peso" type="number" class="form-control" id="valor-peso">
+        </div>
+        <div class="p-2 col-lg-12">
+          <label class="form-label">Comentario del registro</label>
+          <textarea formControlName="comentario_peso" class="form-control"></textarea>
+        </div>
+      </div>
+      <button type="submit" class="col-lg-4 btn btn-primary">Registrar Peso</button>
     </form>
   </div> <!-- Cierre del div.container -->
 
@@ -122,7 +176,7 @@
       </div>
     </div> <!-- Cierre del div.carrito -->
   </div> <!-- Cierre del div.row -->
-</section> <!-- Cierre del section.container
+</section> <!-- Cierre del section.container -->
 
 <!-- Javascript -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"

@@ -6,7 +6,8 @@ import { Injectable } from '@angular/core';
 })
 export class EcommerceServiceService {
   
-  url:string='http://localhost:3000/SERVICIOS';
+  url:string="http://localhost:8080/servicios/";
+
   //url:string='http://127.0.0.1:8000/api/paciente/servicios/';  ENDPOINT PARA EL BACK
 
   ////////////////////////////////////////////////////
@@ -16,8 +17,9 @@ export class EcommerceServiceService {
   
   ///////////////////////////////////////////////////
   // metodo GET para traer los servicios
-  muestraservicio( ){
+  GET_SERVICIOS( ){
     return this.http.get(this.url)
   }
+
 }
 

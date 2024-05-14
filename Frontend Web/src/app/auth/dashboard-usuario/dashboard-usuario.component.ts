@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router'; // Importa Router
+import { Router } from '@angular/router';
 import { EstadisUsuariosService } from 'src/app/servicios/estadis-usuarios.service';
 
 @Component({
@@ -13,11 +13,15 @@ export class DashboardUsuarioComponent implements OnInit {
   servicios: any;
   formNotasPOST: FormGroup;
   formActualizarNota: FormGroup;
+  formTensionArterial: FormGroup;
+  formRegistroPeso: FormGroup; // Formulario de registro de peso
   serviciosCarrito: any[] = [];
   Snombre: string = '';
   Smonto: string = '';
   nuevoPedido: any[] = [];
   showForm: boolean = false;
+  showFormTensionArterial: boolean = false;
+  showFormRegistroPeso: boolean = false; // Propiedad para controlar el formulario de registro de peso
 
   constructor(
     private paciente: EstadisUsuariosService,
@@ -35,6 +39,20 @@ export class DashboardUsuarioComponent implements OnInit {
       valor_glucemia: ['', [Validators.required, Validators.maxLength(3)]],
       comentario_registro: ['', Validators.required]
     });
+
+    this.formTensionArterial = this.formBuilder.group({
+      fecha_registro_tension: ['', Validators.required],
+      sistolica: ['', Validators.required],
+      diastolica: ['', Validators.required],
+      comentario_tension: ['']
+    });
+
+    // Inicializamos el formulario de registro de peso
+    this.formRegistroPeso = this.formBuilder.group({
+      fecha_registro_peso: ['', Validators.required],
+      valor_peso: ['', Validators.required],
+      comentario_peso: ['']
+    });
   }
 
   ngOnInit(): void {
@@ -42,10 +60,19 @@ export class DashboardUsuarioComponent implements OnInit {
     this.getServicios();
     this.getCarrito();
   }
-// Agrega el método toggleForm para mostrar/ocultar el formulario
-toggleForm(): void {
-  this.showForm = !this.showForm;
-}
+
+  toggleForm(): void {
+    this.showForm = !this.showForm;
+  }
+
+  toggleFormTensionArterial(): void {
+    this.showFormTensionArterial = !this.showFormTensionArterial;
+  }
+
+  toggleFormRegistroPeso(): void { // Método para controlar la visibilidad del formulario de registro de peso
+    this.showFormRegistroPeso = !this.showFormRegistroPeso;
+  }
+
   agregarNota(): void {
     if (this.formNotasPOST.valid) {
       this.paciente.nuevaNota({
@@ -60,6 +87,40 @@ toggleForm(): void {
     } else {
       alert('Ingrese los datos correctamente');
       this.formNotasPOST.markAllAsTouched();
+    }
+  }
+
+  agregarTensionArterial(): void {
+    if (this.formTensionArterial.valid) {
+      this.paciente.agregarTensionArterial({
+        fecha_registro: this.formTensionArterial.value.fecha_registro_tension,
+        sistolica: this.formTensionArterial.value.sistolica,
+        diastolica: this.formTensionArterial.value.diastolica,
+        comentario: this.formTensionArterial.value.comentario_tension
+      }).subscribe((respuesta: any) => {
+        alert('Registro de tensión arterial agregado');
+        this.formTensionArterial.reset();
+      });
+    } else {
+      alert('Ingrese los datos correctamente');
+      this.formTensionArterial.markAllAsTouched();
+    }
+  }
+
+  // Método para agregar el registro de peso
+  agregarRegistroPeso(): void {
+    if (this.formRegistroPeso.valid) {
+      this.paciente.agregarRegistroPeso({
+        fecha_registro: this.formRegistroPeso.value.fecha_registro_peso,
+        valor_peso: this.formRegistroPeso.value.valor_peso,
+        comentario: this.formRegistroPeso.value.comentario_peso
+      }).subscribe((respuesta: any) => {
+        alert('Registro de peso agregado');
+        this.formRegistroPeso.reset();
+      });
+    } else {
+      alert('Ingrese los datos correctamente');
+      this.formRegistroPeso.markAllAsTouched();
     }
   }
 

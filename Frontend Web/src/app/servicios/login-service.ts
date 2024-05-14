@@ -3,6 +3,8 @@ import { loginInterface } from './interfaces/loginInterface';
 import { HttpClient } from '@angular/common/http';
 import { Observable, Subject } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { Router } from '@angular/router';
+
 
 import { userInterface } from './interfaces/userInterface';
 
@@ -19,7 +21,7 @@ import { CookieService } from 'ngx-cookie-service';
 export class LoginService {
  
 
-  constructor( private http:HttpClient) { }
+  constructor( private http:HttpClient, private router:Router) { }
 
 
   email_string:string=""
@@ -56,6 +58,51 @@ public verificacionLogeo(){
   }else{
     //console.log("El TOKEN está vigente")
     return true
+  }
+}
+
+// REDIRECCION DEL BOTON DEL USERNAME
+public redireccionUsername(){
+  let user = this.getUser();
+  if(user.role == "ADMIN"){
+    this.router.navigateByUrl("auth/dash_admin");
+  }
+  if(user.role == "MEDICO"){
+    this.router.navigateByUrl("auth/dash_admin");
+  }
+  if(user.role == "USUARIO"){
+  this.router.navigateByUrl("auth/dash_user");
+  }
+
+}
+
+// VERIFICACION DE SI ES ADMIN
+  public verificacionAdmin(){
+    let user = this.getUser();
+    if(user.role == "ADMIN"){
+      return true;
+    }else{
+      return false
+    }
+  }
+
+// VERIFICACION DE SI ES MEDICO
+public verificacionMedico(){
+  let user = this.getUser();
+  if(user.role == "MEDICO"){
+    return true;
+  }else{
+    return false
+  }
+}
+
+// VERIFICACION DE SI ES PACIENTE
+public verificacionPaciente(){
+  let user = this.getUser();
+  if(user.role == "USUARIO"){
+    return true;
+  }else{
+    return false
   }
 }
 

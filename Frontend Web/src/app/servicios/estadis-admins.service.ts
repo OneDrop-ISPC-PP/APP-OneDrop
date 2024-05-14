@@ -19,7 +19,11 @@ export class EstadisAdminsService {
   //url_SERVICIOS:string="http://localhost:3000/SERVICIOS/";
 
   // URL DE PACIENTES:
-  url_PACIENTES:string='http://localhost:8080/auth/userDetails'
+  url_USUARIOS:string='http://localhost:8080/auth/users';
+  url_PACIENTES:string='http://localhost:8080/auth/users/pacientes';
+  url_MEDICOS:string='http://localhost:8080/auth/users/medicos';
+
+
   //url_PACIENTES:string="http://localhost:3000/REGISTRO_DATOS_PERSONALES/"
 
   // URL GENERAL DEL FRONT (TRANQUI DAVID):
@@ -63,7 +67,15 @@ export class EstadisAdminsService {
 
 // USUARIOS DASHBOARD ADMIN //
 // USUARIOS DASHBOARD ADMIN //
-
+public GET_USUARIOS(){
+  return this.http.get(this.url_PACIENTES);
+}
+// METODO PARA ELIMINAR SERVICIOS
+// METODO PARA ELIMINAR SERVICIOS
+public DELETE_USUARIO(id:string){
+  return this.http.delete(this.url_PACIENTES+id, {withCredentials: true})
+  
+}
 
 
 
@@ -81,7 +93,7 @@ export class EstadisAdminsService {
 
   // METODO QUE MUESTRA USUARIOS
  muestraUsuarios( ){
-   return this.http.get(this.url_PACIENTES, {withCredentials: true})
+   return this.http.get(this.url_USUARIOS, {withCredentials: true})
   }
     
   // METODO QUE MUESTRA LOS SERVICIOS 
