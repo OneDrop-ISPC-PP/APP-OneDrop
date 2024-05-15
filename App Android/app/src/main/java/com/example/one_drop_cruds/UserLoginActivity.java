@@ -11,6 +11,7 @@ import com.example.one_drop_cruds.entities.user.AuthResponse;
 import com.example.one_drop_cruds.entities.user.LoginRequest;
 import com.example.one_drop_cruds.request.AuthRequests;
 import com.example.one_drop_cruds.utils.AdminSQLiteOpenHelper;
+import com.example.one_drop_cruds.utils.BackendUrl;
 import com.example.one_drop_cruds.utils.SharedPrefManager;
 
 import java.util.regex.Matcher;
@@ -28,8 +29,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class UserLoginActivity extends AppCompatActivity {
     SharedPrefManager sharedPrefManager;
     ActivityUserLoginBinding binding;
-    String baseUrl = "http://192.168.6.144:8080";// "http://192.168.18.3:8080";
-
+    String baseUrl = new BackendUrl().getBackendUrl();
     private void loginUserRequest(String username, String password){// logica de request
         HttpLoggingInterceptor logginInterceptor = new HttpLoggingInterceptor();
         logginInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);

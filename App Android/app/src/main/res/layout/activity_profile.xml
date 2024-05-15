@@ -146,40 +146,84 @@
                 android:textSize="20dp"
                 android:textStyle="bold" />
 
-            <EditText
-                android:id="@+id/signup_db_type"
+            <Spinner
+                android:id="@+id/spinnerDiabetes"
                 android:layout_width="280dp"
                 android:layout_height="51dp"
                 android:layout_gravity="center"
                 android:layout_marginTop="10dp"
                 android:background="@drawable/lavender_border"
-                android:drawableLeft="@drawable/baseline_health_and_safety_24"
                 android:drawablePadding="8dp"
                 android:fontFamily="sans-serif-condensed"
-                android:hint="@string/f_m_type_db"
                 android:padding="8dp"
+                android:textAlignment="center"
                 android:textColor="@color/blackonedrop"
                 android:textSize="20dp"
                 android:textStyle="bold" />
 
             <Spinner
-                android:padding="8dp"
-                android:textColor="@color/blackonedrop"
-                android:textSize="20dp"
-                android:textStyle="bold"
+                android:id="@+id/spinnerTerapiaInsulina"
                 android:layout_width="280dp"
                 android:layout_height="51dp"
                 android:layout_gravity="center"
                 android:layout_marginTop="10dp"
                 android:background="@drawable/lavender_border"
-                android:drawableLeft="@drawable/baseline_health_and_safety_24"
                 android:drawablePadding="8dp"
                 android:fontFamily="sans-serif-condensed"
+                android:padding="8dp"
+                android:textAlignment="center"
+                android:textColor="@color/blackonedrop"
+                android:textSize="20dp"
+                android:textStyle="bold" />
 
-                android:id="@+id/spinner"/>
+            <Spinner
+                android:id="@+id/spinnerTerapiaPastillas"
+                android:layout_width="280dp"
+                android:layout_height="51dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/lavender_border"
+                android:drawablePadding="8dp"
+                android:fontFamily="sans-serif-condensed"
+                android:padding="8dp"
+                android:textAlignment="center"
+                android:textColor="@color/blackonedrop"
+                android:textSize="20dp"
+                android:textStyle="bold" />
+
+            <Spinner
+                android:id="@+id/spinnerTipoGlucometro"
+                android:layout_width="280dp"
+                android:layout_height="51dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/lavender_border"
+                android:drawablePadding="8dp"
+                android:fontFamily="sans-serif-condensed"
+                android:padding="8dp"
+                android:textAlignment="center"
+                android:textColor="@color/blackonedrop"
+                android:textSize="20dp"
+                android:textStyle="bold" />
+
+            <Spinner
+                android:id="@+id/spinnerTipoSensor"
+                android:layout_width="280dp"
+                android:layout_height="51dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/lavender_border"
+                android:drawablePadding="8dp"
+                android:fontFamily="sans-serif-condensed"
+                android:padding="8dp"
+                android:textAlignment="center"
+                android:textColor="@color/blackonedrop"
+                android:textSize="20dp"
+                android:textStyle="bold" />
 
             <EditText
-                android:id="@+id/signup_db_therapy"
+                android:id="@+id/signup_comorbilidades"
+                android:inputType="textMultiLine|textNoSuggestions"
                 android:layout_width="280dp"
                 android:layout_height="51dp"
                 android:layout_gravity="center"
@@ -188,7 +232,7 @@
                 android:drawableLeft="@drawable/baseline_vaccines_24"
                 android:drawablePadding="8dp"
                 android:fontFamily="sans-serif-condensed"
-                android:hint="@string/f_m_therapy_db"
+                android:hint="@string/f_m_comorbilidades"
                 android:padding="8dp"
                 android:textColor="@color/blackonedrop"
                 android:textSize="20dp"
@@ -196,8 +240,6 @@
 
 
 
-
-            
 
             <LinearLayout
                 android:layout_width="wrap_content"

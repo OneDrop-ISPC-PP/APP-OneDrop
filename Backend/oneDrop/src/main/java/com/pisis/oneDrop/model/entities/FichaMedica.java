@@ -24,7 +24,7 @@ public class FichaMedica {
 
     @NotNull
     @OneToOne
-    @JoinColumn(name="id_paciente", referencedColumnName="id", nullable = true)
+    @JoinColumn(name="id_paciente", referencedColumnName="id")
     private User paciente;
 
     @Enumerated(EnumType.STRING)

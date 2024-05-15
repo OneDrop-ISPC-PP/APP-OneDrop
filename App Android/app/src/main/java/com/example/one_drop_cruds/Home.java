@@ -29,6 +29,7 @@ import com.example.one_drop_cruds.entities.user.AuthResponse;
 import com.example.one_drop_cruds.entities.user.LoginRequest;
 import com.example.one_drop_cruds.entities.user.LoguedUserDetails;
 import com.example.one_drop_cruds.request.AuthRequests;
+import com.example.one_drop_cruds.utils.BackendUrl;
 import com.example.one_drop_cruds.utils.FilesManager;
 import com.example.one_drop_cruds.utils.SharedPrefManager; // Importa la clase SharedPrefManager
 
@@ -47,7 +48,7 @@ public class Home extends AppCompatActivity {
     TextView textView_welcome;
     FilesManager filesManager;
     WebView webview;
-    String baseUrl = "http://192.168.6.144:8080";// "http://192.168.18.3:8080";
+    String baseUrl = new BackendUrl().getBackendUrl();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

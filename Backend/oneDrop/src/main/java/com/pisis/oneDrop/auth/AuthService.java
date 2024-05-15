@@ -59,10 +59,14 @@ public class AuthService {
             throw new NotFoundException("No se encontro usuario por ID: "+idUser);
         }
     }
-    public UserReadDto getUserById(Integer idUser){
+    public User getUserById(Integer idUser){
         Optional<User> user = userRepository.findById(idUser);
         if (user.isEmpty()) throw new NotFoundException("No existe el usuario por ID "+idUser);
-        return userMapper.toReadDto(user.get());
+        return user.get();
+    }
+
+    public UserReadDto findUserById(Integer idUser){
+        return userMapper.toReadDto(getUserById(idUser));
     }
     public UserReadDtoArray getAllUsers (String dni, String fullName, Integer page, Integer size, String sortBy){
         Page<User> results;

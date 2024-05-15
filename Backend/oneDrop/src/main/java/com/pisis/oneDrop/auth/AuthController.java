@@ -194,7 +194,7 @@ public class AuthController {
     @SecurityRequirement(name = "Bearer Authentication")
     @GetMapping("users/{idUser}") // TODO PARA QUE ADMIN CAMBIE ROL A MEDICO
     public ResponseEntity<UserReadDto> getUserById (@PathVariable Integer idUser){
-        return new ResponseEntity<>(authService.getUserById(idUser), HttpStatus.ACCEPTED);
+        return new ResponseEntity<>(authService.findUserById(idUser), HttpStatus.ACCEPTED);
     }
 
 

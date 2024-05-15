@@ -1,29 +1,35 @@
 package com.pisis.oneDrop.model.entities;
 
+import com.pisis.oneDrop.model.entities.enums.MetodoDePago;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.validation.constraints.NotNull;
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Data
+@Entity
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity
 @Builder
-public class RegistroGlucemia {
+public class ResumenCompra {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @NotNull
+    private Double importe;
+
     private Date fecha;
 
-    @NotNull
-    private Double valor;
+    @OneToMany(fetch = FetchType.LAZY)
+    private List<Servicio> servicios = new ArrayList<>();
 
-    private String comentario;
+    @Enumerated(EnumType.STRING)
+    private MetodoDePago metodoDePago;
+
 }
