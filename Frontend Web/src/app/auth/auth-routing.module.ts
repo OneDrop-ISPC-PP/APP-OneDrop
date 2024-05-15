@@ -14,6 +14,9 @@ import { UserGuard } from '../servicios/user.guard';
 import { InfoServicioDashAdminComponent } from './dashboard-admin/info-servicio-dash-admin/info-servicio-dash-admin.component';
 import { InfoUsuarioDashAdminComponent } from './dashboard-admin/info-usuario-dash-admin/info-usuario-dash-admin.component';
 import { BienvenidaDashAdminComponent } from './dashboard-admin/bienvenida-dash-admin/bienvenida-dash-admin.component';
+import { ModPacienteAdminComponent } from './mod-paciente-admin/mod-paciente-admin.component';
+
+
 
 
 // RUTAS EXPORTADAS AL NAV
@@ -45,6 +48,8 @@ const routes:Routes=[
         {path:'registro3usuario', component:Registro3usuarioComponent},
         {path:'edit_nota/:id', component:ModNotaUsuarioComponent},
         {path:'edit_servicio/:id', component:ModServicioAdminComponent},
+        {path:'edit_paciente/:id', component:ModPacienteAdminComponent},
+
 
 
 

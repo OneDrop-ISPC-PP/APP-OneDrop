@@ -248,16 +248,19 @@
       </label>
     </div>
           <!--  validacion  -->
-          <div *ngIf="sex_GET.invalid && (sex_GET.dirty || sex_GET.touched)" class="text-danger">
-            <div *ngIf="sex_GET.errors?.['required']">
-              Seleccione una opcion.
-            </div>
+        <div *ngIf="dni_GET.invalid && (dni_GET.dirty || dni_GET.touched)"
+      class="text-danger">
+      
+          <div *ngIf="dni_GET.errors?.['required']">
+              Complete este campo.
           </div>
+        </div>
   </div>
 </div>
 
 
 <!-- ////////////////////////////  DNI  //////////////////////////////  -->
+<!-- ////////////////////////////  TELEFONO //////////////////////////////  -->
 <div class="row g-3 align-items-center  margin campo-input borde campo-email borde_validacion " >
   <!--  label  -->
    <div class="col-lg-3 col-md-12 align-self-start ">
@@ -265,8 +268,8 @@
    </div>
    <!--  input  -->
    <div class="col-lg-8 col-md-12 align-self-start  ">
-     <input formControlName="dni" id="dni" type="number" class="form-control sub-campo-input" id="exampleFormControlInput1" placeholder="34012034">
-
+     <input formControlName="dni" id="phone" type="tel" class="form-control sub-campo-input" id="exampleFormControlInput1" placeholder="351 555 66666">
+          <!--  validacion  -->
           <div *ngIf="dni_GET.invalid && (dni_GET.dirty || dni_GET.touched)"
           class="text-danger">
           
@@ -277,12 +280,14 @@
                 Este campo debe tener más de 8 caracteres.
               </div>
               <div *ngIf="dni_GET.errors?.['maxlength']">
-                Este campo debe tener menos de 10 caracteres.
+                Este campo debe tener menos de 11 caracteres.
               </div>
+              
             </div>
    </div>
 
   </div>
+
 
 
 

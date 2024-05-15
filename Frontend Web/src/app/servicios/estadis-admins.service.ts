@@ -19,8 +19,10 @@ export class EstadisAdminsService {
   //url_SERVICIOS:string="http://localhost:3000/SERVICIOS/";
 
   // URL DE PACIENTES:
-  url_USUARIOS:string='http://localhost:8080/auth/users';
+  url_USUARIOS:string='http://localhost:8080/auth/users/';
   url_PACIENTES:string='http://localhost:8080/auth/users/pacientes';
+
+
   url_MEDICOS:string='http://localhost:8080/auth/users/medicos';
 
 
@@ -53,29 +55,36 @@ export class EstadisAdminsService {
 
 
 // MODIFICACION SERVICIOS DASHBOARD ADMIN //
-// MODIFICACION SERVICIOS DASHBOARD ADMIN //
-
   // metodo para TRAER la informacion
-  public GET_DATOS(id:number){
+  public GET_DATOS_SERVICIOS(id:number){
     return this.http.get(this.url_SERVICIOS+id, {withCredentials: true})
   }
   // metodo para MODIFICAR la informacion
-  public UPDATE(datos:any, id:number){
+  public UPDATE_SERVICIO(datos:any, id:number){
     return this.http.put(this.url_SERVICIOS+id,datos, {withCredentials: true})
   }
 
 
 // USUARIOS DASHBOARD ADMIN //
 // USUARIOS DASHBOARD ADMIN //
-public GET_USUARIOS(){
-  return this.http.get(this.url_PACIENTES);
-}
-// METODO PARA ELIMINAR SERVICIOS
-// METODO PARA ELIMINAR SERVICIOS
-public DELETE_USUARIO(id:string){
-  return this.http.delete(this.url_PACIENTES+id, {withCredentials: true})
-  
-}
+  // metodo para TRAER la informacion
+  public GET_PACIENTES(){
+    return this.http.get(this.url_PACIENTES);
+  }
+
+
+// MODIFICACION USUARIOS DASHBOARD ADMIN //
+  public GET_DATOS_PACIENTES(id:number){
+    return this.http.get(this.url_USUARIOS+id, {withCredentials: true})
+  }
+
+
+
+  // METODO PARA ELIMINAR USUARIO
+  public DELETE_USUARIO(id:string){
+    return this.http.delete(this.url_PACIENTES+id, {withCredentials: true})
+    
+  }
 
 
 
@@ -83,7 +92,10 @@ public DELETE_USUARIO(id:string){
 // MODIFICACION USUARIOS DASHBOARD ADMIN //
 // MODIFICACION USUARIOS DASHBOARD ADMIN //
 
-
+  // metodo para MODIFICAR la informacion
+  public UPDATE_PACIENTE(datos:any, id:number){
+    return this.http.put(this.url_PACIENTES+id,datos, {withCredentials: true})
+  }
 
 
 

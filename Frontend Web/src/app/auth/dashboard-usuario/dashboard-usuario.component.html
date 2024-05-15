@@ -1,3 +1,25 @@
+<section class="containe m-0">
+    <div class="row">
+        <div class="col-lg-2">
+              <!-- Barra lateral izquierda -->
+              <div class="sidebar">
+                <!-- Barra lateral con título y botones -->
+                <div class="sidebar-header">
+                  <h3>MENU</h3>
+                </div>
+                <!-- Menú de botones -->
+                <div class="sidebar-menu">
+                  <button class="btn btn-primary mb-3" (click)="toggleForm()">GLUCEMIA</button>
+                  <button class="btn btn-primary mb-3" (click)="toggleFormTensionArterial()">TENSION ARTERIAL</button>
+                  <button class="btn btn-primary mb-3" (click)="toggleFormRegistroPeso()">PESO</button>
+
+                  <button class="btn btn-primary mb-3" (click)="aFormFichaMedica()">Ficha Medica</button>
+                </div>
+              </div>
+        </div>
+
+    <div class="col-lg-10"> <!-- EMPIEZA COL-LG-10 -->
+
 <!-- Empieza Dashboard Usuario -->
 <div class="dashboardUser">
   
@@ -6,43 +28,31 @@
       <p class="nombreUsuario">Paciente</p>
     </div>
   </div>
-<!-- Barra lateral izquierda -->
-  <div class="sidebar">
-    <!-- Barra lateral con título y botones -->
-    <div class="sidebar-header">
-      <h3>MENU</h3>
-    </div>
-    <!-- Menú de botones -->
-    <div class="sidebar-menu">
-      <button class="btn btn-primary mb-3" (click)="toggleForm()">GLUCEMIA</button>
-      <button class="btn btn-primary mb-3" (click)="toggleFormTensionArterial()">TENSION ARTERIAL</button>
-      <button class="btn btn-primary mb-3" (click)="toggleFormRegistroPeso()">PESO</button>
-    </div>
-  </div>
+
 
   <!-- ///////////////////////// SECCION DE NOTAS ///////////////////////////// -->
   <!-- ///////////////////////// SECCION DE NOTAS ///////////////////////////// -->
   <!-- ///////////////////////// SECCION DE NOTAS ///////////////////////////// -->
 
-  <!-- /////////////////// FORMULARIO DE INGRESO DE NOTAS //////////////////////// -->
-  <h2 class="titulo">NUEVO REGISTRO</h2>
+  <!-- /////////////////// FORMULARIO DE INGRESO DE NOTAS DE GLUCEMIA //////////////////////// -->
+  <h2 class="titulo">NUEVO REGISTRO DE CLUCEMIA</h2>
   <div class="p-4 container">
-    <form class="form-register bg-success" [formGroup]="formNotasPOST" *ngIf="showForm" (submit)="agregarNota()">
+    <form class="form-register bg-success" [formGroup]="formNotasGlucemia" *ngIf="showForm" (submit)="agregarNotaGlucemia()">
       <div class="row">
         <div class="p-2 col-lg-4">
           <label for="fecha-registro" class="form-label">Fecha Registro</label>
-          <input formControlName="fecha_registro" type="datetime-local" class="form-control" id="fecha-registro"
+          <input formControlName="fecha" type="datetime-local" class="form-control" id="fecha-registro"
             aria-describedby="emailHelp">
         </div>
 
         <div class="p-2  col-lg-6">
           <label for="valor-glucemia" class="form-label">Valor Glucemia</label>
-          <input formControlName="valor_glucemia" type="number" class="form-control" id="valor-glucemia">
+          <input formControlName="valor" type="number" class="form-control" id="valor-glucemia">
         </div>
 
         <div class="p-2 col-lg-12">
           <label class="form-label">Comentario del registro</label>
-          <textarea formControlName="comentario_registro" name="" id="" cols="30" rows="5"
+          <textarea formControlName="comentario" name="" id="" cols="30" rows="5"
             class="form-control"></textarea>
         </div>
       </div>
@@ -186,3 +196,9 @@
   integrity="sha512-ElRFoEQdI5Ht6kZvyzXhYG9NqjtkmlkfYk0wr6wHxU9JEHakS7UJZNeml5ALk+8IKlU6iRJHn3Db3mOXSYXbUQ=="
   crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <!-- script de app -->
+
+
+    </div>
+
+  </div> <!-- CIERRA COL-LG-10 -->
+</section>

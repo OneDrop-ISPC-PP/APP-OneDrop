@@ -18,16 +18,16 @@
   
               </tr>
             </thead>
-            <tbody  *ngFor="let s of listaDeUsuarios">
+            <tbody  *ngFor="let s of listaDePacientes">
               <tr>
-                <td>{{s.id}}</td>
-                <td>{{s.nombre}}</td>
-                <td>{{s.apellido}}</td>
-                <td>{{s.username}}</td>
-                <td>{{s.email}}</td>
+                <td class=" py-4 ">{{s.id}}</td>
+                <td class=" py-4 ">{{s.nombre}}</td>
+                <td class=" py-4 ">{{s.apellido}}</td>
+                <td class=" py-4 ">{{s.username}}</td>
+                <td class=" py-4 ">{{s.email}}</td>
 
                 <td> 
-                  <button  class="btn bg_btn_edit px-4 p-2 m-2" routerLink="/auth/edit_servicio/{{s.id}}">
+                  <button  class="btn bg_btn_edit px-4 p-2 m-2" routerLink="/auth/edit_paciente/{{s.id}}">
                     Ver mas info</button>
                   <!-- <button  class="btn bg_btn_elim px-4 p-2 m-2" (click)="darBajaAUsuario(s.id)" >Eliminar</button> -->
                 </td>

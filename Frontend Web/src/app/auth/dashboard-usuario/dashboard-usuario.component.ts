@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { EstadisUsuariosService } from 'src/app/servicios/estadis-usuarios.service';
+import { LoginService } from 'src/app/servicios/login-service';
+
 
 @Component({
   selector: 'app-dashboard-usuario',
@@ -9,12 +11,37 @@ import { EstadisUsuariosService } from 'src/app/servicios/estadis-usuarios.servi
   styleUrls: ['./dashboard-usuario.component.css']
 })
 export class DashboardUsuarioComponent implements OnInit {
+  constructor(
+    private paciente: EstadisUsuariosService,
+    private formBuilder: FormBuilder,
+    private router: Router,
+    private serv_login: LoginService
+  ) {
+   
+  }
+
+// NO PUEDO TRAER LA FICHA MEDICA Y POR LO TANTO TMPOCO SU ID PARA HACER LOS REGISTROS
+  getId = this.serv_login.getUserId();
+  idFichaMedica = 5 // HARDCODEADA
+
+
+  getUser = this.serv_login.getUser();
+  //getFichaMedica = this.paciente.getFichaMedica(this.getId);
+
+  // HAY REGISTRO DE GLUCEMIA, VER COMO TRAERLOS. QUE SERIA LO MISMO QUE TRAER LA FICHA MEDICA.
+  // CAPAZ ESTAMOS TRAYENDO MAL Y POR ESO NO SE VE NADA :l
+
+
+  listaNotasGlucemia:any = [];
+
   notas_glucemia: any;
   servicios: any;
-  formNotasPOST: FormGroup;
-  formActualizarNota: FormGroup;
-  formTensionArterial: FormGroup;
-  formRegistroPeso: FormGroup; // Formulario de registro de peso
+
+  formNotasGlucemia: FormGroup|any;
+  formActualizarNota: FormGroup|any;
+  formTensionArterial: FormGroup|any;
+  formRegistroPeso: FormGroup|any; // Formulario de registro de peso
+
   serviciosCarrito: any[] = [];
   Snombre: string = '';
   Smonto: string = '';
@@ -23,20 +50,53 @@ export class DashboardUsuarioComponent implements OnInit {
   showFormTensionArterial: boolean = false;
   showFormRegistroPeso: boolean = false; // Propiedad para controlar el formulario de registro de peso
 
-  constructor(
-    private paciente: EstadisUsuariosService,
-    private formBuilder: FormBuilder,
-    private router: Router
-  ) {
-    this.formNotasPOST = this.formBuilder.group({
-      fecha_registro: ['', Validators.required],
-      valor_glucemia: ['', [Validators.required, Validators.maxLength(3)]],
-      comentario_registro: ['', Validators.required]
+
+
+  // EMPIEZA ON INIT
+  ngOnInit(): void {
+    // TREAMOS LAS NOTAS DE GLUCEMIA
+    this.paciente.GET_NOTAS_GLUCEMIA(this.getId).subscribe(
+      (data:any)=>{
+        this.listaNotasGlucemia = data;
+        console.log("CARGA DE NOTAS DE GLUCEMIA EXITOSA, LOS DATOS SON:")
+        console.log(data);
+
+      },
+      (error:any) => {
+        console.log("ERROR EN LA CARGA DE LAS NOTAS DE GLUCEMIA");
+        console.log(error);
+
+      })
+
+
+    // TREAMOS LA FICHA MEDICA
+    this.paciente.getFichaMedica(this.getId).subscribe(
+      (data:any)=>{
+        this.listaNotasGlucemia = data;
+        console.log("CARGA DE LA FICHA MEDICA EXITOSA, LOS DATOS SON:")
+        console.log(data);
+        console.log("El ID de la ficha medica es:")
+        // GUARDAMOS EL ID EN LA VARIABLE idFichaMedica
+
+        console.log(data.id);
+
+      },
+      (error:any) => {
+        console.log("ERROR EN LA CARGA DE LA FICHA MEDICA");
+        console.log(error);
+      })
+
+    
+    // BUILDER DE NOTAS DE GLUCEMIA
+    this.formNotasGlucemia = this.formBuilder.group({
+      fecha: ['', Validators.required],
+      valor: ['', [Validators.required]],
+      comentario: ['', Validators.required]
     });
 
     this.formActualizarNota = this.formBuilder.group({
       fecha_registro: ['', Validators.required],
-      valor_glucemia: ['', [Validators.required, Validators.maxLength(3)]],
+      valor_glucemia: ['', [Validators.required]],
       comentario_registro: ['', Validators.required]
     });
 
@@ -53,14 +113,17 @@ export class DashboardUsuarioComponent implements OnInit {
       valor_peso: ['', Validators.required],
       comentario_peso: ['']
     });
-  }
 
-  ngOnInit(): void {
+
+
     this.getNotas();
     this.getServicios();
     this.getCarrito();
-  }
+  } // CIERRA ON INIT
+  public aFormFichaMedica(){
+    this.router.navigateByUrl("/auth/registro3usuario")
 
+  }
   toggleForm(): void {
     this.showForm = !this.showForm;
   }
@@ -73,23 +136,46 @@ export class DashboardUsuarioComponent implements OnInit {
     this.showFormRegistroPeso = !this.showFormRegistroPeso;
   }
 
-  agregarNota(): void {
-    if (this.formNotasPOST.valid) {
-      this.paciente.nuevaNota({
-        fecha_registro: this.formNotasPOST.value.fecha_registro,
-        valor_glucemia: this.formNotasPOST.value.valor_glucemia,
-        comentario_registro: this.formNotasPOST.value.comentario_registro
-      }).subscribe((respuesta: any) => {
-        alert('Nota registrada');
+  // METODO PARA AGREGAR NOTA DE GLUCEMIA
+  // METODO PARA AGREGAR NOTA DE GLUCEMIA
+  agregarNotaGlucemia(): void {
+    if (this.formNotasGlucemia.valid) {
+      this.paciente.nuevaNotaGlucemia({
+
+        fecha: this.formNotasGlucemia.value.fecha,
+        valor: this.formNotasGlucemia.value.valor,
+        comentario: this.formNotasGlucemia.value.comentario
+
+      },this.idFichaMedica).subscribe((data: any) => {
+        //alert('Nota de glucemia registrada');
+        console.log("Datos registrados de glucemia");
+        console.log(data);
         this.getNotas();
-        this.formNotasPOST.reset();
-      });
+        this.formNotasGlucemia.reset();
+      },
+      (error: any) => {
+        console.log("Datos de glucemia no fueron registrados ");
+        //console.log("El id del paciente es:");
+        //console.log(this.getId);
+        //console.log("Los datos del paciente son:");
+        //console.log(this.getUser);
+        //console.log("Las fichas medicas son:");
+        //console.log(this.getId);
+
+        console.log(error);
+      }
+    
+    
+    );
     } else {
       alert('Ingrese los datos correctamente');
-      this.formNotasPOST.markAllAsTouched();
+      this.formNotasGlucemia.markAllAsTouched();
     }
   }
 
+    
+    // METODO PARA AGREGAR NOTA DE ARTERIAL 
+    // METODO PARA AGREGAR NOTA DE ARTERIAL 
   agregarTensionArterial(): void {
     if (this.formTensionArterial.valid) {
       this.paciente.agregarTensionArterial({
@@ -107,7 +193,8 @@ export class DashboardUsuarioComponent implements OnInit {
     }
   }
 
-  // Método para agregar el registro de peso
+    // METODO PARA AGREGAR NOTA DE PESO
+    // METODO PARA AGREGAR NOTA DE PESO
   agregarRegistroPeso(): void {
     if (this.formRegistroPeso.valid) {
       this.paciente.agregarRegistroPeso({
@@ -124,6 +211,7 @@ export class DashboardUsuarioComponent implements OnInit {
     }
   }
 
+  // GET DE LAS NOTAS DE GLUCEMIA
   getNotas(): void {
     this.paciente.muestraNotasUsuario().subscribe({
       next: (notas_S) => {

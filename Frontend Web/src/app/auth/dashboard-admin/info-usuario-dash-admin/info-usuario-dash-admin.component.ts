@@ -10,7 +10,7 @@ import { EstadisAdminsService } from 'src/app/servicios/estadis-admins.service';
 })
 export class InfoUsuarioDashAdminComponent implements OnInit {
   // VARIABLES
-  listaDeUsuarios:any = [];
+  listaDePacientes:any = [];
 
   // CONSTRUCTOR
   constructor(
@@ -22,20 +22,21 @@ export class InfoUsuarioDashAdminComponent implements OnInit {
   // ON INIT
   ngOnInit(): void {
     // SUSCRIPCION A LA LISTA DE SERVICIOS
-    this.estad_admin.GET_USUARIOS().subscribe(
+    this.estad_admin.GET_PACIENTES().subscribe(
       (data:any)=>{
-        this.listaDeUsuarios = data.users;
-        console.log("CARGA DE USUARIOS EXITOSA LOS DATOS SON:")
+        this.listaDePacientes = data.users;
+        console.log("CARGA DE PACIENTES EXITOSA, LOS DATOS SON:")
         console.log(data.users);
 
       },
       (error:any) => {
-        console.log("ERROR EN LA CARGA DE LOS USUARIOS");
+        console.log("ERROR EN LA CARGA DE LOS PACIENTES");
         console.log(error);
 
       })
 
   }// CIERRA ON INIT
+
 
   // METODO DELETE
   darBajaAUsuario(id:string){

@@ -12,6 +12,7 @@ export class InfoServicioDashAdminComponent implements OnInit{
 
   // VARIABLES
 
+
   FormRegistroServicios: FormGroup|any;
   listaDeServicios:any = [];
 

@@ -137,7 +137,13 @@ public getUser(){
 public getUserRole(){
   let user = this.getUser();
   return user.role;
-  //return user.authorities[1].authority;
+
+}
+
+public getUserId(){
+  let user = this.getUser();
+  return user.id;
+
 }
 
 // GET DE USUARIOS ACTUAL (CONSULTAR EL FINAL DE LA RUTA) // NO FUNCIONA
@@ -150,7 +156,7 @@ public getCurrentUser(){
 
 // CIERRE DE SESION Y ELIMINAMOS EL TOKEN DEL LOCAL STORAGE
 public logout(){
-  console.log("Se elimino el TOKEN");
+  console.log("Se elimino el TOKEN luego del registro inicial");
   localStorage.removeItem('token');
   localStorage.removeItem('user');
   return true

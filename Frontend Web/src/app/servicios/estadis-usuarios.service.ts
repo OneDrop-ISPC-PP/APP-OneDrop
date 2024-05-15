@@ -11,39 +11,57 @@ export class EstadisUsuariosService {
 
   constructor(private http: HttpClient) { }
 
+  // URL GET PARA FICHA MEDICA:
+  url_GET_FICHA_MEDICA: string = 'http://localhost:8080/fichaMedica/user/';
+
+
   // URL DE NOTAS DE GLUCEMIA:
-  url_NOTAS_GLUCEMIA: string = 'http://localhost:8080/registros/glucemia/usuario/1';
+  url_NOTAS_GLUCEMIA_GET: string = 'http://localhost:8080/registros/glucemia/usuario/';
+  
+  // URL DE NOTAS DE GLUCEMIA:
+  url_NOTA_GLUCEMIA_POST: string = 'http://localhost:8080/registros/glucemia/usuario/';
+
   // URL DE SERVICIOS:
   url_SERVICIOS: string = 'http://localhost:8080/servicios/';
+
   // URL DE CARRITO:
   url_CARRITO: string = 'http://localhost:3000/CARRITO/';
 
-  ////////////////// CODIGO NOTAS GLUCEMIA ///////////////////
-  
-  // MUESTRA LAS NOTAS DE GLUCEMIA
-  muestraNotasUsuario() {
-    return this.http.get(this.url_NOTAS_GLUCEMIA, { withCredentials: true });
+  ////////////////// GET FICHA MEDICA ///////////////////
+  getFichaMedica(id:any){
+    return this.http.get(this.url_GET_FICHA_MEDICA+id)
   }
 
+  ////////////////// CODIGO NOTAS GLUCEMIA ///////////////////
   // AGREGA NOTAS DE GLUCEMIA
-  nuevaNota(datos: any) {
-    return this.http.post(this.url_NOTAS_GLUCEMIA, datos, { withCredentials: true });
+  nuevaNotaGlucemia(datos: any, id:any) {
+    return this.http.post(this.url_NOTA_GLUCEMIA_POST+id, datos);
+  }
+
+  // GET_NOTAS_GLUCEMIA
+  public GET_NOTAS_GLUCEMIA(id:any){
+    return this.http.get(this.url_NOTAS_GLUCEMIA_GET+id)
+  }
+
+  // MUESTRA LAS NOTAS DE GLUCEMIA (BORRAR SI ANDA EL DE ARRIBA)
+  muestraNotasUsuario() {
+    return this.http.get(this.url_NOTAS_GLUCEMIA_GET, { withCredentials: true });
   }
 
   // MODIFICAR NOTAS DE GLUCEMIA
   // Método para TRAER la informacion
   modificar(id: number) {
-    return this.http.get(this.url_NOTAS_GLUCEMIA + id, { withCredentials: true });
+    return this.http.get(this.url_NOTAS_GLUCEMIA_GET + id, { withCredentials: true });
   }
 
   // Método para MODIFICAR la informacion
   modificar2(datos: any, id: number) {
-    return this.http.put(this.url_NOTAS_GLUCEMIA + id, datos, { withCredentials: true });
+    return this.http.put(this.url_NOTAS_GLUCEMIA_GET + id, datos, { withCredentials: true });
   }
 
   // Método para ELIMINAR la informacion
   DELETE(id: string) {
-    return this.http.delete(this.url_NOTAS_GLUCEMIA + id, { withCredentials: true });
+    return this.http.delete(this.url_NOTAS_GLUCEMIA_GET + id, { withCredentials: true });
   }
 
   ////////////////// CODIGO TENSION ARTERIAL ///////////////////

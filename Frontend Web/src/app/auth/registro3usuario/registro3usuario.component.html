@@ -10,7 +10,7 @@
   <h3 class=" margin titulo">Ficha Médica</h3>
   <h6 class=" margin">Ya falta menos para tener tu cuenta. Completá tus datos para que podamos brindarte una mejor atención.</h6>
 
-  <form  [formGroup]="formPOSTRegistro3Usuarios" (submit)=" enviarDatosRegistroTRES()">
+  <form  [formGroup]="formPOSTRegistro3Usuarios" (submit)=" enviarDatosFichaMedica()">
 
 
 
@@ -172,6 +172,27 @@
      class="text-danger">
 
          <div *ngIf="comorbilidades_GET.errors?.['required']">
+           Complete este campo.
+         </div>
+     </div>
+   </div>
+
+</div>
+
+<!-- ////////////////////////////  PESO //////////////////////////////  -->
+<div class="row g-3 align-items-center  margin campo-input borde campo-email borde_validacion " >
+  <!--  label  -->
+   <div class="col-lg-3 col-md-12 align-self-start ">
+       <label for="exampleFormControlInput1" class="col-form-label">Peso</label>
+   </div>
+   <!--  input  -->
+   <div class="col-lg-8 col-md-12 align-self-start  ">
+     <input formControlName="peso" id="comorbilidades" type="number" class="form-control sub-campo-input" id="exampleFormControlInput1" placeholder="">
+     <!--  validacion  -->
+     <div *ngIf="peso_GET.invalid && (peso_GET.dirty || peso_GET.touched)"
+     class="text-danger">
+
+         <div *ngIf="peso_GET.errors?.['required']">
            Complete este campo.
          </div>
      </div>

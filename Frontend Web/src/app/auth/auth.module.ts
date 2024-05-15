@@ -22,6 +22,7 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import {MatIconModule} from '@angular/material/icon';
 import {MatListModule} from '@angular/material/list'; 
 import {MatButtonModule} from '@angular/material/button';
+import { ModPacienteAdminComponent } from './mod-paciente-admin/mod-paciente-admin.component';
 
 
 
@@ -41,6 +42,7 @@ import {MatButtonModule} from '@angular/material/button';
     InfoUsuarioDashAdminComponent,
     InfoServicioDashAdminComponent,
     BienvenidaDashAdminComponent,
+    ModPacienteAdminComponent,
 
   ],
   imports: [
