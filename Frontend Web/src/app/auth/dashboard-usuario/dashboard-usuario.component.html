@@ -1,128 +1,123 @@
-<section class="containe m-0">
-    <div class="row">
-        <div class="col-lg-2">
-              <!-- Barra lateral izquierda -->
-              <div class="sidebar">
-                <!-- Barra lateral con título y botones -->
-                <div class="sidebar-header">
-                  <h3>MENU</h3>
-                </div>
-                <!-- Menú de botones -->
-                <div class="sidebar-menu">
-                  <button class="btn btn-primary mb-3" (click)="toggleForm()">GLUCEMIA</button>
-                  <button class="btn btn-primary mb-3" (click)="toggleFormTensionArterial()">TENSION ARTERIAL</button>
-                  <button class="btn btn-primary mb-3" (click)="toggleFormRegistroPeso()">PESO</button>
-
-                  <button class="btn btn-primary mb-3" (click)="aFormFichaMedica()">Ficha Medica</button>
-                </div>
-              </div>
+<section class="container m-0">
+  <div class="row">
+    <div class="col-lg-2">
+      <!-- Barra lateral izquierda -->
+      <div class="sidebar">
+        <!-- Barra lateral con título y botones -->
+        <div class="sidebar-header">
+          <h3>MENU</h3>
         </div>
+        <!-- Menú de botones -->
+        <div class="sidebar-menu">
+          <button class="btn btn-primary mb-3" (click)="aFormFichaMedica()">Ficha Medica</button>
+          <button class="btn btn-primary mb-3" (click)="toggleForm()">GLUCEMIA</button>
+          <button class="btn btn-primary mb-3" (click)="toggleFormTensionArterial()">TENSION ARTERIAL</button>
+          <button class="btn btn-primary mb-3" (click)="toggleFormRegistroPeso()">PESO</button>
+          
+        </div>
+      </div>
+    </div>
 
     <div class="col-lg-10"> <!-- EMPIEZA COL-LG-10 -->
 
-<!-- Empieza Dashboard Usuario -->
-<div class="dashboardUser">
-  
-  <div class="headerDashboard">
-    <div>
-      <p class="nombreUsuario">Paciente</p>
-    </div>
-  </div>
-
-
-  <!-- ///////////////////////// SECCION DE NOTAS ///////////////////////////// -->
-  <!-- ///////////////////////// SECCION DE NOTAS ///////////////////////////// -->
-  <!-- ///////////////////////// SECCION DE NOTAS ///////////////////////////// -->
-
-  <!-- /////////////////// FORMULARIO DE INGRESO DE NOTAS DE GLUCEMIA //////////////////////// -->
-  <h2 class="titulo">NUEVO REGISTRO DE CLUCEMIA</h2>
-  <div class="p-4 container">
-    <form class="form-register bg-success" [formGroup]="formNotasGlucemia" *ngIf="showForm" (submit)="agregarNotaGlucemia(idFichaMedica)">
-      <div class="row">
-        <div class="p-2 col-lg-4">
-          <label for="fecha-registro" class="form-label">Fecha Registro</label>
-          <input formControlName="fecha" type="datetime-local" class="form-control" id="fecha-registro"
-            aria-describedby="emailHelp">
+      <!-- Empieza Dashboard Usuario -->
+      <div class="dashboardUser">
+        <div class="headerDashboard">
+          <div>
+            <p class="nombreUsuario">BIENVENIDO PACIENTE</p>
+          </div>
         </div>
 
-        <div class="p-2  col-lg-6">
-          <label for="valor-glucemia" class="form-label">Valor Glucemia</label>
-          <input formControlName="valor" type="number" class="form-control" id="valor-glucemia">
-        </div>
+        <!-- FORMULARIO DE INGRESO DE NOTAS DE GLUCEMIA -->
+        <form class="form-register bg-success formulario-glucemia" [formGroup]="formNotasGlucemia" *ngIf="showForm" (submit)="agregarNotaGlucemia(idFichaMedica)">
+          <h2 class="titulo">NUEVO REGISTRO DE GLUCEMIA</h2>
+          <div class="row">
+            <div class="p-2 col-lg-4">
+              <label for="fecha-registro" class="form-label">Fecha Registro</label>
+              <input formControlName="fecha" type="datetime-local" class="form-control" id="fecha-registro" aria-describedby="emailHelp">
+            </div>
+            <div class="p-2 col-lg-6">
+              <label for="valor-glucemia" class="form-label">Valor Glucemia</label>
+              <input formControlName="valor" type="number" class="form-control" id="valor-glucemia">
+            </div>
+            <div class="p-2 col-lg-12">
+              <label class="form-label">Comentario del registro</label>
+              <textarea formControlName="comentario" name="" id="" cols="30" rows="5" class="form-control"></textarea>
+            </div>
+          </div>
+          <button type="submit" class="col-lg-4 btn btn-primary">Registrar Glucemia</button>
+        </form>
 
-        <div class="p-2 col-lg-12">
-          <label class="form-label">Comentario del registro</label>
-          <textarea formControlName="comentario" name="" id="" cols="30" rows="5"
-            class="form-control"></textarea>
+        <!-- FORMULARIO DE INGRESO DE TENSIÓN ARTERIAL -->
+        <form class="form-register bg-success formulario-tension" [formGroup]="formTensionArterial" *ngIf="showFormTensionArterial" (submit)="agregarTensionArterial()">
+          <h2 class="titulo">NUEVO REGISTRO DE TENSIÓN ARTERIAL</h2>
+          <div class="row">
+            <div class="p-2 col-lg-4">
+              <label for="fecha-registro-tension" class="form-label">Fecha Registro</label>
+              <input formControlName="fecha_registro_tension" type="datetime-local" class="form-control" id="fecha-registro-tension">
+            </div>
+            <div class="p-2 col-lg-4">
+              <label for="sistolica" class="form-label">Sistólica</label>
+              <input formControlName="sistolica" type="number" class="form-control" id="sistolica">
+            </div>
+            <div class="p-2 col-lg-4">
+              <label for="diastolica" class="form-label">Diastólica</label>
+              <input formControlName="diastolica" type="number" class="form-control" id="diastolica">
+            </div>
+            <div class="p-2 col-lg-12">
+              <label class="form-label">Comentario del registro</label>
+              <textarea formControlName="comentario_tension" class="form-control"></textarea>
+            </div>
+          </div>
+          <button type="submit" class="col-lg-4 btn btn-primary">Registrar Tensión Arterial</button>
+        </form>
+
+        <!-- FORMULARIO DE INGRESO DE PESO -->
+        <form class="form-register bg-success formulario-peso" [formGroup]="formRegistroPeso" *ngIf="showFormRegistroPeso" (submit)="agregarRegistroPeso()">
+          <h2 class="titulo">NUEVO REGISTRO DE PESO</h2>
+          <div class="row">
+            <div class="p-2 col-lg-4">
+              <label for="fecha-registro-peso" class="form-label">Fecha Registro</label>
+              <input formControlName="fecha_registro_peso" type="datetime-local" class="form-control" id="fecha-registro-peso">
+            </div>
+            <div class="p-2 col-lg-4">
+              <label for="valor-peso" class="form-label">Valor Peso</label>
+              <input formControlName="valor_peso" type="number" class="form-control" id="valor-peso">
+            </div>
+            <div class="p-2 col-lg-12">
+              <label class="form-label">Comentario del registro</label>
+              <textarea formControlName="comentario_peso" class="form-control"></textarea>
+            </div>
+          </div>
+          <button type="submit" class="col-lg-4 btn btn-primary">Registrar Peso</button>
+        </form>
+      </div> <!-- Cierre del div.dashboardUser -->
+
+    </div> <!-- Cierre del div.col-lg-10 -->
+
+  </div> <!-- Cierre del div.row -->
+</section> <!-- Cierre del section.container -->
+
+<!--/////////////////////  ULTIMOS REGISTROS  //////////////////////-->
+<section class="container">
+  <div class="row">
+    <!-- Modal -->
+    <h2 class="titulo">ULTIMOS REGISTROS</h2>
+    <div class="registros">
+      <div class="bg-light col-lg-4 col-md-6 p-4 registro" *ngFor="let nota of notas_glucemia">
+        <p class="fecha">Fecha: {{ nota.fecha }}</p>
+        <p class="glucemia">Glucemia: {{ nota.valor }}</p>
+        <p class="notas">Notas: {{ nota.comentario }}</p>
+        <div class="btn-group">
+          <button (click)="cargarNotaParaActualizar(nota)" class="m-1 p-2 btn btn-success">Editar</button>
+          <button (click)="eliminar(nota.id)" class="m-1 p-2 btn btn-danger">Eliminar</button>
         </div>
       </div>
-      <button type="submit" class="col-lg-4 btn btn-primary">Registrar Glucemia</button>
-    </form>
-    
-    <!-- /////////////////// FORMULARIO DE INGRESO DE TENSIÓN ARTERIAL //////////////////////// -->
-    <form class="form-register bg-success" [formGroup]="formTensionArterial" *ngIf="showFormTensionArterial" (submit)="agregarTensionArterial()">
-      <div class="row">
-        <div class="p-2 col-lg-4">
-          <label for="fecha-registro-tension" class="form-label">Fecha Registro</label>
-          <input formControlName="fecha_registro_tension" type="datetime-local" class="form-control" id="fecha-registro-tension">
-        </div>
-        <div class="p-2 col-lg-4">
-          <label for="sistolica" class="form-label">Sistólica</label>
-          <input formControlName="sistolica" type="number" class="form-control" id="sistolica">
-        </div>
-        <div class="p-2 col-lg-4">
-          <label for="diastolica" class="form-label">Diastólica</label>
-          <input formControlName="diastolica" type="number" class="form-control" id="diastolica">
-        </div>
-        <div class="p-2 col-lg-12">
-          <label class="form-label">Comentario del registro</label>
-          <textarea formControlName="comentario_tension" class="form-control"></textarea>
-        </div>
-      </div>
-      <button type="submit" class="col-lg-4 btn btn-primary">Registrar Tensión Arterial</button>
-    </form>
-
-    <!-- /////////////////// FORMULARIO DE INGRESO DE PESO //////////////////////// -->
-    <form class="form-register bg-success" [formGroup]="formRegistroPeso" *ngIf="showFormRegistroPeso" (submit)="agregarRegistroPeso()">
-      <div class="row">
-        <div class="p-2 col-lg-4">
-          <label for="fecha-registro-peso" class="form-label">Fecha Registro</label>
-          <input formControlName="fecha_registro_peso" type="datetime-local" class="form-control" id="fecha-registro-peso">
-        </div>
-        <div class="p-2 col-lg-4">
-          <label for="valor-peso" class="form-label">Valor Peso</label>
-          <input formControlName="valor_peso" type="number" class="form-control" id="valor-peso">
-        </div>
-        <div class="p-2 col-lg-12">
-          <label class="form-label">Comentario del registro</label>
-          <textarea formControlName="comentario_peso" class="form-control"></textarea>
-        </div>
-      </div>
-      <button type="submit" class="col-lg-4 btn btn-primary">Registrar Peso</button>
-    </form>
-  </div> <!-- Cierre del div.container -->
-
-  <!--/////////////////////  ULTIMOS REGISTROS  //////////////////////-->
-
-  <!-- Modal -->
-  <h2 class="titulo">ULTIMOS REGISTROS</h2>
-  <div class="registros">
-    <div class="bg-light col-lg-4 col-md-6 p-4 registro" *ngFor="let nota of notas_glucemia">
-      <p class="fecha">Fecha: {{nota.fecha_registro}}ml</p>
-      <p class="glucemia">Glucemia:{{nota.valor_glucemia}}</p>
-      <p class="notas">Notas:{{nota.comentario_registro}}</p>
-      <button routerLink="/auth/edit_nota/{{nota.id}}" type="submit"
-        class="m-1 p-2 col-lg-4 btn btn-success">Editar</button>
-      <button (click)="eliminar(nota.id)" type="button" class="m-1 p-2 col-lg-4 btn btn-danger">Eliminar</button>
-    </div>
-  </div>
-</div>
+    </div> <!-- Cierre del div.registros -->
+  </div> <!-- Cierre del div.row -->
+</section> <!-- Cierre del section.container -->
 
 <!--/////////////////////  SECCION DE SERVICIOS  //////////////////////-->
-<!--/////////////////////  SECCION DE SERVICIOS  //////////////////////-->
-<!--/////////////////////  SECCION DE SERVICIOS  //////////////////////-->
-
-<!-- se hace la estructura con BOOTSTRAP    -->
 <section class="container">
   <div class="row">
     <!-- SERVICIOS -->
@@ -141,7 +136,7 @@
           </div>
         </div>
       </div>
-    </div>
+    </div> <!-- Cierre del div.grid-container -->
 
     <!-- CARRITO -->
     <div class="carrito col-lg-4 py-4">
@@ -185,6 +180,7 @@
         <button class="m-1 px-3 p-1 btn btn-primary boton-carr" (click)="comprar()">Comprar</button>
       </div>
     </div> <!-- Cierre del div.carrito -->
+
   </div> <!-- Cierre del div.row -->
 </section> <!-- Cierre del section.container -->
 
@@ -195,10 +191,3 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"
   integrity="sha512-ElRFoEQdI5Ht6kZvyzXhYG9NqjtkmlkfYk0wr6wHxU9JEHakS7UJZNeml5ALk+8IKlU6iRJHn3Db3mOXSYXbUQ=="
   crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-<!-- script de app -->
-
-
-    </div>
-
-  </div> <!-- CIERRA COL-LG-10 -->
-</section>

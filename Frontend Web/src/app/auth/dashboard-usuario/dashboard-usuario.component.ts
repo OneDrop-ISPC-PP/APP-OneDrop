@@ -4,92 +4,45 @@ import { Router } from '@angular/router';
 import { EstadisUsuariosService } from 'src/app/servicios/estadis-usuarios.service';
 import { LoginService } from 'src/app/servicios/login-service';
 
-
 @Component({
   selector: 'app-dashboard-usuario',
   templateUrl: './dashboard-usuario.component.html',
   styleUrls: ['./dashboard-usuario.component.css']
 })
 export class DashboardUsuarioComponent implements OnInit {
-  constructor(
-    private paciente: EstadisUsuariosService,
-    private formBuilder: FormBuilder,
-    private router: Router,
-    private serv_login: LoginService
-  ) {
-   
-  }
-
-// NO PUEDO TRAER LA FICHA MEDICA Y POR LO TANTO TMPOCO SU ID PARA HACER LOS REGISTROS
-  getId = this.serv_login.getUserId();
-  idFichaMedica:any // HARDCODEADA
-
-
-  getUser = this.serv_login.getUser();
-  //getFichaMedica = this.paciente.getFichaMedica(this.getId);
-
-  // HAY REGISTRO DE GLUCEMIA, VER COMO TRAERLOS. QUE SERIA LO MISMO QUE TRAER LA FICHA MEDICA.
-  // CAPAZ ESTAMOS TRAYENDO MAL Y POR ESO NO SE VE NADA :l
-
-
-  listaNotasGlucemia:any = [];
-
+  getId: any;
+  idFichaMedica: any;
+  getUser: any;
+  listaNotasGlucemia: any = [];
   notas_glucemia: any;
   servicios: any;
-
-  formNotasGlucemia: FormGroup|any;
-  formActualizarNota: FormGroup|any;
-  formTensionArterial: FormGroup|any;
-  formRegistroPeso: FormGroup|any; // Formulario de registro de peso
-
+  formNotasGlucemia: FormGroup | any;
+  formActualizarNota: FormGroup | any;
+  formTensionArterial: FormGroup | any;
+  formRegistroPeso: FormGroup | any;
   serviciosCarrito: any[] = [];
   Snombre: string = '';
   Smonto: string = '';
   nuevoPedido: any[] = [];
   showForm: boolean = false;
   showFormTensionArterial: boolean = false;
-  showFormRegistroPeso: boolean = false; // Propiedad para controlar el formulario de registro de peso
+  showFormRegistroPeso: boolean = false;
 
+  constructor(
+    private paciente: EstadisUsuariosService,
+    private formBuilder: FormBuilder,
+    private router: Router,
+    private serv_login: LoginService
+  ) {}
 
-
-  // EMPIEZA ON INIT
   ngOnInit(): void {
-    // TREAMOS LAS NOTAS DE GLUCEMIA
-    this.paciente.GET_NOTAS_GLUCEMIA(this.getId).subscribe(
-      (data:any)=>{
-        this.listaNotasGlucemia = data;
-        console.log("CARGA DE NOTAS DE GLUCEMIA EXITOSA, LOS DATOS SON:")
-        console.log(data);
+    this.getId = this.serv_login.getUserId();
+    this.getUser = this.serv_login.getUser();
 
-      },
-      (error:any) => {
-        console.log("ERROR EN LA CARGA DE LAS NOTAS DE GLUCEMIA");
-        console.log(error);
+    this.getNotas();
+    this.getServicios();
+    this.getCarrito();
 
-      })
-
-
-    // TREAMOS LA FICHA MEDICA
-    this.paciente.getFichaMedica(this.getId).subscribe(
-      (data:any)=>{
-        this.listaNotasGlucemia = data;
-        console.log("CARGA DE LA FICHA MEDICA EXITOSA, LOS DATOS SON:")
-        console.log(data);
-        console.log("----El ID de la ficha medica es:----")
-        // GUARDAMOS EL ID EN LA VARIABLE idFichaMedica
-        this.idFichaMedica = data.id
-        console.log(data.id);
-        console.log("-- y se guardo en la variable --")
-
-
-      },
-      (error:any) => {
-        console.log("ERROR EN LA CARGA DE LA FICHA MEDICA");
-        console.log(error);
-      })
-
-    
-    // BUILDER DE NOTAS DE GLUCEMIA
     this.formNotasGlucemia = this.formBuilder.group({
       fecha: ['', Validators.required],
       valor: ['', [Validators.required]],
@@ -109,23 +62,17 @@ export class DashboardUsuarioComponent implements OnInit {
       comentario_tension: ['']
     });
 
-    // Inicializamos el formulario de registro de peso
     this.formRegistroPeso = this.formBuilder.group({
       fecha_registro_peso: ['', Validators.required],
       valor_peso: ['', Validators.required],
       comentario_peso: ['']
     });
-
-
-
-    this.getNotas();
-    this.getServicios();
-    this.getCarrito();
-  } // CIERRA ON INIT
-  public aFormFichaMedica(){
-    this.router.navigateByUrl("/auth/registro3usuario")
-
   }
+
+  public aFormFichaMedica(): void {
+    this.router.navigateByUrl("/auth/registro3usuario");
+  }
+
   toggleForm(): void {
     this.showForm = !this.showForm;
   }
@@ -134,22 +81,17 @@ export class DashboardUsuarioComponent implements OnInit {
     this.showFormTensionArterial = !this.showFormTensionArterial;
   }
 
-  toggleFormRegistroPeso(): void { // Método para controlar la visibilidad del formulario de registro de peso
+  toggleFormRegistroPeso(): void {
     this.showFormRegistroPeso = !this.showFormRegistroPeso;
   }
 
-  // METODO PARA AGREGAR NOTA DE GLUCEMIA
-  // METODO PARA AGREGAR NOTA DE GLUCEMIA
-  agregarNotaGlucemia(id:any): void {
+  agregarNotaGlucemia(id: any): void {
     if (this.formNotasGlucemia.valid) {
       this.paciente.nuevaNotaGlucemia({
-
         fecha: this.formNotasGlucemia.value.fecha,
         valor: this.formNotasGlucemia.value.valor,
         comentario: this.formNotasGlucemia.value.comentario
-
-      },id).subscribe((data: any) => {
-        //alert('Nota de glucemia registrada');
+      }, id).subscribe((data: any) => {
         console.log("Datos registrados de glucemia");
         console.log(data);
         console.log("El id pasado es");
@@ -157,30 +99,16 @@ export class DashboardUsuarioComponent implements OnInit {
 
         this.getNotas();
         this.formNotasGlucemia.reset();
-      },
-      (error: any) => {
+      }, (error: any) => {
         console.log("Datos de glucemia no fueron registrados ");
-        //console.log("El id del paciente es:");
-        //console.log(this.getId);
-        //console.log("Los datos del paciente son:");
-        //console.log(this.getUser);
-        //console.log("Las fichas medicas son:");
-        //console.log(this.getId);
-
         console.log(error);
-      }
-    
-    
-    );
+      });
     } else {
       alert('Ingrese los datos correctamente');
       this.formNotasGlucemia.markAllAsTouched();
     }
   }
 
-    
-    // METODO PARA AGREGAR NOTA DE ARTERIAL 
-    // METODO PARA AGREGAR NOTA DE ARTERIAL 
   agregarTensionArterial(): void {
     if (this.formTensionArterial.valid) {
       this.paciente.agregarTensionArterial({
@@ -198,8 +126,6 @@ export class DashboardUsuarioComponent implements OnInit {
     }
   }
 
-    // METODO PARA AGREGAR NOTA DE PESO
-    // METODO PARA AGREGAR NOTA DE PESO
   agregarRegistroPeso(): void {
     if (this.formRegistroPeso.valid) {
       this.paciente.agregarRegistroPeso({
@@ -216,16 +142,18 @@ export class DashboardUsuarioComponent implements OnInit {
     }
   }
 
-  // GET DE LAS NOTAS DE GLUCEMIA
   getNotas(): void {
-    this.paciente.muestraNotasUsuario().subscribe({
-      next: (notas_S) => {
-        this.notas_glucemia = notas_S;
+    this.paciente.GET_NOTAS_GLUCEMIA(this.getId).subscribe(
+      (data:any)=>{
+        this.listaNotasGlucemia = data;
+        console.log("CARGA DE NOTAS DE GLUCEMIA EXITOSA, LOS DATOS SON:")
+        console.log(data);
+
       },
-      error: (errorData) => {
-        console.error(errorData);
-      }
-    });
+      (error:any) => {
+        console.log("ERROR EN LA CARGA DE LAS NOTAS DE GLUCEMIA");
+        console.log(error);
+      });
   }
 
   eliminar(id: string): void {
@@ -281,12 +209,12 @@ export class DashboardUsuarioComponent implements OnInit {
       });
   }
 
-  eliminarServ(id:string){
+  eliminarServ(id:string): void {
     this.paciente.DELETE_SERV(id).subscribe(()=>{
-      alert("Servicio eliminado del carrito")
-      this.getCarrito()
-      console.log("el id de delete es"+id)
-    })
+      alert("Servicio eliminado del carrito");
+      this.getCarrito();
+      console.log("el id de delete es"+id);
+    });
   }
 
   getServicios(): void {
