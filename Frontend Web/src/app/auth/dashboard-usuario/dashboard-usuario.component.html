@@ -37,7 +37,7 @@
   <!-- /////////////////// FORMULARIO DE INGRESO DE NOTAS DE GLUCEMIA //////////////////////// -->
   <h2 class="titulo">NUEVO REGISTRO DE CLUCEMIA</h2>
   <div class="p-4 container">
-    <form class="form-register bg-success" [formGroup]="formNotasGlucemia" *ngIf="showForm" (submit)="agregarNotaGlucemia()">
+    <form class="form-register bg-success" [formGroup]="formNotasGlucemia" *ngIf="showForm" (submit)="agregarNotaGlucemia(idFichaMedica)">
       <div class="row">
         <div class="p-2 col-lg-4">
           <label for="fecha-registro" class="form-label">Fecha Registro</label>

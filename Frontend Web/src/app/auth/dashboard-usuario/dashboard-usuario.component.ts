@@ -22,7 +22,7 @@ export class DashboardUsuarioComponent implements OnInit {
 
 // NO PUEDO TRAER LA FICHA MEDICA Y POR LO TANTO TMPOCO SU ID PARA HACER LOS REGISTROS
   getId = this.serv_login.getUserId();
-  idFichaMedica = 5 // HARDCODEADA
+  idFichaMedica:any // HARDCODEADA
 
 
   getUser = this.serv_login.getUser();
@@ -75,10 +75,12 @@ export class DashboardUsuarioComponent implements OnInit {
         this.listaNotasGlucemia = data;
         console.log("CARGA DE LA FICHA MEDICA EXITOSA, LOS DATOS SON:")
         console.log(data);
-        console.log("El ID de la ficha medica es:")
+        console.log("----El ID de la ficha medica es:----")
         // GUARDAMOS EL ID EN LA VARIABLE idFichaMedica
-
+        this.idFichaMedica = data.id
         console.log(data.id);
+        console.log("-- y se guardo en la variable --")
+
 
       },
       (error:any) => {
@@ -138,7 +140,7 @@ export class DashboardUsuarioComponent implements OnInit {
 
   // METODO PARA AGREGAR NOTA DE GLUCEMIA
   // METODO PARA AGREGAR NOTA DE GLUCEMIA
-  agregarNotaGlucemia(): void {
+  agregarNotaGlucemia(id:any): void {
     if (this.formNotasGlucemia.valid) {
       this.paciente.nuevaNotaGlucemia({
 
@@ -146,10 +148,13 @@ export class DashboardUsuarioComponent implements OnInit {
         valor: this.formNotasGlucemia.value.valor,
         comentario: this.formNotasGlucemia.value.comentario
 
-      },this.idFichaMedica).subscribe((data: any) => {
+      },id).subscribe((data: any) => {
         //alert('Nota de glucemia registrada');
         console.log("Datos registrados de glucemia");
         console.log(data);
+        console.log("El id pasado es");
+        console.log(id);
+
         this.getNotas();
         this.formNotasGlucemia.reset();
       },
