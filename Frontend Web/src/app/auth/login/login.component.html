@@ -31,8 +31,11 @@
                     <div *ngIf="username_GET.errors?.['required']">
                       Complete este campo.
                     </div>
-                    <div *ngIf="username_GET.errors?.['email']">
-                      Ingrese un email con formato correcto.
+                    <div *ngIf="username_GET.errors?.['minlength']">
+                      Ingrese un usuario con más de 2 caracteres.
+                    </div>
+                    <div *ngIf="username_GET.errors?.['maxlength']">
+                      Ingrese un usuario con menos de 30 caracteres.
                     </div>
             </div>      
       
@@ -59,7 +62,10 @@
               Complete este campo.
             </div>
             <div *ngIf="pass_GET.errors?.['minlength']">
-              Ingrese una contraseña de mas de 9 caracteres.
+              Ingrese una contraseña de más de 8 caracteres.
+            </div>
+            <div *ngIf="pass_GET.errors?.['maxlength']">
+              Ingrese una contraseña de menos de 30 caracteres.
             </div>
       </div>
 
