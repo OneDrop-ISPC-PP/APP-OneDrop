@@ -39,12 +39,16 @@ public class CarritoService {
 
     public CarritoReadDto createCarrito(Integer idUser){
         User paciente = authService.getUserById(idUser);
+        validarSiUsuarioYaTieneCarrito(paciente);
         Carrito newCarrito = new Carrito().builder()
                 .paciente(paciente)
                 .historialCompras(new ArrayList<>())
                 .servicios(new ArrayList<>())
                 .build();
         return carritoMapper.toReadDto(carritoRepository.save(newCarrito));
+    }
+    public void validarSiUsuarioYaTieneCarrito(User paciente){
+        if(carritoRepository.findByPaciente(paciente).isPresent()) throw new ForbiddenAction("Paciente ya tiene un carrito asignado, no se puede crear otro.");
     }
     public Carrito getById (Integer id){
         Optional<Carrito> carrito = carritoRepository.findById(id);
@@ -54,14 +58,21 @@ public class CarritoService {
     public CarritoReadDto findById (Integer id){
         return  carritoMapper.toReadDto(getById(id));
     }
-
-    public CarritoReadDto addServicioACarrito (Integer idCarrito, Integer idServicio, Integer cantidad){
+    public CarritoReadDto addServicioACarrito (Integer idCarrito, Integer idServicio){
         Servicio servicio = servicioService.getServicioById(idServicio);
         Carrito carrito = getById(idCarrito);
         // todo INICIALMENTE, VAMOS A SIMPLIFICAR LOGICA DE NEGOCIOS, PARA QUE NO EXISTA STOCK, SOLO SERVICIOS QUE LUEGO SE FIJARA FECHA PARA LA CITA, POR LO QUE NO HABRA STOCK NI CANTIDAD DE PRODUCTOS EN CARRITO
-        List<Servicio> servicioEnCarrito = carrito.getServicios().stream().filter(s -> s.getId().equals(idServicio)).collect(Collectors.toList());
-        if(! servicioEnCarrito.isEmpty()) throw new ForbiddenAction("Producto ya existe en carrito!");
+        Boolean existeServicioEnCarrito = carrito.getServicios().stream().anyMatch(s -> s.getId().equals(idServicio));
+        if(existeServicioEnCarrito) throw new ForbiddenAction("Producto ya existe en carrito!");
         carrito.getServicios().add(servicio);
+        return carritoMapper.toReadDto(carritoRepository.save(carrito));
+    }
+    public CarritoReadDto removeServicioDeCarrito (Integer idCarrito, Integer idServicio){
+        Carrito carrito = getById(idCarrito);
+        // todo INICIALMENTE, VAMOS A SIMPLIFICAR LOGICA DE NEGOCIOS, PARA QUE NO EXISTA STOCK, SOLO SERVICIOS QUE LUEGO SE FIJARA FECHA PARA LA CITA, POR LO QUE NO HABRA STOCK NI CANTIDAD DE PRODUCTOS EN CARRITO
+        Boolean existeServicioEnCarrito = carrito.getServicios().stream().anyMatch(s -> s.getId().equals(idServicio));
+        if( ! existeServicioEnCarrito ) throw new ForbiddenAction("Producto NO existe en carrito!");
+        carrito.getServicios().removeIf(servicio -> servicio.getId().equals(idServicio));
         return carritoMapper.toReadDto(carritoRepository.save(carrito));
     }
 

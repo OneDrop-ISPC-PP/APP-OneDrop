@@ -29,6 +29,7 @@ public class CarritoController {
         return new ResponseEntity<>(carritoService.findAll(page, size, sortBy), HttpStatus.OK);
     }
      */
+    // crear un carrito para un usuario, lo crea vacio y por unica vez!
     @PostMapping("{idUser}")
     public ResponseEntity<CarritoReadDto> addCarrito (@PathVariable Integer idUser){
         return new ResponseEntity<>(carritoService.createCarrito(idUser) , HttpStatus.CREATED);
@@ -37,11 +38,17 @@ public class CarritoController {
     public ResponseEntity<CarritoReadDto> findById (@PathVariable Integer id){
         return new ResponseEntity<>(carritoService.findById(id) , HttpStatus.OK);
     }
-    @PutMapping("{idCarrito}/{idServicio}")
+    // agregar servicios
+    @PostMapping("{idCarrito}/{idServicio}")
     public ResponseEntity<CarritoReadDto> addServicioACarrito (@PathVariable Integer idCarrito,
-                                                               @PathVariable Integer idServicio,
-                                                               @RequestParam(required = false, defaultValue = "1") Integer cantidad){
-        return new ResponseEntity<>(carritoService.addServicioACarrito(idCarrito,idServicio, cantidad) , HttpStatus.ACCEPTED);
+                                                               @PathVariable Integer idServicio){
+        return new ResponseEntity<>(carritoService.addServicioACarrito(idCarrito,idServicio) , HttpStatus.ACCEPTED);
+    }
+    // quitar servicios
+    @DeleteMapping("{idCarrito}/{idServicio}")
+    public ResponseEntity<CarritoReadDto> removeServicioDeCarrito (@PathVariable Integer idCarrito,
+                                                               @PathVariable Integer idServicio){
+        return new ResponseEntity<>(carritoService.removeServicioDeCarrito(idCarrito,idServicio) , HttpStatus.ACCEPTED);
     }
 
     // todo faltan el resto de enpoindts, solo pueda agregar servicios, falta quitar servicios, falta "comprar" que es cuando se crean los resumens de compra ects..
