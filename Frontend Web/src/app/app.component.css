@@ -5,6 +5,15 @@
     box-sizing: border-box;
     font-family: Poppins, sans-serif; 
     /*outline: solid 1px tomato !important;*/
+
+/*  PALETA DE COLORES DEL NUEVO LOGO
+#FC5880 rosa
+#16BBEB celeste
+#0870AA azul
+#03476D azul oscuro
+*/
+
+
 }
 /* Estilos generales del nav */
 .navbar {
@@ -39,10 +48,10 @@
 .navbar-brand {
     background-image: url('../assets/images/dropLogo.png');
     background-repeat: no-repeat;
-    background-size: contain; /* Ajusta automáticamente el tamaño de la imagen */
+    background-size: cover; /* Ajusta automáticamente el tamaño de la imagen */
     background-position: center; /* Centra la imagen vertical y horizontalmente */
-    width: 150px; /* Ancho de la imagen */
-    height: 50px; /* Altura de la imagen */
+    width: 250px; /* Ancho de la imagen */
+    height: 70px; /* Altura de la imagen */
     padding: 0; /* Elimina cualquier espacio de relleno */
 
     
@@ -65,15 +74,15 @@
 .botones {
     padding: .7rem .4rem;
     border: 1px solid white;
-    border-radius: .5rem;
+    border-radius: .3rem;
 
     transition: all 2s ease;
 
 }
 .botones:hover{
-    border: 1px solid #0062cc;
-    background-color: #f9fcff;
-    border-radius: .5rem;
+    border: 1px solid #03476D;
+    color:#16BBEB;
+    border-radius: .3rem;
 
 }
 
@@ -82,15 +91,17 @@
 
 .boton1{
     padding: .7rem 2rem ;
-    background-color: #0062cc;
-    border-radius: .5rem;
-    border: 1px solid #0062cc;
+    /*background-color: #0062cc;*/
+    background-color:#03476D;
+
+    border-radius: .3rem;
+    border: 1px solid#03476D;
     transition: all 2s ease;
 }
 
 .boton1:hover{
-    border: 1px solid #052a5c;
-    background-color: #052a5c;
+    border: 1px solid#0870AA;
+    background-color: #0870AA;
 
 
     
@@ -99,3 +110,6 @@
 .boton1bis{
     color: white;
 }
+
+
+

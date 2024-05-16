@@ -14,6 +14,12 @@ export class DashboardAdminComponent implements OnInit{
 
   ngOnInit(): void {}  // CIERRA NG ONIT
 
+ public seleccionado(){
+  let seleccionado = "border: #2845d6 1px solid;";
+ }
+
+seleccionado2 = "border: #2845d6 1px solid;";
+
 }
   
 
