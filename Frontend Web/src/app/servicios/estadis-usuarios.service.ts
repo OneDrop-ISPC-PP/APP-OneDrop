@@ -11,7 +11,7 @@ export class EstadisUsuariosService {
 
   constructor(private http: HttpClient) { }
 
-  // URL GET PARA FICHA MEDICA:
+  // URL GET PARA FICHA MEDICA POR UD USER:
   url_GET_FICHA_MEDICA: string = 'http://localhost:8080/fichaMedica/user/';
 
 
@@ -28,7 +28,7 @@ export class EstadisUsuariosService {
   url_CARRITO: string = 'http://localhost:3000/CARRITO/';
 
   ////////////////// GET FICHA MEDICA ///////////////////
-  getFichaMedica(id:any){
+  getFichaMedicaIdUser(id:any){
     return this.http.get(this.url_GET_FICHA_MEDICA+id)
   }
 
