@@ -8,9 +8,13 @@ import com.pisis.oneDrop.exceptions.customsExceptions.ForbiddenAction;
 import com.pisis.oneDrop.exceptions.customsExceptions.NotFoundException;
 import com.pisis.oneDrop.model.dtos.RegistrosPaginadosReadDtoArray;
 import com.pisis.oneDrop.model.dtos.carrito.CarritoReadDto;
+import com.pisis.oneDrop.model.dtos.resumenCompra.ResumenCompraReadDto;
 import com.pisis.oneDrop.model.entities.Carrito;
+import com.pisis.oneDrop.model.entities.ResumenCompra;
 import com.pisis.oneDrop.model.entities.Servicio;
+import com.pisis.oneDrop.model.entities.enums.MetodoDePago;
 import com.pisis.oneDrop.model.mappers.CarritoMapper;
+import com.pisis.oneDrop.model.mappers.ResumenCompraMapper;
 import com.pisis.oneDrop.model.repositories.CarritoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -19,7 +23,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -36,6 +42,10 @@ public class CarritoService {
     UserMapper userMapper;
     @Autowired
     ServicioService servicioService;
+    @Autowired
+    ResumenCompraService resumenCompraService;
+    @Autowired
+    ResumenCompraMapper resumenCompraMapper;
 
     public CarritoReadDto createCarrito(Integer idUser){
         User paciente = authService.getUserById(idUser);
@@ -76,6 +86,14 @@ public class CarritoService {
         return carritoMapper.toReadDto(carritoRepository.save(carrito));
     }
 
+    public ResumenCompraReadDto comprarCarrito(Integer idCarrito, MetodoDePago metodoDePago){
+        Carrito carrito = getById(idCarrito);
+        ResumenCompra resumenCompra = resumenCompraService.crearResumen(carrito, metodoDePago);
+        carrito.getServicios().clear();
+        carrito.getHistorialCompras().add(resumenCompra);
+        carritoRepository.save(carrito);
+        return resumenCompraMapper.toReadDto(resumenCompra);
+    }
     /*
 
     public RegistrosPaginadosReadDtoArray findAll(Integer page, Integer size, String sortBy ){

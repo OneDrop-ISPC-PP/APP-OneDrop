@@ -34,6 +34,7 @@ public class CarritoMapper {
         List<ServicioReadDto> serviciosReadDtos = entity.getServicios().stream().map(servicio -> servicioMapper.toReadDto(servicio)).collect(Collectors.toList());
         List<ResumenCompraReadDto> resumenesReadDtos = entity.getHistorialCompras().stream().map(resumenCompra -> resumenCompraMapper.toReadDto(resumenCompra)).collect(Collectors.toList());
         return CarritoReadDto.builder()
+                .id(entity.getId())
                 .paciente(userMapper.toReadDto(entity.getPaciente()))
                 .servicios(serviciosReadDtos)
                 .historialCompras(resumenesReadDtos)
