@@ -46,7 +46,7 @@ const routes:Routes=[
         {path:'dash_user', component:DashboardUsuarioComponent, canActivate:[UserGuard]},
         {path:'registro2usuario', component:Registro2usuarioComponent},
         {path:'registro3usuario', component:Registro3usuarioComponent},
-        {path:'edit_nota/:id', component:ModNotaUsuarioComponent},
+        {path:'edit_nota_glucemia/:id', component:ModNotaUsuarioComponent},
         {path:'edit_servicio/:id', component:ModServicioAdminComponent},
         {path:'edit_paciente/:id', component:ModPacienteAdminComponent},
 

@@ -30,10 +30,11 @@ export class ModServicioAdminComponent implements OnInit {
 
     })
 
-    this.serv_estadistica.GET_DATOS_SERVICIOS(this.dataid).subscribe(
+    this.serv_estadistica.GET_DATOS_SERVICIO(this.dataid).subscribe(
       (data)=>{
         this.servicio=data;
-        console.log("los datos del servicio son:");
+        console.log("DATOS DEL SERVICIO ACTULIZADOS");
+        console.log("Los datos del servicio son:");
         console.log(data)
       },
       (error)=>{
