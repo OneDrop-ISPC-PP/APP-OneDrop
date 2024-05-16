@@ -14,12 +14,32 @@ export class EstadisUsuariosService {
   // URL GET PARA FICHA MEDICA POR UD USER:
   url_GET_FICHA_MEDICA: string = 'http://localhost:8080/fichaMedica/user/';
 
-
+  // GLUCEMIA
   // URL DE NOTAS DE GLUCEMIA:
   url_NOTAS_GLUCEMIA_GET: string = 'http://localhost:8080/registros/glucemia/usuario/';
   
   // URL DE NOTAS DE GLUCEMIA:
   url_NOTA_GLUCEMIA_POST: string = 'http://localhost:8080/registros/glucemia/usuario/';
+
+
+
+  // PESO
+  // URL DE NOTAS DE GLUCEMIA:
+  url_NOTAS_PESO_GET: string = 'http://localhost:8080/registros/peso/usuario/';
+  
+  // URL DE NOTAS DE GLUCEMIA:
+  url_NOTA_PESO_POST: string = 'http://localhost:8080/registros/peso/usuario/';
+
+
+
+  // TENSION
+  // URL DE NOTAS DE GLUCEMIA:
+  url_NOTAS_TENSION_GET: string = 'http://localhost:8080/registros/tensionArterial/usuario/';
+  
+  // URL DE NOTAS DE GLUCEMIA:
+  url_NOTA_TENSION_POST: string = 'http://localhost:8080/registros/tensionArterial/usuario/';
+
+
 
   // URL DE SERVICIOS:
   url_SERVICIOS: string = 'http://localhost:8080/servicios/';
@@ -32,7 +52,7 @@ export class EstadisUsuariosService {
     return this.http.get(this.url_GET_FICHA_MEDICA+id)
   }
 
-  ////////////////// CODIGO NOTAS GLUCEMIA ///////////////////
+  ////////////////// CODIGO NOTAS GLUCEMIA (FUNCIONAL) ///////////////////
   // AGREGA NOTAS DE GLUCEMIA
   nuevaNotaGlucemia(datos: any, id:any) {
     return this.http.post(this.url_NOTA_GLUCEMIA_POST+id, datos);
@@ -42,6 +62,37 @@ export class EstadisUsuariosService {
   public GET_NOTAS_GLUCEMIA(id:any){
     return this.http.get(this.url_NOTAS_GLUCEMIA_GET+id)
   }
+
+
+  ////////////////// CODIGO NOTAS PESO (FUNCIONAL) ///////////////////
+  // AGREGA NOTAS DE GLUCEMIA
+  nuevaNotaPeso(datos: any, id:any) {
+    return this.http.post(this.url_NOTA_PESO_POST+id, datos);
+  }
+
+  // GET_NOTAS_GLUCEMIA
+  public GET_NOTAS_PESO(id:any){
+    return this.http.get(this.url_NOTAS_PESO_GET+id)
+  }
+
+  ////////////////// CODIGO NOTAS TENSION ARTERIAL ///////////////////
+  // AGREGA NOTAS DE GLUCEMIA
+  nuevaNotaTension(datos: any, id:any) {
+    return this.http.post(this.url_NOTA_TENSION_POST+id, datos);
+  }
+
+  // GET_NOTAS_GLUCEMIA
+  public GET_NOTAS_TENSION(id:any){
+    return this.http.get(this.url_NOTAS_TENSION_GET+id)
+  }
+
+
+
+
+
+
+
+
 
   // MUESTRA LAS NOTAS DE GLUCEMIA (BORRAR SI ANDA EL DE ARRIBA)
   muestraNotasUsuario() {

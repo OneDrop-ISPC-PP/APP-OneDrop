@@ -11,7 +11,7 @@
     scroll-behavior: smooth;
 }
 
-/*  ESPECIFICO DASHBOARD PACIENTE  */ 
+/*  ESPECIFICO DASHBOARD PACIENTE 
 .dashboardUser {
     background-color: #ffffff;
 }
@@ -69,8 +69,8 @@
 .dashboardUser .contenedorGrafico .grafico {
     margin: auto;
 }
-
-/* boton nuevo registro   */
+ */ 
+/* boton nuevo registro   
 .dashboardUser .btnAgregar {
     position: sticky;
     top: 90vh;
@@ -93,7 +93,7 @@
     background-color: rgb(4, 125, 6);
 }
 
-/* modal nuevo registro   */
+/* modal nuevo registro 
 .dashboardUser #nuevoRegistroGlucemia label {
     margin-bottom: 5px;
 }
@@ -106,8 +106,8 @@
     text-align: right;
     width: 100%;
 }
-
-/* listado de registros   */
+*/
+/* listado de registros 
 .dashboardUser .registros .registro {
     background: -webkit-linear-gradient(left, #a345b292, #fa42989e);
     padding: 5px;
@@ -163,8 +163,8 @@
     margin-top: 6rem;
     line-height: 2.5;
 }
-
-/*  ESTILOS DE LOS SERVICIOS */
+  */
+/*  ESTILOS DE LOS SERVICIOS 
 .servicios {
     margin: 0rem;
 }
@@ -172,8 +172,8 @@
 .cont-serv {
     background-color: #edf5fc;
 }
-
-/* ESTILOS DE USO */
+*/
+/* ESTILOS DE USO
 
 .text-center {
     text-align: center;
@@ -182,8 +182,8 @@
 .borde {
     border: 1px solid blue;
 }
-
-/* Estilos generales del nav */
+ */
+/* Estilos generales del nav
 
 .container {
     background-color: #f5f3f3;
@@ -293,8 +293,8 @@
     background-color: #2da0c3;
     transition: all 0.3s;
 }
-
-/*------Banner--------*/
+ */
+/*------Banner--------
 
 .banner {
     position: absolute;
@@ -308,8 +308,8 @@
     background: #edf5fc;
     transition: 0.5s;
 }
-
-/*------Cuerpo--------*/
+*/
+/*------Cuerpo--------
 
 .cuerpo {
     position: relative;
@@ -332,8 +332,8 @@
     max-width: 700px;
     color: #333333;
 }
-
-/*------Cards--------*/
+*/
+/*------Cards--------
 
 .card-body {
     background: transparent;
@@ -395,8 +395,8 @@
     line-height: 2;
     font-family: 'Roboto', sans-serif;
 }
-
-/*------Seccion--------*/
+*/
+/*------Seccion--------
 
 .seccion {
     max-width: 80%;
@@ -434,8 +434,8 @@
     margin: 0rem;
     padding: 0rem;
 }
-
-/* Responsividad */
+*/
+/* Responsividad 
 
 @media screen and (max-width: 1200px) {
     .banner {
@@ -598,8 +598,8 @@
         max-width: none;
     }
 }
-
-/* ESTILOS DEL CARRITO */
+*/
+/* ESTILOS DEL CARRITO 
 
 .carrito {
     margin-top: 1.5%;
@@ -634,8 +634,8 @@
 .boton-carr {
     margin: 0.1rem;
 }
-
-/* Estilos para la barra lateral */
+*/
+/* Estilos para la barra lateral
 .sidebar {
     height: 50%;
     width: 250px;
@@ -643,50 +643,95 @@
     z-index: 1;
     top: 85px;
     left: 0;
-    background-color: #333; /* Color de la barra lateral */
+     */
+      /*
+    background-color: #333; Color de la barra lateral
     overflow-x: hidden;
     padding-top: 20px;
     padding-left: 20px;
 }
-
-/* Estilos para el encabezado de la barra lateral */
+ */
+/* Estilos para el encabezado de la barra lateral
 .sidebar-header {
     padding:10px;
     margin-right: 25px;
     margin-bottom: 5px;
     text-align: center;
-    background-color: #444; /* Color del encabezado */
+    background-color: #444; /* Color del encabezado 
 }
-
-/* Estilos para los botones en la barra lateral */
+*/
+/* Estilos para los botones en la barra lateral
 .sidebar-menu button {
     display: block;
     width: 90%;
     padding: 10px;
     text-align: center;
-    background-color: #555; /* Color de fondo de los botones */
+     */
+    /* background-color: #555; Color de fondo de los botones
     border: none;
     color: white;
     cursor: pointer;
     transition: background-color 0.3s;
 }
 
-/* Cambio de color al pasar el mouse sobre los botones */
+/* Cambio de color al pasar el mouse sobre los botones 
 .sidebar-menu button:hover {
     background-color: #666;
 }
-
-/* Ajuste para mover hacia la derecha todos los contenedores excepto la barra lateral */
+*/
+/* Ajuste para mover hacia la derecha todos los contenedores excepto la barra lateral
 .container .row > div:not(.sidebar) {
-    margin-left: 250px; /* Ajusta el margen izquierdo */
+    margin-left: 250px; /* Ajusta el margen izquierdo 
+   
 }
-/* Estilos para dispositivos pequeños y medianos */
+*/
+/* Estilos para dispositivos pequeños y medianos 
 @media (max-width: 992px) {
   .sidebar {
-      display:inline; /* Ocultar la barra lateral por defecto */
+      display:inline; /* Ocultar la barra lateral por defecto 
   }
 
   .show-sidebar {
-      display: block; /* Mostrar la barra lateral al hacer clic en el botón de hamburguesa */
+      display: block; /* Mostrar la barra lateral al hacer clic en el botón de hamburguesa 
   }
 }
+*/
+/* ///////////// 2 0 2 4 ///////////// */
+.borde{
+    border:#2845d6 1px solid;
+}
+
+.bg_c_primary{
+    background-color: var(--primary-dark);
+  }
+  
+  .text_center{
+    text-align: center;
+  }
+  
+  .borde_servicios{
+    border: 1px solid #2845d6;
+  
+  }
+  
+  .bg_btn_edit{
+    background-color:  #3155e7;
+    color: #ffffff;
+  }
+  
+  .bg_btn_elim{
+    background-color: #fa4299;
+    color: #ffffff;
+  }
+  
+  /* CONTENEDOR*/
+  
+  .contenedor_servicios{
+    height: 20rem;
+    width: 100%;
+    overflow-y: scroll;
+    overflow-x: scroll;
+  
+  
+  }
+  
