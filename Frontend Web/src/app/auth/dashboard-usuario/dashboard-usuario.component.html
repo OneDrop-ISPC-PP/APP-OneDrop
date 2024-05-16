@@ -29,7 +29,7 @@
         </div>
 
         <!-- FORMULARIO DE INGRESO DE NOTAS DE GLUCEMIA -->
-        <form class="form-register bg-success formulario-glucemia" [formGroup]="formNotasGlucemia" *ngIf="showForm" (submit)="agregarNotaGlucemia(idFichaMedica)">
+        <form class="form-register bg-success formulario-glucemia" [formGroup]="formNotasGlucemia" *ngIf="showForm" (submit)="agregarNotaGlucemia(getIdFichaMedica)">
           <h2 class="titulo">NUEVO REGISTRO DE GLUCEMIA</h2>
           <div class="row">
             <div class="p-2 col-lg-4">
@@ -49,7 +49,7 @@
         </form>
 
         <!-- FORMULARIO DE INGRESO DE TENSIÓN ARTERIAL -->
-        <form class="form-register bg-success formulario-tension" [formGroup]="formTensionArterial" *ngIf="showFormTensionArterial" (submit)="agregarTensionArterial()">
+        <form class="form-register bg-success formulario-tension" [formGroup]="formTensionArterial" *ngIf="showFormTensionArterial" (submit)="agregarNotaTensionArterial()">
           <h2 class="titulo">NUEVO REGISTRO DE TENSIÓN ARTERIAL</h2>
           <div class="row">
             <div class="p-2 col-lg-4">
@@ -73,7 +73,7 @@
         </form>
 
         <!-- FORMULARIO DE INGRESO DE PESO -->
-        <form class="form-register bg-success formulario-peso" [formGroup]="formRegistroPeso" *ngIf="showFormRegistroPeso" (submit)="agregarRegistroPeso()">
+        <form class="form-register bg-success formulario-peso" [formGroup]="formRegistroPeso" *ngIf="showFormRegistroPeso" (submit)="agregarNotaRegistroPeso()">
           <h2 class="titulo">NUEVO REGISTRO DE PESO</h2>
           <div class="row">
             <div class="p-2 col-lg-4">
@@ -104,8 +104,8 @@
     <!-- Modal -->
     <h2 class="titulo">ULTIMOS REGISTROS</h2>
     <div class="registros">
-      <div class="bg-light col-lg-4 col-md-6 p-4 registro" *ngFor="let nota of notas_glucemia">
-        <p class="fecha">Fecha: {{ nota.fecha }}</p>
+      <div class="bg-light col-lg-4 col-md-6 p-4 registro" *ngFor="let nota of listaNotasGlucemia">
+        <p class="fecha" type="date">Fecha: {{ nota.fecha }}</p>
         <p class="glucemia">Glucemia: {{ nota.valor }}</p>
         <p class="notas">Notas: {{ nota.comentario }}</p>
         <div class="btn-group">
