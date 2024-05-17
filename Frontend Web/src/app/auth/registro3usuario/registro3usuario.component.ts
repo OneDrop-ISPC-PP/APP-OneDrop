@@ -106,6 +106,7 @@ export class Registro3usuarioComponent {
             tipo_sensor:this.formPOSTRegistro3Usuarios.value.tipo_sensor,
             objetivo_glucosa:this.formPOSTRegistro3Usuarios.value.objetivo_glucosa,
             comorbilidades:this.formPOSTRegistro3Usuarios.value.comorbilidades,
+            peso:this.formPOSTRegistro3Usuarios.value.peso
           })
           .subscribe(
           // MANEJO DE SUSCRIPCIONES 

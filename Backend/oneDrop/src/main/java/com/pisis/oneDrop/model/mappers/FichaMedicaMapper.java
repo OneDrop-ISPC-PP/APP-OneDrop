@@ -24,6 +24,7 @@ public class FichaMedicaMapper {
     public FichaMedicaReadDto toReadDto (FichaMedica entity){
         return FichaMedicaReadDto.builder()
                 .id(entity.getId())
+                .paciente(entity.getPaciente())
                 .tipo_diabetes(entity.getTipo_diabetes())
                 .terapia_insulina(entity.getTerapia_insulina())
                 .terapia_pastillas(entity.getTerapia_pastillas())
