@@ -21,7 +21,9 @@ public class RegistroGlucemia {
 
     @NotNull
     private Date fecha;
+
     @NotNull
     private Double valor;
+
     private String comentario;
 }

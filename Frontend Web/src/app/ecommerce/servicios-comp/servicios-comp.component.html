@@ -25,11 +25,11 @@
     <div class="grid-container col-lg-12 seccion">
         <div class="row justify-content-evenly ">
 
-       <div class="items card cajas card2 "  *ngFor="let servicio of servicios, let i=index"> 
+       <div class="items card cajas card2 "  *ngFor="let s of listaServicios, let i=index"> 
           <img src="../../../assets/cardio.jpg" class="card-img-top" alt="Pilares-tratamiento-diabetes">
           <div class="info card-body">
-             <h3  class="card-title">{{servicio.nombre_servicio}}</h3>
-             <p >{{servicio.descripcion_servicio}}</p>
+             <h3  class="card-title">{{s.nombre}}</h3>
+             <p >{{s.descripcion}}</p>
              
           </div>
          </div>

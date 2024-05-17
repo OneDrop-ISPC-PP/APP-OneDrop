@@ -46,8 +46,19 @@ a {
     align-items: center;
     background: #EDF5FC;
     transition: 0.5s;
-}
+    background-image: url(src/assets/images/quienessomos.jpeg);
+    background-position: top;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
 
+}
+.banner .overlay {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(237, 245, 252, 0.7);
+}
 /* Container */
 div.container2 {
     text-align: center;
@@ -116,6 +127,11 @@ div.container2 {
     flex: 0 0 calc(33.33% - 40px);
     margin: 20px;
     width: auto;
+}
+
+.cajas:hover {
+    transform: scale(1.05); 
+    transition: transform 0.3s ease; 
 }
 
 .card-title {

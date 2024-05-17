@@ -25,9 +25,13 @@ input:focus~.barra::before{
 }
 
 .section-princ{
-    background-color: #edf5fc;
     padding-top: 4.5rem;
     padding-bottom: 4.5rem;
+    background-image: url(src/assets/images/fondoinicio.png);
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
 }
 
 

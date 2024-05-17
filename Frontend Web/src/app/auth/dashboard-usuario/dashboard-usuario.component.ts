@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute, Params, Router } from '@angular/router';
-import { HttpClient } from '@angular/common/http';
+import { Router } from '@angular/router';
 import { EstadisUsuariosService } from 'src/app/servicios/estadis-usuarios.service';
-import { AuthService } from 'src/app/servicios/auth.service';
+import { LoginService } from 'src/app/servicios/login-service';
 
 @Component({
   selector: 'app-dashboard-usuario',
@@ -11,97 +10,236 @@ import { AuthService } from 'src/app/servicios/auth.service';
   styleUrls: ['./dashboard-usuario.component.css']
 })
 export class DashboardUsuarioComponent implements OnInit {
+// VARIABLES DE INFO USUARIO Y FICHA MEDICA
+  getIdUser: any;
+  getIdFichaMedica: any;
+  getUser: any;
+
+// LISTAS
+  listaNotasGlucemia: any = [];
   notas_glucemia: any;
   servicios: any;
-  formNotasPOST: FormGroup;
 
-  // Variables para el carrito
+// VARIABLES DE FORMULARIO
+  formNotasGlucemia: FormGroup | any;
+  formActualizarNota: FormGroup | any;
+  formTensionArterial: FormGroup | any;
+  formRegistroPeso: FormGroup | any;
+
+// VARIABLES VARIAS 
+  serviciosCarrito: any[] = [];
   Snombre: string = '';
   Smonto: string = '';
   nuevoPedido: any[] = [];
+  showForm: boolean = false;
+  showFormTensionArterial: boolean = false;
+  showFormRegistroPeso: boolean = false;
 
-  serviciosCarrito: any;
-
-/////////////////////////////////////////////////
+  message: string = ''; // Variable para almacenar el mensaje de bienvenida
+// CONSTRUCTOR
   constructor(
     private paciente: EstadisUsuariosService,
-    private usuario: AuthService,
     private formBuilder: FormBuilder,
     private router: Router,
-    private routerAct: ActivatedRoute,
-    private http: HttpClient
-  ) {
-    this.formNotasPOST = this.formBuilder.group({
-      fecha_registro: ['', Validators.required],
-      valor_glucemia: ['', [Validators.required, Validators.maxLength(3)]],
-      comentario_registro: ['', Validators.required]
-    });
-  }
-////////////////////////////////////////////////
+    private serv_login: LoginService
+  ) {} // CIERRA CONSTRUCTOR
+
+// INICIA NG ON INIT
   ngOnInit(): void {
+    this.setUserWelcomeMessage(); // Llama al método para establecer el mensaje de bienvenida
+    // TRAEMOS ID DEL LOCAL STORAGE
+    this.getIdUser = this.serv_login.getUserId();
+
+    // TRAEMOS INFO USER DEL LOCAL STORAGE
+    this.getUser = this.serv_login.getUser();
+
+    // GET ON INIT DE LA FICHA MEDICA
+    this.getFichaMedica();
+
+    // GETERS ON INIT DE LAS NOTAS
     this.getNotas();
     this.getServicios();
     this.getCarrito();
 
-    // Codigo que muestra las notas (instancia)
-    this.paciente.muestraNotasUsuario().subscribe({
-      next:(notas_G)=>{
-        this.notas_glucemia=notas_G
-      },
-      error:(errorData)=>{
-        console.error(errorData);
-      } 
+    // ON INIT FORMULARIOS
+    this.formNotasGlucemia = this.formBuilder.group({
+      fecha: ['', Validators.required],
+      valor: ['', [Validators.required]],
+      comentario: ['', Validators.required]
     });
 
-    // Codigo que muestra los servicios (instancia)
-    this.paciente.muestraServicioAUsuario().subscribe({
-      next:(servicio)=>{
-        this.servicios=servicio
-      },
-      error:(errorData)=>{
-        console.error(errorData);
-      } 
-    })    
+    this.formActualizarNota = this.formBuilder.group({
+      fecha_registro: ['', Validators.required],
+      valor_glucemia: ['', [Validators.required]],
+      comentario_registro: ['', Validators.required]
+    });
 
-  }
-////////////////////////////////////////////////
+    this.formTensionArterial = this.formBuilder.group({
+      fecha_registro_tension: ['', Validators.required],
+      sistolica: ['', Validators.required],
+      diastolica: ['', Validators.required],
+      comentario_tension: ['']
+    });
 
-  //////////// CODIGO NOTAS ///////////////
-  //////////// CODIGO NOTAS ///////////////
-  //////////// CODIGO NOTAS ///////////////
+    this.formRegistroPeso = this.formBuilder.group({
+      fecha_registro_peso: ['', Validators.required],
+      valor_peso: ['', Validators.required],
+      comentario_peso: ['']
+    });
 
-  // AGREGAR NOTA
-  agregarNota(): void {
-    if (this.formNotasPOST.valid) {
-      this.paciente.nuevaNota(
-        {
-          fecha_registro: this.formNotasPOST.value.fecha_registro,
-          valor_glucemia: this.formNotasPOST.value.valor_glucemia,
-          comentario_registro: this.formNotasPOST.value.comentario_registro
-        })
-        .subscribe((respuesta: any) => {
-          alert('Nota registrada');
-          this.getNotas();
-          this.formNotasPOST.reset();
-        });
+
+  } // INICIA NG ON INIT
+  
+  setUserWelcomeMessage(): void {
+    // Método para establecer el mensaje de bienvenida con el nombre de usuario
+    const user = this.serv_login.getUser();
+    if (user) {
+      this.message = `Bienvenido ${user.username},`; // Suponiendo que el nombre de usuario está en el campo 'username'
     } else {
-      alert('Ingrese los datos correctamente');
-      this.formNotasPOST.markAllAsTouched();
+      this.message = 'Bienvenido'; // Mensaje de bienvenida predeterminado si no hay usuario logueado
     }
   }
 
-// METODO GET NOTAS
-  getNotas(): void {
-    this.paciente.muestraNotasUsuario().subscribe({
-      next: (notas_S) => {
-        this.notas_glucemia = notas_S;
-      },
-      error: (errorData) => {
-        console.error(errorData);
-      }
-    });
+
+//METODO PARA IR A LA FICHA MEDICA DESDE EL SIDEBAR
+  public aFormFichaMedica(): void {
+    this.router.navigateByUrl("/auth/registro3usuario");
   }
-// METODO DELETE NOTAS
+
+  // METODOS DEL SIDEBAR
+  toggleForm(): void {
+    this.showForm = !this.showForm;
+  }
+
+  toggleFormTensionArterial(): void {
+    this.showFormTensionArterial = !this.showFormTensionArterial;
+  }
+
+  toggleFormRegistroPeso(): void {
+    this.showFormRegistroPeso = !this.showFormRegistroPeso;
+  }
+  
+
+
+// -----  METODOS PARA GLUCEMIA -----
+// -----  METODOS PARA GLUCEMIA -----
+
+  // METODO PARA AGREGAR NOTA DE GLUCEMIA
+  agregarNotaGlucemia(id: any): void {
+    if (this.formNotasGlucemia.valid) {
+      this.paciente.nuevaNotaGlucemia({
+        fecha: this.formNotasGlucemia.value.fecha,
+        valor: this.formNotasGlucemia.value.valor,
+        comentario: this.formNotasGlucemia.value.comentario
+      }, id).subscribe((data: any) => {
+        console.log("Datos registrados de glucemia");
+        console.log(data);
+        console.log("El id pasado de la ficha medica es");
+        console.log(id);
+        this.getNotas();
+        this.formNotasGlucemia.reset();
+      }, (error: any) => {
+        console.log("Datos de glucemia no fueron registrados ");
+        console.log(error);
+      });
+    } else {
+      alert('Ingrese los datos correctamente');
+      this.formNotasGlucemia.markAllAsTouched();
+    }
+  }
+  // METODO PARA ELIMINAR NOTA DE GLUCEMIA
+  eliminarNotaGlucemia(id:string){
+    this.paciente.DELETE_NOTA_GLUCEMIA(id).subscribe((data)=>{
+      alert("Nota Eliminada")
+    
+    },
+      (error) =>{
+        console.log("Nota NO eliminado");
+        console.log("El ID es");
+        console.log(id);
+        console.log(error);
+      })
+  }
+
+// -----  METODOS PARA TENSION ARTERIAL -----
+// -----  METODOS PARA TENSION ARTERIAL -----
+
+  // METODO PARA AGREGAR NOTA DE TENSION ARTERIAL
+  agregarNotaTensionArterial(): void {
+    if (this.formTensionArterial.valid) {
+      this.paciente.agregarTensionArterial({
+        fecha_registro: this.formTensionArterial.value.fecha_registro_tension,
+        sistolica: this.formTensionArterial.value.sistolica,
+        diastolica: this.formTensionArterial.value.diastolica,
+        comentario: this.formTensionArterial.value.comentario_tension
+      }).subscribe((respuesta: any) => {
+        alert('Registro de tensión arterial agregado');
+        this.formTensionArterial.reset();
+      });
+    } else {
+      alert('Ingrese los datos correctamente');
+      this.formTensionArterial.markAllAsTouched();
+    }
+  }
+
+  // METODO PARA AGREGAR NOTA DE TENSION ARTERIAL
+  agregarNotaRegistroPeso(): void {
+    if (this.formRegistroPeso.valid) {
+      this.paciente.agregarRegistroPeso({
+        fecha_registro: this.formRegistroPeso.value.fecha_registro_peso,
+        valor_peso: this.formRegistroPeso.value.valor_peso,
+        comentario: this.formRegistroPeso.value.comentario_peso
+      }).subscribe((respuesta: any) => {
+        alert('Registro de peso agregado');
+        this.formRegistroPeso.reset();
+      });
+    } else {
+      alert('Ingrese los datos correctamente');
+      this.formRegistroPeso.markAllAsTouched();
+    }
+  }
+
+// -----  METODO PARA TRAER LA FICHA MEDICA -----
+// -----  METODO PARA TRAER LA FICHA MEDICA -----
+
+  // TRAEMOS LA FICHA MEDICA (NO BORRAR ESTE METODO, ES EL QUE TRAE LA FICHA MEDICA)
+  getFichaMedica(): void{
+    this.paciente.getFichaMedicaIdUser(this.getIdUser).subscribe(
+      (data:any)=>{
+        // VERIFICAMOS QUE INFO TRAE
+        //console.log("CARGA DE EXITOSA DE LA FICHA MEDICA:")
+        //console.log(data);
+        //console.log("Y EL ID DE LA FICHA MEDICA ES:") 
+        //console.log(data.id);
+        // COMO FUNCIONA BIEN GUARDAMOS EL ID DE LA FICHA MEDICA EN UNA VARIABLE
+        this.getIdFichaMedica = data.id;
+        // A ESTE ID LO PASAMOS COMO PARAMETRO DEL METODO agregarNotaGlucemia()
+        // PERO NO POR ACA, SINO POR EL HTML
+      },
+      (error) => {
+        console.log("ERROR EN LA CARGA DE LA FICHA MEDICA");
+        console.log(error);
+      })
+    }
+
+// -----  METODOS PARA TRAER TODAS NOTAS -----
+// -----  METODOS PARA TRAER TODAS NOTAS -----
+
+  // GET NOTAS DE GLUCEMIA
+  getNotas(): void {
+    this.paciente.GET_NOTAS_GLUCEMIA(this.getIdUser).subscribe(
+      (data:any)=>{
+        console.log("CARGA DE NOTAS DE GLUCEMIA EXITOSA, LOS DATOS SON:")
+        console.log(data.registros);
+        this.listaNotasGlucemia = data.registros;
+        
+      },
+      (error:any) => {
+        console.log("ERROR EN LA CARGA DE LAS NOTAS DE GLUCEMIA");
+        console.log(error);
+      });
+  }
+
   eliminar(id: string): void {
     this.paciente.DELETE(id).subscribe(() => {
       alert('Nota Eliminada');
@@ -110,23 +248,43 @@ export class DashboardUsuarioComponent implements OnInit {
     });
   }
 
+  cargarNotaParaActualizar(nota: any): void {
+    this.formActualizarNota.patchValue({
+      fecha_registro: nota.fecha_registro,
+      valor_glucemia: nota.valor_glucemia,
+      comentario_registro: nota.comentario_registro
+    });
+  }
 
+  actualizarNota(id: string): void {
+    if (this.formActualizarNota.valid) {
+      const datosActualizados = {
+        fecha_registro: this.formActualizarNota.value.fecha_registro,
+        valor_glucemia: this.formActualizarNota.value.valor_glucemia,
+        comentario_registro: this.formActualizarNota.value.comentario_registro
+      };
+      
+      const idNumber: number = parseInt(id, 10);
+      this.paciente.modificar2(datosActualizados, idNumber).subscribe((respuesta: any) => {
+        alert('Nota actualizada');
+      });
+    } else {
+      alert('Ingrese los datos correctamente');
+      this.formActualizarNota.markAllAsTouched();
+    }
+  }
 
-  //////////////// CODIGO DEL CARRITO /////////////////
-  //////////////// CODIGO DEL CARRITO /////////////////
-  //////////////// CODIGO DEL CARRITO /////////////////
-  getCarrito(){
-    this.paciente.muestraCarritoAUsuario().subscribe({
-      next: (servicios_C) => {
-        this.serviciosCarrito = servicios_C;
+  getCarrito(): void {
+    this.paciente.muestraCarritoAUsuario().subscribe(
+      (servicios_C: any) => {
+        this.serviciosCarrito = servicios_C as any[];
       },
-      error: (errorData) => {
+      (errorData: any) => {
         console.error(errorData);
       }
-    });
-
+    );
   }
-  // METODO AGREGA AL CARRITO
+
   agregarCarrito(servicio: any): void {
     this.paciente.agregaAlCarrito(servicio)
       .subscribe((data) => {
@@ -135,31 +293,25 @@ export class DashboardUsuarioComponent implements OnInit {
       });
   }
 
-  // METODO DELETE
-  eliminarServ(id:string){
-      this.paciente.DELETE_SERV(id).subscribe(()=>{
-        alert("Servicio eliminado del carrito")
-        this.getCarrito()
-        console.log("el id de delete es"+id)
-      })
-    }
+  eliminarServ(id:string): void {
+    this.paciente.DELETE_SERV(id).subscribe(()=>{
+      alert("Servicio eliminado del carrito");
+      this.getCarrito();
+      console.log("el id de delete es"+id);
+    });
+  }
 
-  // METODO GET DE SERVICIOS
   getServicios(): void {
-      this.paciente.muestraServicioAUsuario().subscribe({
-        next: (servicios_S) => {
-          this.servicios = servicios_S;
-        },
-        error: (errorData) => {
-          console.error(errorData);
-        }
-      });
-    }
-    
-    
-  ///////////////////////////////////////////
-  ///////////////////////////////////////////
-  ///////////////////////////////////////////
+    this.paciente.muestraServicioAUsuario().subscribe({
+      next: (servicios_S) => {
+        this.servicios = servicios_S;
+      },
+      error: (errorData) => {
+        console.error(errorData);
+      }
+    });
+  }
+
   agregarNombre(value: string): void {
     this.Snombre = value;
   }
@@ -200,4 +352,7 @@ export class DashboardUsuarioComponent implements OnInit {
   comprar(): void {
     this.router.navigateByUrl('/formulario_pago');
   }
+
+  // CODIGO AGREGADO POR MARTIN
+
 }

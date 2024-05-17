@@ -2,9 +2,10 @@ package com.pisis.oneDrop.services;
 
 import com.pisis.oneDrop.exceptions.customsExceptions.NotFoundException;
 import com.pisis.oneDrop.model.dtos.RegistrosPaginadosReadDtoArray;
-import com.pisis.oneDrop.model.dtos.registros.RegistroGlucemiaAddDto;
-import com.pisis.oneDrop.model.dtos.registros.RegistroGlucemiaReadDto;
-import com.pisis.oneDrop.model.dtos.registros.RegistroGlucemiaUpdateDto;
+import com.pisis.oneDrop.model.dtos.fichaMedica.FichaMedicaReadDto;
+import com.pisis.oneDrop.model.dtos.registros.RegistroAddDto;
+import com.pisis.oneDrop.model.dtos.registros.RegistroReadDto;
+import com.pisis.oneDrop.model.dtos.registros.RegistroUpdateDto;
 import com.pisis.oneDrop.model.entities.FichaMedica;
 import com.pisis.oneDrop.model.entities.RegistroGlucemia;
 import com.pisis.oneDrop.model.mappers.RegistroGlucemiaMapper;
@@ -30,7 +31,7 @@ public class RegistroGlucemiaService {
     FichaMedicaService fichaMedicaService;
 
     // TODO validar datos de ficha medica
-    public RegistroGlucemiaReadDto addRegistro (Integer id, RegistroGlucemiaAddDto registroGlucemiaAddDto){
+    public RegistroReadDto addRegistro (Integer id, RegistroAddDto registroGlucemiaAddDto){
         FichaMedica fichaMedicaDeUsuario = fichaMedicaService.getFichaMedicaById(id);
         // TODO validar datos de ficha medica
         // TODO validar datos de ficha medica
@@ -69,7 +70,7 @@ public class RegistroGlucemiaService {
                 .build();
     }
 
-    public RegistroGlucemiaReadDto findById (Integer id){
+    public RegistroReadDto findById (Integer id){
         return registroGlucemiaMapper.toReadDto(getRegistroById(id));
     }
     public RegistroGlucemia getRegistroById (Integer id){
@@ -78,14 +79,15 @@ public class RegistroGlucemiaService {
         return reg.get();
     }
 
-    public RegistroGlucemiaReadDto deleteRegistroById (Integer id){
+    public RegistroReadDto deleteRegistroById (Integer id){
         RegistroGlucemia regABorrar = getRegistroById(id);
+        fichaMedicaService.deleteRegistroById(regABorrar);
         registroGlucemiaRepository.deleteById(id);
         return registroGlucemiaMapper.toReadDto(regABorrar);
     }
 
     // todo VALIDAR DATO DE ACTUALIZACION
-    public RegistroGlucemiaReadDto editRegistroGlucemia(Integer id, RegistroGlucemiaUpdateDto registroGlucemiaUpdateDto){
+    public RegistroReadDto editRegistroGlucemia(Integer id, RegistroUpdateDto registroGlucemiaUpdateDto){
         Optional<RegistroGlucemia> registro = registroGlucemiaRepository.findById(id);
         if (registro.isEmpty()){
             throw new NotFoundException("NO SE ENCONTRO REGISTRO CON EL ID "+id);

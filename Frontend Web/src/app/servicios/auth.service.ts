@@ -70,17 +70,4 @@ this.cookies.set("csrftoken", token);
 getToken() {
 return this.cookies.get("csrftoken");
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
   }

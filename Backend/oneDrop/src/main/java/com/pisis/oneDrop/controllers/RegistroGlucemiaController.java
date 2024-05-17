@@ -1,9 +1,10 @@
 package com.pisis.oneDrop.controllers;
 
 import com.pisis.oneDrop.model.dtos.RegistrosPaginadosReadDtoArray;
-import com.pisis.oneDrop.model.dtos.registros.RegistroGlucemiaAddDto;
-import com.pisis.oneDrop.model.dtos.registros.RegistroGlucemiaReadDto;
-import com.pisis.oneDrop.model.dtos.registros.RegistroGlucemiaUpdateDto;
+import com.pisis.oneDrop.model.dtos.fichaMedica.FichaMedicaReadDto;
+import com.pisis.oneDrop.model.dtos.registros.RegistroAddDto;
+import com.pisis.oneDrop.model.dtos.registros.RegistroReadDto;
+import com.pisis.oneDrop.model.dtos.registros.RegistroUpdateDto;
 import com.pisis.oneDrop.services.RegistroGlucemiaService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,19 +30,19 @@ public class RegistroGlucemiaController {
         return new ResponseEntity<>(registroGlucemiaService.findAllRegistrosByIdUser(id, page, size,sortBy), HttpStatus.OK);
     }
     @GetMapping("{id}")
-    public ResponseEntity<RegistroGlucemiaReadDto> findRegistroGlucemia (@PathVariable Integer id){
+    public ResponseEntity<RegistroReadDto> findRegistroGlucemia (@PathVariable Integer id){
         return new ResponseEntity<>(registroGlucemiaService.findById(id) , HttpStatus.OK);
     }
     @PostMapping("usuario/{id}")
-    public ResponseEntity<RegistroGlucemiaReadDto> addRegistroGlucemia (@PathVariable Integer id,@Valid @RequestBody RegistroGlucemiaAddDto registroGlucemiaAddDto){
+    public ResponseEntity<RegistroReadDto> addRegistroGlucemia (@PathVariable Integer id, @Valid @RequestBody RegistroAddDto registroGlucemiaAddDto){
         return new ResponseEntity<>(registroGlucemiaService.addRegistro(id, registroGlucemiaAddDto) , HttpStatus.CREATED);
     }
     @PutMapping("{id}")
-    public ResponseEntity<RegistroGlucemiaReadDto> editRegistroGlucemia (@PathVariable Integer id, @RequestBody RegistroGlucemiaUpdateDto registroGlucemiaUpdateDto){
+    public ResponseEntity<RegistroReadDto> editRegistroGlucemia (@PathVariable Integer id, @RequestBody RegistroUpdateDto registroGlucemiaUpdateDto){
         return new ResponseEntity<>(registroGlucemiaService.editRegistroGlucemia(id, registroGlucemiaUpdateDto) , HttpStatus.ACCEPTED);
     }
     @DeleteMapping("{id}")
-    public ResponseEntity<RegistroGlucemiaReadDto> deleteRegistroGlucemia (@PathVariable Integer id){
+    public ResponseEntity<RegistroReadDto> deleteRegistroGlucemia (@PathVariable Integer id){
         return new ResponseEntity<>(registroGlucemiaService.deleteRegistroById(id) , HttpStatus.ACCEPTED);
     }
 }

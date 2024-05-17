@@ -1,7 +1,7 @@
 package com.pisis.oneDrop.model.entities.enums;
 
 public enum Tipo_glucometro {
-    TIPO_1,
-    TIPO_2,
-    TIPO_3
+    Medidor_Capilar,
+    Medidor_Continuo_MCG,
+    Medidor_Tipo_Flash
 }

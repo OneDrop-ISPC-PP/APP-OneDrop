@@ -28,8 +28,8 @@ export class LoginComponent implements OnInit{
         this.profileForm=this.formBuilder.group({
 
           //email:["",[Validators.required,Validators.email]],
-          username:["",[Validators.required]],
-          password:["",[Validators.required,Validators.minLength(9)]]
+          username:["",[Validators.required,Validators.minLength(2),Validators.maxLength(30)]],
+          password:["",[Validators.required,Validators.minLength(9),Validators.maxLength(30)]]
       
         });
     }

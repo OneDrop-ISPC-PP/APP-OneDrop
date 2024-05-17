@@ -26,6 +26,5 @@ public class LoguedUserDetails {
     String telefono;
     LocalDate nacimiento;
     String sexo;
-
     Collection<? extends GrantedAuthority> authorities;
 }

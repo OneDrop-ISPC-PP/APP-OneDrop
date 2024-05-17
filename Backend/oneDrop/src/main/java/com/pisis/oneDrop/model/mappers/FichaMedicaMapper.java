@@ -17,6 +17,7 @@ public class FichaMedicaMapper {
                 .tipo_sensor(addDto.getTipo_sensor())
                 .objetivo_glucosa(addDto.getObjetivo_glucosa())
                 .comorbilidades(addDto.getComorbilidades())
+                .peso(addDto.getPeso())
                 .build();
     }
 
@@ -30,6 +31,7 @@ public class FichaMedicaMapper {
                 .tipo_sensor(entity.getTipo_sensor())
                 .objetivo_glucosa(entity.getObjetivo_glucosa())
                 .comorbilidades(entity.getComorbilidades())
+                .peso(entity.getPeso())
                 .build();
     }
 }

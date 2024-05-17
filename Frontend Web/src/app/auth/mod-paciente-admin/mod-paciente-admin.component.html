@@ -1,0 +1,88 @@
+      <!-- REGISTRO DE SERVICIOS -->
+      <section  class="  m-2 p-4 borde_servicios">
+        <div>
+          <h3 class="text_center my-4">Editar Informacion del Paciente</h3>
+        </div>
+
+        <!-- EDITAR SERVICIOS -->          
+        <form class=" container  bg-light ">
+          
+        <div class="row  bg-light justify-content-evenly align-items-center p-4">
+
+        <!-- NOMBRE SERVICIO -->  
+          <div class="col-lg-4 bg-light">
+            <h5 class="text-center ">Nombre del Paciente</h5>
+            <input  [(ngModel)]="paciente.nombre"  [ngModelOptions]="{standalone: true}" class="controls col-lg-12 text-dark" type="text" name="nombres" id="nombres"
+            > 
+        <!-- verificacion 
+        <div *ngIf="nombre_servicio_GET.invalid && (nombre_servicio_GET.dirty || nombre_servicio_GET.touched)"
+        class="text-danger msj-verificacion col-lg-12 col-md-12 align-self-start">
+    
+            <div *ngIf="nombre_servicio_GET.errors?.['required']">
+              Complete este campo.
+            </div>
+
+        </div>  -->
+
+          </div>
+
+        <!-- PRECIO SERVICIO -->  
+          <div class="col-lg-4 bg-light">
+            <h5 class="text-center">Apellido</h5>
+            <input  [(ngModel)]="paciente.apellido"  [ngModelOptions]="{standalone: true}" class="controls col-lg-12 text-dark" type="text" name="nombres" id="nombres">
+            
+                    <!-- verificacion 
+                  <div *ngIf="precio_servicio_GET.invalid && (precio_servicio_GET.dirty || precio_servicio_GET.touched)"
+                    class="text-danger msj-verificacion col-lg-12 col-md-12 align-self-start">
+                
+                        <div *ngIf="precio_servicio_GET.errors?.['required']">
+                          Complete este campo.
+                        </div>
+                       
+                </div> -->
+
+
+          </div>
+
+          <div class="col-lg-12 bg-light m-4">
+            <h5 class="text-center">Descripcion</h5>
+            <input  [(ngModel)]="paciente.username"  [ngModelOptions]="{standalone: true}" class="col-lg-12 controls text-dark" type="text" name="nombres" id="nombres">
+            
+                  <!-- verificacion 
+                  <div *ngIf="descripcion_servicio_GET.invalid && (descripcion_servicio_GET.dirty || descripcion_servicio_GET.touched)"
+                  class="text-danger msj-verificacion col-lg-12 col-md-12 align-self-start">
+              
+                      <div *ngIf="descripcion_servicio_GET.errors?.['required']">
+                        Complete este campo.
+                      </div>
+
+              </div>   -->
+
+
+          </div>
+
+          <div class="col-lg-12 bg-light m-4">
+            <h5 class="text-center">Comentarios</h5>
+            <input [(ngModel)]="paciente.email"  [ngModelOptions]="{standalone: true}" class="col-lg-12 controls text-dark" type="text" name="nombres" id="nombres">
+            
+                    <!-- verificacion 
+                    <div *ngIf="comentarios_servicio_GET.invalid && (comentarios_servicio_GET.dirty || comentarios_servicio_GET.touched)"
+                    class="text-danger msj-verificacion col-lg-12 col-md-12 align-self-start">
+                
+                        <div *ngIf="comentarios_servicio_GET.errors?.['required']">
+                          Complete este campo.
+                        </div>
+                        
+                     </div> -->
+
+
+          </div>
+ 
+  
+          <button (click)="update()" type="submit" class="m-4 col-lg-4 btn bg_btn_edit">Modificar Servicio</button>
+          <button routerLink="/auth/dash_admin/info_users" type="submit" class="m-4 col-lg-4 btn bg_btn_elim">Volver</button>
+
+        </div>
+        </form>
+      
+      </section>

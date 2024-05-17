@@ -29,6 +29,20 @@ export class ModNotaUsuarioComponent implements OnInit {
 
     })
 
+    this.serv_estadistica.GET_NOTA_GLUCEMIA_POR_ID(this.dataid).subscribe(
+      (data)=>{
+        this.nota=data;
+        console.log("los datos de la nota de glucemia son:");
+        console.log(data);
+        console.log(this.nota.fecha);
+
+      },
+      (error)=>{
+        console.log("No se pudieron cargar los datos de la nota de glucemia");
+        console.log(error)
+      
+      })
+
     this.serv_estadistica.modificar(this.dataid).subscribe((data)=>{
       this.nota=data;
 
@@ -38,10 +52,17 @@ export class ModNotaUsuarioComponent implements OnInit {
 
   ///////////////////////////////////////////////////////////////
   update(){
-    this.serv_estadistica.modificar2(this.nota,this.dataid).subscribe(()=>{
+    this.serv_estadistica.UPDATE_NOTA_GLUCEMIA(this.nota,this.dataid).subscribe(
+      (data)=>{
       this.router.navigate(["auth/dash_user"])
+      console.log("La nota se modifico con exito")
+      console.log(data)},
 
-    })
+      (error) => {
+        console.log("La nota NO se modifico con exito")
+        console.log(error)}
+      
+    )
 
 
   }

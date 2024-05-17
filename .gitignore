@@ -13,12 +13,9 @@
 .externalNativeBuild
 .cxx
 local.properties
-
 .node_modules
 /Frontend Web/node_modules
-
 /Frontend Web/.angular
-
 .metadata
 /Backend/.metadata/
 /Backend/oneDrop/.metadata

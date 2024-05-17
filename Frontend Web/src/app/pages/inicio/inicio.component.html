@@ -4,72 +4,118 @@
     <!--video autoplay muted loop><source src="assets/img/video_index.mp4"></video>
             <div class="overlay" id="overlay"></div-->
     <!-- Restyling: definir si usamos el video o la imagen de fondo + overlay o queda solo con color de fondo -->
-    <div class="cuerpo" id="cuerpo">
-        <h3> La APP N° 1 en gestión de Diabetes</h3>
-        <h1> OneDrop</h1>
-        <div class="contenedor-button" id="contenedor-button">
-            <a href="auth/registrarse"><button class="button1" id="button1"> Registrarse </button></a>
-            <a href="auth/login"><button class="button2" id="button2"> Ingresar </button></a>
-        </div>
+    <div class="cuerpo   container-fluid" id="cuerpo">
+
+      <div class="row justify-content-md-center">
+          <div class="col-lg-12 "><h3 class="text_center"> La APP N° 1 en gestión de Diabetes</h3></div>
+
+
+            <div class="fondoLogo  col-lg-12 " ></div>
+
+          
+          
+          <div class="contenedor-button container-fluid col-lg-10 m-0" id="contenedor-button">
+            <div class="row justify-content-md-center ">
+              <a href="auth/registrarse" class=" col-lg-12 text_center "><button class=" btn button1 col-lg-12  " id="button1"> Registrarse </button></a>
+               <a href="auth/login"  class=" col-lg-12 text_center "><button class="btn  button2 " id="button2"> Ingresar </button></a>
+            </div>
+          </div>
+      </div>
     </div>
 </section>
 <!-- Termina Hero -->
 <!-- Empieza Seccion Características -->
 <!-- Cards / Bootstrap -->
-<div class="container2 texto1" id="container2">
-    <div class="row" id="row">
-        <div class="col" id="col">
-            <h3> Características </h3>
-        </div>
-    </div>
-</div>
+
 <!--  Responsive-->
-<div class="container-fluid">
 
-    <div class="grid-container seccion row" id="grid-container seccion">
+<!-- CARACTERISTICAS -->
+<div class="container-fluid m-0 caract_borde">
 
-        <div class="card2 cajas col-lg-3" id="card cajas">
-            <img src="assets/index-f1.gif" class="card-img-top" alt="caracteristica 1">
-            <div class="card-body" id="card-body">
-                <h5 class="card-title" id="card-title">Simplificando la gestión</h5>
-                <p class="card-text" id="card-text">La información que registra en la APP se actualiza en la plataforma en tiempo real.</p>
-            </div>
+    <div class="container-fluid margin_0 row m-0 " id="grid-container">
+
+
+
+        <div  class="col-lg-8 caract   d-flex justify-content-center align-items-center ">
+          <h1 class="text_center"> Que es lo que ofrecemos? </h1>
         </div>
 
-        <div class="card2 cajas col-lg-3" id="card cajas">
+  
+        
+        <div class="col-lg-4  caract caract_2  d-flex justify-content-center align-items-center ">
+          <h4>En OneDrop te invitamos a disfrutar y a vivir experiencias saludables a través de nuestros servicios relacionados con el bienestar integral. </h4>
+           
+        </div>
+
+
+        <!-- CARD 1 -->
+        <div class="col-lg-4 cont  d-flex justify-content-center ">
+
+          <div  class=" col-lg-12 card2 cajas  p-4">
+            <img src="assets/index-f1.gif" class="card-img-top" alt="caracteristica 1">
+              <div class="card-body" id="card-body">
+                  <h5 class="card-title" id="card-title">Simplificando la gestión</h5>
+                  <p class="card-text" id="card-text">La información que registra en la APP se actualiza en la plataforma en tiempo real.</p>
+              </div>
+
+        </div>
+      </div>
+
+
+        <!-- CARD 2 -->
+        <div class="col-lg-4 cont  d-flex justify-content-center">
+
+          <div  class=" col-lg-12 card2 cajas  p-4">
             <img src="assets/index-f2.gif" class="card-img-top" alt="característica 2">
             <div class="card-body" id="card-body">
                 <h5 class="card-title" id="card-title">Reserve turno</h5>
                 <p class="card-text" id="card-text"> Puede solicitar un turno para realizar su control de salud, con atención preferencial.</p>
             </div>
-        </div>
 
-        <div class="card2 cajas col-lg-3" id="card cajas">
+        </div>
+      </div>
+
+        <!-- CARD 3 -->
+        <div class="col-lg-4 cont  d-flex justify-content-center">
+
+          <div  class=" col-lg-12 card2 cajas  p-4">
             <img src="assets/index-f3.gif" class="card-img-top" alt="caracteristica 3">
             <div class="card-body" id="card-body">
                 <h5 class="card-title" id="card-title">Seguimiento personalizado</h5>
                 <p class="card-text" id="card-text">Mejore su tratamiento individual y reciba información personalizada sobre su diabetes. </p>
             </div>
-        </div>
-    </div>
 
+        </div>
+      </div>
 </div>
 <!-- Termina Seccion Características -->
 <!-- Empieza Seccion Testimonios -->
 <!-- Podríamos poner un carrousel -->
-<div class="container2 texto1" id="container2" >
-    <div class="row" id="row">
-        <div class="col" id="col">
-            <h3> Testimonios </h3>
-        </div>
-    </div>
-</div>
 
-<div class="container-fluid">
+
+<!-- TESTIMONIOS -->
+<div class="container-fluid my-4 testim_borde">
+
+  <div class="container-fluid margin_0 row m-0 " id="grid-container">
+
+      <div  class="col-lg-6 testim  d-flex justify-content-center align-items-center ">
+
+        <div class="m-4 ">
+            <h2 class="text_center "> Te invitamos a leer algunos de los testimonios de nuestros usuarios </h2>
+        </div>
+
+        
+      </div>
+
+
+    
+
+    
+<div class="container-fluid col-lg-6">
     <div id="myCarousel" class="carousel slide" data-bs-ride="carousel">
       <div class="carousel-inner">
         <div class="carousel-item active">
-          <div class="card2 cajas col-lg-3 mx-auto">
+          <div class="card2test cajas col-lg-3 mx-auto">
             <img src="assets/paciente1.jpg" class="card-img-top" alt="...">
             <div class="card-body">
               <h5 class="card-title">Juan Pérez</h5>
@@ -78,7 +124,7 @@
           </div>
         </div>
         <div class="carousel-item">
-          <div class="card2 cajas col-lg-3 mx-auto">
+          <div class="card2test cajas col-lg-3 mx-auto">
             <img src="assets/paciente2.jpg" class="card-img-top" alt="...">
             <div class="card-body">
               <h5 class="card-title">María Fernández</h5>
@@ -87,7 +133,7 @@
           </div>
         </div>
         <div class="carousel-item">
-          <div class="card2 cajas col-lg-3 mx-auto">
+          <div class="card2test cajas col-lg-3 mx-auto">
             <img src="assets/paciente3.jpg" class="card-img-top" alt="...">
             <div class="card-body">
               <h5 class="card-title">Pedro González</h5>

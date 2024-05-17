@@ -21,11 +21,11 @@ public class RegisterRequest {
     String username;
 
     @NotNull(message = "Password no puede ser nulo")
-    @Size(min=5, max=30, message = "Password debe tener entre 5 y 30 caracteres")
+    @Size(min=8, max=30, message = "Password debe tener entre 8 y 30 caracteres")
     String password1;
 
     @NotNull(message = "Password no puede ser nulo")
-    @Size(min=5, max=30, message = "Password debe tener entre 5 y 30 caracteres")
+    @Size(min=8, max=30, message = "Password debe tener entre 8 y 30 caracteres")
     String password2;
 
     @NotNull(message = "Nombre no puede ser nulo")

@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { RegistroFichaMedicaService } from 'src/app/servicios/registro-ficha-medica.service';
+import { LoginComponent } from '../login/login.component';
+import { LoginService } from 'src/app/servicios/login-service';
 
 
 @Component({
@@ -11,8 +13,20 @@ import { RegistroFichaMedicaService } from 'src/app/servicios/registro-ficha-med
 })
 export class Registro3usuarioComponent {
 
+  /////////////////////////////////////////////////////
+  constructor(
+    private formBuilder:FormBuilder,
+    private router:Router,
+    private serv_RegistroFichaMedica:RegistroFichaMedicaService,
+    private serv_login: LoginService
+  ){};
+
 //////////////////////////////////////////////////////
   formPOSTRegistro3Usuarios: FormGroup | any;
+
+  getId = this.serv_login.getUserId();
+  getUser = this.serv_login.getUser();
+
 
 
 //////////////////////////////////////////////////////
@@ -29,6 +43,8 @@ export class Registro3usuarioComponent {
       tipo_sensor:["",[Validators.required]],
       objetivo_glucosa:["",[Validators.required]],
       comorbilidades:["",[Validators.required]],
+      peso:["",[Validators.required]],
+
 
     
     });
@@ -36,11 +52,7 @@ export class Registro3usuarioComponent {
 
   }
 
-/////////////////////////////////////////////////////
-  constructor(
-    private formBuilder:FormBuilder,
-    private router:Router,
-    private serv_RegistroFichaMedica:RegistroFichaMedicaService){};
+
 
 //////////////////// METODOS GET //////////////////////
 
@@ -69,13 +81,15 @@ export class Registro3usuarioComponent {
     get objetivo_glucosa_GET(){
       return this.formPOSTRegistro3Usuarios.controls['objetivo_glucosa'];
     }
-
+    get peso_GET(){
+      return this.formPOSTRegistro3Usuarios.controls['peso'];
+    }
 
 
   /////////////////////////////////
   //////////// POST //////////////
   ////////////////////////////////
-  enviarDatosRegistroTRES(){
+  enviarDatosFichaMedica(){
 
         if(this.formPOSTRegistro3Usuarios.valid){
      //Envia datos de creacion FICHA MEDICA
@@ -83,7 +97,8 @@ export class Registro3usuarioComponent {
         this.serv_RegistroFichaMedica.POST_REG_FICHA_MEDICA('http://localhost:8080/fichaMedica/',
         {
             // esta funcion deberia llamarse post a secas, porque es polimorfica a cualquier post, osea no ahcce nada especial referido a que sea un post de registros de ususarios...
-            //id_paciente: this.formPOSTRegistro3Usuarios.value.id_paciente,
+            //Aid:this.getId,
+            id_paciente:this.getId,
             tipo_diabetes:this.formPOSTRegistro3Usuarios.value.tipo_diabetes,
             terapia_insulina:this.formPOSTRegistro3Usuarios.value.terapia_insulina,
             terapia_pastillas:this.formPOSTRegistro3Usuarios.value.terapia_pastillas,
@@ -94,17 +109,28 @@ export class Registro3usuarioComponent {
           })
           .subscribe(
           // MANEJO DE SUSCRIPCIONES 
-            (data) => {console.log(data);},
-            (error) => {console.log(error);},
+            (data) => {
+              console.log("SE ENVIARON LOS DATOS DE LA FICHA MEDICA")
+              console.log(data);
+              //console.log(this.getId)
+            },
+            (error) => {
+              console.log(error);
+              console.log("NO enviaron los datos del formulario")
+
+              //console.log(this.getId)             
+            },
           )
          // CODIGO QUE VALIDA, ES APARTE AL CONSUMO DEL SERVICIO
-        this.router.navigateByUrl("/home")
+        this.router.navigateByUrl("/auth/dash_user")
         this.formPOSTRegistro3Usuarios.reset(); // SI VALIDA CORRECTAMENTE SE REINICIAN LOS VALORES DE LOS CAMPOS
         }
         else{
             // SI NO VALIDA TODOS LOS CAMPOS QUEDAN MARCADO EN ROJO
             this.formPOSTRegistro3Usuarios.markAllAsTouched();
             alert("No se ingresaron correctamente los datos")
+            console.log(this.getId)             
+
 
     }
 

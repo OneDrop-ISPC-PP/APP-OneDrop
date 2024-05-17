@@ -1,0 +1,44 @@
+<section class="bg-light my-3 mx-0 p-4 borde_servicios ">
+  <div class="">
+      <h3 class="text_center">Lista de pacientes</h3>
+  </div>
+  
+        <div class="my-4 contenedor_usuarios">
+          <table class="table p-4">
+            <thead>
+              <tr>
+                <th scope="col">Id</th>
+                <th scope="col">Nombre</th>
+                <th scope="col">Apellido</th>
+                <th scope="col">Username</th>
+                <th scope="col">Email</th>
+
+                <th scope="col"></th>
+  
+  
+              </tr>
+            </thead>
+            <tbody  *ngFor="let s of listaDePacientes">
+              <tr>
+                <td class=" py-4 ">{{s.id}}</td>
+                <td class=" py-4 ">{{s.nombre}}</td>
+                <td class=" py-4 ">{{s.apellido}}</td>
+                <td class=" py-4 ">{{s.username}}</td>
+                <td class=" py-4 ">{{s.email}}</td>
+
+                <td> 
+                  <button  class="btn bg_btn_edit px-4 p-2 m-2" routerLink="/auth/edit_paciente/{{s.id}}">
+                    Ver mas info</button>
+                  <!-- <button  class="btn bg_btn_elim px-4 p-2 m-2" (click)="darBajaAUsuario(s.id)" >Eliminar</button> -->
+                </td>
+  
+  
+              </tr>
+            </tbody>
+          </table>
+        </div>
+  
+  </section>
+
+
+

@@ -24,17 +24,17 @@ export class RegistroComponent implements OnInit{
     
     this.formPOSTRegistroUsuario= this.formBuilder.group({
 
-      username:["",[Validators.required]],
-      password1:["",[Validators.required,Validators.minLength(9)]],
-      password2:["",[Validators.required,Validators.minLength(9)]],
+      username:["",[Validators.required,Validators.minLength(2),Validators.maxLength(30)]],
+      password1:["",[Validators.required,Validators.minLength(9),Validators.maxLength(30)]], 
+      password2:["",[Validators.required,Validators.minLength(9),Validators.maxLength(30)]], 
       email:["",[Validators.required,Validators.email]],
   
-      nombre:["",[Validators.required]],
-      apellido:["",[Validators.required]],
+      nombre:["",[Validators.required,Validators.minLength(2),Validators.maxLength(30)]],
+      apellido:["",[Validators.required,Validators.minLength(2),Validators.maxLength(30)]],
       nacimiento:["",[Validators.required]],
       sexo:["",[Validators.required]],
-      dni:["",[Validators.required]],
-      telefono:["",[Validators.required]]
+      dni:["",[Validators.required,Validators.minLength(8),Validators.maxLength(10)]],
+      telefono:["",[Validators.required,Validators.minLength(9),Validators.maxLength(14)]],
     })
 
   }
@@ -85,10 +85,7 @@ export class RegistroComponent implements OnInit{
   enviarDatosRegistroInicial(){
     // SI EL FORMULARIO CUMPLE CON LA VALIDACION
       if(this.formPOSTRegistroUsuario.valid){
-
             // Envia los datos
-            //this.serv_registro.POST( 'http://localhost:3000/REGISTRO_INICIAL',
-            //this.serv_registro.POST( 'http://127.0.0.1:8080/auth/signup/',
             this.serv_registro.POST_REG_INICIAL({
               // INFORMACION QUE VAMOS A PASAR  
               username:this.formPOSTRegistroUsuario.value.username,
@@ -104,11 +101,19 @@ export class RegistroComponent implements OnInit{
             })
             .subscribe(
             // MANEJO DE SUSCRIPCIONES 
-            (data) => {console.log("El token es: "), console.log(data);},
-            (error) => {console.log(error);}
+            (data) => {
+                console.log("El token es: ");
+                console.log(data);
+              
+              },
+            (error) => {
+                console.log(error);
+              
+              }
           ),
             // ACA HAY QUE ESPERAR UNA RESPUESTA 201 SI SE CREO USUARIO, SINO ERROR                
             // CODIGO QUE VALIDA, ES APARTE AL CONSUMO DEL SERVICIO
+            //this.serv_registro.logout();
             this.router.navigateByUrl("/auth/login")
             this.formPOSTRegistroUsuario.reset(); // SI VALIDA CORRECTAMENTE SE REINICIAN LOS VALORES DE LOS CAMPOS
 

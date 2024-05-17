@@ -25,6 +25,10 @@ public class FichaMedicaController {
     public ResponseEntity<FichaMedicaReadDto> findFichaMedica (@PathVariable Integer id){
         return new ResponseEntity<>(fichaMedicaService.findById(id) , HttpStatus.OK);
     }
+    @GetMapping("user/{id}")
+    public ResponseEntity<FichaMedicaReadDto> findFichaMedicaByUserId (@PathVariable Integer id){
+        return new ResponseEntity<>(fichaMedicaService.findByUserId(id) , HttpStatus.OK);
+    }
     @PostMapping()
     public ResponseEntity<FichaMedicaReadDto> addFichaMedica (@Valid @RequestBody FichaMedicaAddDto fichaMedicaAddDto){
         return new ResponseEntity<>(fichaMedicaService.addFichaMedica(fichaMedicaAddDto) , HttpStatus.CREATED);

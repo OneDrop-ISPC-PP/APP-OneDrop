@@ -19,4 +19,5 @@ public class FichaMedicaUpdateDto {
     private Tipo_sensor tipo_sensor;
     private String objetivo_glucosa;
     private String comorbilidades;
+    private Double peso;
 }

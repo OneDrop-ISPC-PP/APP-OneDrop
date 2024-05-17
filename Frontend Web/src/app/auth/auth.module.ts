@@ -11,6 +11,19 @@ import { Registro2usuarioComponent } from './registro2usuario/registro2usuario.c
 import { Registro3usuarioComponent } from './registro3usuario/registro3usuario.component';
 import { ModNotaUsuarioComponent } from './mod-nota-usuario/mod-nota-usuario.component';
 import { ModServicioAdminComponent } from './mod-servicio-admin/mod-servicio-admin.component';
+import { InfoUsuarioDashAdminComponent } from './dashboard-admin/info-usuario-dash-admin/info-usuario-dash-admin.component';
+import { InfoServicioDashAdminComponent } from './dashboard-admin/info-servicio-dash-admin/info-servicio-dash-admin.component';
+import { BienvenidaDashAdminComponent } from './dashboard-admin/bienvenida-dash-admin/bienvenida-dash-admin.component';
+
+// ANGULAR MATERIAL
+// ANGULAR MATERIAL
+import {MatCardModule} from '@angular/material/card';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import {MatIconModule} from '@angular/material/icon';
+import {MatListModule} from '@angular/material/list'; 
+import {MatButtonModule} from '@angular/material/button';
+import { ModPacienteAdminComponent } from './mod-paciente-admin/mod-paciente-admin.component';
+
 
 
 
@@ -25,17 +38,27 @@ import { ModServicioAdminComponent } from './mod-servicio-admin/mod-servicio-adm
     Registro2usuarioComponent,
     Registro3usuarioComponent,
     ModNotaUsuarioComponent,
-    ModServicioAdminComponent
+    ModServicioAdminComponent,
+    InfoUsuarioDashAdminComponent,
+    InfoServicioDashAdminComponent,
+    BienvenidaDashAdminComponent,
+    ModPacienteAdminComponent,
+
   ],
   imports: [
     CommonModule,
     AuthRoutingModule,
     ReactiveFormsModule,
     FormsModule,
-    RouterModule
+    RouterModule,
+    MatSlideToggleModule,
+    MatCardModule,
+    MatIconModule,
+    MatListModule,
+    MatButtonModule
   ],
   exports:[
-    RouterModule
+    RouterModule,
   ]
 })
 export class AuthModule { }

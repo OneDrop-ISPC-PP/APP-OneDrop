@@ -24,7 +24,7 @@ public class FichaMedica {
 
     @NotNull
     @OneToOne
-    @JoinColumn(name="id_paciente", referencedColumnName="id", nullable = true)
+    @JoinColumn(name="id_paciente", referencedColumnName="id")
     private User paciente;
 
     @Enumerated(EnumType.STRING)
@@ -40,9 +40,13 @@ public class FichaMedica {
 
     private String objetivo_glucosa;
     private String comorbilidades;
+    private Double peso;
 
     @OneToMany(fetch = FetchType.LAZY)
-    // @OrderBy("fecha_registro")
     private List<RegistroGlucemia> registros_glucemia = new ArrayList<>();
+    @OneToMany(fetch = FetchType.LAZY)
+    private List<RegistroPeso> registros_peso = new ArrayList<>();
+    @OneToMany(fetch = FetchType.LAZY)
+    private List<RegistroTensionArterial> registros_tension_arterial = new ArrayList<>();
 
 }

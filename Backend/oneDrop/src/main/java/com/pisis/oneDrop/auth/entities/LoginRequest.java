@@ -13,11 +13,11 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class LoginRequest {
 
-    // @NotNull(message = "Username no puede ser nulo")
-    // @Size(min=2, max=30, message = "Username debe tener entre 2 y 30 caracteres")
+    @NotNull(message = "Username no puede ser nulo")
+    @Size(min=2, max=30, message = "Username debe tener entre 2 y 30 caracteres")
     String username;
 
-    // @NotNull(message = "Password no puede ser nulo")
-    // @Size(min=2, max=30, message = "Password debe tener entre 2 y 30 caracteres")
+    @NotNull(message = "Password no puede ser nulo")
+    @Size(min=8, max=30, message = "Password debe tener entre 8 y 30 caracteres")
     String password;
 }

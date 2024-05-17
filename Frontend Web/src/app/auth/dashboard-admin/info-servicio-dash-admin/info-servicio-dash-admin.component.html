@@ -1,0 +1,122 @@
+<section class="bg-light my-3 mx-0 p-4 borde_servicios ">
+<div >
+    <h3 class="text_center">Servicios disponibles</h3>
+</div>
+
+      <div class="my-4 contenedor_servicios">
+        <table class="table p-4">
+          <thead>
+            <tr>
+              <th scope="col">Nombre</th>
+              <th scope="col">Precio</th>
+              <th scope="col"></th>
+
+
+            </tr>
+          </thead>
+          <tbody  *ngFor="let s of listaDeServicios">
+            <tr  >
+              <td class=" py-4 ">{{s.nombre}}</td>
+              <td class=" py-4 ">${{s.precio}}</td>
+
+              <td> 
+                <button  class="btn bg_btn_edit px-4 p-2 m-2" routerLink="/auth/edit_servicio/{{s.id}}">
+                  Editar</button>
+                <button  class="btn bg_btn_elim px-4 p-2 m-2" (click)="eliminarServicio(s.id)"  >Eliminar</button>
+              </td>
+
+
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+</section>
+
+<div class=""><br></div>
+
+<!-- ////////// FORMULARIO //////////// -->
+<section class="bg-light my-3 mx-0 p-4 borde_servicios">
+  <div>
+    <h3 class="text_center">Formulario para agregar un nuevo servicio</h3>
+  </div>
+        <form class="container" [formGroup]="FormRegistroServicios"
+        (submit)="enviarDatosDeServicio()">
+
+        <div class="row  bg-light justify-content-evenly align-items-center p-4" >
+
+        <!-- NOMBRE SERVICIO -->  
+          <div class="col-lg-4 bg-light">
+            <h5 class="text-center p-3" >Nombre del Servicio</h5>
+            <input formControlName="nombre" class="controls text-dark" type="text" name="nombres" id="nombres"
+            > 
+
+        <!-- verificacion -->  
+        <div *ngIf="nombre_servicio_GET.invalid && (nombre_servicio_GET.dirty || nombre_servicio_GET.touched)"
+        class="text-danger msj-verificacion col-lg-12 col-md-12 align-self-start">
+    
+            <div *ngIf="nombre_servicio_GET.errors?.['required']">
+              Complete este campo.
+            </div>
+
+        </div> 
+        
+          </div>
+
+        <!-- PRECIO SERVICIO -->  
+          <div class="col-lg-4 bg-light">
+            <h5 class="text-center  p-3">Precio</h5>
+            <input formControlName="precio" class="controls text-dark" type="number" name="nombres" id="nombres"   >         
+                    <!-- verificacion -->  
+                  <div *ngIf="precio_servicio_GET.invalid && (precio_servicio_GET.dirty || precio_servicio_GET.touched)"
+                    class="text-danger msj-verificacion col-lg-12 col-md-12 align-self-start">
+                
+                        <div *ngIf="precio_servicio_GET.errors?.['required']">
+                          Complete este campo.
+                        </div>
+                       
+                </div> 
+          </div>
+
+        <!-- DESCRIPCION SERVICIO -->  
+          <div class="col-lg-12 bg-light ">
+            <h5 class="text-center p-3">Descripcion</h5>
+            <input formControlName="descripcion" class="controls text-dark" type="text" name="nombres" id="nombres">
+          
+                  <!-- verificacion -->  
+                  <div *ngIf="descripcion_servicio_GET.invalid && (descripcion_servicio_GET.dirty || descripcion_servicio_GET.touched)"
+                  class="text-danger msj-verificacion col-lg-12 col-md-12 align-self-start">
+              
+                      <div *ngIf="descripcion_servicio_GET.errors?.['required']">
+                        Complete este campo.
+                      </div>
+
+              </div>   
+          </div>
+
+
+        <!-- COMENTARIO SERVICIO -->  
+          <div class="col-lg-12  bg-light ">
+            <h5 class="text-center p-3">Comentarios</h5>
+            <input formControlName="comentarios" class="controls text-dark" type="text" name="nombres" id="nombres">
+          
+                    <!-- verificacion   --> 
+                    <div *ngIf="comentarios_servicio_GET.invalid && (comentarios_servicio_GET.dirty || comentarios_servicio_GET.touched)"
+                    class="text-danger msj-verificacion col-lg-12 col-md-12 align-self-start">
+                
+                        <div *ngIf="comentarios_servicio_GET.errors?.['required']">
+                          Complete este campo.
+                        </div> 
+                </div> 
+          </div>
+  
+          <button  class="btn bg_btn_edit m-2 col-lg-3 py-2 px-4">Registrar Servicio</button>
+          
+        </div>
+
+        </form>
+      
+ 
+  </section>
+
+

@@ -197,6 +197,16 @@ div.container3 {
 	display:block;
 }
 
+.bot {
+    padding: .7rem 2rem ;
+    background-color: #0062cc;
+    border-radius: .5rem;
+    border: 1px solid #0062cc;
+    transition: all 2s ease;
+    background-position: left;
+
+}
+
 /*.boton3 {
     border-radius: 5px;
     padding: 10px;
@@ -420,7 +430,10 @@ footer p {
 .pie {
     margin-top: 3%;
 }
-
+.col-lg-4 img {
+    width: 250px; 
+    height: auto;
+}
 /*------Responsive-------*/
 
 @media (max-width:400px){

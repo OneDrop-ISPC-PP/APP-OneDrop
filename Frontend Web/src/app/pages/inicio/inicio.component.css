@@ -23,27 +23,31 @@ a {
 /*------Banner-------*/
 
 .banner {
-    position: absolute;
-    right: 0;
-    width: 100%;
-    min-height: 100vh;
-    padding: 150px;
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
-    background: #EDF5FC;
-    transition: 0.5s;
+  
+  right: 0;
+  width: 100%;
+  min-height: 100vh;
+  padding: 150px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  background-image: url(src/assets/images/fondoinicio2.png);
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-attachment: fixed;
+  transition: 0.5s;
 }
-
 /*------Container-------*/
 div.container2 {
+  background-color: #ffc1de;
     position: center;
     justify-content: center;
     text-align: center;
-    padding-top: 5%;
+    padding-top: 1%;
     padding-left: 10%;
     padding-right: 10%;
-    padding-bottom: 1px;
+    padding-bottom: 2px;
 }
 
 .grid-container {
@@ -58,6 +62,7 @@ div.container2 {
 
 .cuerpo {
    position: relative;
+   width: 50%;
 }
 
 .cuerpo h1 {
@@ -86,15 +91,32 @@ div.container2 {
 
 .card-body {
    background: transparent; 
-   margin: 5%; 
+
+   height: auto;
  }
+
 
 .card2 {
    background: transparent;
    margin: 1%; 
    border: none;
-   width: 20rem;
+   width: 25rem;
+   height: auto;
+   max-width: 100%;
 }
+
+.card2test {
+  background:#fff;
+  margin: 1%; 
+  border: none;
+  width: 25rem;
+  height: auto;
+  max-width: 100%;
+  margin-top: 4rem;
+  margin-bottom: 4rem;
+
+}
+
 
 .card {
  background: transparent;
@@ -118,8 +140,12 @@ div.container2 {
 .cajas {
    box-shadow: 0 0 16px rgba(0, 0, 0, 1);
    border-radius: 5px;
+   padding: 20px;
+
    overflow: hidden; /* Agregar esta línea */
     }
+
+
 
 
 .card-title {
@@ -177,18 +203,23 @@ div.container2 {
     border-radius: 5px;
     width: 50%;
     margin: 10px;
+
 }
 
 .button1 {
-    background: -webkit-linear-gradient(left, #a445b2, #fa4299);
-    border-color: white;
+    background: -webkit-linear-gradient(left, #FC5880, #fa4299);
+    border: #FC5880 1px solid;
     color: white;
+
+
 }
 
+
 .button2 {
-    background: -webkit-linear-gradient(left, #001d4d, #1A609F);
+    background: -webkit-linear-gradient(left, #03476D,#0870AA );
     /*background-color: #1A609F;*/
-    border-color: white;
+
+
     color: white;
 }
 
@@ -233,9 +264,7 @@ div.container2 {
   border: none;
 }
 
-.cajas {
-  padding: 20px;
-}
+
 
 .carousel-inner {
   display: flex;
@@ -345,11 +374,12 @@ div.container2 {
      padding: 50px;
    }
  
-   div.container2 {
+   div.container2 {    
      padding-top: 2%;
      padding-left: 5%;
      padding-right: 5%;
      padding-bottom: 1px;
+     
    }
  
    .grid-container {
@@ -362,6 +392,7 @@ div.container2 {
  
    .cuerpo p {
      font-size: 0.9em;
+     
    }
  
    .seccion {
@@ -375,18 +406,13 @@ div.container2 {
       height: auto;
       max-width: 100%;
     }
-    .card2 {
-      height: auto;
-      max-width: 100%;
-    }
+
     .card3 {
       height: auto;
       max-width: 100%;
     }
-    .card-body {
-      margin: 2%;
-      height: auto;
-    }
+
+
   
     .card-text {
       font-size: 14px;
@@ -401,3 +427,59 @@ div.container2 {
     }
   }
  
+
+  /* codigo 2024*/
+.fondoLogo{
+
+  background-image: url('../../../assets/images/dropLogoCentrado.png');
+  width: 35rem;
+  height: 10rem;
+  background-repeat: no-repeat;
+  background-size: contain; /* Ajusta automáticamente el tamaño de la imagen */
+}
+
+.borde{
+  border: #001d4d 1px solid;
+}
+
+.text_center{
+  text-align: center;
+}
+
+
+
+.box_carac{
+  height: 10rem;
+}
+
+/* CRACTERISTICAS */
+.caract{
+  height: 25rem;
+}
+
+.caract_2{
+  padding-right: 8rem;
+}
+
+.caract_borde{
+  border-top: 1px solid #000 ;
+  margin-bottom: 5rem;
+
+}
+
+/* CRACTERISTICAS */
+.testim{
+  height: auto;
+  color: white;
+  padding:4rem;
+}
+
+.testim_2{
+  padding-right: 8rem;
+}
+
+.testim_borde{
+  margin-bottom: 5rem;
+  background-color:#03476D;
+
+}

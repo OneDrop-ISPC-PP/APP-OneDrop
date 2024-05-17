@@ -3,16 +3,21 @@ package com.pisis.oneDrop.services;
 import com.pisis.oneDrop.auth.AuthService;
 import com.pisis.oneDrop.auth.UserRepository;
 import com.pisis.oneDrop.auth.entities.User;
+import com.pisis.oneDrop.exceptions.customsExceptions.ForbiddenAction;
 import com.pisis.oneDrop.exceptions.customsExceptions.NotFoundException;
 import com.pisis.oneDrop.model.dtos.fichaMedica.FichaMedicaAddDto;
 import com.pisis.oneDrop.model.dtos.fichaMedica.FichaMedicaReadDto;
 import com.pisis.oneDrop.model.dtos.fichaMedica.FichaMedicaUpdateDto;
 import com.pisis.oneDrop.model.entities.FichaMedica;
+import com.pisis.oneDrop.model.entities.RegistroGlucemia;
+import com.pisis.oneDrop.model.entities.RegistroPeso;
+import com.pisis.oneDrop.model.entities.RegistroTensionArterial;
 import com.pisis.oneDrop.model.mappers.FichaMedicaMapper;
 import com.pisis.oneDrop.model.repositories.FichaMedicaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -27,6 +32,7 @@ public class FichaMedicaService {
     AuthService authService;
     @Autowired
     private UserRepository userRepository;
+
 
     // TODO leer todos no, porque deberia buscar todos los pacientes y luego de cada paciente buscar la ficha si es que la quiero, mas perf
 
@@ -81,10 +87,38 @@ public class FichaMedicaService {
         if(ficha.isEmpty()) throw new NotFoundException("Ficha medica no encontrada por id: "+id);
         return ficha.get();
     }
+    public FichaMedicaReadDto findByUserId (Integer id){
+        return fichaMedicaMapper.toReadDto(getFichaMedicaByUserId(id));
+    }
+    public FichaMedica getFichaMedicaByUserId (Integer id){
+        User paciente = userRepository.findById(id).get();
+        Optional<FichaMedica> ficha = fichaMedicaRepository.findByPaciente(paciente);
+        if(ficha.isEmpty()) throw new NotFoundException("Ficha medica no encontrada para el usuario con id: "+id);
+        return ficha.get();
+    }
 
     public FichaMedicaReadDto deleteFichaMedica (Integer id){
         FichaMedica fichaABorrar = getFichaMedicaById(id);
         fichaMedicaRepository.deleteById(id);
         return fichaMedicaMapper.toReadDto(fichaABorrar);
+    }
+
+    public FichaMedicaReadDto deleteRegistroById(RegistroGlucemia regABorrar){
+        FichaMedica fichaMedica = fichaMedicaRepository.findFichaMedicaByIdRegistrosGlucemia(regABorrar.getId());
+        List<RegistroGlucemia> regs = fichaMedica.getRegistros_glucemia();
+        regs.remove(regABorrar);
+        return fichaMedicaMapper.toReadDto(fichaMedicaRepository.save(fichaMedica));
+    }
+    public FichaMedicaReadDto deleteRegistroById(RegistroPeso regABorrar){
+        FichaMedica fichaMedica = fichaMedicaRepository.findFichaMedicaByIdRegistrosPeso(regABorrar.getId());
+        List<RegistroPeso> regs = fichaMedica.getRegistros_peso();
+        regs.remove(regABorrar);
+        return fichaMedicaMapper.toReadDto(fichaMedicaRepository.save(fichaMedica));
+    }
+    public FichaMedicaReadDto deleteRegistroById(RegistroTensionArterial regABorrar){
+        FichaMedica fichaMedica = fichaMedicaRepository.findFichaMedicaByIdRegistrosTension(regABorrar.getId());
+        List<RegistroTensionArterial> regs = fichaMedica.getRegistros_tension_arterial();
+        regs.remove(regABorrar);
+        return fichaMedicaMapper.toReadDto(fichaMedicaRepository.save(fichaMedica));
     }
 }

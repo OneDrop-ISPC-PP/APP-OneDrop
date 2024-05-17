@@ -30,25 +30,31 @@ export class ModServicioAdminComponent implements OnInit {
 
     })
 
-    this.serv_estadistica.modificar(this.dataid).subscribe((data)=>{
-      this.servicio=data;
-
-    })
-
-    
+    this.serv_estadistica.GET_DATOS_SERVICIO(this.dataid).subscribe(
+      (data)=>{
+        this.servicio=data;
+        console.log("DATOS DEL SERVICIO ACTULIZADOS");
+        console.log("Los datos del servicio son:");
+        console.log(data)
+      },
+      (error)=>{
+        console.log("No se pudieron cargar los datos del servicio");
+        console.log(error)
+      
+      })
+  
   }
 ///////////////////////////////////////////////////////////////
 
   update(){
-    this.serv_estadistica.modificar2(this.servicio,this.dataid).subscribe(()=>{
-      this.router.navigate(["auth/dash_admin"])
+    this.serv_estadistica.UPDATE_SERVICIO(this.servicio,this.dataid).subscribe(()=>{
+      this.router.navigate(["auth/dash_admin/info_services"])
 
     })
-
-
   }
 
 
+///////////////////////////////////////////////////////////////////
 
 
 

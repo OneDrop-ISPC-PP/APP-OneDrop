@@ -18,7 +18,6 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Environment;
 import android.util.Log;
 import android.view.View;
 import android.webkit.WebView;
@@ -26,17 +25,30 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.one_drop_cruds.entities.user.AuthResponse;
+import com.example.one_drop_cruds.entities.user.LoginRequest;
+import com.example.one_drop_cruds.entities.user.LoguedUserDetails;
+import com.example.one_drop_cruds.request.AuthRequests;
+import com.example.one_drop_cruds.utils.BackendUrl;
 import com.example.one_drop_cruds.utils.FilesManager;
 import com.example.one_drop_cruds.utils.SharedPrefManager; // Importa la clase SharedPrefManager
 
-import java.io.File;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.logging.HttpLoggingInterceptor;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
+
 
 public class Home extends AppCompatActivity {
     SharedPrefManager sharedPrefManager;
     TextView textView_welcome;
     FilesManager filesManager;
     WebView webview;
-
+    String baseUrl = new BackendUrl().getBackendUrl();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,18 +57,18 @@ public class Home extends AppCompatActivity {
         webview = (WebView) findViewById(R.id.web_tip);
         webview.loadUrl("https://davidcosta92.github.io/noticias_one_drop/");
 
-
         textView_welcome = findViewById(R.id.textView_welcome);
         sharedPrefManager = new SharedPrefManager(getApplicationContext(), "oneDrop_shared_preferences");
-        String loggedUsername = sharedPrefManager.getLoguedUsername();
 
-        if (loggedUsername == null) {
+        String token = sharedPrefManager.getUserToken();
+
+        if (token == null) {
             // Si el usuario no ha iniciado sesión, redirige a la actividad de inicio de sesión
             Intent loginIntent = new Intent(this, UserLoginActivity.class);
             startActivity(loginIntent);
             finish(); // Cierra la actividad actual
         } else {
-            textView_welcome.setText("Bienvenido, " + loggedUsername + " a");
+            getLoguedUserDetails(token);
         }
 
         filesManager = new FilesManager(getApplicationContext(), this);
@@ -75,7 +87,6 @@ public class Home extends AppCompatActivity {
                             public void onClick(DialogInterface dialog, int which) {
                                 // Llama al método clearLoguedUser de SharedPrefManager para cerrar la sesión
                                 sharedPrefManager.clearLoguedUser();
-
                                 // Redirige al usuario a la actividad de inicio de sesión
                                 Intent loginIntent = new Intent(Home.this, UserLoginActivity.class);
                                 startActivity(loginIntent);
@@ -91,6 +102,49 @@ public class Home extends AppCompatActivity {
             }
         });
     }
+
+    private void getLoguedUserDetails(String token){
+        HttpLoggingInterceptor getDetailsUserInterceptor = new HttpLoggingInterceptor();
+        getDetailsUserInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+        OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
+        httpClient.addInterceptor(getDetailsUserInterceptor);
+
+        // todo el interceptor para agregar el token al header
+        httpClient.addInterceptor(chain -> {
+            Request originalRequest = chain.request();
+            Request.Builder builder = originalRequest.newBuilder();
+
+            if (token!= null &&!token.isEmpty()) {
+                builder.header("Authorization", "Bearer " + token);
+            }
+            return chain.proceed(builder.build());
+        }); //todo el interceptor para agregar el token al header
+
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(baseUrl+"/auth/userDetails/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .client(httpClient.build())
+                .build();
+        AuthRequests authRequest = retrofit.create(AuthRequests.class);
+        Call<LoguedUserDetails> call = authRequest.getUserDetailsRequest();
+        call.enqueue(new Callback<LoguedUserDetails>() {
+            @Override
+            public void onResponse(Call<LoguedUserDetails> call, Response<LoguedUserDetails> response) {
+                if(response.isSuccessful() && response.body() != null){
+                    // Obtener datos del usuario de la resp y guardarlo en shared pref como un objeto json
+                    sharedPrefManager.setLoguedUser(response.body());
+                    textView_welcome.setText("Bienvenido, " + response.body().getUsername());
+                } else if (response.code()==400){
+                    sharedPrefManager.clearLoguedUser();
+                }
+            }
+            @Override
+            public void onFailure(Call<LoguedUserDetails> call, Throwable t) {
+                sharedPrefManager.clearLoguedUser();
+            }
+        });
+    }
+
 
     public void aRegistrarGlucemia(View v) {
         Intent siguiente = new Intent(this, RegGlyActivity.class);
@@ -108,8 +162,8 @@ public class Home extends AppCompatActivity {
     }
 
     public void toProfile(View v) {
-        Intent pressure = new Intent(this, ProfileActivity.class);
-        startActivity(pressure);
+        Intent intent = new Intent(this, ProfileActivity.class);
+        startActivity(intent);
     }
 
     public void toContact(View v) {
