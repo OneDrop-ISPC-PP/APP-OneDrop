@@ -15,6 +15,8 @@ import { InfoServicioDashAdminComponent } from './dashboard-admin/info-servicio-
 import { InfoUsuarioDashAdminComponent } from './dashboard-admin/info-usuario-dash-admin/info-usuario-dash-admin.component';
 import { BienvenidaDashAdminComponent } from './dashboard-admin/bienvenida-dash-admin/bienvenida-dash-admin.component';
 import { ModPacienteAdminComponent } from './mod-paciente-admin/mod-paciente-admin.component';
+import { ModNotaPesoUsuarioComponent } from './mod-nota-peso-usuario/mod-nota-peso-usuario.component';
+import { ModNotaTensionUsuarioComponent } from './mod-nota-tension-usuario/mod-nota-tension-usuario.component';
 
 
 
@@ -41,12 +43,12 @@ const routes:Routes=[
         
         },
 
-
-
         {path:'dash_user', component:DashboardUsuarioComponent, canActivate:[UserGuard]},
         {path:'registro2usuario', component:Registro2usuarioComponent},
         {path:'registro3usuario', component:Registro3usuarioComponent},
         {path:'edit_nota_glucemia/:id', component:ModNotaUsuarioComponent},
+        {path:'edit_nota_peso/:id', component:ModNotaPesoUsuarioComponent},
+        {path:'edit_nota_tension/:id', component:ModNotaTensionUsuarioComponent},
         {path:'edit_servicio/:id', component:ModServicioAdminComponent},
         {path:'edit_paciente/:id', component:ModPacienteAdminComponent},
 

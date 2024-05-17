@@ -24,16 +24,18 @@ export class EstadisUsuariosService {
 
   // -------- PESO ----------
   url_NOTAS_PESO_GET: string = 'http://localhost:8080/registros/peso/usuario/';
+  url_NOTA_PESO_GET: string = 'http://localhost:8080/registros/peso/';
   url_NOTA_PESO_POST: string = 'http://localhost:8080/registros/peso/usuario/';
-
+  url_NOTA_PESO_PUT: string = 'http://localhost:8080/registros/peso/';
+  url_NOTA_PESO_DEL: string = 'http://localhost:8080/registros/peso/';
 
 
   // TENSION
-  // URL DE NOTAS DE GLUCEMIA:
   url_NOTAS_TENSION_GET: string = 'http://localhost:8080/registros/tensionArterial/usuario/';
-  
-  // URL DE NOTAS DE GLUCEMIA:
+  url_NOTA_TENSION_GET: string = 'http://localhost:8080/registros/tensionArterial/';
   url_NOTA_TENSION_POST: string = 'http://localhost:8080/registros/tensionArterial/usuario/';
+  url_NOTA_TENSION_PUT: string = 'http://localhost:8080/registros/tensionArterial/';
+  url_NOTA_TENSION_DEL: string = 'http://localhost:8080/registros/tensionArterial/';
 
 
 
@@ -72,18 +74,23 @@ export class EstadisUsuariosService {
 
 
   ////////////////// CODIGO NOTAS PESO (FUNCIONAL) ///////////////////
-  // AGREGA NOTAS DE GLUCEMIA
-  nuevaNotaPeso(datos: any, id:any) {
-    return this.http.post(this.url_NOTA_PESO_POST+id, datos);
-  }
 
-  // GET_NOTAS_GLUCEMIA
+  // GET_NOTAS_PESO
   public GET_NOTAS_PESO(id:any){
     return this.http.get(this.url_NOTAS_PESO_GET+id)
   }
+  // AGREGAR NOTA PESO
+  nuevaNotaPeso(datos: any, id:any) {
+    return this.http.post(this.url_NOTA_PESO_POST+id, datos);
+  }
+  // ELIMINA NOTA PESO
+  public DELETE_NOTA_PESO(id:any){
+    return this.http.delete(this.url_NOTA_PESO_DEL+id) 
+  }
+
 
   ////////////////// CODIGO NOTAS TENSION ARTERIAL ///////////////////
-  // AGREGA NOTAS DE GLUCEMIA
+  // AGREGA NOTAS DE TENSION
   nuevaNotaTension(datos: any, id:any) {
     return this.http.post(this.url_NOTA_TENSION_POST+id, datos);
   }
@@ -93,7 +100,10 @@ export class EstadisUsuariosService {
     return this.http.get(this.url_NOTAS_TENSION_GET+id)
   }
 
-
+  // ELIMINAR_NOTAS_GLUCEMIA
+  public DELETE_NOTA_TENSION( id:any){
+    return this.http.delete(this.url_NOTA_TENSION_DEL+id) 
+  }
 
 
 
@@ -125,8 +135,8 @@ export class EstadisUsuariosService {
   ////////////////// CODIGO TENSION ARTERIAL ///////////////////
   
   // Método para agregar registro de tensión arterial
-  agregarTensionArterial(datos: any) {
-    return this.http.post('http://localhost:8080/registros/tensionArterial/usuario/1', datos, { withCredentials: true });
+  agregarTensionArterial(datos: any, id:any) {
+    return this.http.post('http://localhost:8080/registros/tensionArterial/usuario/'+id, datos, { withCredentials: true });
   }
 
   // Método para obtener registros de tensión arterial de un usuario específico

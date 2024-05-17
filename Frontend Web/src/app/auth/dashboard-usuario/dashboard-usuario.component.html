@@ -4,9 +4,7 @@
 
       <!-- SIDEBAR -->
       <div class="col-lg-2   px-2 py-3">
-
         <div class=" container bg-light   ">
-
           <div class="row ">
 
               <div>
@@ -15,7 +13,7 @@
 
 
 
-              <div class="p-2">          
+              <div class="p-2" *ngIf="toggleFicheMedica()">          
                 <button  (click)="aFormFichaMedica()" class="btn btn-light p-2 col-lg-12" >
                 Ficha Medica
                 </button>
@@ -46,8 +44,12 @@
       </div>
       <!-- ////////////////// CONTENIDO  QUE NO ES DEL SIDE BAR///////////////// -->
       <div class="col-lg-10  px-2 py-1">
-        <div>
-          <h3> {{ message }} completa la ficha medica antes de iniciar el registro de notas</h3>
+        <div *ngIf="toggleFicheMedica()">
+          <h3 class="text_center"> {{ message }} ,completa la ficha médica antes de iniciar el registro de notas</h3>
+        </div>
+
+        <div *ngIf="!toggleFicheMedica()">
+          <h3 class="text_center"> {{ message }} ¿Qué registros tenés pensado agregar hoy?</h3>
         </div>
 
 
@@ -88,11 +90,11 @@
 
 
         <!-- ////////// FORMULARIO //////////// -->
-        <section class="bg-light my-3 mx-0 p-4 borde_servicios">
+        <section class="bg-light my-3 mx-0 p-4 borde_servicios " *ngIf="showForm">
           <div>
             <h3 class="text_center">Nueva nota de glucemia</h3>
           </div>
-                <form class="container" [formGroup]="formNotasGlucemia" *ngIf="showForm" (submit)="agregarNotaGlucemia(getIdFichaMedica)">
+                <form class="container" [formGroup]="formNotasGlucemia"  (submit)="agregarNotaGlucemia(getIdFichaMedica)">
 
                 <div class="row  bg-light justify-content-evenly align-items-center p-4" >
 
@@ -114,11 +116,8 @@
                   <h5 class="text-center p-3" >Comentario</h5>
                   <textarea formControlName="comentario" name="" id="" cols="30" rows="5" class="form-control"></textarea>
                 </div>
-
-              <button  class="btn bg_btn_edit m-2 col-lg-3 py-2 px-4">Registrar Servicio</button>
-                  
+              <button  class="btn bg_btn_edit m-2 col-lg-3 py-2 px-4">Registrar Nota de Glucemia</button>
               </div>
-
           </form>
       
  
@@ -146,7 +145,7 @@
         
                     </tr>
                   </thead>
-                  <tbody  *ngFor="let s of listaNotasGlucemia">
+                  <tbody  *ngFor="let s of listaNotasPeso">
                     <tr  >
                       <td class=" py-4 ">{{s.fecha}}</td>
                       <td class=" py-4 ">{{s.comentario}}</td>
@@ -154,7 +153,7 @@
                       <td> 
                         <button  class="btn bg_btn_edit px-4 p-2 m-2" routerLink="/auth/edit_servicio/{{s.id}}">
                           Editar</button>
-                        <button  class="btn bg_btn_elim px-4 p-2 m-2">Eliminar</button>
+                        <button  class="btn bg_btn_elim px-4 p-2 m-2" (click)="eliminarNotaPeso(s.id)" >Eliminar</button>
                       </td>
                     </tr>
                   </tbody>
@@ -168,7 +167,7 @@
         <div>
           <h3 class="text_center">Nueva nota de Peso</h3>
         </div>
-              <form class="container" [formGroup]="formNotasGlucemia" *ngIf="showForm" (submit)="agregarNotaGlucemia(getIdFichaMedica)">
+              <form class="container" [formGroup]="formRegistroPeso"  (submit)="agregarNotaRegistroPeso(getIdFichaMedica)">
 
               <div class="row  bg-light justify-content-evenly align-items-center p-4" >
 
@@ -194,7 +193,7 @@
 
 
 
-            <button  class="btn bg_btn_edit m-2 col-lg-3 py-2 px-4">Registrar Servicio</button>
+            <button  class="btn bg_btn_edit m-2 col-lg-3 py-2 px-4">Registrar Nota de Peso</button>
                 
             </div>
 
@@ -206,10 +205,10 @@
 </section> 
 <!-- ////////////////// CIERRA SECCION PESO ///////////////// -->
 
-<!-- ////////////////// SECCION TENSION ARTERIL ///////////////// -->
-<section class="bg-light  "  *ngIf="showFormTensionArterial">
+<!-- ////////////////// SECCION TENSION ARTERIAL ///////////////// -->
+<section class="bg-light"   *ngIf="showFormTensionArterial">
 
-  <div class=" my-3 mx-0 p-4 borde_servicios">
+  <div class=" my-3 mx-0 p-4 borde_servicios" >
   <div >
       <h3 class="text_center">Historial de Tension Arterial</h3>
   </div>
@@ -219,21 +218,24 @@
             <thead>
               <tr>
                 <th scope="col">Fecha</th>
+                <th scope="col">Diastolica</th>
+                <th scope="col">Sistolica</th>
                 <th scope="col">Comentario</th>
-                <th scope="col">Valor</th>
+
   
   
               </tr>
             </thead>
-            <tbody  *ngFor="let s of listaNotasGlucemia">
+            <tbody  *ngFor="let s of listaNotasTension">
               <tr  >
                 <td class=" py-4 ">{{s.fecha}}</td>
+                <td class=" py-4 ">{{s.diastolica}}</td>
+                <td class=" py-4 ">{{s.sistolica}}</td>
                 <td class=" py-4 ">{{s.comentario}}</td>
-                <td class=" py-4 ">{{s.valor}}</td>
                 <td> 
                   <button  class="btn bg_btn_edit px-4 p-2 m-2" routerLink="/auth/edit_servicio/{{s.id}}">
                     Editar</button>
-                  <button  class="btn bg_btn_elim px-4 p-2 m-2">Eliminar</button>
+                  <button  class="btn bg_btn_elim px-4 p-2 m-2" (click)="eliminarNotaTension(s.id)">Eliminar</button>
                 </td>
               </tr>
             </tbody>
@@ -247,7 +249,7 @@
   <div>
     <h3 class="text_center">Nueva nota de Tension Arterial</h3>
   </div>
-        <form class="container" [formGroup]="formNotasGlucemia" *ngIf="showForm" (submit)="agregarNotaGlucemia(getIdFichaMedica)">
+        <form class="container" [formGroup]="formTensionArterial"  (submit)="agregarNotaTensionArterial(getIdFichaMedica)">
 
         <div class="row  bg-light justify-content-evenly align-items-center p-4" >
 
@@ -258,11 +260,21 @@
           </div>
     
 
-        <!-- VALOR GLUCEMIA -->  
-        <div class="col-lg-4 bg-light">
-          <h5 class="text-center p-3" >valor</h5>
-          <input formControlName="valor" type="number" class="form-control" id="valor-glucemia">
+        <!-- VALOR DIASTOLICA -->  
+        <div class="col-lg-3 bg-light">
+          <h5 class="text-center p-3" >Diastolica</h5>
+          <input formControlName="diastolica" type="number" class="form-control" id="valor-glucemia">
         </div>
+
+
+        
+        <!-- VALOR SISTOLICA -->  
+        <div class="col-lg-3 bg-light">
+          <h5 class="text-center p-3" >Diastolica</h5>
+          <input formControlName="sistolica" type="number" class="form-control" id="valor-glucemia">
+        </div>
+
+
 
         <!-- COMENTARIO DEL REGISTRO -->  
         <div class="col-lg-10 bg-light">
@@ -270,10 +282,7 @@
           <textarea formControlName="comentario" name="" id="" cols="30" rows="5" class="form-control"></textarea>
         </div>
 
-
-
-
-      <button  class="btn bg_btn_edit m-2 col-lg-3 py-2 px-4">Registrar Servicio</button>
+      <button  class="btn bg_btn_edit m-2 col-lg-3 py-2 px-4">Registrar Nota de Tension</button>
           
       </div>
 
