@@ -118,7 +118,6 @@ public class AuthController {
     public ResponseEntity<AuthResponse> setNewPassword(@RequestBody @Valid RestorePassRequest restorePassRequest){
         return new ResponseEntity<>(authService.setNewPassword(restorePassRequest) , HttpStatus.ACCEPTED);
     }
-
     @Operation(summary = "This endpoint returns a pageable List of users, accepts search by dni, name or lastname. And sort by fields, on other hand for Paginated results gets size and page number")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Returns List of all users, and page data.",
@@ -158,8 +157,8 @@ public class AuthController {
                                                             @RequestParam(required = false, defaultValue = "dni") String sortBy){
         return new ResponseEntity<>(authService.getAllByRole(Role.MEDICO,dni,fullName, page, size, sortBy), HttpStatus.OK);
     }
-
-
+  
+    // TODO PARA QUE ADMIN CAMBIE ROL A MEDICO
      @Operation(summary = "This endpoint sets a new role for an user, this endpoint need an user ID and a Role to set")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "202", description = "Returns updated data",
