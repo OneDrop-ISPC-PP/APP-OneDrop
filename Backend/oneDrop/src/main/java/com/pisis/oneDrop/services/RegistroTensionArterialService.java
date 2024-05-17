@@ -4,6 +4,7 @@ import com.pisis.oneDrop.exceptions.customsExceptions.NotFoundException;
 import com.pisis.oneDrop.model.dtos.RegistrosPaginadosReadDtoArray;
 import com.pisis.oneDrop.model.dtos.registros.*;
 import com.pisis.oneDrop.model.entities.FichaMedica;
+import com.pisis.oneDrop.model.entities.RegistroPeso;
 import com.pisis.oneDrop.model.entities.RegistroTensionArterial;
 import com.pisis.oneDrop.model.mappers.RegistroTensionArterialMapper;
 import com.pisis.oneDrop.model.repositories.RegistroTensionArterialRepository;
@@ -77,6 +78,7 @@ public class RegistroTensionArterialService {
 
     public RegistroTensionReadDto deleteRegistroById (Integer id){
         RegistroTensionArterial regABorrar = getRegistroById(id);
+        fichaMedicaService.deleteRegistroById(regABorrar);
         registroTensionArterialRepository.deleteById(id);
         return registroTensionArterialMapper.toReadDto(regABorrar);
     }

@@ -6,6 +6,7 @@ import com.pisis.oneDrop.model.dtos.registros.RegistroAddDto;
 import com.pisis.oneDrop.model.dtos.registros.RegistroReadDto;
 import com.pisis.oneDrop.model.dtos.registros.RegistroUpdateDto;
 import com.pisis.oneDrop.model.entities.FichaMedica;
+import com.pisis.oneDrop.model.entities.RegistroGlucemia;
 import com.pisis.oneDrop.model.entities.RegistroPeso;
 import com.pisis.oneDrop.model.mappers.RegistroPesoMapper;
 import com.pisis.oneDrop.model.repositories.RegistroPesoRepository;
@@ -79,6 +80,7 @@ public class RegistroPesoService {
 
     public RegistroReadDto deleteRegistroById (Integer id){
         RegistroPeso regABorrar = getRegistroById(id);
+        fichaMedicaService.deleteRegistroById(regABorrar);
         registroPesoRepository.deleteById(id);
         return registroPesoMapper.toReadDto(regABorrar);
     }

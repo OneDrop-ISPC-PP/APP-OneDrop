@@ -2,6 +2,7 @@ package com.pisis.oneDrop.services;
 
 import com.pisis.oneDrop.exceptions.customsExceptions.NotFoundException;
 import com.pisis.oneDrop.model.dtos.RegistrosPaginadosReadDtoArray;
+import com.pisis.oneDrop.model.dtos.fichaMedica.FichaMedicaReadDto;
 import com.pisis.oneDrop.model.dtos.registros.RegistroAddDto;
 import com.pisis.oneDrop.model.dtos.registros.RegistroReadDto;
 import com.pisis.oneDrop.model.dtos.registros.RegistroUpdateDto;
@@ -80,6 +81,7 @@ public class RegistroGlucemiaService {
 
     public RegistroReadDto deleteRegistroById (Integer id){
         RegistroGlucemia regABorrar = getRegistroById(id);
+        fichaMedicaService.deleteRegistroById(regABorrar);
         registroGlucemiaRepository.deleteById(id);
         return registroGlucemiaMapper.toReadDto(regABorrar);
     }

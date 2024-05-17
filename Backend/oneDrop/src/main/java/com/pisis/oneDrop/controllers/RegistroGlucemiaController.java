@@ -1,6 +1,7 @@
 package com.pisis.oneDrop.controllers;
 
 import com.pisis.oneDrop.model.dtos.RegistrosPaginadosReadDtoArray;
+import com.pisis.oneDrop.model.dtos.fichaMedica.FichaMedicaReadDto;
 import com.pisis.oneDrop.model.dtos.registros.RegistroAddDto;
 import com.pisis.oneDrop.model.dtos.registros.RegistroReadDto;
 import com.pisis.oneDrop.model.dtos.registros.RegistroUpdateDto;

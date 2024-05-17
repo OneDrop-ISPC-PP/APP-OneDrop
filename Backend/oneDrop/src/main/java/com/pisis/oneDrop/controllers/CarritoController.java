@@ -62,22 +62,4 @@ public class CarritoController {
     }
 
 
-    /*
-
-
-
-
-
-    @DeleteMapping("{id}")
-    public ResponseEntity<CarritoReadDto> deleteServicio (@PathVariable Integer id){
-        return new ResponseEntity<>(carritoService.deleteById(id) , HttpStatus.ACCEPTED);
-    }
-
-
-     */
-
-
-
-
-
 }

@@ -34,4 +34,6 @@ public class ResumenCompraService {
                 .build();
         return resumenRepository.save(resumenCompra);
     }
+
+    // todo obtener todos los resumens de compra en tal fecha? tipo para sacar un balance?
 }
