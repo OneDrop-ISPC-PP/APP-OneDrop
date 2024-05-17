@@ -23,22 +23,24 @@ export class DashboardUsuarioComponent implements OnInit {
 
 
   notas_glucemia: any;
-  servicios: any;
-
-// VARIABLES DE FORMULARIO
+  
+  // VARIABLES DE FORMULARIO
   formNotasGlucemia: FormGroup | any;
   formActualizarNota: FormGroup | any;
   formTensionArterial: FormGroup | any;
   formRegistroPeso: FormGroup | any;
-
-// VARIABLES VARIAS 
-  serviciosCarrito: any[] = [];
+  
+  // VARIABLES VARIAS 
+  servicios: any;
+  serviciosEnCarrito: any[] = [];
   Snombre: string = '';
   Smonto: string = '';
   nuevoPedido: any[] = [];
   showForm: boolean = true;
   showFormTensionArterial: boolean = false;
   showFormRegistroPeso: boolean = false;
+  showServicios: boolean = false;
+
 
   message: string = ''; // Variable para almacenar el mensaje de bienvenida
 // CONSTRUCTOR
@@ -121,31 +123,66 @@ export class DashboardUsuarioComponent implements OnInit {
     this.showForm = !this.showForm;
     this.showFormRegistroPeso = false;
     this.showFormTensionArterial = false;
+    this.showServicios = false;
+
   }
 
   toggleFormTensionArterial(): void {
     this.showFormTensionArterial = !this.showFormTensionArterial;
     this.showForm = false;
     this.showFormRegistroPeso = false;
+    this.showServicios = false;
+
   }
 
   toggleFormRegistroPeso(): void {
     this.showFormRegistroPeso = !this.showFormRegistroPeso;
     this.showForm = false;
     this.showFormTensionArterial = false;
+    this.showServicios = false;
+
   }
 
   public toggleFicheMedica(){
     if (this.getIdFichaMedica != undefined){
-      console.log("La ficha medica ya fue cargada")
+      //console.log("La ficha medica ya fue cargada")
       return false
     }else{
-      console.log("La ficha medica aun NO fue cargada")
+      //console.log("La ficha medica aun NO fue cargada")
       return true
     }
   }
   
+  public toggleServicios(){
+    this.showServicios = !this.showServicios;
+    this.showForm = false;
+    this.showFormRegistroPeso = false;
+    this.showFormTensionArterial = false;
 
+  }
+
+// -----  METODO PARA TRAER LA FICHA MEDICA -----
+// -----  METODO PARA TRAER LA FICHA MEDICA -----
+
+  // TRAEMOS LA FICHA MEDICA (NO BORRAR ESTE METODO, ES EL QUE TRAE LA FICHA MEDICA)
+  getFichaMedica(): void{
+    this.paciente.getFichaMedicaIdUser(this.getIdUser).subscribe(
+      (data:any)=>{
+        // VERIFICAMOS QUE INFO TRAE
+        //console.log("CARGA DE EXITOSA DE LA FICHA MEDICA:")
+        //console.log(data);
+        //console.log("Y EL ID DE LA FICHA MEDICA ES:") 
+        //console.log(data.id);
+        // COMO FUNCIONA BIEN GUARDAMOS EL ID DE LA FICHA MEDICA EN UNA VARIABLE
+        this.getIdFichaMedica = data.id;
+        // A ESTE ID LO PASAMOS COMO PARAMETRO DEL METODO agregarNotaGlucemia()
+        // PERO NO POR ACA, SINO POR EL HTML
+      },
+      (error) => {
+        console.log("ERROR EN LA CARGA DE LA FICHA MEDICA");
+        console.log(error);
+      })
+    }
 
 // -----  METODOS PARA GLUCEMIA -----
 // -----  METODOS PARA GLUCEMIA -----
@@ -222,7 +259,7 @@ getNotasTension(): void {
       console.log(error);
     });
 }
-  // METODO PARA AGREGAR NOTA DE TENSION ARTERIAL
+// METODO PARA AGREGAR NOTA DE TENSION ARTERIAL
   agregarNotaTensionArterial(id: any): void {
     if (this.formTensionArterial.valid) {
       this.paciente.agregarTensionArterial({
@@ -308,7 +345,7 @@ getNotasPeso(): void {
       });
     }
   }
-  // METODO PARA ELIMINAR NOTA DE TENSION
+  // METODO PARA ELIMINAR NOTA DE PESO
   eliminarNotaPeso(id:string){
     this.paciente.DELETE_NOTA_PESO(id).subscribe((data)=>{
       alert("Nota Peso Eliminada")
@@ -322,34 +359,57 @@ getNotasPeso(): void {
       })
   }
 
-// -----  METODO PARA TRAER LA FICHA MEDICA -----
-// -----  METODO PARA TRAER LA FICHA MEDICA -----
-
-  // TRAEMOS LA FICHA MEDICA (NO BORRAR ESTE METODO, ES EL QUE TRAE LA FICHA MEDICA)
-  getFichaMedica(): void{
-    this.paciente.getFichaMedicaIdUser(this.getIdUser).subscribe(
-      (data:any)=>{
-        // VERIFICAMOS QUE INFO TRAE
-        //console.log("CARGA DE EXITOSA DE LA FICHA MEDICA:")
-        //console.log(data);
-        //console.log("Y EL ID DE LA FICHA MEDICA ES:") 
-        //console.log(data.id);
-        // COMO FUNCIONA BIEN GUARDAMOS EL ID DE LA FICHA MEDICA EN UNA VARIABLE
-        this.getIdFichaMedica = data.id;
-        // A ESTE ID LO PASAMOS COMO PARAMETRO DEL METODO agregarNotaGlucemia()
-        // PERO NO POR ACA, SINO POR EL HTML
-      },
-      (error) => {
-        console.log("ERROR EN LA CARGA DE LA FICHA MEDICA");
-        console.log(error);
-      })
+// -----  METODOS PARA SERVICIOS -----
+getServicios(): void {
+  this.paciente.GET_SERVICIOS(this.getIdUser).subscribe(
+    (data:any)=>{
+      console.log("LOS SERVICIOS SON:")
+      console.log(data.registros);
+      this.servicios = data.registros;
+      
+    },
+    (error:any) => {
+      console.log("ERROR EN LA CARGA DE LOS SERVICIOS");
+      console.log(error);
+    });
+}
+// -----  METODOS DEL CARRITO -----
+getCarrito(): void {
+  this.paciente.muestraCarritoAUsuario().subscribe(
+    (servicios_C: any) => {
+      this.serviciosEnCarrito = servicios_C as any[];
+    },
+    (errorData: any) => {
+      console.error(errorData);
     }
+  );
+}
+agregarAlCarrito(precio:any, nombre:any): void {
+  const nuevoItem = [precio, nombre];
+  this.serviciosEnCarrito.push(nuevoItem);
+  console.log("Servicio carrito");
+  console.log(nuevoItem);
+  console.log(this.serviciosEnCarrito);
 
-// -----  METODOS PARA TRAER TODAS NOTAS -----
-// -----  METODOS PARA TRAER TODAS NOTAS -----
+
+}
 
 
 
+
+
+
+agregarCarrito(servicio: any): void {
+  this.paciente.agregaAlCarrito(servicio)
+    .subscribe((data) => {
+      console.log(data);
+      this.getCarrito();
+    });
+}
+
+
+// -----  DEMAS CODIGO -----
+// -----  DEMAS CODIGO -----
   eliminar(id: string): void {
     this.paciente.DELETE(id).subscribe(() => {
       alert('Nota Eliminada');
@@ -384,24 +444,9 @@ getNotasPeso(): void {
     }
   }
 
-  getCarrito(): void {
-    this.paciente.muestraCarritoAUsuario().subscribe(
-      (servicios_C: any) => {
-        this.serviciosCarrito = servicios_C as any[];
-      },
-      (errorData: any) => {
-        console.error(errorData);
-      }
-    );
-  }
 
-  agregarCarrito(servicio: any): void {
-    this.paciente.agregaAlCarrito(servicio)
-      .subscribe((data) => {
-        console.log(data);
-        this.getCarrito();
-      });
-  }
+
+
 
   eliminarServ(id:string): void {
     this.paciente.DELETE_SERV(id).subscribe(()=>{
@@ -411,16 +456,7 @@ getNotasPeso(): void {
     });
   }
 
-  getServicios(): void {
-    this.paciente.muestraServicioAUsuario().subscribe({
-      next: (servicios_S) => {
-        this.servicios = servicios_S;
-      },
-      error: (errorData) => {
-        console.error(errorData);
-      }
-    });
-  }
+
 
   agregarNombre(value: string): void {
     this.Snombre = value;
@@ -430,18 +466,7 @@ getNotasPeso(): void {
     this.Smonto = value2;
   }
 
-  agregarAlCarrito(): void {
-    const nuevoItem = [this.Snombre, this.Smonto];
-
-    if (!this.nuevoPedido) {
-      this.nuevoPedido = [];
-    }
-
-    this.nuevoPedido.push(nuevoItem);
-
-    this.Snombre = '';
-    this.Smonto = '';
-  }
+  
 
   eliminarDelCarrito(index: number): void {
     if (index >= 0 && index < this.nuevoPedido.length) {

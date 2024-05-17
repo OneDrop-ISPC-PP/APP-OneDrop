@@ -738,4 +738,35 @@
     text-align: center;
     padding: 2rem 0rem;
   }
+
+
+  .tarjeta_img_1{
+  background-image: url('../../../assets/images/serv_bioq.jpg');
+  height: 18rem;
+  background-size: cover; /* Ajusta automáticamente el tamaño de la imagen */
+
+  }
   
+  .tarjeta_img_2{
+    background-image: url('../../../assets/images/serv_diabetologo.jpg');
+    height: 18rem;
+    background-size: cover; /* Ajusta automáticamente el tamaño de la imagen */
+    }
+
+    .tarjeta_img_3{
+        background-image: url('../../../assets/images/serv_nutr.jpg');
+        height: 18rem;
+        background-size: cover; /* Ajusta automáticamente el tamaño de la imagen */
+    }
+
+    .tarjeta_img_4{
+        background-image: url('../../../assets/images/serv_cardio.jpg');
+        height: 18rem;
+        background-size: cover; /* Ajusta automáticamente el tamaño de la imagen */
+        }
+
+    .tarjeta_img_5{
+        background-image: url('../../../assets/images/serv_endoc.jpg');
+        height: 18rem;
+        background-size: cover; /* Ajusta automáticamente el tamaño de la imagen */
+        }

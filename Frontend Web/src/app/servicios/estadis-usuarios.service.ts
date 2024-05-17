@@ -106,6 +106,10 @@ export class EstadisUsuariosService {
   }
 
 
+  ////////////////// CODIGO SERVICIOS (FUNCIONAL) ///////////////////
+  public GET_SERVICIOS(id:any){
+    return this.http.get(this.url_SERVICIOS)
+  }
 
 
 
