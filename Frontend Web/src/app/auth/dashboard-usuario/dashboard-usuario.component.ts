@@ -15,8 +15,13 @@ export class DashboardUsuarioComponent implements OnInit {
   getIdFichaMedica: any;
   getUser: any;
 
+
 // LISTAS
   listaNotasGlucemia: any = [];
+  listaNotasTension: any = [];
+  listaNotasPeso: any = [];
+
+
   notas_glucemia: any;
   servicios: any;
 
@@ -31,7 +36,7 @@ export class DashboardUsuarioComponent implements OnInit {
   Snombre: string = '';
   Smonto: string = '';
   nuevoPedido: any[] = [];
-  showForm: boolean = false;
+  showForm: boolean = true;
   showFormTensionArterial: boolean = false;
   showFormRegistroPeso: boolean = false;
 
@@ -58,6 +63,11 @@ export class DashboardUsuarioComponent implements OnInit {
 
     // GETERS ON INIT DE LAS NOTAS
     this.getNotas();
+    this.getNotasTension();
+    this.getNotasPeso();
+    
+    this.toggleFicheMedica();
+
     this.getServicios();
     this.getCarrito();
 
@@ -75,16 +85,16 @@ export class DashboardUsuarioComponent implements OnInit {
     });
 
     this.formTensionArterial = this.formBuilder.group({
-      fecha_registro_tension: ['', Validators.required],
+      fecha: ['', Validators.required],
       sistolica: ['', Validators.required],
       diastolica: ['', Validators.required],
-      comentario_tension: ['']
+      comentario: ['']
     });
 
     this.formRegistroPeso = this.formBuilder.group({
-      fecha_registro_peso: ['', Validators.required],
-      valor_peso: ['', Validators.required],
-      comentario_peso: ['']
+      fecha: ['', Validators.required],
+      valor: ['', Validators.required],
+      comentario: ['']
     });
 
 
@@ -109,20 +119,51 @@ export class DashboardUsuarioComponent implements OnInit {
   // METODOS DEL SIDEBAR
   toggleForm(): void {
     this.showForm = !this.showForm;
+    this.showFormRegistroPeso = false;
+    this.showFormTensionArterial = false;
   }
 
   toggleFormTensionArterial(): void {
     this.showFormTensionArterial = !this.showFormTensionArterial;
+    this.showForm = false;
+    this.showFormRegistroPeso = false;
   }
 
   toggleFormRegistroPeso(): void {
     this.showFormRegistroPeso = !this.showFormRegistroPeso;
+    this.showForm = false;
+    this.showFormTensionArterial = false;
+  }
+
+  public toggleFicheMedica(){
+    if (this.getIdFichaMedica != undefined){
+      console.log("La ficha medica ya fue cargada")
+      return false
+    }else{
+      console.log("La ficha medica aun NO fue cargada")
+      return true
+    }
   }
   
 
 
 // -----  METODOS PARA GLUCEMIA -----
 // -----  METODOS PARA GLUCEMIA -----
+
+  // GET NOTAS DE GLUCEMIA
+  getNotas(): void {
+    this.paciente.GET_NOTAS_GLUCEMIA(this.getIdUser).subscribe(
+      (data:any)=>{
+        console.log("CARGA DE NOTAS DE GLUCEMIA EXITOSA, LOS DATOS SON:")
+        console.log(data.registros);
+        this.listaNotasGlucemia = data.registros;
+        
+      },
+      (error:any) => {
+        console.log("ERROR EN LA CARGA DE LAS NOTAS DE GLUCEMIA");
+        console.log(error);
+      });
+  }
 
   // METODO PARA AGREGAR NOTA DE GLUCEMIA
   agregarNotaGlucemia(id: any): void {
@@ -138,6 +179,8 @@ export class DashboardUsuarioComponent implements OnInit {
         console.log(id);
         this.getNotas();
         this.formNotasGlucemia.reset();
+        this.router.navigateByUrl("/auth/dash_user");
+
       }, (error: any) => {
         console.log("Datos de glucemia no fueron registrados ");
         console.log(error);
@@ -151,6 +194,8 @@ export class DashboardUsuarioComponent implements OnInit {
   eliminarNotaGlucemia(id:string){
     this.paciente.DELETE_NOTA_GLUCEMIA(id).subscribe((data)=>{
       alert("Nota Eliminada")
+      this.router.navigateByUrl("/auth/dash_user");
+
     
     },
       (error) =>{
@@ -163,40 +208,118 @@ export class DashboardUsuarioComponent implements OnInit {
 
 // -----  METODOS PARA TENSION ARTERIAL -----
 // -----  METODOS PARA TENSION ARTERIAL -----
-
+// GET NOTAS DE TENSION
+getNotasTension(): void {
+  this.paciente.GET_NOTAS_TENSION(this.getIdUser).subscribe(
+    (data:any)=>{
+      console.log("CARGA DE NOTAS DE TENSION EXITOSA, LOS DATOS SON:")
+      console.log(data.registros);
+      this.listaNotasTension = data.registros;
+      
+    },
+    (error:any) => {
+      console.log("ERROR EN LA CARGA DE LAS NOTAS DE TENSION");
+      console.log(error);
+    });
+}
   // METODO PARA AGREGAR NOTA DE TENSION ARTERIAL
-  agregarNotaTensionArterial(): void {
+  agregarNotaTensionArterial(id: any): void {
     if (this.formTensionArterial.valid) {
       this.paciente.agregarTensionArterial({
-        fecha_registro: this.formTensionArterial.value.fecha_registro_tension,
+        fecha: this.formTensionArterial.value.fecha,
         sistolica: this.formTensionArterial.value.sistolica,
         diastolica: this.formTensionArterial.value.diastolica,
-        comentario: this.formTensionArterial.value.comentario_tension
-      }).subscribe((respuesta: any) => {
-        alert('Registro de tensión arterial agregado');
+        comentario: this.formTensionArterial.value.comentario
+      },id).subscribe((data: any) => {
+        console.log("Datos registrados de tension");
+        console.log(data);
+        console.log("El id pasado de la ficha medica es");
+        console.log(id);
+        this.getNotas();
         this.formTensionArterial.reset();
+      }, (error: any) => {
+        console.log("Datos de tension no fueron registrados ");
+        console.log(error);
+        console.log(id);
+
       });
     } else {
       alert('Ingrese los datos correctamente');
+      console.log(id);
+
       this.formTensionArterial.markAllAsTouched();
     }
   }
 
-  // METODO PARA AGREGAR NOTA DE TENSION ARTERIAL
-  agregarNotaRegistroPeso(): void {
+  // METODO PARA ELIMINAR NOTA DE TENSION
+  eliminarNotaTension(id:string){
+    this.paciente.DELETE_NOTA_TENSION(id).subscribe((data)=>{
+      alert("Nota Tension Eliminada")
+      this.router.navigateByUrl("/auth/dash_user");
+
+    
+    },
+      (error) =>{
+        console.log("Nota NO eliminado");
+        console.log("El ID es");
+        console.log(id);
+        console.log(error);
+      })
+  }
+
+  
+
+// -----  METODOS PARA PESO -----
+// -----  METODOS PARA PESO -----
+
+// GET NOTAS DE TENSION
+getNotasPeso(): void {
+  this.paciente.GET_NOTAS_PESO(this.getIdUser).subscribe(
+    (data:any)=>{
+      console.log("CARGA DE NOTAS DE PESO, LOS DATOS SON:")
+      console.log(data.registros);
+      this.listaNotasPeso = data.registros;
+      
+    },
+    (error:any) => {
+      console.log("ERROR EN LA CARGA DE LAS NOTAS DE PESO");
+      console.log(error);
+    });
+}
+
+  agregarNotaRegistroPeso(id:any): void {
     if (this.formRegistroPeso.valid) {
-      this.paciente.agregarRegistroPeso({
-        fecha_registro: this.formRegistroPeso.value.fecha_registro_peso,
-        valor_peso: this.formRegistroPeso.value.valor_peso,
-        comentario: this.formRegistroPeso.value.comentario_peso
-      }).subscribe((respuesta: any) => {
-        alert('Registro de peso agregado');
+      this.paciente.nuevaNotaPeso({
+        fecha: this.formRegistroPeso.value.fecha,
+        valor: this.formRegistroPeso.value.valor,
+        comentario: this.formRegistroPeso.value.comentario
+      },id).subscribe((data: any) => {
+        console.log("Datos registrados de peso");
+        console.log(data);
+        console.log("El id pasado de la ficha medica es");
+        console.log(id);
+        this.getNotas();
         this.formRegistroPeso.reset();
+      }, (error: any) => {
+        console.log("Datos de tension no fueron registrados ");
+        console.log(error);
+        console.log(id);
+
       });
-    } else {
-      alert('Ingrese los datos correctamente');
-      this.formRegistroPeso.markAllAsTouched();
     }
+  }
+  // METODO PARA ELIMINAR NOTA DE TENSION
+  eliminarNotaPeso(id:string){
+    this.paciente.DELETE_NOTA_PESO(id).subscribe((data)=>{
+      alert("Nota Peso Eliminada")
+      this.router.navigateByUrl("/auth/dash_user");
+    },
+      (error) =>{
+        console.log("Nota NO eliminadA");
+        console.log("El ID es");
+        console.log(id);
+        console.log(error);
+      })
   }
 
 // -----  METODO PARA TRAER LA FICHA MEDICA -----
@@ -225,20 +348,7 @@ export class DashboardUsuarioComponent implements OnInit {
 // -----  METODOS PARA TRAER TODAS NOTAS -----
 // -----  METODOS PARA TRAER TODAS NOTAS -----
 
-  // GET NOTAS DE GLUCEMIA
-  getNotas(): void {
-    this.paciente.GET_NOTAS_GLUCEMIA(this.getIdUser).subscribe(
-      (data:any)=>{
-        console.log("CARGA DE NOTAS DE GLUCEMIA EXITOSA, LOS DATOS SON:")
-        console.log(data.registros);
-        this.listaNotasGlucemia = data.registros;
-        
-      },
-      (error:any) => {
-        console.log("ERROR EN LA CARGA DE LAS NOTAS DE GLUCEMIA");
-        console.log(error);
-      });
-  }
+
 
   eliminar(id: string): void {
     this.paciente.DELETE(id).subscribe(() => {
