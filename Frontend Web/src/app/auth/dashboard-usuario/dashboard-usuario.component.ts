@@ -231,7 +231,7 @@ export class DashboardUsuarioComponent implements OnInit {
   eliminarNotaGlucemia(id:string){
     this.paciente.DELETE_NOTA_GLUCEMIA(id).subscribe((data)=>{
       alert("Nota Eliminada")
-      this.getNotas();
+      this.router.navigateByUrl("/auth/dash_user");
 
     
     },
@@ -272,7 +272,7 @@ getNotasTension(): void {
         console.log(data);
         console.log("El id pasado de la ficha medica es");
         console.log(id);
-        this.getNotasTension();
+        this.getNotas();
         this.formTensionArterial.reset();
       }, (error: any) => {
         console.log("Datos de tension no fueron registrados ");
@@ -292,7 +292,7 @@ getNotasTension(): void {
   eliminarNotaTension(id:string){
     this.paciente.DELETE_NOTA_TENSION(id).subscribe((data)=>{
       alert("Nota Tension Eliminada")
-      this.getNotasTension();
+      this.router.navigateByUrl("/auth/dash_user");
 
     
     },
@@ -335,7 +335,7 @@ getNotasPeso(): void {
         console.log(data);
         console.log("El id pasado de la ficha medica es");
         console.log(id);
-        this.getNotasPeso();
+        this.getNotas();
         this.formRegistroPeso.reset();
       }, (error: any) => {
         console.log("Datos de tension no fueron registrados ");
@@ -349,7 +349,7 @@ getNotasPeso(): void {
   eliminarNotaPeso(id:string){
     this.paciente.DELETE_NOTA_PESO(id).subscribe((data)=>{
       alert("Nota Peso Eliminada")
-      this.getNotasPeso();
+      this.router.navigateByUrl("/auth/dash_user");
     },
       (error) =>{
         console.log("Nota NO eliminadA");
