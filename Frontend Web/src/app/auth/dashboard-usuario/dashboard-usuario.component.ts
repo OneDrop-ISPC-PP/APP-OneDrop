@@ -35,6 +35,7 @@ export class DashboardUsuarioComponent implements OnInit {
   showFormTensionArterial: boolean = false;
   showFormRegistroPeso: boolean = false;
 
+  message: string = ''; // Variable para almacenar el mensaje de bienvenida
 // CONSTRUCTOR
   constructor(
     private paciente: EstadisUsuariosService,
@@ -45,6 +46,7 @@ export class DashboardUsuarioComponent implements OnInit {
 
 // INICIA NG ON INIT
   ngOnInit(): void {
+    this.setUserWelcomeMessage(); // Llama al método para establecer el mensaje de bienvenida
     // TRAEMOS ID DEL LOCAL STORAGE
     this.getIdUser = this.serv_login.getUserId();
 
@@ -87,6 +89,16 @@ export class DashboardUsuarioComponent implements OnInit {
 
 
   } // INICIA NG ON INIT
+  
+  setUserWelcomeMessage(): void {
+    // Método para establecer el mensaje de bienvenida con el nombre de usuario
+    const user = this.serv_login.getUser();
+    if (user) {
+      this.message = `Bienvenido ${user.username},`; // Suponiendo que el nombre de usuario está en el campo 'username'
+    } else {
+      this.message = 'Bienvenido'; // Mensaje de bienvenida predeterminado si no hay usuario logueado
+    }
+  }
 
 
 //METODO PARA IR A LA FICHA MEDICA DESDE EL SIDEBAR
@@ -109,8 +121,8 @@ export class DashboardUsuarioComponent implements OnInit {
   
 
 
-// -----  METODOS PARA AGREGAR TODAS NOTAS -----
-// -----  METODOS PARA AGREGAR TODAS NOTAS -----
+// -----  METODOS PARA GLUCEMIA -----
+// -----  METODOS PARA GLUCEMIA -----
 
   // METODO PARA AGREGAR NOTA DE GLUCEMIA
   agregarNotaGlucemia(id: any): void {
@@ -135,6 +147,22 @@ export class DashboardUsuarioComponent implements OnInit {
       this.formNotasGlucemia.markAllAsTouched();
     }
   }
+  // METODO PARA ELIMINAR NOTA DE GLUCEMIA
+  eliminarNotaGlucemia(id:string){
+    this.paciente.DELETE_NOTA_GLUCEMIA(id).subscribe((data)=>{
+      alert("Nota Eliminada")
+    
+    },
+      (error) =>{
+        console.log("Nota NO eliminado");
+        console.log("El ID es");
+        console.log(id);
+        console.log(error);
+      })
+  }
+
+// -----  METODOS PARA TENSION ARTERIAL -----
+// -----  METODOS PARA TENSION ARTERIAL -----
 
   // METODO PARA AGREGAR NOTA DE TENSION ARTERIAL
   agregarNotaTensionArterial(): void {

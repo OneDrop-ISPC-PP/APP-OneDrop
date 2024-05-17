@@ -47,7 +47,7 @@
       <!-- ////////////////// CONTENIDO  QUE NO ES DEL SIDE BAR///////////////// -->
       <div class="col-lg-10  px-2 py-1">
         <div>
-          <h3>Recordá completar la ficha medica antes de hacer cualquier nota</h3>
+          <h3> {{ message }} completa la ficha medica antes de iniciar el registro de notas</h3>
         </div>
 
 
@@ -76,9 +76,9 @@
                         <td class=" py-4 ">{{s.comentario}}</td>
                         <td class=" py-4 ">{{s.valor}}</td>
                         <td> 
-                          <button  class="btn bg_btn_edit px-4 p-2 m-2" routerLink="/auth/edit_servicio/{{s.id}}">
+                          <button  class="btn bg_btn_edit px-4 p-2 m-2" routerLink="/auth/edit_nota_glucemia/{{s.id}}">
                             Editar</button>
-                          <button  class="btn bg_btn_elim px-4 p-2 m-2">Eliminar</button>
+                          <button  class="btn bg_btn_elim px-4 p-2 m-2"  (click)="eliminarNotaGlucemia(s.id)">Eliminar</button>
                         </td>
                       </tr>
                     </tbody>

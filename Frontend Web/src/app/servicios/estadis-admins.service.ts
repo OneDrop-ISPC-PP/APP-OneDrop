@@ -56,7 +56,7 @@ export class EstadisAdminsService {
 
 // MODIFICACION SERVICIOS DASHBOARD ADMIN //
   // metodo para TRAER la informacion
-  public GET_DATOS_SERVICIOS(id:number){
+  public GET_DATOS_SERVICIO(id:number){
     return this.http.get(this.url_SERVICIOS+id, {withCredentials: true})
   }
   // metodo para MODIFICAR la informacion
@@ -77,8 +77,6 @@ export class EstadisAdminsService {
   public GET_DATOS_PACIENTES(id:number){
     return this.http.get(this.url_USUARIOS+id, {withCredentials: true})
   }
-
-
 
   // METODO PARA ELIMINAR USUARIO
   public DELETE_USUARIO(id:string){

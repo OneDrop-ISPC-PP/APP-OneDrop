@@ -105,12 +105,16 @@ enviarDatosDeServicio(){
   
 }
 
-  // METODO ELIMINAR USUARIO
-  eliminarUsuario(id:string){
-    this.estad_admin.DELETE_SERVICIO(id).subscribe(()=>{
+  // METODO ELIMINAR SERVICIO
+  eliminarServicio(id:string){
+    this.estad_admin.DELETE_SERVICIO(id).subscribe(
+      (data)=>{
       alert("Servicio Eliminado")
-
-    })
+    
+    },
+      (error) =>{
+        console.log("Servicio NO eliminado");
+      })
   }
 
 

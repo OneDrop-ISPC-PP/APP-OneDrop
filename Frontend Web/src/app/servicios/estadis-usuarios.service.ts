@@ -14,20 +14,16 @@ export class EstadisUsuariosService {
   // URL GET PARA FICHA MEDICA POR UD USER:
   url_GET_FICHA_MEDICA: string = 'http://localhost:8080/fichaMedica/user/';
 
-  // GLUCEMIA
-  // URL DE NOTAS DE GLUCEMIA:
+  // -------- GLUCEMIA ----------
   url_NOTAS_GLUCEMIA_GET: string = 'http://localhost:8080/registros/glucemia/usuario/';
-  
-  // URL DE NOTAS DE GLUCEMIA:
+  url_NOTA_GLUCEMIA_GET: string = 'http://localhost:8080/registros/glucemia/';
   url_NOTA_GLUCEMIA_POST: string = 'http://localhost:8080/registros/glucemia/usuario/';
+  url_NOTA_GLUCEMIA_PUT: string = 'http://localhost:8080/registros/glucemia/';
+  url_NOTA_GLUCEMIA_DEL: string = 'http://localhost:8080/registros/glucemia/';
 
 
-
-  // PESO
-  // URL DE NOTAS DE GLUCEMIA:
+  // -------- PESO ----------
   url_NOTAS_PESO_GET: string = 'http://localhost:8080/registros/peso/usuario/';
-  
-  // URL DE NOTAS DE GLUCEMIA:
   url_NOTA_PESO_POST: string = 'http://localhost:8080/registros/peso/usuario/';
 
 
@@ -53,14 +49,25 @@ export class EstadisUsuariosService {
   }
 
   ////////////////// CODIGO NOTAS GLUCEMIA (FUNCIONAL) ///////////////////
+  // GET_NOTAS_GLUCEMIA
+  public GET_NOTAS_GLUCEMIA(id:any){
+    return this.http.get(this.url_NOTAS_GLUCEMIA_GET+id)
+  }
+  // GET_NOTA_GLUCEMIA POR ID
+  public GET_NOTA_GLUCEMIA_POR_ID(id:any){
+    return this.http.get(this.url_NOTA_GLUCEMIA_GET+id)
+  } 
   // AGREGA NOTAS DE GLUCEMIA
   nuevaNotaGlucemia(datos: any, id:any) {
     return this.http.post(this.url_NOTA_GLUCEMIA_POST+id, datos);
   }
-
-  // GET_NOTAS_GLUCEMIA
-  public GET_NOTAS_GLUCEMIA(id:any){
-    return this.http.get(this.url_NOTAS_GLUCEMIA_GET+id)
+  // UPDATE_NOTAS_GLUCEMIA
+  public UPDATE_NOTA_GLUCEMIA(datos:any, id:any){
+    return this.http.put(this.url_NOTA_GLUCEMIA_PUT+id,datos)
+  }
+  // ELIMINAR_NOTAS_GLUCEMIA
+  public DELETE_NOTA_GLUCEMIA( id:any){
+    return this.http.delete(this.url_NOTA_GLUCEMIA_DEL+id) 
   }
 
 
