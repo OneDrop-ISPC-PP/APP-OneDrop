@@ -51,7 +51,7 @@
       <!-- ////////////////// CONTENIDO  QUE NO ES DEL SIDE BAR///////////////// -->
       <div class="col-lg-10  px-2 py-1">
         <div *ngIf="toggleFicheMedica()">
-          <h3 class="text_center"> {{ message }} ,completa la ficha médica antes de iniciar el registro de notas</h3>
+          <h3 class="text_center"> {{ message }} completa la ficha médica antes de iniciar el registro de notas</h3>
         </div>
 
         <div *ngIf="!toggleFicheMedica()">
@@ -276,7 +276,7 @@
         
         <!-- VALOR SISTOLICA -->  
         <div class="col-lg-3 bg-light">
-          <h5 class="text-center p-3" >Diastolica</h5>
+          <h5 class="text-center p-3" >Sistolica</h5>
           <input formControlName="sistolica" type="number" class="form-control" id="valor-glucemia">
         </div>
 
