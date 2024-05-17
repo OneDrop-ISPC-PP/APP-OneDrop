@@ -231,7 +231,7 @@ export class DashboardUsuarioComponent implements OnInit {
   eliminarNotaGlucemia(id:string){
     this.paciente.DELETE_NOTA_GLUCEMIA(id).subscribe((data)=>{
       alert("Nota Eliminada")
-      this.router.navigateByUrl("/auth/dash_user");
+      this.getNotas();
 
     
     },
@@ -272,7 +272,7 @@ getNotasTension(): void {
         console.log(data);
         console.log("El id pasado de la ficha medica es");
         console.log(id);
-        this.getNotas();
+        this.getNotasTension();
         this.formTensionArterial.reset();
       }, (error: any) => {
         console.log("Datos de tension no fueron registrados ");
@@ -292,7 +292,7 @@ getNotasTension(): void {
   eliminarNotaTension(id:string){
     this.paciente.DELETE_NOTA_TENSION(id).subscribe((data)=>{
       alert("Nota Tension Eliminada")
-      this.router.navigateByUrl("/auth/dash_user");
+      this.getNotasTension();
 
     
     },
@@ -335,7 +335,7 @@ getNotasPeso(): void {
         console.log(data);
         console.log("El id pasado de la ficha medica es");
         console.log(id);
-        this.getNotas();
+        this.getNotasPeso();
         this.formRegistroPeso.reset();
       }, (error: any) => {
         console.log("Datos de tension no fueron registrados ");
@@ -349,7 +349,7 @@ getNotasPeso(): void {
   eliminarNotaPeso(id:string){
     this.paciente.DELETE_NOTA_PESO(id).subscribe((data)=>{
       alert("Nota Peso Eliminada")
-      this.router.navigateByUrl("/auth/dash_user");
+      this.getNotasPeso();
     },
       (error) =>{
         console.log("Nota NO eliminadA");
@@ -437,6 +437,7 @@ agregarCarrito(servicio: any): void {
       const idNumber: number = parseInt(id, 10);
       this.paciente.modificar2(datosActualizados, idNumber).subscribe((respuesta: any) => {
         alert('Nota actualizada');
+        this.getNotas();
       });
     } else {
       alert('Ingrese los datos correctamente');
