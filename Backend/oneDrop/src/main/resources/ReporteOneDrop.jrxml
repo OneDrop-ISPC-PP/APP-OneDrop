@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version last-->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="ReporteOneDrop" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="7ff43bd8-8d37-4e3a-9a5a-74596c5fdaf4">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
+	<parameter name="logoPrincipal" class="java.io.InputStream"/>
+	<parameter name="tituloPrincipal" class="java.lang.String"/>
+	<parameter name="textoFichaMedica" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[]]>
+	</queryString>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="92" splitType="Stretch">
+			<rectangle radius="5">
+				<reportElement x="0" y="0" width="554" height="92" uuid="c1d5fcee-f215-4f17-8832-e3d292630c79"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="427" y="-10" width="49" height="20" uuid="cddf4a19-b456-4425-a7c5-ad8dd169aa90"/>
+				<textElement textAlignment="Center">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Impresion: ]]></text>
+			</staticText>
+			<textField pattern="MMMMM dd, yyyy">
+				<reportElement x="477" y="-10" width="78" height="20" uuid="c9646d73-32f5-49bb-a986-2cc22c4de111"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="10" y="30" width="417" height="54" uuid="0f3ac21e-c5a7-4a58-af67-27657458a6d4"/>
+				<box padding="5">
+					<topPen lineWidth="0.2" lineStyle="Solid" lineColor="#8F8C8C"/>
+					<leftPen lineWidth="0.2" lineStyle="Solid" lineColor="#8F8C8C"/>
+					<bottomPen lineWidth="0.2" lineStyle="Solid" lineColor="#8F8C8C"/>
+					<rightPen lineWidth="0.2" lineStyle="Solid" lineColor="#8F8C8C"/>
+				</box>
+				<textElement>
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{textoFichaMedica}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="10" y="10" width="417" height="20" uuid="9b3eff69-2771-4dca-a247-b462a22de126"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{tituloPrincipal}]]></textFieldExpression>
+			</textField>
+			<image scaleImage="FillFrame" hAlign="Center" vAlign="Middle" onErrorType="Blank">
+				<reportElement x="427" y="10" width="127" height="50" backcolor="rgba(191, 225, 255, 0.0)" uuid="97e79380-96b2-4fa7-b4ee-64e3debe72b7"/>
+				<box leftPadding="0">
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<imageExpression><![CDATA[$P{logoPrincipal}]]></imageExpression>
+			</image>
+		</band>
+	</title>
+	<detail>
+		<band height="455" splitType="Stretch">
+			<staticText>
+				<reportElement x="-1" y="12" width="556" height="20" uuid="5ae4f859-dcd0-4842-8022-9583c214ee03"/>
+				<textElement textAlignment="Left">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Registros de Glucemia]]></text>
+			</staticText>
+			<bubbleChart>
+				<chart evaluationTime="Report">
+					<reportElement x="0" y="32" width="554" height="128" uuid="34186fcc-c233-4d16-99eb-e98d11f4c1b2"/>
+					<chartTitle/>
+					<chartSubtitle/>
+					<chartLegend/>
+				</chart>
+				<xyzDataset>
+					<xyzSeries>
+						<seriesExpression><![CDATA["SERIES 1"]]></seriesExpression>
+						<xValueExpression><![CDATA[0]]></xValueExpression>
+						<yValueExpression><![CDATA[0]]></yValueExpression>
+						<zValueExpression><![CDATA[0]]></zValueExpression>
+					</xyzSeries>
+				</xyzDataset>
+				<bubblePlot>
+					<plot/>
+					<xAxisFormat>
+						<axisFormat/>
+					</xAxisFormat>
+					<yAxisFormat>
+						<axisFormat/>
+					</yAxisFormat>
+				</bubblePlot>
+			</bubbleChart>
+			<staticText>
+				<reportElement x="0" y="160" width="554" height="20" uuid="3690c987-10fe-4e20-a19d-ddc7f7f2461e"/>
+				<textElement textAlignment="Left">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Registros de Tension Arterial]]></text>
+			</staticText>
+			<lineChart>
+				<chart evaluationTime="Report">
+					<reportElement x="0" y="180" width="554" height="110" uuid="16de07f9-9f9d-456a-9ba0-21b2558d965a"/>
+					<chartTitle/>
+					<chartSubtitle/>
+					<chartLegend/>
+				</chart>
+				<categoryDataset>
+					<categorySeries>
+						<seriesExpression><![CDATA["SERIES 1"]]></seriesExpression>
+						<categoryExpression><![CDATA[0]]></categoryExpression>
+						<valueExpression><![CDATA[0]]></valueExpression>
+					</categorySeries>
+				</categoryDataset>
+				<linePlot>
+					<plot/>
+					<categoryAxisFormat>
+						<axisFormat/>
+					</categoryAxisFormat>
+					<valueAxisFormat>
+						<axisFormat/>
+					</valueAxisFormat>
+				</linePlot>
+			</lineChart>
+			<staticText>
+				<reportElement x="0" y="290" width="556" height="20" uuid="ffb4c875-baca-418e-9ca2-2ff829f59d8f"/>
+				<textElement textAlignment="Left">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Registros de Peso]]></text>
+			</staticText>
+			<lineChart>
+				<chart evaluationTime="Report">
+					<reportElement x="0" y="310" width="554" height="110" uuid="538c947e-9d6e-4785-874f-d96919941767"/>
+					<chartTitle/>
+					<chartSubtitle/>
+					<chartLegend/>
+				</chart>
+				<categoryDataset>
+					<categorySeries>
+						<seriesExpression><![CDATA["SERIES 1"]]></seriesExpression>
+						<categoryExpression><![CDATA[0]]></categoryExpression>
+						<valueExpression><![CDATA[0]]></valueExpression>
+					</categorySeries>
+				</categoryDataset>
+				<linePlot>
+					<plot/>
+					<categoryAxisFormat>
+						<axisFormat/>
+					</categoryAxisFormat>
+					<valueAxisFormat>
+						<axisFormat/>
+					</valueAxisFormat>
+				</linePlot>
+			</lineChart>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+</jasperReport>
