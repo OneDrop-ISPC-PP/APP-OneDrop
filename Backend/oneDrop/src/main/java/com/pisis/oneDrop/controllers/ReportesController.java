@@ -32,6 +32,14 @@ public class ReportesController {
         headers.setContentDispositionFormData("Registro Glucemia", "Registro glucemia usuario "+idUser+", "+fechaCreacion+".pdf");
         return ResponseEntity.ok().headers(headers).body(reportesService.crearResumenGlucemia(idUser));
     }
+    @GetMapping("{idUser}")
+    public ResponseEntity<byte[]> descargarResumenCompleto(@PathVariable Integer idUser) throws JRException, IOException {
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_PDF);
+        LocalDate fechaCreacion = LocalDate.now();
+        headers.setContentDispositionFormData("Ficha medica", "Ficha medica usuario "+idUser+", "+fechaCreacion+".pdf");
+        return ResponseEntity.ok().headers(headers).body(reportesService.crearReporteCompleto(idUser));
+    }
 
 
     // todo => reporte completo

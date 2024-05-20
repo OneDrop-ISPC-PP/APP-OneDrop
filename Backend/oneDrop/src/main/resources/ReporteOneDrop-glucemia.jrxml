@@ -10,24 +10,10 @@
 		<field name="fecha" class="java.util.Date"/>
 		<field name="valor" class="java.lang.Double"/>
 	</subDataset>
-	<subDataset name="dataSetTension" uuid="e5c9f0d8-46bd-404d-ac22-147ac574f9bd">
-		<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
-		<queryString>
-			<![CDATA[]]>
-		</queryString>
-		<field name="fecha" class="java.util.Date">
-			<fieldDescription><![CDATA[]]></fieldDescription>
-		</field>
-		<field name="diastolica" class="java.lang.Integer">
-			<fieldDescription><![CDATA[]]></fieldDescription>
-		</field>
-		<field name="sistolica" class="java.lang.Integer"/>
-	</subDataset>
 	<parameter name="logoPrincipal" class="java.io.InputStream"/>
 	<parameter name="tituloPrincipal" class="java.lang.String"/>
 	<parameter name="textoFichaMedica" class="java.lang.String"/>
 	<parameter name="dataSetGlucemia" class="net.sf.jasperreports.engine.data.JRBeanCollectionDataSource"/>
-	<parameter name="dataSetTension" class="net.sf.jasperreports.engine.data.JRBeanCollectionDataSource"/>
 	<queryString>
 		<![CDATA[]]>
 	</queryString>
@@ -94,44 +80,6 @@
 				</textElement>
 				<text><![CDATA[Registros de Glucemia]]></text>
 			</staticText>
-			<staticText>
-				<reportElement x="0" y="160" width="554" height="20" uuid="3690c987-10fe-4e20-a19d-ddc7f7f2461e"/>
-				<textElement textAlignment="Left">
-					<font size="12" isBold="true"/>
-				</textElement>
-				<text><![CDATA[Registros de Tension Arterial]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="0" y="290" width="556" height="20" uuid="ffb4c875-baca-418e-9ca2-2ff829f59d8f"/>
-				<textElement textAlignment="Left">
-					<font size="12" isBold="true"/>
-				</textElement>
-				<text><![CDATA[Registros de Peso]]></text>
-			</staticText>
-			<lineChart>
-				<chart evaluationTime="Report">
-					<reportElement x="0" y="310" width="554" height="110" uuid="538c947e-9d6e-4785-874f-d96919941767"/>
-					<chartTitle/>
-					<chartSubtitle/>
-					<chartLegend/>
-				</chart>
-				<categoryDataset>
-					<categorySeries>
-						<seriesExpression><![CDATA["SERIES 1"]]></seriesExpression>
-						<categoryExpression><![CDATA[0]]></categoryExpression>
-						<valueExpression><![CDATA[0]]></valueExpression>
-					</categorySeries>
-				</categoryDataset>
-				<linePlot>
-					<plot/>
-					<categoryAxisFormat>
-						<axisFormat/>
-					</categoryAxisFormat>
-					<valueAxisFormat>
-						<axisFormat/>
-					</valueAxisFormat>
-				</linePlot>
-			</lineChart>
 			<timeSeriesChart>
 				<chart evaluationTime="Report">
 					<reportElement x="-1" y="30" width="557" height="120" uuid="d3a14d7a-431a-43d8-956e-9d32f45a2427"/>
@@ -149,40 +97,6 @@
 						<seriesExpression><![CDATA["Valor glucemia"]]></seriesExpression>
 						<timePeriodExpression><![CDATA[$F{fecha}]]></timePeriodExpression>
 						<valueExpression><![CDATA[$F{valor}]]></valueExpression>
-					</timeSeries>
-				</timeSeriesDataset>
-				<timeSeriesPlot>
-					<plot/>
-					<timeAxisFormat>
-						<axisFormat/>
-					</timeAxisFormat>
-					<valueAxisFormat>
-						<axisFormat/>
-					</valueAxisFormat>
-				</timeSeriesPlot>
-			</timeSeriesChart>
-			<timeSeriesChart>
-				<chart evaluationTime="Report">
-					<reportElement x="0" y="180" width="557" height="120" uuid="7c6cd2a2-2a27-43f9-b8c5-caff41f4e084"/>
-					<chartTitle/>
-					<chartSubtitle/>
-					<chartLegend/>
-				</chart>
-				<timeSeriesDataset timePeriod="Minute">
-					<dataset>
-						<datasetRun subDataset="dataSetTension" uuid="54a0de17-cf99-46f0-93ec-adde0568973f">
-							<dataSourceExpression><![CDATA[$P{dataSetTension}]]></dataSourceExpression>
-						</datasetRun>
-					</dataset>
-					<timeSeries>
-						<seriesExpression><![CDATA["Sistolica"]]></seriesExpression>
-						<timePeriodExpression><![CDATA[$F{fecha}]]></timePeriodExpression>
-						<valueExpression><![CDATA[$F{sistolica}]]></valueExpression>
-					</timeSeries>
-					<timeSeries>
-						<seriesExpression><![CDATA["Diastolica"]]></seriesExpression>
-						<timePeriodExpression><![CDATA[$F{fecha}]]></timePeriodExpression>
-						<valueExpression><![CDATA[$F{diastolica}]]></valueExpression>
 					</timeSeries>
 				</timeSeriesDataset>
 				<timeSeriesPlot>

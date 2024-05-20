@@ -3,14 +3,19 @@ package com.pisis.oneDrop.services;
 import com.pisis.oneDrop.auth.entities.User;
 import com.pisis.oneDrop.exceptions.customsExceptions.InvalidValueException;
 import com.pisis.oneDrop.model.entities.FichaMedica;
+import com.pisis.oneDrop.model.entities.reports.ReporteRegistroGlucemiaItem;
+import com.pisis.oneDrop.model.entities.reports.ReporteRegistroTensionArterialItem;
 import net.sf.jasperreports.engine.*;
+import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ResourceUtils;
 
 import java.io.*;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Service
@@ -25,6 +30,10 @@ public class ReportesService {
     public byte[] crearResumenGlucemia(Integer idUser) throws JRException, IOException {
         FichaMedica ficha = fichaMedicaService.getFichaMedicaByUserId(idUser);
         return JasperExportManager.exportReportToPdf(generarReporteGlucemia(ficha));
+    }
+    public byte[] crearReporteCompleto(Integer idUser) throws JRException, IOException {
+        FichaMedica ficha = fichaMedicaService.getFichaMedicaByUserId(idUser);
+        return JasperExportManager.exportReportToPdf(generarReporteCompleto(ficha));
     }
 
     private void cargarRotuloReporte(FichaMedica ficha) throws FileNotFoundException {
@@ -50,11 +59,51 @@ public class ReportesService {
         parametrosReporte.put("textoFichaMedica", textoFichaMedica);
 
     }
+    private void cargarGraficoGlucemia(FichaMedica ficha){
+        ficha.getRegistros_glucemia();
+        List<ReporteRegistroGlucemiaItem> registroGlucemiaItems = new ArrayList<>();
+        for (int i =0; i<ficha.getRegistros_glucemia().size(); i++){
+            registroGlucemiaItems.add(new ReporteRegistroGlucemiaItem(ficha.getRegistros_glucemia().get(i).getFecha(), ficha.getRegistros_glucemia().get(i).getValor()));
+        }
+        parametrosReporte.put("dataSetGlucemia", new JRBeanCollectionDataSource(registroGlucemiaItems));
+    }
+    private void cargarGraficoTensionArterial(FichaMedica ficha){
+        ficha.getRegistros_tension_arterial();
 
+        List<ReporteRegistroTensionArterialItem> registroTensionItems = new ArrayList<>();
+        for (int i =0; i<ficha.getRegistros_tension_arterial().size(); i++){
+            registroTensionItems.add(new ReporteRegistroTensionArterialItem(ficha.getRegistros_tension_arterial().get(i).getFecha(), ficha.getRegistros_tension_arterial().get(i).getDiastolica(), ficha.getRegistros_tension_arterial().get(i).getSistolica()));
+        }
+        System.out.println(" >>>>>>>> registroTensionItems >>>>>>>>>>>>> ");
+        System.out.println(registroTensionItems);
+        System.out.println(" >>>>>>>> registroTensionItems >>>>>>>>>>>>> ");
+        parametrosReporte.put("dataSetTension", new JRBeanCollectionDataSource(registroTensionItems));
+    }
+    private void cargarGraficoPeso(FichaMedica ficha){
+        ficha.getRegistros_glucemia();
+        List<ReporteRegistroGlucemiaItem> registroGlucemiaItems = new ArrayList<>();
+        for (int i =0; i<ficha.getRegistros_glucemia().size(); i++){
+            registroGlucemiaItems.add(new ReporteRegistroGlucemiaItem(ficha.getRegistros_glucemia().get(i).getFecha(), ficha.getRegistros_glucemia().get(i).getValor()));
+        }
+        parametrosReporte.put("dataSetGlucemia", new JRBeanCollectionDataSource(registroGlucemiaItems));
+    }
     private JasperPrint generarReporteGlucemia (FichaMedica ficha) throws FileNotFoundException {
         cargarRotuloReporte(ficha);
-        // registros glucemia
-
+        cargarGraficoGlucemia(ficha);
+        try{
+            InputStream jrxmlStream = getClass().getResourceAsStream("/ReporteOneDrop-glucemia.jrxml");
+            JasperReport jasperReport = JasperCompileManager.compileReport(jrxmlStream);
+            JasperPrint report = JasperFillManager.fillReport(jasperReport, parametrosReporte, new JREmptyDataSource());
+            return report;
+        } catch (Exception e){
+            throw new InvalidValueException("Error generando reporte: "+e.getMessage());
+        }
+    }
+    private JasperPrint generarReporteCompleto(FichaMedica ficha) throws FileNotFoundException {
+        cargarRotuloReporte(ficha);
+        cargarGraficoGlucemia(ficha);
+        cargarGraficoTensionArterial(ficha);
+       // todo pendiente cargarGraficoPeso(ficha);
 
         try{
             InputStream jrxmlStream = getClass().getResourceAsStream("/ReporteOneDrop.jrxml");
@@ -65,7 +114,6 @@ public class ReportesService {
             throw new InvalidValueException("Error generando reporte: "+e.getMessage());
         }
     }
-
     private FileInputStream obtenerLogoPrincipal() throws FileNotFoundException {
         File logoPrincipal = ResourceUtils.getFile("classpath:imagenes/logoPrincipal.png");
         return new FileInputStream(logoPrincipal);
