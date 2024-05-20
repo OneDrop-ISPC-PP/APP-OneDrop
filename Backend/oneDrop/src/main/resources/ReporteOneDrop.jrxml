@@ -16,18 +16,35 @@
 			<![CDATA[]]>
 		</queryString>
 		<field name="fecha" class="java.util.Date">
-			<fieldDescription><![CDATA[]]></fieldDescription>
+			<fieldDescription><![CDATA[fecha]]></fieldDescription>
 		</field>
 		<field name="diastolica" class="java.lang.Integer">
-			<fieldDescription><![CDATA[]]></fieldDescription>
+			<fieldDescription><![CDATA[diastolica]]></fieldDescription>
 		</field>
-		<field name="sistolica" class="java.lang.Integer"/>
+		<field name="sistolica" class="java.lang.Integer">
+			<fieldDescription><![CDATA[sistolica]]></fieldDescription>
+		</field>
+	</subDataset>
+	<subDataset name="dataSetPeso" uuid="e0842f60-3aa3-4b30-990a-be877889a266">
+		<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
+		<queryString>
+			<![CDATA[]]>
+		</queryString>
+		<field name="fecha" class="java.util.Date">
+			<fieldDescription><![CDATA[fecha]]></fieldDescription>
+		</field>
+		<field name="valor" class="java.lang.Double">
+			<fieldDescription><![CDATA[valor]]></fieldDescription>
+		</field>
 	</subDataset>
 	<parameter name="logoPrincipal" class="java.io.InputStream"/>
 	<parameter name="tituloPrincipal" class="java.lang.String"/>
 	<parameter name="textoFichaMedica" class="java.lang.String"/>
 	<parameter name="dataSetGlucemia" class="net.sf.jasperreports.engine.data.JRBeanCollectionDataSource"/>
 	<parameter name="dataSetTension" class="net.sf.jasperreports.engine.data.JRBeanCollectionDataSource"/>
+	<parameter name="dataSetPeso" class="net.sf.jasperreports.engine.data.JRBeanCollectionDataSource">
+		<parameterDescription><![CDATA[dataSetPeso]]></parameterDescription>
+	</parameter>
 	<queryString>
 		<![CDATA[]]>
 	</queryString>
@@ -108,30 +125,6 @@
 				</textElement>
 				<text><![CDATA[Registros de Peso]]></text>
 			</staticText>
-			<lineChart>
-				<chart evaluationTime="Report">
-					<reportElement x="0" y="310" width="554" height="110" uuid="538c947e-9d6e-4785-874f-d96919941767"/>
-					<chartTitle/>
-					<chartSubtitle/>
-					<chartLegend/>
-				</chart>
-				<categoryDataset>
-					<categorySeries>
-						<seriesExpression><![CDATA["SERIES 1"]]></seriesExpression>
-						<categoryExpression><![CDATA[0]]></categoryExpression>
-						<valueExpression><![CDATA[0]]></valueExpression>
-					</categorySeries>
-				</categoryDataset>
-				<linePlot>
-					<plot/>
-					<categoryAxisFormat>
-						<axisFormat/>
-					</categoryAxisFormat>
-					<valueAxisFormat>
-						<axisFormat/>
-					</valueAxisFormat>
-				</linePlot>
-			</lineChart>
 			<timeSeriesChart>
 				<chart evaluationTime="Report">
 					<reportElement x="-1" y="30" width="557" height="120" uuid="d3a14d7a-431a-43d8-956e-9d32f45a2427"/>
@@ -163,14 +156,14 @@
 			</timeSeriesChart>
 			<timeSeriesChart>
 				<chart evaluationTime="Report">
-					<reportElement x="0" y="180" width="557" height="120" uuid="7c6cd2a2-2a27-43f9-b8c5-caff41f4e084"/>
+					<reportElement x="0" y="180" width="557" height="120" uuid="3041de36-84c0-4efd-a853-9dc7f30ae40d"/>
 					<chartTitle/>
 					<chartSubtitle/>
 					<chartLegend/>
 				</chart>
-				<timeSeriesDataset timePeriod="Minute">
+				<timeSeriesDataset timePeriod="Hour">
 					<dataset>
-						<datasetRun subDataset="dataSetTension" uuid="54a0de17-cf99-46f0-93ec-adde0568973f">
+						<datasetRun subDataset="dataSetTension" uuid="55cf5d32-5b2a-4c33-bd19-88d7c63ef005">
 							<dataSourceExpression><![CDATA[$P{dataSetTension}]]></dataSourceExpression>
 						</datasetRun>
 					</dataset>
@@ -183,6 +176,35 @@
 						<seriesExpression><![CDATA["Diastolica"]]></seriesExpression>
 						<timePeriodExpression><![CDATA[$F{fecha}]]></timePeriodExpression>
 						<valueExpression><![CDATA[$F{diastolica}]]></valueExpression>
+					</timeSeries>
+				</timeSeriesDataset>
+				<timeSeriesPlot>
+					<plot/>
+					<timeAxisFormat>
+						<axisFormat/>
+					</timeAxisFormat>
+					<valueAxisFormat>
+						<axisFormat/>
+					</valueAxisFormat>
+				</timeSeriesPlot>
+			</timeSeriesChart>
+			<timeSeriesChart>
+				<chart evaluationTime="Report">
+					<reportElement x="-1" y="310" width="557" height="120" uuid="e3a713e0-22b1-42a1-a316-6aa0e27da20a"/>
+					<chartTitle/>
+					<chartSubtitle/>
+					<chartLegend/>
+				</chart>
+				<timeSeriesDataset timePeriod="Minute">
+					<dataset>
+						<datasetRun subDataset="dataSetPeso" uuid="f1b69b35-9161-40a4-aed5-d9bde38423f7">
+							<dataSourceExpression><![CDATA[$P{dataSetPeso}]]></dataSourceExpression>
+						</datasetRun>
+					</dataset>
+					<timeSeries>
+						<seriesExpression><![CDATA["Peso"]]></seriesExpression>
+						<timePeriodExpression><![CDATA[$F{fecha}]]></timePeriodExpression>
+						<valueExpression><![CDATA[$F{valor}]]></valueExpression>
 					</timeSeries>
 				</timeSeriesDataset>
 				<timeSeriesPlot>

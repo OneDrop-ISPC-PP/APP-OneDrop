@@ -4,6 +4,7 @@ import com.pisis.oneDrop.auth.entities.User;
 import com.pisis.oneDrop.exceptions.customsExceptions.InvalidValueException;
 import com.pisis.oneDrop.model.entities.FichaMedica;
 import com.pisis.oneDrop.model.entities.reports.ReporteRegistroGlucemiaItem;
+import com.pisis.oneDrop.model.entities.reports.ReporteRegistroPesoItem;
 import com.pisis.oneDrop.model.entities.reports.ReporteRegistroTensionArterialItem;
 import net.sf.jasperreports.engine.*;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
@@ -69,23 +70,19 @@ public class ReportesService {
     }
     private void cargarGraficoTensionArterial(FichaMedica ficha){
         ficha.getRegistros_tension_arterial();
-
         List<ReporteRegistroTensionArterialItem> registroTensionItems = new ArrayList<>();
         for (int i =0; i<ficha.getRegistros_tension_arterial().size(); i++){
             registroTensionItems.add(new ReporteRegistroTensionArterialItem(ficha.getRegistros_tension_arterial().get(i).getFecha(), ficha.getRegistros_tension_arterial().get(i).getDiastolica(), ficha.getRegistros_tension_arterial().get(i).getSistolica()));
         }
-        System.out.println(" >>>>>>>> registroTensionItems >>>>>>>>>>>>> ");
-        System.out.println(registroTensionItems);
-        System.out.println(" >>>>>>>> registroTensionItems >>>>>>>>>>>>> ");
         parametrosReporte.put("dataSetTension", new JRBeanCollectionDataSource(registroTensionItems));
     }
     private void cargarGraficoPeso(FichaMedica ficha){
-        ficha.getRegistros_glucemia();
-        List<ReporteRegistroGlucemiaItem> registroGlucemiaItems = new ArrayList<>();
-        for (int i =0; i<ficha.getRegistros_glucemia().size(); i++){
-            registroGlucemiaItems.add(new ReporteRegistroGlucemiaItem(ficha.getRegistros_glucemia().get(i).getFecha(), ficha.getRegistros_glucemia().get(i).getValor()));
+        ficha.getRegistros_peso();
+        List<ReporteRegistroPesoItem> registroPesoItems = new ArrayList<>();
+        for (int i =0; i<ficha.getRegistros_peso().size(); i++){
+            registroPesoItems.add(new ReporteRegistroPesoItem(ficha.getRegistros_peso().get(i).getFecha(), ficha.getRegistros_peso().get(i).getValor()));
         }
-        parametrosReporte.put("dataSetGlucemia", new JRBeanCollectionDataSource(registroGlucemiaItems));
+        parametrosReporte.put("dataSetPeso", new JRBeanCollectionDataSource(registroPesoItems));
     }
     private JasperPrint generarReporteGlucemia (FichaMedica ficha) throws FileNotFoundException {
         cargarRotuloReporte(ficha);
@@ -103,7 +100,7 @@ public class ReportesService {
         cargarRotuloReporte(ficha);
         cargarGraficoGlucemia(ficha);
         cargarGraficoTensionArterial(ficha);
-       // todo pendiente cargarGraficoPeso(ficha);
+        cargarGraficoPeso(ficha);
 
         try{
             InputStream jrxmlStream = getClass().getResourceAsStream("/ReporteOneDrop.jrxml");
