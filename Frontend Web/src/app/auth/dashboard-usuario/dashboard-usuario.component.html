@@ -157,7 +157,7 @@
                       <td class=" py-4 ">{{s.comentario}}</td>
                       <td class=" py-4 ">{{s.valor}}</td>
                       <td> 
-                        <button  class="btn bg_btn_edit px-4 p-2 m-2" routerLink="/auth/edit_servicio/{{s.id}}">
+                        <button  class="btn bg_btn_edit px-4 p-2 m-2"  routerLink="/auth/edit_nota_peso/{{s.id}}">
                           Editar</button>
                         <button  class="btn bg_btn_elim px-4 p-2 m-2" (click)="eliminarNotaPeso(s.id)" >Eliminar</button>
                       </td>
@@ -239,7 +239,7 @@
                 <td class=" py-4 ">{{s.sistolica}}</td>
                 <td class=" py-4 ">{{s.comentario}}</td>
                 <td> 
-                  <button  class="btn bg_btn_edit px-4 p-2 m-2" routerLink="/auth/edit_servicio/{{s.id}}">
+                  <button  class="btn bg_btn_edit px-4 p-2 m-2" routerLink="/auth/edit_nota_tension/{{s.id}}">
                     Editar</button>
                   <button  class="btn bg_btn_elim px-4 p-2 m-2" (click)="eliminarNotaTension(s.id)">Eliminar</button>
                 </td>
