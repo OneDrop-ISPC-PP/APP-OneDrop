@@ -18,7 +18,7 @@ public class UserSignupActivity extends AppCompatActivity {
     SharedPrefManager sharedPrefManager;
     ActivityUserSignupBinding binding;
     AdminSQLiteOpenHelper adminBD;
-    EditText signup_email, signup_password , signup_confirm;
+    EditText signup_email, signup_password , signup_confirm, signup_username, signup_name, signup_last_name, signup_phone, signup_birthdate, signup_sex, signup_dni ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +32,15 @@ public class UserSignupActivity extends AppCompatActivity {
         signup_email = findViewById(R.id.signup_email);
         signup_password = findViewById(R.id.signup_password);
         signup_confirm = findViewById(R.id.signup_confirm);
+        // todo signup_username, signup_name, signup_last_name, signup_phone, signup_birthdate, signup_sex, signup_dni
+        // todo signup_username, signup_name, signup_last_name, signup_phone, signup_birthdate, signup_sex, signup_dni
+        // todo signup_username, signup_name, signup_last_name, signup_phone, signup_birthdate, signup_sex, signup_dni
+        // todo signup_username, signup_name, signup_last_name, signup_phone, signup_birthdate, signup_sex, signup_dni
+        // todo signup_username, signup_name, signup_last_name, signup_phone, signup_birthdate, signup_sex, signup_dni
+        // todo signup_username, signup_name, signup_last_name, signup_phone, signup_birthdate, signup_sex, signup_dni
+        // todo signup_username, signup_name, signup_last_name, signup_phone, signup_birthdate, signup_sex, signup_dni
+
+
 
     }
 
