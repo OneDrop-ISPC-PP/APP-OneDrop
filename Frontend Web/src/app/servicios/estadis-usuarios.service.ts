@@ -30,7 +30,7 @@ export class EstadisUsuariosService {
   url_NOTA_PESO_DEL: string = 'http://localhost:8080/registros/peso/';
 
 
-  // TENSION
+  // -------- TENSION ----------
   url_NOTAS_TENSION_GET: string = 'http://localhost:8080/registros/tensionArterial/usuario/';
   url_NOTA_TENSION_GET: string = 'http://localhost:8080/registros/tensionArterial/';
   url_NOTA_TENSION_POST: string = 'http://localhost:8080/registros/tensionArterial/usuario/';
@@ -39,11 +39,14 @@ export class EstadisUsuariosService {
 
 
 
-  // URL DE SERVICIOS:
+  // -------- SERVICIOS ----------
   url_SERVICIOS: string = 'http://localhost:8080/servicios/';
 
-  // URL DE CARRITO:
-  url_CARRITO: string = 'http://localhost:3000/CARRITO/';
+
+  // -------- CARRITO----------
+  url_CARRITO_GET: string = 'http://localhost:8080/carrito/';
+  url_CARRITO_POST: string = 'http://localhost:8080/carrito/';
+
 
   ////////////////// GET FICHA MEDICA ///////////////////
   getFichaMedicaIdUser(id:any){
@@ -79,6 +82,10 @@ export class EstadisUsuariosService {
   public GET_NOTAS_PESO(id:any){
     return this.http.get(this.url_NOTAS_PESO_GET+id)
   }
+ // GET_NOTA_PESO POR ID
+  public GET_NOTA_PESO_POR_ID(id:any){
+    return this.http.get(this.url_NOTA_PESO_GET+id)
+  } 
   // AGREGAR NOTA PESO
   nuevaNotaPeso(datos: any, id:any) {
     return this.http.post(this.url_NOTA_PESO_POST+id, datos);
@@ -87,22 +94,33 @@ export class EstadisUsuariosService {
   public DELETE_NOTA_PESO(id:any){
     return this.http.delete(this.url_NOTA_PESO_DEL+id) 
   }
+  // ACTUALIZAR NOTA PESO
+  public UPDATE_NOTA_PESO(datos:any, id:any){
+    return this.http.put(this.url_NOTA_PESO_PUT+id,datos)
+  }
+
 
 
   ////////////////// CODIGO NOTAS TENSION ARTERIAL ///////////////////
-  // AGREGA NOTAS DE TENSION
-  nuevaNotaTension(datos: any, id:any) {
-    return this.http.post(this.url_NOTA_TENSION_POST+id, datos);
-  }
-
   // GET_NOTAS_GLUCEMIA
   public GET_NOTAS_TENSION(id:any){
     return this.http.get(this.url_NOTAS_TENSION_GET+id)
   }
-
+  // GET_NOTA_TENSION POR ID
+  public GET_NOTA_TENSION_POR_ID(id:any){
+    return this.http.get(this.url_NOTA_TENSION_GET+id)
+  } 
+  // AGREGA NOTAS DE TENSION
+  nuevaNotaTension(datos: any, id:any) {
+    return this.http.post(this.url_NOTA_TENSION_POST+id, datos);
+  }
   // ELIMINAR_NOTAS_GLUCEMIA
   public DELETE_NOTA_TENSION( id:any){
     return this.http.delete(this.url_NOTA_TENSION_DEL+id) 
+  }
+  // ACTUALIZAR NOTA TENSION
+  public UPDATE_NOTA_TENSION(datos:any, id:any){
+    return this.http.put(this.url_NOTA_TENSION_PUT+id,datos)
   }
 
 
@@ -194,16 +212,16 @@ eliminarRegistroPeso(idRegistro: number) {
 
   // MUESTRA CARRITO USUARIOS
   muestraCarritoAUsuario() {
-    return this.http.get(this.url_CARRITO, { withCredentials: true });
+    return this.http.get(this.url_CARRITO_GET, { withCredentials: true });
   }
 
   // AGREGA SERVICIO AL CARRITO
   agregaAlCarrito(servicio: any) {
-    return this.http.post(this.url_CARRITO, servicio, { withCredentials: true });
+    return this.http.post(this.url_CARRITO_POST, servicio, { withCredentials: true });
   }
 
   // ELIMINA SERVICIO AL CARRITO
   DELETE_SERV(id: string) {
-    return this.http.delete(this.url_CARRITO + id, { withCredentials: true });
+    return this.http.delete(this.url_CARRITO_GET+ id, { withCredentials: true });
   }
 }
