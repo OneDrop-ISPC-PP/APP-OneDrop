@@ -319,9 +319,19 @@
                       
                     <h5 class="text_center py-0 my-1">{{s.nombre}}</h5>
                     <h3 class="text_center py-0 my-1">${{s.precio}}</h3>
-                    <div class="d-flex justify-content-center">
-                    <button  class="btn bg_btn_edit px-4 p-2 m-1 col-lg-6" (click)="agregarAlCarrito(s.precio,s.nombre)" >
+
+
+                    <div class="d-flex justify-content-center" *ngIf="veracidadCarrito"  >
+                      <button  class="btn bg_btn_edit px-4 p-2 m-1 col-lg-6" (click)="agregarAlCarrito(s.precio,s.nombre)" >
                       Agregar al Carrito</button>
+
+                      <button  class="btn bg_btn_edit px-4 p-2 m-1 col-lg-6"  >
+                       Mas Info</button>
+                    </div>
+
+                    <div class="d-flex justify-content-center" *ngIf="!veracidadCarrito">
+                      <button  class="btn bg_btn_edit px-4 p-2 m-1 col-lg-6" >
+                      Mas Info</button>
                     </div>
                   </div>
                 </div>
@@ -331,15 +341,24 @@
               <!-- MUESTRA CARRITO -->
               <section class="col-lg-4 borde_servicios my-4 ">
                 <h3 class="text_center "  >Carrito</h3>
-                <div class="container-fluid p-1 " >
-                  <div class="row my-2" *ngFor="let s of serviciosEnCarrito; let i=index " >
-                    <div class="col-lg-2  "> <p class="p-1 text_center" > ${{s[0]}}</p></div>
-                    <div class="col-lg-8 "><p class="p-1 text_center"> {{s[1]}} </p></div>
+                <!-- carrito false -->
+                <div *ngIf="!veracidadCarrito">
+                  <button  class="btn bg_btn_edit px-4 p-2 m-1 col-lg-10" (click)="nuevoCarrito24()" >
+                    Nueva Compra</button>
+                </div>
+
+
+                <!-- carrito true -->
+                <div *ngIf="veracidadCarrito">
+                    
 
 
 
 
-                  </div>
+
+
+                  <button  class="btn bg_btn_edit px-4 p-2 m-1 col-lg-10" (click)="nuevoCarrito24false()" >
+                    Cancelar la Compra</button>
                 </div>
               </section>
 

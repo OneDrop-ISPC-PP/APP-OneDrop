@@ -10,6 +10,8 @@ import { LoginService } from 'src/app/servicios/login-service';
   styleUrls: ['./dashboard-usuario.component.css']
 })
 export class DashboardUsuarioComponent implements OnInit {
+// VARIABLES CARRITO
+  veracidadCarrito:boolean = false;
 // VARIABLES DE INFO USUARIO Y FICHA MEDICA
   getIdUser: any;
   getIdFichaMedica: any;
@@ -53,6 +55,9 @@ export class DashboardUsuarioComponent implements OnInit {
 
 // INICIA NG ON INIT
   ngOnInit(): void {
+    // INICIALIZAMOS LA VARIABLE DE CARRITO
+    this.veracidadCarrito = false;
+
     this.setUserWelcomeMessage(); // Llama al método para establecer el mensaje de bienvenida
     // TRAEMOS ID DEL LOCAL STORAGE
     this.getIdUser = this.serv_login.getUserId();
@@ -374,6 +379,20 @@ getServicios(): void {
     });
 }
 // -----  METODOS DEL CARRITO -----
+public nuevoCarrito24(){
+  this.veracidadCarrito = true;
+  return this.paciente.nuevoCarrito24
+}
+
+public nuevoCarrito24false(){
+  this.veracidadCarrito = false;
+}
+
+
+
+
+
+
 getCarrito(): void {
   this.paciente.muestraCarritoAUsuario().subscribe(
     (servicios_C: any) => {
