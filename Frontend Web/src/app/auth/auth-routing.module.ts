@@ -17,6 +17,11 @@ import { BienvenidaDashAdminComponent } from './dashboard-admin/bienvenida-dash-
 import { ModPacienteAdminComponent } from './mod-paciente-admin/mod-paciente-admin.component';
 import { ModNotaPesoUsuarioComponent } from './mod-nota-peso-usuario/mod-nota-peso-usuario.component';
 import { ModNotaTensionUsuarioComponent } from './mod-nota-tension-usuario/mod-nota-tension-usuario.component';
+import { InfoGlucemiaDashUserComponent } from './dashboard-usuario/info-glucemia-dash-user/info-glucemia-dash-user.component';
+import { InfoPesoDashUserComponent } from './dashboard-usuario/info-peso-dash-user/info-peso-dash-user.component';
+import { BienvenidaDashUserComponent } from './dashboard-usuario/bienvenida-dash-user/bienvenida-dash-user.component';
+import { InfoTensionDashUserComponent } from './dashboard-usuario/info-tension-dash-user/info-tension-dash-user.component';
+import { ServiciosDashUserComponent } from './dashboard-usuario/servicios-dash-user/servicios-dash-user.component';
 
 
 
@@ -35,15 +40,25 @@ const routes:Routes=[
          children:[
             {path:'info_users', component:InfoUsuarioDashAdminComponent},
             {path:'info_services', component:InfoServicioDashAdminComponent},
-            {path:'bienvenida', component:BienvenidaDashAdminComponent},
-            {path:'**', redirectTo:'bienvenida'}
+            {path:'bienvenida_admin', component:BienvenidaDashAdminComponent},
+            {path:'**', redirectTo:'bienvenida_admin'}
             
           ]
-
-        
         },
 
-        {path:'dash_user', component:DashboardUsuarioComponent, canActivate:[UserGuard]},
+        {path:'dash_user', component:DashboardUsuarioComponent, canActivate:[UserGuard],
+        children:[
+          {path:'bienvenida_user', component:BienvenidaDashUserComponent},
+          {path:'info_glucemia', component:InfoGlucemiaDashUserComponent},
+          {path:'info_peso', component:InfoPesoDashUserComponent},
+          {path:'info_tension', component:InfoTensionDashUserComponent},
+          {path:'servicios_user', component:ServiciosDashUserComponent},
+
+          {path:'**', redirectTo:'bienvenida_user'}
+
+          
+        ]
+        },
         {path:'registro2usuario', component:Registro2usuarioComponent},
         {path:'registro3usuario', component:Registro3usuarioComponent},
         {path:'edit_nota_glucemia/:id', component:ModNotaUsuarioComponent},

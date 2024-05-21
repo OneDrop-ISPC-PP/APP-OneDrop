@@ -1,0 +1,67 @@
+      <!-- ////////////////// SECCION SERVICIOS ///////////////// -->
+      <section class="bg-light container-fluid"  >
+
+        <div class=" my-3 mx-0 p-4 borde_servicios row">
+
+              <!-- MUESTRA SERVICIOS -->
+              <section class="my-4  container-fluid col-lg-8">
+                
+                <div >
+                  <h3 class="text_center">Nuestros Servicios</h3>
+                </div>
+                <div class="row">
+
+
+                  <div class="tarjeta_s col-lg-6 p-3" *ngFor="let s of servicios"> 
+                    <div class="tarjeta_img_{{s.id}}" ></div>
+                      
+                    <h5 class="text_center py-0 my-1">{{s.nombre}}</h5>
+                    <h3 class="text_center py-0 my-1">${{s.precio}}</h3>
+
+
+                    <div class="d-flex justify-content-center" *ngIf="veracidadCarrito"  >
+                      <button  class="btn bg_btn_edit px-4 p-2 m-1 col-lg-6" (click)="agregarAlCarrito(s.precio,s.nombre)" >
+                      Agregar al Carrito</button>
+
+                      <button  class="btn bg_btn_edit px-4 p-2 m-1 col-lg-6"  >
+                       Mas Info</button>
+                    </div>
+
+                    <div class="d-flex justify-content-center" *ngIf="!veracidadCarrito">
+                      <button  class="btn bg_btn_edit px-4 p-2 m-1 col-lg-6" >
+                      Mas Info</button>
+                    </div>
+                  </div>
+                </div>
+        
+              </section>
+
+              <!-- MUESTRA CARRITO -->
+              <section class="col-lg-4 borde_servicios my-4 ">
+                <h3 class="text_center "  >Carrito</h3>
+              
+                <!-- carrito false -->
+                <div *ngIf="!veracidadCarrito">
+                  <button  class="btn bg_btn_edit px-4 p-2 m-1 col-lg-10" (click)="nuevoCarrito24()" >
+                    Nueva Compra</button>
+                </div>
+
+
+                <!-- carrito true -->
+                <div *ngIf="veracidadCarrito">
+                    
+
+
+
+
+
+
+                  <button  class="btn bg_btn_edit px-4 p-2 m-1 col-lg-10" (click)="nuevoCarrito24false()" >
+                    Cancelar la Compra</button>
+                </div>
+              </section>
+
+            </div>
+
+</section> 
+

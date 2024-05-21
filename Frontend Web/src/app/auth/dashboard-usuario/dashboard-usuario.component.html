@@ -3,9 +3,11 @@
     <div class="row m-0">
 
       <!-- SIDEBAR -->
-      <div class="col-lg-2   px-2 py-3">
-        <div class=" container bg-light   ">
-          <div class="row ">
+      <div class="col-lg-2  py-3">
+        
+        <div class=" container bg-light  sub_sidebar ">
+          
+          <div class="row m-0">
 
               <div>
                 <h2 class="menu_text p-4 col-lg-12 menu_text text_center">Menú</h2>
@@ -19,26 +21,26 @@
                 </button>
               </div>
 
-              <div class="p-2">
-                <button  (click)="toggleForm()" class="btn btn-light p-2 col-lg-12">
+              <div class="p-2"  *ngIf="!toggleFicheMedica()">
+                <button    routerLink = "info_glucemia" class="btn btn-light p-2 col-lg-12">
                   Glucemia
                 </button>
               </div>
 
-              <div class="p-2">
-                <button  (click)="toggleFormRegistroPeso() "class="btn btn-light p-2 col-lg-12">
+              <div class="p-2"  *ngIf="!toggleFicheMedica()">
+                <button  routerLink = "info_peso" class="btn btn-light p-2 col-lg-12">
                   Peso
                 </button>
               </div>
 
-              <div class="p-2">
-                <button  (click)="toggleFormTensionArterial()"  class="btn btn-light p-2 col-lg-12">
+              <div class="p-2"  *ngIf="!toggleFicheMedica()">
+                <button  routerLink = "info_tension" class="btn btn-light p-2 col-lg-12">
                   Presion Arterial
                 </button>
               </div>
 
-              <div class="p-2">
-                <button  (click)="toggleServicios()"  class="btn btn-light p-2 col-lg-12">
+              <div class="p-2"  *ngIf="!toggleFicheMedica()">
+                <button  routerLink = "servicios_user"  class="btn btn-light p-2 col-lg-12">
                   Nuestros Servicios
                 </button>
               </div>
@@ -48,325 +50,19 @@
         </div>
 
       </div>
-      <!-- ////////////////// CONTENIDO  QUE NO ES DEL SIDE BAR///////////////// -->
-      <div class="col-lg-10  px-2 py-1">
-        <div *ngIf="toggleFicheMedica()">
-          <h3 class="text_center"> {{ message }} completa la ficha médica antes de iniciar el registro de notas</h3>
+
+      <section class="col-lg-10  px-2 py-1">
+        <div *ngIf="getIdFichaMedica">
+            <h3 class="text_center message">{{message}} </h3>
+
         </div>
 
-        <div *ngIf="!toggleFicheMedica()">
-          <h3 class="text_center"> {{ message }} ¿Qué registros tenés pensado agregar hoy?</h3>
-        </div>
-
-
-      <!-- ////////////////// SECCION GLUCEMIA ///////////////// -->
-        <section class="bg-light  "  *ngIf="showForm">
-
-          <div class=" my-3 mx-0 p-4 borde_servicios">
-          <div >
-              <h3 class="text_center">Historial de Glucemia</h3>
-          </div>
-          
-                <div class="my-4 contenedor_servicios">
-                  <table class="table p-4">
-                    <thead>
-                      <tr>
-                        <th scope="col">Fecha</th>
-                        <th scope="col">Comentario</th>
-                        <th scope="col">Valor</th>
-          
-          
-                      </tr>
-                    </thead>
-                    <tbody  *ngFor="let s of listaNotasGlucemia">
-                      <tr  >
-                        <td class=" py-4 ">{{s.fecha}}</td>
-                        <td class=" py-4 ">{{s.comentario}}</td>
-                        <td class=" py-4 ">{{s.valor}}</td>
-                        <td> 
-                          <button  class="btn bg_btn_edit px-4 p-2 m-2" routerLink="/auth/edit_nota_glucemia/{{s.id}}">
-                            Editar</button>
-                          <button  class="btn bg_btn_elim px-4 p-2 m-2"  (click)="eliminarNotaGlucemia(s.id)">Eliminar</button>
-                        </td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
-              </div>
-
-
-        <!-- ////////// FORMULARIO //////////// -->
-        <section class="bg-light my-3 mx-0 p-4 borde_servicios " *ngIf="showForm">
-          <div>
-            <h3 class="text_center">Nueva nota de glucemia</h3>
-          </div>
-                <form class="container" [formGroup]="formNotasGlucemia"  (submit)="agregarNotaGlucemia(getIdFichaMedica)">
-
-                <div class="row  bg-light justify-content-evenly align-items-center p-4" >
-
-                <!-- FECHA SERVICIO -->  
-                  <div class="col-lg-4 bg-light">
-                    <h5 class="text-center p-3" >Fecha</h5>
-                    <input formControlName="fecha" type="datetime-local" class="form-control" id="fecha-registro" aria-describedby="emailHelp">
-                  </div>
-            
-
-                <!-- VALOR GLUCEMIA -->  
-                <div class="col-lg-4 bg-light">
-                  <h5 class="text-center p-3" >valor</h5>
-                  <input formControlName="valor" type="number" class="form-control" id="valor-glucemia">
-                </div>
-
-                <!-- COMENTARIO DEL REGISTRO -->  
-                <div class="col-lg-10 bg-light">
-                  <h5 class="text-center p-3" >Comentario</h5>
-                  <textarea formControlName="comentario" name="" id="" cols="30" rows="5" class="form-control"></textarea>
-                </div>
-              <button  class="btn bg_btn_edit m-2 col-lg-3 py-2 px-4">Registrar Nota de Glucemia</button>
-              </div>
-          </form>
-      
- 
-  </section>
-
-</section> 
-<!-- ////////////////// CIERRA SECCION GLUCEMIA ///////////////// -->
-
-<!-- ////////////////// SECCION PESO ///////////////// -->
-      <section class="bg-light  "  *ngIf="showFormRegistroPeso">
-
-        <div class=" my-3 mx-0 p-4 borde_servicios">
-        <div >
-            <h3 class="text_center">Historial de Peso</h3>
-        </div>
-        
-              <div class="my-4 contenedor_servicios">
-                <table class="table p-4">
-                  <thead>
-                    <tr>
-                      <th scope="col">Fecha</th>
-                      <th scope="col">Comentario</th>
-                      <th scope="col">Valor</th>
-        
-        
-                    </tr>
-                  </thead>
-                  <tbody  *ngFor="let s of listaNotasPeso">
-                    <tr  >
-                      <td class=" py-4 ">{{s.fecha}}</td>
-                      <td class=" py-4 ">{{s.comentario}}</td>
-                      <td class=" py-4 ">{{s.valor}}</td>
-                      <td> 
-                        <button  class="btn bg_btn_edit px-4 p-2 m-2"  routerLink="/auth/edit_nota_peso/{{s.id}}">
-                          Editar</button>
-                        <button  class="btn bg_btn_elim px-4 p-2 m-2" (click)="eliminarNotaPeso(s.id)" >Eliminar</button>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-
-      <!-- ////////// FORMULARIO //////////// -->
-      <section class="bg-light my-3 mx-0 p-4 borde_servicios">
         <div>
-          <h3 class="text_center">Nueva nota de Peso</h3>
+
         </div>
-              <form class="container" [formGroup]="formRegistroPeso"  (submit)="agregarNotaRegistroPeso(getIdFichaMedica)">
+          <router-outlet></router-outlet>
 
-              <div class="row  bg-light justify-content-evenly align-items-center p-4" >
-
-              <!-- FECHA SERVICIO -->  
-                <div class="col-lg-4 bg-light">
-                  <h5 class="text-center p-3" >Fecha</h5>
-                  <input formControlName="fecha" type="datetime-local" class="form-control" id="fecha-registro" aria-describedby="emailHelp">
-                </div>
-          
-
-              <!-- VALOR GLUCEMIA -->  
-              <div class="col-lg-4 bg-light">
-                <h5 class="text-center p-3" >valor</h5>
-                <input formControlName="valor" type="number" class="form-control" id="valor-glucemia">
-              </div>
-
-              <!-- COMENTARIO DEL REGISTRO -->  
-              <div class="col-lg-10 bg-light">
-                <h5 class="text-center p-3" >Comentario</h5>
-                <textarea formControlName="comentario" name="" id="" cols="30" rows="5" class="form-control"></textarea>
-              </div>
-
-
-
-
-            <button  class="btn bg_btn_edit m-2 col-lg-3 py-2 px-4">Registrar Nota de Peso</button>
-                
-            </div>
-
-        </form>
-    
-
-</section>
-
-</section> 
-<!-- ////////////////// CIERRA SECCION PESO ///////////////// -->
-
-<!-- ////////////////// SECCION TENSION ARTERIAL ///////////////// -->
-<section class="bg-light"   *ngIf="showFormTensionArterial">
-
-  <div class=" my-3 mx-0 p-4 borde_servicios" >
-  <div >
-      <h3 class="text_center">Historial de Tension Arterial</h3>
-  </div>
-  
-        <div class="my-4 contenedor_servicios">
-          <table class="table p-4">
-            <thead>
-              <tr>
-                <th scope="col">Fecha</th>
-                <th scope="col">Diastolica</th>
-                <th scope="col">Sistolica</th>
-                <th scope="col">Comentario</th>
-
-  
-  
-              </tr>
-            </thead>
-            <tbody  *ngFor="let s of listaNotasTension">
-              <tr  >
-                <td class=" py-4 ">{{s.fecha}}</td>
-                <td class=" py-4 ">{{s.diastolica}}</td>
-                <td class=" py-4 ">{{s.sistolica}}</td>
-                <td class=" py-4 ">{{s.comentario}}</td>
-                <td> 
-                  <button  class="btn bg_btn_edit px-4 p-2 m-2" routerLink="/auth/edit_nota_tension/{{s.id}}">
-                    Editar</button>
-                  <button  class="btn bg_btn_elim px-4 p-2 m-2" (click)="eliminarNotaTension(s.id)">Eliminar</button>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-
-
-<!-- ////////// FORMULARIO //////////// -->
-<section class="bg-light my-3 mx-0 p-4 borde_servicios">
-  <div>
-    <h3 class="text_center">Nueva nota de Tension Arterial</h3>
-  </div>
-        <form class="container" [formGroup]="formTensionArterial"  (submit)="agregarNotaTensionArterial(getIdFichaMedica)">
-
-        <div class="row  bg-light justify-content-evenly align-items-center p-4" >
-
-        <!-- FECHA SERVICIO -->  
-          <div class="col-lg-4 bg-light">
-            <h5 class="text-center p-3" >Fecha</h5>
-            <input formControlName="fecha" type="datetime-local" class="form-control" id="fecha-registro" aria-describedby="emailHelp">
-          </div>
-    
-
-        <!-- VALOR DIASTOLICA -->  
-        <div class="col-lg-3 bg-light">
-          <h5 class="text-center p-3" >Diastolica</h5>
-          <input formControlName="diastolica" type="number" class="form-control" id="valor-glucemia">
-        </div>
-
-
-        
-        <!-- VALOR SISTOLICA -->  
-        <div class="col-lg-3 bg-light">
-          <h5 class="text-center p-3" >Sistolica</h5>
-          <input formControlName="sistolica" type="number" class="form-control" id="valor-glucemia">
-        </div>
-
-
-
-        <!-- COMENTARIO DEL REGISTRO -->  
-        <div class="col-lg-10 bg-light">
-          <h5 class="text-center p-3" >Comentario</h5>
-          <textarea formControlName="comentario" name="" id="" cols="30" rows="5" class="form-control"></textarea>
-        </div>
-
-      <button  class="btn bg_btn_edit m-2 col-lg-3 py-2 px-4">Registrar Nota de Tension</button>
-          
-      </div>
-
-  </form>
-
-
-</section>
-
-</section> 
-<!-- ////////////////// CIERRA SECCION TENSION ARTERIAL///////////////// -->
-
-      <!-- ////////////////// SECCION SERVICIOS ///////////////// -->
-      <section class="bg-light container-fluid"  *ngIf="showServicios">
-
-        <div class=" my-3 mx-0 p-4 borde_servicios row">
-
-              <!-- MUESTRA SERVICIOS -->
-              <section class="my-4  container-fluid col-lg-8">
-                
-                <div >
-                  <h3 class="text_center">Nuestros Servicios</h3>
-                </div>
-                <div class="row">
-
-
-                  <div class="tarjeta_s col-lg-6 p-3" *ngFor="let s of servicios"> 
-                    <div class="tarjeta_img_{{s.id}}" ></div>
-                      
-                    <h5 class="text_center py-0 my-1">{{s.nombre}}</h5>
-                    <h3 class="text_center py-0 my-1">${{s.precio}}</h3>
-
-
-                    <div class="d-flex justify-content-center" *ngIf="veracidadCarrito"  >
-                      <button  class="btn bg_btn_edit px-4 p-2 m-1 col-lg-6" (click)="agregarAlCarrito(s.precio,s.nombre)" >
-                      Agregar al Carrito</button>
-
-                      <button  class="btn bg_btn_edit px-4 p-2 m-1 col-lg-6"  >
-                       Mas Info</button>
-                    </div>
-
-                    <div class="d-flex justify-content-center" *ngIf="!veracidadCarrito">
-                      <button  class="btn bg_btn_edit px-4 p-2 m-1 col-lg-6" >
-                      Mas Info</button>
-                    </div>
-                  </div>
-                </div>
-        
-              </section>
-
-              <!-- MUESTRA CARRITO -->
-              <section class="col-lg-4 borde_servicios my-4 ">
-                <h3 class="text_center "  >Carrito</h3>
-                <!-- carrito false -->
-                <div *ngIf="!veracidadCarrito">
-                  <button  class="btn bg_btn_edit px-4 p-2 m-1 col-lg-10" (click)="nuevoCarrito24()" >
-                    Nueva Compra</button>
-                </div>
-
-
-                <!-- carrito true -->
-                <div *ngIf="veracidadCarrito">
-                    
-
-
-
-
-
-
-                  <button  class="btn bg_btn_edit px-4 p-2 m-1 col-lg-10" (click)="nuevoCarrito24false()" >
-                    Cancelar la Compra</button>
-                </div>
-              </section>
-
-            </div>
-
-</section> 
-<!-- ////////////////// CIERRA SECCION SERVICIOS ///////////////// -->
-
+      </section> 
 
 
 
@@ -374,215 +70,10 @@
       </div>
     </div>
   </div>
-</div>
 
 
 
-<!-- 
-<section class="container m-0">
-  <div class="row">
-    <div class="col-lg-2">
 
--->
-      <!-- Barra lateral izquierda¡
-      <div class="sidebar">
--->        
-        <!-- Barra lateral con título y botones
-        <div class="sidebar-header">
-          <h3>MENU</h3>
-        </div> -->
-        <!-- Menú de botones 
-        <div class="sidebar-menu">
-          <button class="btn btn-primary mb-3" (click)="aFormFichaMedica()">Ficha Medica</button>
-          <button class="btn btn-primary mb-3" (click)="toggleForm()">GLUCEMIA</button>
-          <button class="btn btn-primary mb-3" (click)="toggleFormTensionArterial()">TENSION ARTERIAL</button>
-          <button class="btn btn-primary mb-3" (click)="toggleFormRegistroPeso()">PESO</button>
-          
-        </div>
-      </div>
-    </div>
-
-    <div class="col-lg-10">
- -->
-    
-    <!-- EMPIEZA COL-LG-10 -->
-
-      <!-- Empieza Dashboard Usuario 
-      <div class="dashboardUser">
-        <div class="headerDashboard">
-          <div>
-            <p class="nombreUsuario">BIENVENIDO PACIENTE</p>
-          </div>
-        </div>
--->
-        <!-- FORMULARIO DE INGRESO DE NOTAS DE GLUCEMIA
-        <form class="form-register bg-success formulario-glucemia" [formGroup]="formNotasGlucemia" *ngIf="showForm" (submit)="agregarNotaGlucemia(getIdFichaMedica)">
-          <h2 class="titulo">NUEVO REGISTRO DE GLUCEMIA</h2>
-          <div class="row">
-            <div class="p-2 col-lg-4">
-              <label for="fecha-registro" class="form-label">Fecha Registro</label>
-              <input formControlName="fecha" type="datetime-local" class="form-control" id="fecha-registro" aria-describedby="emailHelp">
-            </div>
-            <div class="p-2 col-lg-6">
-              <label for="valor-glucemia" class="form-label">Valor Glucemia</label>
-              <input formControlName="valor" type="number" class="form-control" id="valor-glucemia">
-            </div>
-            <div class="p-2 col-lg-12">
-              <label class="form-label">Comentario del registro</label>
-              <textarea formControlName="comentario" name="" id="" cols="30" rows="5" class="form-control"></textarea>
-            </div>
-          </div>
-          <button type="submit" class="col-lg-4 btn btn-primary">Registrar Glucemia</button>
-        </form>
--->
-        <!-- FORMULARIO DE INGRESO DE TENSIÓN ARTERIAL
-        <form class="form-register bg-success formulario-tension" [formGroup]="formTensionArterial" *ngIf="showFormTensionArterial" (submit)="agregarNotaTensionArterial()">
-          <h2 class="titulo">NUEVO REGISTRO DE TENSIÓN ARTERIAL</h2>
-          <div class="row">
-            <div class="p-2 col-lg-4">
-              <label for="fecha-registro-tension" class="form-label">Fecha Registro</label>
-              <input formControlName="fecha_registro_tension" type="datetime-local" class="form-control" id="fecha-registro-tension">
-            </div>
-            <div class="p-2 col-lg-4">
-              <label for="sistolica" class="form-label">Sistólica</label>
-              <input formControlName="sistolica" type="number" class="form-control" id="sistolica">
-            </div>
-            <div class="p-2 col-lg-4">
-              <label for="diastolica" class="form-label">Diastólica</label>
-              <input formControlName="diastolica" type="number" class="form-control" id="diastolica">
-            </div>
-            <div class="p-2 col-lg-12">
-              <label class="form-label">Comentario del registro</label>
-              <textarea formControlName="comentario_tension" class="form-control"></textarea>
-            </div>
-          </div>
-          <button type="submit" class="col-lg-4 btn btn-primary">Registrar Tensión Arterial</button>
-        </form>
--->
-        <!-- FORMULARIO DE INGRESO DE PESO 
-        <form class="form-register bg-success formulario-peso" [formGroup]="formRegistroPeso" *ngIf="showFormRegistroPeso" (submit)="agregarNotaRegistroPeso()">
-          <h2 class="titulo">NUEVO REGISTRO DE PESO</h2>
-          <div class="row">
-            <div class="p-2 col-lg-4">
-              <label for="fecha-registro-peso" class="form-label">Fecha Registro</label>
-              <input formControlName="fecha_registro_peso" type="datetime-local" class="form-control" id="fecha-registro-peso">
-            </div>
-            <div class="p-2 col-lg-4">
-              <label for="valor-peso" class="form-label">Valor Peso</label>
-              <input formControlName="valor_peso" type="number" class="form-control" id="valor-peso">
-            </div>
-            <div class="p-2 col-lg-12">
-              <label class="form-label">Comentario del registro</label>
-              <textarea formControlName="comentario_peso" class="form-control"></textarea>
-            </div>
-          </div>
-          <button type="submit" class="col-lg-4 btn btn-primary">Registrar Peso</button>
-        </form>
-      </div>
--->
-      <!-- Cierre del div.dashboardUser
-
-    </div>  --> <!-- Cierre del div.col-lg-10
-
-  </div>   --> <!-- Cierre del div.row¡
-</section>    Cierre del section.container
- -->
-<!--/////////////////////  ULTIMOS REGISTROS  //////////////////////
-<section class="container">
-  <div class="row">
--->
-    <!-- Modal 
-    <h2 class="titulo">ULTIMOS REGISTROS</h2>
-    <div class="registros">
-      <div class="bg-light col-lg-4 col-md-6 p-4 registro" *ngFor="let nota of listaNotasGlucemia">
-        <p class="fecha" type="date">Fecha: {{ nota.fecha }}</p>
-        <p class="glucemia">Glucemia: {{ nota.valor }}</p>
-        <p class="notas">Notas: {{ nota.comentario }}</p>
-        <div class="btn-group">
-          <button (click)="cargarNotaParaActualizar(nota)" class="m-1 p-2 btn btn-success">Editar</button>
-          <button (click)="eliminar(nota.id)" class="m-1 p-2 btn btn-danger">Eliminar</button>
-        </div>
-      </div>
-    </div> 
-  -->
-    <!-- Cierre del div.registros
-  </div> --><!-- Cierre del div.row 
-</section> --><!-- Cierre del section.container -->
-
-<!--/////////////////////  SECCION DE SERVICIOS  //////////////////////
-<section class="container">
-  <div class="row">
-
-  -->
-    <!-- SERVICIOS 
-    <h2 class="titulo">CONTRATA NUESTROS SERVICIOS</h2>
-    <div class="grid-container col-lg-8 seccion">
-      <div class="row cont-serv justify-content-evenly ">
-        <div class="items card cajas card2 col-lg-3 col-md-4 col-sm-6" *ngFor="let servicio of servicios; let i=index">
-          <img src="../../../assets/cardio.jpg" class="card-img-top" alt="Pilares-tratamiento-diabetes">
-          <div class="info card-body">
-            <h3 class="card-title">{{servicio.nombre_servicio}}</h3>
-            <p>{{servicio.descripcion_servicio}}</p>
-            <div class="precio">
-              <p>${{servicio.precio_servicio}}</p>
-            </div>
-            <button (click)="agregarCarrito(servicio);agregarNombre(servicio.nombre_servicio);agregarMonto(servicio.precio_servicio);agregarAlCarrito()">Agregar al carrito</button>
-          </div>
-        </div>
-      </div>
-    </div> 
-  -->
-    <!-- Cierre del div.grid-container 
--->
-    <!-- CARRITO 
-    <div class="carrito col-lg-4 py-4">
-      <h4 class="text-center">CARRITO DE COMPRAS</h4>
--->
-      <!-- Descripcion lista de servicios 
-      <div class="row justify-content-evenly car-desc">
-        <div class="col-lg-4 m-1 col-md-3 col-sm-3 text-center">
-          <h5>Servicio</h5>
-        </div>
-        <div class="col-lg-4 m-1 col-md-3 col-sm-3 text-center">
-          <h5>Monto</h5>
-        </div>
-        <div class="col-lg-3 m-1 col-md-3 col-sm-3 text-center">
-          -->
-          <!-- Espacio en blanco 
-        </div>
-      </div>
--->
-      <!-- Servicios en el carrito
-      <div class="row align-items-center justify-content-evenly grid-container p-2 carr-cont-serv" *ngFor="let servicio of serviciosCarrito; let i=index">
-        <div class="col-lg-4 col-md-3 col-sm-3 text-center m-1">
-          <h6>{{ servicio.nombre_servicio }}</h6>
-        </div>
-        <div class="col-lg-4 col-md-3 col-sm-3 text-center">
-          <h6>${{servicio.precio_servicio }}</h6>
-        </div>
-        <div class="col-lg-3 col-md-3 col-sm-3 text-center row">
-          <button class="btn btn-danger boton-carr col-lg-12" (click)="eliminarServ(servicio.id)">
-            <i class="fa-regular fa-trash-can"></i>
-          </button>
-        </div>
-      </div>
-
-      <div class="row justify-content-end mt-2">
-        <div class="col-lg-8">
-          <h5 class="text-end">Total: ${{calcularMontoTotal()}}</h5>
-        </div>
-      </div>
-
-      <div>
-        <button class="m-1 px-3 p-1 btn btn-primary boton-carr" (click)="comprar()">Comprar</button>
-      </div>
-    </div>
-     --> <!-- Cierre del div.carrito
-
-  </div>  --> <!-- Cierre del div.row 
-</section>--> <!-- Cierre del section.container -->
-
-<!-- Javascript -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
   integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
 <!-- scrip chart js-->

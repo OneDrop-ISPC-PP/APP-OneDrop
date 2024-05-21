@@ -5,21 +5,25 @@ import { EstadisUsuariosService } from 'src/app/servicios/estadis-usuarios.servi
 import { LoginService } from 'src/app/servicios/login-service';
 
 @Component({
-  selector: 'app-dashboard-usuario',
-  templateUrl: './dashboard-usuario.component.html',
-  styleUrls: ['./dashboard-usuario.component.css']
+  selector: 'app-servicios-dash-user',
+  templateUrl: './servicios-dash-user.component.html',
+  styleUrls: ['./servicios-dash-user.component.css']
 })
-export class DashboardUsuarioComponent implements OnInit {
+export class ServiciosDashUserComponent implements OnInit{
 // VARIABLES CARRITO
-  veracidadCarrito:boolean = false;
+veracidadCarrito:boolean = false;
 // VARIABLES DE INFO USUARIO Y FICHA MEDICA
   getIdUser: any;
   getIdFichaMedica: any;
   getUser: any;
 
-  
-  message: string = ''; // Variable para almacenar el mensaje de bienvenida
-// CONSTRUCTOR
+  // VARIABLES DE SERVICIO
+  servicios: any;
+
+  // VARIABLES DE CARRITO
+  serviciosEnCarrito: any[] = [];
+
+
   constructor(
     private paciente: EstadisUsuariosService,
     private formBuilder: FormBuilder,
@@ -27,10 +31,10 @@ export class DashboardUsuarioComponent implements OnInit {
     private serv_login: LoginService
   ) {} // CIERRA CONSTRUCTOR
 
-// INICIA NG ON INIT
   ngOnInit(): void {
-    this.message; // Llama al método para establecer el mensaje de bienvenida
-    // TRAEMOS ID DEL LOCAL STORAGE
+  // INICIALIZAMOS LA VARIABLE DE CARRITO
+    this.veracidadCarrito = false;
+
     this.getIdUser = this.serv_login.getUserId();
 
     // TRAEMOS INFO USER DEL LOCAL STORAGE
@@ -39,36 +43,11 @@ export class DashboardUsuarioComponent implements OnInit {
     // GET ON INIT DE LA FICHA MEDICA
     this.getFichaMedica();
 
-    // GET ON INIT TOGGLE DE LA FICHA MEDICA
-    this.toggleFicheMedica();
+    // GET ON INIT DE LA FICHA MEDICA
+    this.getServicios();
+    this.getCarrito();
 
-
-
-
-  } // CIERRA NG ON INIT
-  
-
-
-
-//METODO PARA IR A LA FICHA MEDICA DESDE EL SIDEBAR
-  public aFormFichaMedica(): void {
-    this.router.navigateByUrl("/auth/registro3usuario");
-  }
-
-
-  public toggleFicheMedica(){
-    const user = this.serv_login.getUser();
-    if (this.getIdFichaMedica != undefined){
-      //console.log("La ficha medica ya fue cargada")
-      this.message = `Bienvenido ${user.username}, ¿Que notas tenés pensadas registrar hoy? `
-      return false
-    }else{
-      this.message = `Bienvenido ${user.username}, recordá completar la ficha medica para ingresar registros `
-      //console.log("La ficha medica aun NO fue cargada")
-      return true
-    }
-  }
-  
+  } // CIERRA ON INIT
 
 // -----  METODO PARA TRAER LA FICHA MEDICA -----
 // -----  METODO PARA TRAER LA FICHA MEDICA -----
@@ -91,7 +70,54 @@ export class DashboardUsuarioComponent implements OnInit {
         console.log("ERROR EN LA CARGA DE LA FICHA MEDICA");
         console.log(error);
       })
+
     }
+
+
+    // -----  METODOS PARA SERVICIOS -----
+getServicios(): void {
+  this.paciente.GET_SERVICIOS(this.getIdUser).subscribe(
+    (data:any)=>{
+      console.log("LOS SERVICIOS SON:")
+      console.log(data.registros);
+      this.servicios = data.registros;
+      
+    },
+    (error:any) => {
+      console.log("ERROR EN LA CARGA DE LOS SERVICIOS");
+      console.log(error);
+    });
+}
+// -----  METODOS DEL CARRITO -----
+public nuevoCarrito24(){
+  this.veracidadCarrito = true;
+  return this.paciente.nuevoCarrito24
+}
+
+public nuevoCarrito24false(){
+  this.veracidadCarrito = false;
+}
+
+getCarrito(): void {
+  this.paciente.muestraCarritoAUsuario().subscribe(
+    (servicios_C: any) => {
+      this.serviciosEnCarrito = servicios_C as any[];
+    },
+    (errorData: any) => {
+      console.error(errorData);
+    }
+  );
+}
+
+agregarAlCarrito(precio:any, nombre:any): void {
+  const nuevoItem = [precio, nombre];
+  this.serviciosEnCarrito.push(nuevoItem);
+  console.log("Servicio carrito");
+  console.log(nuevoItem);
+  console.log(this.serviciosEnCarrito);
+
+
+}
 
 
 
