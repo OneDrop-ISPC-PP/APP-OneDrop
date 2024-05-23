@@ -53,7 +53,7 @@ export class ModNotaPesoUsuarioComponent implements OnInit {
   update(){
     this.serv_estadistica.UPDATE_NOTA_PESO(this.nota,this.dataid).subscribe(
       (data)=>{
-      this.router.navigate(["auth/dash_user"])
+      this.router.navigate(["auth/dash_user/info_peso"])
       console.log("La nota se modifico con exito")
       console.log(data)},
 

@@ -53,7 +53,7 @@ export class ModNotaTensionUsuarioComponent implements OnInit {
   update(){
     this.serv_estadistica.UPDATE_NOTA_TENSION(this.nota,this.dataid).subscribe(
       (data)=>{
-      this.router.navigate(["auth/dash_user"])
+      this.router.navigate(["auth/dash_user/info_tension"])
       console.log("La nota se modifico con exito")
       console.log(data)},
 

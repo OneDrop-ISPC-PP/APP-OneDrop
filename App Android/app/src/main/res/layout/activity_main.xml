@@ -5,7 +5,6 @@
     android:id="@+id/relativeLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/fondo"
     tools:context=".MainActivity">
 
     <Button
@@ -50,11 +49,19 @@
         android:fontFamily="sans-serif-condensed-medium"
         android:text="La app para gestión de la diabetes hecha para personas con diabetes por personas con diabetes"
         android:textAlignment="center"
-        android:textColor="@color/blackonedrop"
+        android:textColor="@color/blueonedrop"
         android:textSize="20dp"
         app:layout_constraintBottom_toTopOf="@id/btnRegistrarse"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@drawable/droplogocentrado"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="-36dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

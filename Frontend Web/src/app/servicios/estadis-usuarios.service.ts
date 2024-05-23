@@ -129,7 +129,10 @@ export class EstadisUsuariosService {
     return this.http.get(this.url_SERVICIOS)
   }
 
-
+  ////////////////// CODIGO CARRITO (FUNCIONAL) ///////////////////
+public nuevoCarrito24(){
+  return this.http.get(this.url_CARRITO_POST)
+}
 
 
 
