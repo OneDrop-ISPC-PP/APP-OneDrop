@@ -26,6 +26,22 @@
         android:orientation="vertical">
 
         <EditText
+            android:id="@+id/login_username"
+            android:layout_width="330dp"
+            android:layout_height="60dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="30dp"
+            android:background="@drawable/lavender_border"
+            android:drawableLeft="@drawable/baseline_email_24"
+            android:drawablePadding="6dp"
+            android:fontFamily="sans-serif-condensed"
+            android:hint="Username"
+            android:padding="6dp"
+            android:textColor="@color/blackonedrop"
+            android:textSize="20dp"
+            android:textStyle="bold" />
+
+        <EditText
             android:id="@+id/login_password"
             android:layout_width="330dp"
             android:layout_height="60dp"
@@ -38,22 +54,6 @@
             android:hint="Contraseña"
             android:inputType="textPassword"
             android:padding="8dp"
-            android:textColor="@color/blackonedrop"
-            android:textSize="20dp"
-            android:textStyle="bold" />
-
-        <EditText
-            android:id="@+id/login_username"
-            android:layout_width="330dp"
-            android:layout_height="60dp"
-            android:layout_gravity="center"
-            android:layout_marginTop="30dp"
-            android:background="@drawable/lavender_border"
-            android:drawableLeft="@drawable/baseline_email_24"
-            android:drawablePadding="6dp"
-            android:fontFamily="sans-serif-condensed"
-            android:hint="Username"
-            android:padding="6dp"
             android:textColor="@color/blackonedrop"
             android:textSize="20dp"
             android:textStyle="bold" />

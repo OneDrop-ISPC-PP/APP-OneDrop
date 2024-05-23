@@ -14,11 +14,14 @@ import android.widget.Toast;
 import com.example.one_drop_cruds.databinding.ActivityUserSignupBinding;
 import com.example.one_drop_cruds.entities.user.AuthResponse;
 import com.example.one_drop_cruds.entities.user.RegisterRequest;
+import com.example.one_drop_cruds.entities.user.enums.ErrorResponse;
 import com.example.one_drop_cruds.request.AuthRequests;
 import com.example.one_drop_cruds.utils.AdminSQLiteOpenHelper;
 import com.example.one_drop_cruds.utils.BackendUrl;
 import com.example.one_drop_cruds.utils.SharedPrefManager;
+import com.google.gson.Gson;
 
+import java.io.IOException;
 import java.util.Calendar;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -116,11 +119,9 @@ public class UserSignupActivity extends AppCompatActivity {
         RegisterRequest registerRequest = new RegisterRequest(username, password, confirmPassword, name, lastName, dni, phone, email, sex, birth);
         Call<AuthResponse> call = authRequest.registerRequest(registerRequest);
         call.enqueue(new Callback<AuthResponse>() {
+            // todo verificar error: CUANDO INTENTO REGISTRAR UN USUARIO, Y ESTE TIENE INFO QUE YA EXISTE, POR EJ EL DNI, LUEGO INTENTO EDITANDO EL DNI Y PONGO UNO QUE ESTA BIEN, INTENTO EL REGISTRO Y ESTE FUNCIONA, PERO NO ME SALE NINGUN TOAST NI CREA LA NUEVA ACTIVITY.. PERO SI QUIERO LOGUEARME LUEGO SI FUNCIONA CORRECTAMENTE.. PARECE QUE POR ALGUNA RAZON, LA LLAMADA LA EJECUTA CADA VEZ, PERO NO VUELVE A INGRESAR A "OnResponse" como si fuera una llamada exitosa, sino como que volviese siempre a caer en el "onFailure".. por?? como solucionarlo???
             @Override
             public void onResponse(Call<AuthResponse> call, Response<AuthResponse> response) {
-                System.out.println(">>>>>>>>>>>>>>>>>>>>>>>> ");
-                System.out.println(response);
-                System.out.println(">>>>>>>>>>>>>>>>>>>>>>>> ");
                 if(response.isSuccessful() && response.body() != null){
                     // Obtener token de la resp y guardarlo en shared pref
                     String token = response.body().getToken();
@@ -128,9 +129,14 @@ public class UserSignupActivity extends AppCompatActivity {
                     Intent intent = new Intent(getApplicationContext(), Home.class);
                     startActivity(intent);
                     Toast.makeText(getApplicationContext(), "Registro exitoso!", Toast.LENGTH_LONG).show();
-                } else if (response.code()==409){
-                    System.out.println(response.body()); // todo => obtener message y mostrarlo en toast
-                    Toast.makeText(getApplicationContext(), "Registro erroneo, revisa los datos ingresados!", Toast.LENGTH_LONG).show();
+                } else if (response.errorBody()!= null){
+                    try {
+                        Gson gson = new Gson();
+                        ErrorResponse errorResponse = gson.fromJson(response.errorBody().string(), ErrorResponse.class); // obtengo el body de error, y lo serializo en ErrorResponse
+                        Toast.makeText(getApplicationContext(), "Registro erroneo: "+errorResponse.getMessage(), Toast.LENGTH_LONG).show();
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
                 }
             }
             @Override

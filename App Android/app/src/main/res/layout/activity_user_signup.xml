@@ -97,23 +97,6 @@
             android:textSize="20dp"
             android:textStyle="bold" />
 
-<<<<<<< HEAD
-            <EditText
-                android:id="@+id/signup_username"
-                android:layout_width="330dp"
-                android:layout_height="60dp"
-                android:layout_gravity="center"
-                android:layout_marginTop="20dp"
-                android:background="@drawable/lavender_border"
-                android:drawableLeft="@drawable/baseline_lock_24"
-                android:drawablePadding="8dp"
-                android:fontFamily="sans-serif-condensed"
-                android:hint="Username"
-                android:inputType="text"
-                android:padding="8dp"
-                android:textColor="@color/blackonedrop"
-                android:textSize="20dp"
-                android:textStyle="bold" />
             <EditText
                 android:id="@+id/signup_name"
                 android:layout_width="330dp"
@@ -242,122 +225,7 @@
                 android:textStyle="bold"
                 app:cornerRadius="30dp" />
 =======
-        <EditText
-            android:id="@+id/signup_name"
-            android:layout_width="330dp"
-            android:layout_height="60dp"
-            android:layout_gravity="center"
-            android:layout_marginTop="20dp"
-            android:background="@drawable/lavender_border"
-            android:drawableLeft="@drawable/baseline_lock_24"
-            android:drawablePadding="8dp"
-            android:fontFamily="sans-serif-condensed"
-            android:hint="Nombre"
-            android:inputType="text"
-            android:padding="8dp"
-            android:textColor="@color/blackonedrop"
-            android:textSize="20dp"
-            android:textStyle="bold" />
 
-        <EditText
-            android:id="@+id/signup_last_name"
-            android:layout_width="330dp"
-            android:layout_height="60dp"
-            android:layout_gravity="center"
-            android:layout_marginTop="20dp"
-            android:background="@drawable/lavender_border"
-            android:drawableLeft="@drawable/baseline_lock_24"
-            android:drawablePadding="8dp"
-            android:fontFamily="sans-serif-condensed"
-            android:hint="Apellido"
-            android:inputType="text"
-            android:padding="8dp"
-            android:textColor="@color/blackonedrop"
-            android:textSize="20dp"
-            android:textStyle="bold" />
-
-        <EditText
-            android:id="@+id/signup_phone"
-            android:layout_width="330dp"
-            android:layout_height="60dp"
-            android:layout_gravity="center"
-            android:layout_marginTop="20dp"
-            android:background="@drawable/lavender_border"
-            android:drawableLeft="@drawable/baseline_lock_24"
-            android:drawablePadding="8dp"
-            android:fontFamily="sans-serif-condensed"
-            android:hint="Telefono debe ser un input num"
-            android:inputType="text"
-            android:padding="8dp"
-            android:textColor="@color/blackonedrop"
-            android:textSize="20dp"
-            android:textStyle="bold" />
-
-        <EditText
-            android:id="@+id/signup_birthdate"
-            android:layout_width="330dp"
-            android:layout_height="60dp"
-            android:layout_gravity="center"
-            android:layout_marginTop="20dp"
-            android:background="@drawable/lavender_border"
-            android:drawableLeft="@drawable/baseline_lock_24"
-            android:drawablePadding="8dp"
-            android:fontFamily="sans-serif-condensed"
-            android:hint="Nacimiento, debe ser un date picker"
-            android:inputType="text"
-            android:padding="8dp"
-            android:textColor="@color/blackonedrop"
-            android:textSize="20dp"
-            android:textStyle="bold" />
->>>>>>> b142ca95a64f071f982b24cbaa7985b89a1beedc
-
-        <EditText
-            android:id="@+id/signup_sex"
-            android:layout_width="330dp"
-            android:layout_height="60dp"
-            android:layout_gravity="center"
-            android:layout_marginTop="20dp"
-            android:background="@drawable/lavender_border"
-            android:drawableLeft="@drawable/baseline_lock_24"
-            android:drawablePadding="8dp"
-            android:fontFamily="sans-serif-condensed"
-            android:hint="Sexo, debe ser un spinenr de opciones"
-            android:inputType="text"
-            android:padding="8dp"
-            android:textColor="@color/blackonedrop"
-            android:textSize="20dp"
-            android:textStyle="bold" />
-
-        <EditText
-            android:id="@+id/signup_dni"
-            android:layout_width="330dp"
-            android:layout_height="60dp"
-            android:layout_gravity="center"
-            android:layout_marginTop="20dp"
-            android:background="@drawable/lavender_border"
-            android:drawableLeft="@drawable/baseline_lock_24"
-            android:drawablePadding="8dp"
-            android:fontFamily="sans-serif-condensed"
-            android:hint="Dni, de tipo numero"
-            android:inputType="text"
-            android:padding="8dp"
-            android:textColor="@color/blackonedrop"
-            android:textSize="20dp"
-            android:textStyle="bold" />
-
-        <Button
-            android:id="@+id/signupButton"
-            android:layout_width="330dp"
-            android:layout_height="70dp"
-            android:layout_gravity="center"
-            android:layout_marginTop="30dp"
-            android:backgroundTint="@color/blueonedrop"
-            android:fontFamily="sans-serif-condensed"
-            android:onClick="signupUser"
-            android:text="Crear cuenta"
-            android:textSize="20dp"
-            android:textStyle="bold"
-            app:cornerRadius="30dp" />
 
         <TextView
             android:id="@+id/loginRedirectText"
