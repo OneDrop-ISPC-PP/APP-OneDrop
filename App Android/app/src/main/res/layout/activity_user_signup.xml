@@ -139,29 +139,44 @@
                 android:drawableLeft="@drawable/baseline_lock_24"
                 android:drawablePadding="8dp"
                 android:fontFamily="sans-serif-condensed"
-                android:hint="Telefono debe ser un input num"
-                android:inputType="text"
+                android:hint="Telefono"
+                android:inputType="number"
                 android:padding="8dp"
                 android:textColor="@color/blackonedrop"
                 android:textSize="20dp"
                 android:textStyle="bold" />
 
-            <EditText
-                android:id="@+id/signup_birthdate"
+            <LinearLayout
                 android:layout_width="330dp"
                 android:layout_height="60dp"
                 android:layout_gravity="center"
                 android:layout_marginTop="20dp"
-                android:background="@drawable/lavender_border"
-                android:drawableLeft="@drawable/baseline_lock_24"
-                android:drawablePadding="8dp"
-                android:fontFamily="sans-serif-condensed"
-                android:hint="Nacimiento, debe ser un date picker"
-                android:inputType="text"
-                android:padding="8dp"
-                android:textColor="@color/blackonedrop"
-                android:textSize="20dp"
-                android:textStyle="bold" />
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/signup_birthdate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="60dp"
+                    android:background="@drawable/lavender_border"
+                    android:drawableLeft="@drawable/baseline_lock_24"
+                    android:fontFamily="sans-serif-condensed"
+                    android:hint="Fecha de nacimiento"
+                    android:inputType="text"
+                    android:padding="8dp"
+                    android:textColor="@color/blackonedrop"
+                    android:textSize="20dp"
+                    android:textStyle="bold" />
+
+                <Button
+                    android:id="@+id/btn_fecha"
+                    android:layout_width="wrap_content"
+                    android:layout_height="60dp"
+                    android:layout_gravity=""
+                    android:fontFamily="sans-serif-condensed"
+                    android:padding="10dp"
+                    android:text="Seleccionar"
+                    android:textSize="18dp" />
+            </LinearLayout>
 
             <EditText
                 android:id="@+id/signup_sex"
@@ -173,7 +188,7 @@
                 android:drawableLeft="@drawable/baseline_lock_24"
                 android:drawablePadding="8dp"
                 android:fontFamily="sans-serif-condensed"
-                android:hint="Sexo, debe ser un spinenr de opciones"
+                android:hint="Indica tu sexo"
                 android:inputType="text"
                 android:padding="8dp"
                 android:textColor="@color/blackonedrop"
@@ -190,8 +205,8 @@
                 android:drawableLeft="@drawable/baseline_lock_24"
                 android:drawablePadding="8dp"
                 android:fontFamily="sans-serif-condensed"
-                android:hint="Dni, de tipo numero"
-                android:inputType="text"
+                android:hint="Dni"
+                android:inputType="number"
                 android:padding="8dp"
                 android:textColor="@color/blackonedrop"
                 android:textSize="20dp"

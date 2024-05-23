@@ -14,6 +14,7 @@ import com.example.one_drop_cruds.utils.AdminSQLiteOpenHelper;
 import com.example.one_drop_cruds.utils.BackendUrl;
 import com.example.one_drop_cruds.utils.SharedPrefManager;
 
+import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -33,7 +34,12 @@ public class UserLoginActivity extends AppCompatActivity {
     private void loginUserRequest(String username, String password){// logica de request
         HttpLoggingInterceptor logginInterceptor = new HttpLoggingInterceptor();
         logginInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
-        OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
+        OkHttpClient.Builder httpClient = new OkHttpClient.Builder()
+                /*
+                .connectTimeout(30, TimeUnit.SECONDS)
+                .readTimeout(30, TimeUnit.SECONDS)
+                .writeTimeout(30, TimeUnit.SECONDS);
+                 */;
         httpClient.addInterceptor(logginInterceptor);
 
         Retrofit retrofit = new Retrofit.Builder()
