@@ -71,8 +71,8 @@ public class RegGlyActivity extends AppCompatActivity implements View.OnClickLis
     String token;
     LoguedUserDetails loguedUser;
     SharedPrefManager sharedPrefManager;
-    AdminSQLiteOpenHelper admin;
-    String TABLE_NAME = "glycemia";
+    // todo eliminar AdminSQLiteOpenHelper admin;
+    // todo eliminar String TABLE_NAME = "glycemia";
     EditText add_value_gly, add_notes_gly, add_date_gly;
     EditText edit_value_gly, edit_notes_gly, edit_date_gly;
     // Button btn_add_reg_gly;
@@ -98,72 +98,26 @@ public class RegGlyActivity extends AppCompatActivity implements View.OnClickLis
         setContentView(R.layout.activity_reg_gly);
         // TODO ELIMINAR admin = new AdminSQLiteOpenHelper(this, "bd_one_drop", null, 1); // version es para las futuras modificaciones de la estructura de la bd
 
-
         userSessionManager = new UserSessionManager(getApplicationContext());
         sharedPrefManager = new SharedPrefManager(getApplicationContext(), "oneDrop_shared_preferences");
         token = sharedPrefManager.getUserToken();
         loguedUser = userSessionManager.getLoguedUserDetails();  // SI NO ESTA LOGUEADO, SE REDIRIGE A LOGIN
 
-        this.refreshRegs(); // CARGAR ARRAYS CON DATA
+        this.refreshRegs(); // Obtiene data, la setea y grafica
 
         // btn float add
         float_btn_add_reg_gly = findViewById(R.id.float_btn_add_reg_gly);
 
         lineChart = findViewById(R.id.glyLineChart);
-        this.updateChartRegGly(); // sobreescribe chart
 
         // RECICLER VIEW
         rv1 = findViewById(R.id.recyclerView_reg_gly);
         LinearLayoutManager linearLayoutManager_reg_gly = new LinearLayoutManager(this);
         rv1.setLayoutManager(linearLayoutManager_reg_gly);
-        adapterRegGly = new AdapterRegGly();
-        rv1.setAdapter(adapterRegGly);
 
     }
-    public void toHome(View v){
-        Intent home = new Intent(this, Home.class);
-        startActivity(home);
-    }
-    private void updateChartRegGly(){
-        LineDataSet lineDataSet = new LineDataSet(createLineChartDataSet(), "Glucemia");
-        ArrayList<ILineDataSet> iLineDataSets = new ArrayList<>();
-        iLineDataSets.add(lineDataSet);
 
-        System.out.println(" >>>> REGISTROS A RENDERIZAR EN renderRegs update **");
-        System.out.println( reg_gly_ids );
-        System.out.println( reg_gly_dates );
-        System.out.println( reg_gly_values );
-        System.out.println( reg_gly_notes );
-        System.out.println(" >>>> REGISTROS A RENDERIZAR EN renderRegs update *******");
 
-        //Edito los datos de fecha al formato corto
-        ArrayList<String> formatedDates = new ArrayList<String>();
-        reg_gly_dates.forEach(date ->{ formatedDates.add(date);
-
-        });
-        //Seteo el formateador para leyendas del eje X
-        LineData lineData = new LineData(iLineDataSets);
-        XAxis xAxis = lineChart.getXAxis();
-        xAxis.setValueFormatter(new DateAxisValueFormatter(formatedDates));
-
-        lineChart.setData(lineData);
-        lineChart.invalidate();
-        // PERSONALIZACION
-        lineDataSet.setColor(R.color.pinkonedrop2); // COLOR LINEA
-        lineDataSet.setCircleColor(R.color.pinkonedrop); // COLOR PUNTOS?
-        lineDataSet.setDrawCircles(true); // HABILITA QUE SE MUESTRE LOS PUNTOS
-        // lineDataSet.setDrawCircleHole(true); // LOS PUNTOS LOS MUESTRA COMO ARANDELAS
-        lineDataSet.setLineWidth(4); // GROSOR LINEA
-        lineDataSet.setCircleRadius(5); // diametro ext de punto
-        lineDataSet.setCircleHoleRadius(1); // diam interno punto
-        lineDataSet.setValueTextSize(2); // tamaño texxto valot
-        lineDataSet.setValueTextColor(Color.BLACK); // COLOR TEXTO
-        lineChart.setBackgroundColor(getResources().getColor(R.color.celeste_fondo)); // COLOR FONDO OPCION
-        lineChart.setNoDataText("Aun no hay registros guardados.."); // TEXTO SI NO HAY INFO
-        lineChart.setNoDataTextColor(R.color.pinkonedrop); // TEXTO SI NO HAY INFO
-        lineChart.setTouchEnabled(true); // permite tactil
-        lineChart.setPinchZoom(true); // permite zoom tactil
-    }
     public class DateAxisValueFormatter extends IndexAxisValueFormatter {
         private List<String> mValues;
         public DateAxisValueFormatter(List<String> values){
@@ -188,7 +142,6 @@ public class RegGlyActivity extends AppCompatActivity implements View.OnClickLis
         });
         return dataSet;
     }
-
     public void openPopupBtnEdit(int id_reg){
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setMessage("Editar registro de glucemia");
@@ -254,20 +207,12 @@ public class RegGlyActivity extends AppCompatActivity implements View.OnClickLis
         });
         builder.create().show();
     }
-    @Override
-    public void onClick(View view) {
 
-    }
 
-    // RECICLER VIEW
-
-    // RECICLER VIEW crear clase en UTILS, que sea reusable por todos los otros crudso!!!!!
-    // RECICLER VIEW crear clase en UTILS, que sea reusable por todos los otros crudso!!!!!
-    // RECICLER VIEW crear clase en UTILS, que sea reusable por todos los otros crudso!!!!!
-    // RECICLER VIEW crear clase en UTILS, que sea reusable por todos los otros crudso!!!!!
-    // RECICLER VIEW crear clase en UTILS, que sea reusable por todos los otros crudso!!!!!
-    // RECICLER VIEW crear clase en UTILS, que sea reusable por todos los otros crudso!!!!!
-    // RECICLER VIEW crear clase en UTILS, que sea reusable por todos los otros crudso!!!!!
+    // todo pendiente revisar y mejorar el RECICLER VIEW crear clase en UTILS, que sea reusable por todos los otros crudso!!!!!
+    // todo pendiente revisar y mejorar el RECICLER VIEW crear clase en UTILS, que sea reusable por todos los otros crudso!!!!!
+    // todo pendiente revisar y mejorar el RECICLER VIEW crear clase en UTILS, que sea reusable por todos los otros crudso!!!!!
+    // todo pendiente revisar y mejorar el RECICLER VIEW crear clase en UTILS, que sea reusable por todos los otros crudso!!!!!
 
     // RECICLER VIEW Clase que se encargara de CREAR todos los elementos de lista
     private class AdapterRegGly extends RecyclerView.Adapter<AdapterRegGly.AdapterRegGlyHolder> {
@@ -329,11 +274,97 @@ public class RegGlyActivity extends AppCompatActivity implements View.OnClickLis
         }
     }
 
-    //USO DE BD -- USO DE BD -- USO DE BD -- USO DE BD
+    // todo pendiente revisar y mejorar el RECICLER VIEW crear clase en UTILS, que sea reusable por todos los otros crudso!!!!!
+    // todo pendiente revisar y mejorar el RECICLER VIEW crear clase en UTILS, que sea reusable por todos los otros crudso!!!!!
+    // todo pendiente revisar y mejorar el RECICLER VIEW crear clase en UTILS, que sea reusable por todos los otros crudso!!!!!
+    // todo pendiente revisar y mejorar el RECICLER VIEW crear clase en UTILS, que sea reusable por todos los otros crudso!!!!!
 
 
-    private void getGlycemiaReg(){
-        // todo => logica de obtener datos
+    public void cleanAllRegs(){
+        // limpio arrays para recibir los datos nuevos..
+        reg_gly_ids.clear();
+        reg_gly_dates.clear();
+        reg_gly_values.clear();
+        reg_gly_notes.clear();
+    }
+    private void updateAllDataRegs(ArrayList<Integer> reg_ids, ArrayList<String> reg_dates, ArrayList<Double> reg_values, ArrayList<String> reg_notes){
+        cleanAllRegs();
+        // SETEO DATA A LOS NUEVOS VALORES RECIBIDOS
+        reg_gly_ids = reg_ids;
+        reg_gly_dates = reg_dates;
+        reg_gly_values = reg_values;
+        reg_gly_notes = reg_notes;
+        updateReciclerView();// actualizo recicler view
+    }
+    private void updateReciclerView(){
+        adapterRegGly = new AdapterRegGly();
+        rv1.setAdapter(adapterRegGly);
+    }
+    private String getStringDate(Long dateInMilli){
+        Instant instant = Instant.ofEpochMilli(dateInMilli); // Crear un objeto Instant a partir de los milisegundos en Long
+        ZonedDateTime fechaHoraZona = instant.atZone(ZoneId.systemDefault()); // Convertir el Instant a una fecha y hora en la zona horaria predeterminada del sistema
+        DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("EE dd '-' HH:mm'hs'", Locale.ENGLISH); //Formatear la fecha y hora según el estilo // todo VERIFICAR IDIOMA DEL GRAFICO!!!
+        return fechaHoraZona.format(dateFormatter);// Obtener la fecha y hora formateada como una cadena para el grafico
+    }
+    public void renderRegs(List recordsObjects){
+        ArrayList<Integer> reg_ids = new ArrayList<Integer>();
+        ArrayList<String> reg_dates = new ArrayList<String>();
+        ArrayList<Double> reg_values = new ArrayList<Double>();
+        ArrayList<String> reg_notes = new ArrayList<String>();
+
+        Gson gson = new Gson();
+        for (int i = 0; i <recordsObjects.size(); i++){
+            try {
+                Record record = gson.fromJson(recordsObjects.get(i).toString(), Record.class);// obtengo el string y lo serializo a la clase record
+                reg_ids.add(record.getId());
+                reg_dates.add( getStringDate(record.getFecha())); // obtiene fecha en milisegundos en un dato Long y lo convierte a un string del estilo Sun 02:44hs
+                reg_values.add(record.getValor());
+                reg_notes.add(record.getComentario());
+            } catch (Exception e){
+                // todo pendiente de manejar
+            }
+        }
+        if (! reg_ids.isEmpty()){
+            updateChartRegGly(reg_ids,reg_dates, reg_values, reg_notes);
+        } else{
+            Toast.makeText(this, "Aun no hay registros guardados..", Toast.LENGTH_LONG).show();
+        }
+    }
+    private void updateChartRegGly(ArrayList<Integer> reg_ids, ArrayList<String> reg_dates, ArrayList<Double> reg_values, ArrayList<String> reg_notes){
+        updateAllDataRegs(reg_ids,reg_dates, reg_values, reg_notes); // actualiza arrays de datos
+        LineDataSet lineDataSet = new LineDataSet(createLineChartDataSet(), "Glucemia");
+        ArrayList<ILineDataSet> iLineDataSets = new ArrayList<>();
+        iLineDataSets.add(lineDataSet);
+
+        //Edito los datos de fecha al formato corto
+        ArrayList<String> formatedDates = new ArrayList<String>();
+        reg_gly_dates.forEach(date ->{ formatedDates.add(date);
+
+        });
+        //Seteo el formateador para leyendas del eje X
+        LineData lineData = new LineData(iLineDataSets);
+        XAxis xAxis = lineChart.getXAxis();
+        xAxis.setValueFormatter(new DateAxisValueFormatter(formatedDates));
+
+        lineChart.setData(lineData);
+        lineChart.invalidate();
+        // PERSONALIZACION
+        lineDataSet.setColor(R.color.pinkonedrop2); // COLOR LINEA
+        lineDataSet.setCircleColor(R.color.pinkonedrop); // COLOR PUNTOS?
+        lineDataSet.setDrawCircles(true); // HABILITA QUE SE MUESTRE LOS PUNTOS
+        // lineDataSet.setDrawCircleHole(true); // LOS PUNTOS LOS MUESTRA COMO ARANDELAS
+        lineDataSet.setLineWidth(4); // GROSOR LINEA
+        lineDataSet.setCircleRadius(5); // diametro ext de punto
+        lineDataSet.setCircleHoleRadius(1); // diam interno punto
+        lineDataSet.setValueTextSize(2); // tamaño texxto valot
+        lineDataSet.setValueTextColor(Color.BLACK); // COLOR TEXTO
+        lineChart.setBackgroundColor(getResources().getColor(R.color.celeste_fondo)); // COLOR FONDO OPCION
+        lineChart.setNoDataText("Aun no hay registros guardados.."); // TEXTO SI NO HAY INFO
+        lineChart.setNoDataTextColor(R.color.pinkonedrop); // TEXTO SI NO HAY INFO
+        lineChart.setTouchEnabled(true); // permite tactil
+        lineChart.setPinchZoom(true); // permite zoom tactil
+    }
+    public void refreshRegs(){
         HttpLoggingInterceptor recordInterceptor = new HttpLoggingInterceptor();
         recordInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
         OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
@@ -363,6 +394,7 @@ public class RegGlyActivity extends AppCompatActivity implements View.OnClickLis
                 if(response.isSuccessful() && response.body() != null){
                     renderRegs(response.body().getRegistros());
                 } else if (response.code()==400){
+                    // todo pendiente de manejar
                     System.out.println(" DTOReadAllRegisters response.code()==400  *********");
                     System.out.println(response.body());
                     System.out.println(" DTOReadAllRegisters response.code()==400  *********");
@@ -370,77 +402,18 @@ public class RegGlyActivity extends AppCompatActivity implements View.OnClickLis
             }
             @Override
             public void onFailure(Call<RecordsPaginatedReadDtoArray> call, Throwable t) {
+                // todo pendiente de manejar
                 System.out.println("******************** DTOReadAllRegisters Throwable t*************************************************");
                 System.out.println( t);
                 System.out.println("******************** DTOReadAllRegisters Throwable t******************************************************");
             }
         });
     }
-    private String getStringDate(Long dateInMilli){
-        Instant instant = Instant.ofEpochMilli(dateInMilli); // Crear un objeto Instant a partir de los milisegundos en Long
-        ZonedDateTime fechaHoraZona = instant.atZone(ZoneId.systemDefault()); // Convertir el Instant a una fecha y hora en la zona horaria predeterminada del sistema
-        DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("EE dd '-' HH:mm'hs'", Locale.ENGLISH); //Formatear la fecha y hora según el estilo // todo VERIFICAR IDIOMA DEL GRAFICO!!!
-        return fechaHoraZona.format(dateFormatter);// Obtener la fecha y hora formateada como una cadena para el grafico
-    }
-    public void renderRegs(List recordsObjects){
-        ArrayList<Integer> reg_ids = new ArrayList<Integer>();
-        ArrayList<String> reg_dates = new ArrayList<String>();
-        ArrayList<Double> reg_values = new ArrayList<Double>();
-        ArrayList<String> reg_notes = new ArrayList<String>();
-
-        Gson gson = new Gson();
-        for (int i = 0; i <recordsObjects.size(); i++){
-            try {
-                Record record = gson.fromJson(recordsObjects.get(i).toString(), Record.class);// obtengo el string y lo serializo a la clase record
-                reg_ids.add(record.getId());
-                reg_dates.add( getStringDate(record.getFecha())); // obtiene fecha en milisegundos en un dato Long y lo convierte a un string del estilo Sun 02:44hs
-                reg_values.add(record.getValor());
-                reg_notes.add(record.getComentario());
-            } catch (Exception e){
-                // darle manejo a la exce
-            }
-        }
-        if (! reg_ids.isEmpty()){
-            // limpio arrays para recibir los datos nuevos..
-            reg_gly_ids.clear();
-            reg_gly_dates.clear();
-            reg_gly_values.clear();
-            reg_gly_notes.clear();
-
-            // SETEO A LOS VALORES RECIBIDOS
-            reg_gly_ids = reg_ids;
-            reg_gly_dates = reg_dates;
-            reg_gly_values = reg_values;
-            reg_gly_notes = reg_notes;
-            updateChartRegGly();
-        } else{
-            Toast.makeText(this, "Aun no hay registros guardados..", Toast.LENGTH_LONG).show();
-        }
-    }
-    public void refreshRegs(){
-        // logica antigua DTOReadAllRegisters results = admin.getAllRegs(this.TABLE_NAME);
-        getGlycemiaReg(); //admin.getAllRegs(this.TABLE_NAME);
-        /*
-
-        if (! results.getReg_ids().isEmpty()){
-            // limpio arrays para recibir los datos nuevos..
-            reg_gly_ids.clear();
-            reg_gly_dates.clear();
-            reg_gly_values.clear();
-            reg_gly_notes.clear();
-
-            // SETEO A LOS VALORES RECIBIDOS POR BD
-            reg_gly_ids = results.getReg_ids();
-            reg_gly_dates = results.getReg_dates();
-            reg_gly_values = results.getReg_values();
-            reg_gly_notes = results.getReg_notes();
-        } else{
-            Toast.makeText(this, "Aun no hay registros guardados..", Toast.LENGTH_LONG).show();
-        }
-
-         */
-    }
     public void addNewReg(){
+        // todo PENDIENTEEEEE
+        // todo PENDIENTEEEEE
+        // todo PENDIENTEEEEE
+        // todo PENDIENTEEEEE
         String newDate;
         if(add_date_gly.getText().toString().equals("") ){
             System.out.println("CREO NUEVA FECHA NOW PORQUE VINO VACIA");
@@ -450,14 +423,14 @@ public class RegGlyActivity extends AppCompatActivity implements View.OnClickLis
         }
         DTORegister newReg = new DTORegister(newDate ,Double.valueOf(add_value_gly.getText().toString()) , add_notes_gly.getText().toString());
 
-        Boolean insertResult = admin.addReg(this.TABLE_NAME, newReg);
+        Boolean insertResult = true; // todo PENDIENTEEEEE admin.addReg(this.TABLE_NAME, newReg);
 
         if(insertResult){
             add_value_gly.setText("");// limpio pantalla
             add_notes_gly.setText("");
             add_date_gly.setText("");
             this.refreshRegs();
-            this.updateChartRegGly(); // sobreescribe chart
+            this.updateChartRegGly(reg_gly_ids,reg_gly_dates, reg_gly_values, reg_gly_notes); // sobreescribe chart
             adapterRegGly.notifyDataSetChanged(); // refresca pantalla del recycler
             rv1.smoothScrollToPosition(reg_gly_ids.size()-1); // mueve la vista al ultimo elemento agregado
             Toast.makeText(this,"Se agrego registro de glucemia", Toast.LENGTH_SHORT).show();
@@ -466,10 +439,14 @@ public class RegGlyActivity extends AppCompatActivity implements View.OnClickLis
         }
     }
     public void deleteReg(int id){
-        Boolean deleteResult = admin.deleteReg(this.TABLE_NAME , id);
+        // todo PENDIENTEEEEE
+        // todo PENDIENTEEEEE
+        // todo PENDIENTEEEEE
+        // todo PENDIENTEEEEE
+        Boolean deleteResult = true;// todo PENDIENTEEEEE admin.deleteReg(this.TABLE_NAME , id);
         if(deleteResult){
             this.refreshRegs(); // actualiza array de reg
-            this.updateChartRegGly(); // sobreescribe chart
+            this.updateChartRegGly(reg_gly_ids,reg_gly_dates, reg_gly_values, reg_gly_notes); // sobreescribe chart
             adapterRegGly.notifyDataSetChanged(); // refresca pantalla del recycler
             Toast.makeText(this, "Registro eliminado correctamente", Toast.LENGTH_LONG).show();
         } else {
@@ -477,7 +454,11 @@ public class RegGlyActivity extends AppCompatActivity implements View.OnClickLis
         }
     }
     public void setTextEditRegPopup(int id){
-        DTORegister regById = admin.getRegById(this.TABLE_NAME, id);
+        // todo PENDIENTEEEEE
+        // todo PENDIENTEEEEE
+        // todo PENDIENTEEEEE
+        // todo PENDIENTEEEEE
+        DTORegister regById = new DTORegister();// todo PENDIENTEEEEE admin.getRegById(this.TABLE_NAME, id);
         if (regById != null){
             edit_date_gly.setText(regById.getDate());
             edit_value_gly.setText(String.valueOf(regById.getValue()));
@@ -488,19 +469,25 @@ public class RegGlyActivity extends AppCompatActivity implements View.OnClickLis
     }
     public void updateEditedReg(int id){
         DTORegister dtoUpdated = new DTORegister(edit_date_gly.getText().toString(), Double.valueOf(edit_value_gly.getText().toString()) ,edit_notes_gly.getText().toString());
-        boolean updateResult = admin.updateRegById(this.TABLE_NAME,id,dtoUpdated);
+        boolean updateResult = true;// todo PENDIENTEEEEE admin.updateRegById(this.TABLE_NAME,id,dtoUpdated);
         if (updateResult){
             edit_value_gly.setText("");// limpio pantalla
             edit_notes_gly.setText("");
             edit_date_gly.setText("");
             this.refreshRegs(); // actualiza array de reg
-            this.updateChartRegGly(); // actualiza chart
+            this.updateChartRegGly(reg_gly_ids,reg_gly_dates, reg_gly_values, reg_gly_notes); // actualiza chart
             adapterRegGly.notifyDataSetChanged(); // refresca pantalla del recycler
             Toast.makeText(this, "Registro actualizado!", Toast.LENGTH_LONG).show();
         } else {
             Toast.makeText(this, "Error al editar registro", Toast.LENGTH_LONG).show();
         }
     }
+    public void toHome(View v){
+        Intent home = new Intent(this, Home.class);
+        startActivity(home);
+    }
+    @Override
+    public void onClick(View view) { }
 
 
 }
