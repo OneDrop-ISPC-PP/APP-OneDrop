@@ -19,7 +19,19 @@ import android.widget.Toast;
 
 import com.example.one_drop_cruds.entities.DTORegister;
 import com.example.one_drop_cruds.entities.DTOReadAllRegisters;
+import com.example.one_drop_cruds.entities.user.AuthResponse;
+import com.example.one_drop_cruds.entities.user.FichaMedicaUsuario;
+import com.example.one_drop_cruds.entities.user.LoguedUserDetails;
+import com.example.one_drop_cruds.entities.user.Record;
+import com.example.one_drop_cruds.entities.user.RecordsPaginatedReadDtoArray;
+import com.example.one_drop_cruds.entities.user.RegisterRequest;
+import com.example.one_drop_cruds.entities.user.enums.ErrorResponse;
+import com.example.one_drop_cruds.request.AuthRequests;
+import com.example.one_drop_cruds.request.RecordsRequest;
 import com.example.one_drop_cruds.utils.AdminSQLiteOpenHelper;
+import com.example.one_drop_cruds.utils.BackendUrl;
+import com.example.one_drop_cruds.utils.SharedPrefManager;
+import com.example.one_drop_cruds.utils.UserSessionManager;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.data.Entry;
@@ -28,15 +40,37 @@ import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.gson.Gson;
 
+import java.io.IOException;
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.Instant;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.FormatStyle;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.logging.HttpLoggingInterceptor;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
+
 public class RegGlyActivity extends AppCompatActivity implements View.OnClickListener{
+    UserSessionManager userSessionManager;
+    String baseUrl = new BackendUrl().getBackendUrl();
+    String token;
+    LoguedUserDetails loguedUser;
+    SharedPrefManager sharedPrefManager;
     AdminSQLiteOpenHelper admin;
     String TABLE_NAME = "glycemia";
     EditText add_value_gly, add_notes_gly, add_date_gly;
@@ -62,7 +96,13 @@ public class RegGlyActivity extends AppCompatActivity implements View.OnClickLis
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_reg_gly);
-        admin = new AdminSQLiteOpenHelper(this, "bd_one_drop", null, 1); // version es para las futuras modificaciones de la estructura de la bd
+        // TODO ELIMINAR admin = new AdminSQLiteOpenHelper(this, "bd_one_drop", null, 1); // version es para las futuras modificaciones de la estructura de la bd
+
+
+        userSessionManager = new UserSessionManager(getApplicationContext());
+        sharedPrefManager = new SharedPrefManager(getApplicationContext(), "oneDrop_shared_preferences");
+        token = sharedPrefManager.getUserToken();
+        loguedUser = userSessionManager.getLoguedUserDetails();  // SI NO ESTA LOGUEADO, SE REDIRIGE A LOGIN
 
         this.refreshRegs(); // CARGAR ARRAYS CON DATA
 
@@ -89,10 +129,17 @@ public class RegGlyActivity extends AppCompatActivity implements View.OnClickLis
         ArrayList<ILineDataSet> iLineDataSets = new ArrayList<>();
         iLineDataSets.add(lineDataSet);
 
+        System.out.println(" >>>> REGISTROS A RENDERIZAR EN renderRegs update **");
+        System.out.println( reg_gly_ids );
+        System.out.println( reg_gly_dates );
+        System.out.println( reg_gly_values );
+        System.out.println( reg_gly_notes );
+        System.out.println(" >>>> REGISTROS A RENDERIZAR EN renderRegs update *******");
+
         //Edito los datos de fecha al formato corto
         ArrayList<String> formatedDates = new ArrayList<String>();
-        reg_gly_dates.forEach(date ->{
-            formatedDates.add(formatDate(date));
+        reg_gly_dates.forEach(date ->{ formatedDates.add(date);
+
         });
         //Seteo el formateador para leyendas del eje X
         LineData lineData = new LineData(iLineDataSets);
@@ -142,19 +189,6 @@ public class RegGlyActivity extends AppCompatActivity implements View.OnClickLis
         return dataSet;
     }
 
-    public String formatDate (String inputDate){
-        Date date = null;
-        try {
-            // Creo un formateador que reciba un string del fomrato "E MMM dd HH:mm:ss z yyyy" y lo cree un obj date
-            SimpleDateFormat inputPatternFormatter = new SimpleDateFormat("E MMM dd HH:mm:ss z yyyy", Locale.ENGLISH);
-            date = inputPatternFormatter.parse(inputDate);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        // Creo un formateador que reciba un date y lo pase al formato deseado "E dd '-' HH:mm'hs'"
-        SimpleDateFormat outputPatternFormatter = new SimpleDateFormat("E dd '-' HH:mm'hs'", Locale.ENGLISH);
-        return outputPatternFormatter.format(date);
-    }
     public void openPopupBtnEdit(int id_reg){
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setMessage("Editar registro de glucemia");
@@ -271,7 +305,7 @@ public class RegGlyActivity extends AppCompatActivity implements View.OnClickLis
                 itemView.setOnClickListener(this);
             }
             public void printItem(int position) throws ParseException {
-                reg_date.setText(formatDate(reg_gly_dates.get(position)));
+                reg_date.setText(reg_gly_dates.get(position));
                 reg_value.setText(String.valueOf(reg_gly_values.get(position)));
                 reg_note.setText(reg_gly_notes.get(position));
 
@@ -296,10 +330,99 @@ public class RegGlyActivity extends AppCompatActivity implements View.OnClickLis
     }
 
     //USO DE BD -- USO DE BD -- USO DE BD -- USO DE BD
-    public void refreshRegs(){
-        DTOReadAllRegisters results = admin.getAllRegs(this.TABLE_NAME);
 
-        if (results != null){
+
+    private void getGlycemiaReg(){
+        // todo => logica de obtener datos
+        HttpLoggingInterceptor recordInterceptor = new HttpLoggingInterceptor();
+        recordInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+        OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
+        httpClient.addInterceptor(recordInterceptor);
+
+        // todo el interceptor para agregar el token al header
+        httpClient.addInterceptor(chain -> {
+            Request originalRequest = chain.request();
+            Request.Builder builder = originalRequest.newBuilder();
+            if (token!= null &&!token.isEmpty()) {
+                builder.header("Authorization", "Bearer " + token);
+            }
+            return chain.proceed(builder.build());
+        }); //todo el interceptor para agregar el token al header
+
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(baseUrl) // +"/auth/register/"
+                .addConverterFactory(GsonConverterFactory.create())
+                .client(httpClient.build())
+                .build();
+        RecordsRequest recordRequest = retrofit.create(RecordsRequest.class);
+
+        Call<RecordsPaginatedReadDtoArray> call = recordRequest.getAllGlycemiaRecordsByIdUser(loguedUser.getId());
+        call.enqueue(new Callback<RecordsPaginatedReadDtoArray>() {
+            @Override
+            public void onResponse(Call<RecordsPaginatedReadDtoArray> call, Response<RecordsPaginatedReadDtoArray> response) {
+                if(response.isSuccessful() && response.body() != null){
+                    renderRegs(response.body().getRegistros());
+                } else if (response.code()==400){
+                    System.out.println(" DTOReadAllRegisters response.code()==400  *********");
+                    System.out.println(response.body());
+                    System.out.println(" DTOReadAllRegisters response.code()==400  *********");
+                }
+            }
+            @Override
+            public void onFailure(Call<RecordsPaginatedReadDtoArray> call, Throwable t) {
+                System.out.println("******************** DTOReadAllRegisters Throwable t*************************************************");
+                System.out.println( t);
+                System.out.println("******************** DTOReadAllRegisters Throwable t******************************************************");
+            }
+        });
+    }
+    private String getStringDate(Long dateInMilli){
+        Instant instant = Instant.ofEpochMilli(dateInMilli); // Crear un objeto Instant a partir de los milisegundos en Long
+        ZonedDateTime fechaHoraZona = instant.atZone(ZoneId.systemDefault()); // Convertir el Instant a una fecha y hora en la zona horaria predeterminada del sistema
+        DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("EE dd '-' HH:mm'hs'", Locale.ENGLISH); //Formatear la fecha y hora según el estilo // todo VERIFICAR IDIOMA DEL GRAFICO!!!
+        return fechaHoraZona.format(dateFormatter);// Obtener la fecha y hora formateada como una cadena para el grafico
+    }
+    public void renderRegs(List recordsObjects){
+        ArrayList<Integer> reg_ids = new ArrayList<Integer>();
+        ArrayList<String> reg_dates = new ArrayList<String>();
+        ArrayList<Double> reg_values = new ArrayList<Double>();
+        ArrayList<String> reg_notes = new ArrayList<String>();
+
+        Gson gson = new Gson();
+        for (int i = 0; i <recordsObjects.size(); i++){
+            try {
+                Record record = gson.fromJson(recordsObjects.get(i).toString(), Record.class);// obtengo el string y lo serializo a la clase record
+                reg_ids.add(record.getId());
+                reg_dates.add( getStringDate(record.getFecha())); // obtiene fecha en milisegundos en un dato Long y lo convierte a un string del estilo Sun 02:44hs
+                reg_values.add(record.getValor());
+                reg_notes.add(record.getComentario());
+            } catch (Exception e){
+                // darle manejo a la exce
+            }
+        }
+        if (! reg_ids.isEmpty()){
+            // limpio arrays para recibir los datos nuevos..
+            reg_gly_ids.clear();
+            reg_gly_dates.clear();
+            reg_gly_values.clear();
+            reg_gly_notes.clear();
+
+            // SETEO A LOS VALORES RECIBIDOS
+            reg_gly_ids = reg_ids;
+            reg_gly_dates = reg_dates;
+            reg_gly_values = reg_values;
+            reg_gly_notes = reg_notes;
+            updateChartRegGly();
+        } else{
+            Toast.makeText(this, "Aun no hay registros guardados..", Toast.LENGTH_LONG).show();
+        }
+    }
+    public void refreshRegs(){
+        // logica antigua DTOReadAllRegisters results = admin.getAllRegs(this.TABLE_NAME);
+        getGlycemiaReg(); //admin.getAllRegs(this.TABLE_NAME);
+        /*
+
+        if (! results.getReg_ids().isEmpty()){
             // limpio arrays para recibir los datos nuevos..
             reg_gly_ids.clear();
             reg_gly_dates.clear();
@@ -314,6 +437,8 @@ public class RegGlyActivity extends AppCompatActivity implements View.OnClickLis
         } else{
             Toast.makeText(this, "Aun no hay registros guardados..", Toast.LENGTH_LONG).show();
         }
+
+         */
     }
     public void addNewReg(){
         String newDate;
