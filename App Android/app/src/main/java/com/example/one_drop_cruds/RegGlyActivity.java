@@ -27,7 +27,6 @@ import android.widget.Toast;
 import com.example.one_drop_cruds.entities.DTORegister;
 import com.example.one_drop_cruds.entities.dtos.RegistroReadDto;
 import com.example.one_drop_cruds.entities.requests.AddNewRecordDto;
-import com.example.one_drop_cruds.entities.user.FichaMedicaUsuario;
 import com.example.one_drop_cruds.entities.user.LoguedUserDetails;
 import com.example.one_drop_cruds.entities.user.Record;
 import com.example.one_drop_cruds.entities.user.RecordsPaginatedReadDtoArray;
@@ -45,7 +44,6 @@ import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.gson.Gson;
 
-import java.lang.reflect.Field;
 import java.text.ParseException;
 import java.time.Instant;
 import java.time.LocalDateTime;
@@ -54,7 +52,6 @@ import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
@@ -343,7 +340,7 @@ public class RegGlyActivity extends AppCompatActivity implements View.OnClickLis
     // todo pendiente revisar y mejorar el RECICLER VIEW crear clase en UTILS, que sea reusable por todos los otros crudso!!!!!
     // todo pendiente revisar y mejorar el RECICLER VIEW crear clase en UTILS, que sea reusable por todos los otros crudso!!!!!
 
-
+// metodos accesorios
     public void cleanAllRegs(){
         // limpio arrays para recibir los datos nuevos..
         reg_gly_ids.clear();
@@ -370,6 +367,12 @@ public class RegGlyActivity extends AppCompatActivity implements View.OnClickLis
         return fechaHoraZona.format(dateFormatter);// Obtener la fecha y hora formateada como una cadena para el grafico
 
     }
+    private String escapeBlankSpacesInComentario(String objectString){
+        // por problemas para escapar espacios en blanco al serializar los comentarios, es que primero obtengo el string en guardado en comentario, reemplazo los espacios en blacos por **, luego serializo a clase Record y por ultimo elimino los **
+        String onlyComentario =  objectString.split("comentario=")[1].replace(" ", "**");
+        return objectString.split("comentario")[0]+"comentario="+ onlyComentario; //junto el string antes de serializar
+    }
+
     public void renderRegs(List recordsObjects){
         ArrayList<Integer> reg_ids = new ArrayList<Integer>();
         ArrayList<String> reg_dates = new ArrayList<String>();
@@ -379,11 +382,11 @@ public class RegGlyActivity extends AppCompatActivity implements View.OnClickLis
         Gson gson = new Gson();
         for (int i = 0; i <recordsObjects.size(); i++){
             try {
-                Record record = gson.fromJson(recordsObjects.get(i).toString(), Record.class);// obtengo el string y lo serializo a la clase record
+                Record record = gson.fromJson( escapeBlankSpacesInComentario(recordsObjects.get(i).toString()), Record.class);
                 reg_ids.add(record.getId());
                 reg_dates.add( getStringDate(record.getFecha())); // obtiene fecha en milisegundos en un dato Long y lo convierte a un string del estilo Sun 02:44hs
                 reg_values.add(record.getValor());
-                reg_notes.add(record.getComentario());
+                reg_notes.add(record.getComentario().replace("**", " "));
             } catch (Exception e){
                 // todo pendiente de manejar
             }
@@ -499,7 +502,6 @@ public class RegGlyActivity extends AppCompatActivity implements View.OnClickLis
     private void addNewRegRequest(String fecha, Double valor, String comentario){
         Retrofit retrofit = retrofitHelper.getRetrofitHelperWithToken(); // inicializa retrofit, y agrega token de autorizacion
         RecordsRequest recordRequest = retrofit.create(RecordsRequest.class);
-
         AddNewRecordDto newRecordDto = new AddNewRecordDto(fecha, valor, comentario);
         Call<RegistroReadDto> call = recordRequest.addNewGlycemiaRecord(loguedUser.getId(), newRecordDto);
         call.enqueue(new Callback<RegistroReadDto>() {
@@ -531,17 +533,6 @@ public class RegGlyActivity extends AppCompatActivity implements View.OnClickLis
         });
     }
     public void addNewReg(){
-
-        // todo aca hay un bug. APARENTEMENTE SE GENERA ERROR CUANDO HAY ESPACIOS EN BLANCO EN LOS COMENTARIOS.. POR ALGUNA RAZON, AL SERIALIZAR EL STRING SE GENERA ESE ERROR!
-
-        // todo aca hay un bug. APARENTEMENTE SE GENERA ERROR CUANDO HAY ESPACIOS EN BLANCO EN LOS COMENTARIOS.. POR ALGUNA RAZON, AL SERIALIZAR EL STRING SE GENERA ESE ERROR!
-
-        // todo aca hay un bug. APARENTEMENTE SE GENERA ERROR CUANDO HAY ESPACIOS EN BLANCO EN LOS COMENTARIOS.. POR ALGUNA RAZON, AL SERIALIZAR EL STRING SE GENERA ESE ERROR!
-
-        // todo aca hay un bug. APARENTEMENTE SE GENERA ERROR CUANDO HAY ESPACIOS EN BLANCO EN LOS COMENTARIOS.. POR ALGUNA RAZON, AL SERIALIZAR EL STRING SE GENERA ESE ERROR!
-
-        // todo aca hay un bug. APARENTEMENTE SE GENERA ERROR CUANDO HAY ESPACIOS EN BLANCO EN LOS COMENTARIOS.. POR ALGUNA RAZON, AL SERIALIZAR EL STRING SE GENERA ESE ERROR!
-
         String newDate;
         if(add_date_gly.getText().toString().equals("") ){
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm");
@@ -550,7 +541,6 @@ public class RegGlyActivity extends AppCompatActivity implements View.OnClickLis
         } else {
             newDate = add_date_gly.getText().toString();
         }
-        System.out.println(">>>>>>>>>>>>>>>>>>>> newDate > "+newDate);
         addNewRegRequest(newDate, Double.valueOf(add_value_gly.getText().toString()), add_notes_gly.getText().toString());
     }
     public void deleteReg(int id){
