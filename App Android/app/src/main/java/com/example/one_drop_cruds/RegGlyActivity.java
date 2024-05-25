@@ -48,6 +48,7 @@ import com.google.gson.Gson;
 import java.lang.reflect.Field;
 import java.text.ParseException;
 import java.time.Instant;
+import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
@@ -97,9 +98,13 @@ public class RegGlyActivity extends AppCompatActivity implements View.OnClickLis
     private TextView recordDateEditText;
     // TODO DATE PICKER
 
+    // paginado de resultados
+    private Button btn_first_page, btn_prev_page, btn_next_page, btn_last_page;
     private Spinner spinnerPageSize;
     private Integer pageSize;
     private Integer pageNumber;
+    private Integer actualPage;
+    private Integer lastPage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -110,18 +115,26 @@ public class RegGlyActivity extends AppCompatActivity implements View.OnClickLis
         userSessionManager = new UserSessionManager(getApplicationContext());
         sharedPrefManager = new SharedPrefManager(getApplicationContext(), "oneDrop_shared_preferences");
         token = sharedPrefManager.getUserToken();
-        retrofitHelper = new RetrofitHelper(token);
-
         loguedUser = userSessionManager.getLoguedUserDetails();  // SI NO ESTA LOGUEADO, SE REDIRIGE A LOGIN
 
+
+        retrofitHelper = new RetrofitHelper(token);
+
+        // paginado resultados
         spinnerPageSize = findViewById(R.id.spinnerPageSize);
         pageSize = 5;
         pageNumber = 0;
         setSpinnerPageSize(pageSize.toString());
         refreshRegsRequest(pageSize, pageNumber);   // actualiza array de regs, recicler y grafico
 
-        // btn float add
+
+        // btns
         float_btn_add_reg_gly = findViewById(R.id.float_btn_add_reg_gly);
+        btn_first_page = findViewById(R.id.btn_first_page);
+        btn_prev_page = findViewById(R.id.btn_prev_page);
+        btn_next_page = findViewById(R.id.btn_next_page);
+        btn_last_page = findViewById(R.id.btn_last_page);
+
 
         lineChart = findViewById(R.id.glyLineChart);
 
@@ -129,12 +142,15 @@ public class RegGlyActivity extends AppCompatActivity implements View.OnClickLis
         rv1 = findViewById(R.id.recyclerView_reg_gly);
         LinearLayoutManager linearLayoutManager_reg_gly = new LinearLayoutManager(this);
         rv1.setLayoutManager(linearLayoutManager_reg_gly);
-
         adapterRegGly = new AdapterRegGly();
         rv1.setAdapter(adapterRegGly);
 
-
     }
+
+
+
+
+
     public void setSpinnerPageSize(String elementoPreseleccionado){
         List<String> opciones = new ArrayList<>();
         opciones.add("5");
@@ -228,11 +244,11 @@ public class RegGlyActivity extends AppCompatActivity implements View.OnClickLis
         builder.setMessage("Agregar registro de glucemia");
         View popupAddReg = getLayoutInflater().inflate(R.layout.popup_form_add_reg_gly, null);
         builder.setView(popupAddReg); // ESTO ES PARA QUE PUEDA OBTENER LAS REFERENCIAS DESDE popupAddReg Y PODER OBTENER EL CONTROL DE LOS ELEMENTOS
-        // ESTA FORMA AGREGA A ESTA MISMA CLASE COMO LISTENER Y LUEGO EN UN SWITCH SE ELIJE EL EVENTO SEGUN SU ID..
-        add_date_gly.setOnClickListener(this);
-        add_date_gly = popupAddReg.findViewById(R.id.add_date_gly);
+
         add_value_gly = popupAddReg.findViewById(R.id.add_value_gly);
         add_notes_gly = popupAddReg.findViewById(R.id.add_notes_gly);
+        add_date_gly = popupAddReg.findViewById(R.id.add_date_gly);
+        add_date_gly.setOnClickListener(this); // ESTA FORMA AGREGA A ESTA MISMA CLASE COMO LISTENER Y LUEGO EN UN SWITCH SE ELIJE EL EVENTO SEGUN SU ID..
         recordDateBtn = popupAddReg.findViewById(R.id.recordDateBtn); // DATE PICKER
         recordDateEditText = popupAddReg.findViewById(R.id.add_date_gly); // DATE PICKER
         recordDateBtn.setOnClickListener(new View.OnClickListener() { // DATE PICKER
@@ -428,6 +444,8 @@ public class RegGlyActivity extends AppCompatActivity implements View.OnClickLis
             public void onResponse(Call<RecordsPaginatedReadDtoArray> call, Response<RecordsPaginatedReadDtoArray> response) {
                 if(response.isSuccessful() && response.body() != null){
                     renderRegs(response.body().getRegistros());
+                    actualPage = response.body().getCurrent_page();
+                    lastPage = response.body().getPages()-1;
                 } else if (response.code()==400){
                     // todo pendiente de manejar
                     System.out.println(" DTOReadAllRegisters response.code()==400  *********");
@@ -513,21 +531,26 @@ public class RegGlyActivity extends AppCompatActivity implements View.OnClickLis
         });
     }
     public void addNewReg(){
+
+        // todo aca hay un bug. APARENTEMENTE SE GENERA ERROR CUANDO HAY ESPACIOS EN BLANCO EN LOS COMENTARIOS.. POR ALGUNA RAZON, AL SERIALIZAR EL STRING SE GENERA ESE ERROR!
+
+        // todo aca hay un bug. APARENTEMENTE SE GENERA ERROR CUANDO HAY ESPACIOS EN BLANCO EN LOS COMENTARIOS.. POR ALGUNA RAZON, AL SERIALIZAR EL STRING SE GENERA ESE ERROR!
+
+        // todo aca hay un bug. APARENTEMENTE SE GENERA ERROR CUANDO HAY ESPACIOS EN BLANCO EN LOS COMENTARIOS.. POR ALGUNA RAZON, AL SERIALIZAR EL STRING SE GENERA ESE ERROR!
+
+        // todo aca hay un bug. APARENTEMENTE SE GENERA ERROR CUANDO HAY ESPACIOS EN BLANCO EN LOS COMENTARIOS.. POR ALGUNA RAZON, AL SERIALIZAR EL STRING SE GENERA ESE ERROR!
+
+        // todo aca hay un bug. APARENTEMENTE SE GENERA ERROR CUANDO HAY ESPACIOS EN BLANCO EN LOS COMENTARIOS.. POR ALGUNA RAZON, AL SERIALIZAR EL STRING SE GENERA ESE ERROR!
+
         String newDate;
         if(add_date_gly.getText().toString().equals("") ){
-            // todo ACA DEBERIA TENER UN DATE PICKER!!!
-            // todo ACA DEBERIA TENER UN DATE PICKER!!!
-            // todo ACA DEBERIA TENER UN DATE PICKER!!!
-            // todo ACA DEBERIA TENER UN DATE PICKER!!!
-            System.out.println("CREO NUEVA FECHA NOW PORQUE VINO VACIA");
-            newDate = new Date().toString();
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm");
+            LocalDateTime now = LocalDateTime.now();
+            newDate = now.format(formatter);
         } else {
             newDate = add_date_gly.getText().toString();
         }
-
-        // DTORegister newReg = new DTORegister(newDate ,Double.valueOf(add_value_gly.getText().toString()) , add_notes_gly.getText().toString());
-        //Boolean insertResult = true;
-
+        System.out.println(">>>>>>>>>>>>>>>>>>>> newDate > "+newDate);
         addNewRegRequest(newDate, Double.valueOf(add_value_gly.getText().toString()), add_notes_gly.getText().toString());
     }
     public void deleteReg(int id){
@@ -569,6 +592,20 @@ public class RegGlyActivity extends AppCompatActivity implements View.OnClickLis
         } else {
             Toast.makeText(this, "Error al editar registro", Toast.LENGTH_LONG).show();
         }
+    }
+
+// navegacion
+    public void goToFirstPage(View v){
+        refreshRegsRequest(pageSize, 0);   // actualiza array de regs, recicler y grafico
+    }
+    public void goToLastPage(View v){
+        refreshRegsRequest(pageSize, lastPage);   // actualiza array de regs, recicler y grafico
+    }
+    public void goToPrevPage(View v){
+        refreshRegsRequest(pageSize, actualPage-1);   // actualiza array de regs, recicler y grafico
+    }
+    public void goToNextPage(View v){
+        refreshRegsRequest(pageSize, actualPage+1);   // actualiza array de regs, recicler y grafico
     }
     public void toHome(View v){
         Intent home = new Intent(this, Home.class);
