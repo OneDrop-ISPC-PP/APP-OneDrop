@@ -6,30 +6,33 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.DatePickerDialog;
+import android.app.TimePickerDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.example.one_drop_cruds.entities.DTORegister;
-import com.example.one_drop_cruds.entities.DTOReadAllRegisters;
-import com.example.one_drop_cruds.entities.user.AuthResponse;
+import com.example.one_drop_cruds.entities.dtos.RegistroReadDto;
+import com.example.one_drop_cruds.entities.requests.AddNewRecordDto;
 import com.example.one_drop_cruds.entities.user.FichaMedicaUsuario;
 import com.example.one_drop_cruds.entities.user.LoguedUserDetails;
 import com.example.one_drop_cruds.entities.user.Record;
 import com.example.one_drop_cruds.entities.user.RecordsPaginatedReadDtoArray;
-import com.example.one_drop_cruds.entities.user.RegisterRequest;
-import com.example.one_drop_cruds.entities.user.enums.ErrorResponse;
-import com.example.one_drop_cruds.request.AuthRequests;
 import com.example.one_drop_cruds.request.RecordsRequest;
-import com.example.one_drop_cruds.utils.AdminSQLiteOpenHelper;
-import com.example.one_drop_cruds.utils.BackendUrl;
+import com.example.one_drop_cruds.utils.RetrofitHelper;
 import com.example.one_drop_cruds.utils.SharedPrefManager;
 import com.example.one_drop_cruds.utils.UserSessionManager;
 import com.github.mikephil.charting.charts.LineChart;
@@ -42,35 +45,33 @@ import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.gson.Gson;
 
-import java.io.IOException;
-import java.text.DateFormat;
+import java.lang.reflect.Field;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
-import java.time.format.FormatStyle;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 public class RegGlyActivity extends AppCompatActivity implements View.OnClickListener{
+    final Calendar c = Calendar.getInstance(); // Obtener la instancia actual del calendario
     UserSessionManager userSessionManager;
+    /*
     String baseUrl = new BackendUrl().getBackendUrl();
+     */
+    SharedPrefManager sharedPrefManager;
     String token;
     LoguedUserDetails loguedUser;
-    SharedPrefManager sharedPrefManager;
+    RetrofitHelper retrofitHelper;
     // todo eliminar AdminSQLiteOpenHelper admin;
     // todo eliminar String TABLE_NAME = "glycemia";
     EditText add_value_gly, add_notes_gly, add_date_gly;
@@ -88,9 +89,17 @@ public class RegGlyActivity extends AppCompatActivity implements View.OnClickLis
     ArrayList<Double> reg_gly_values = new ArrayList<Double>();
     ArrayList<String> reg_gly_notes = new ArrayList<String>();
 
-
     // GRAPHS
     LineChart lineChart;
+
+    // TODO DATE PICKER
+    private Button recordDateBtn;
+    private TextView recordDateEditText;
+    // TODO DATE PICKER
+
+    private Spinner spinnerPageSize;
+    private Integer pageSize;
+    private Integer pageNumber;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -101,9 +110,15 @@ public class RegGlyActivity extends AppCompatActivity implements View.OnClickLis
         userSessionManager = new UserSessionManager(getApplicationContext());
         sharedPrefManager = new SharedPrefManager(getApplicationContext(), "oneDrop_shared_preferences");
         token = sharedPrefManager.getUserToken();
+        retrofitHelper = new RetrofitHelper(token);
+
         loguedUser = userSessionManager.getLoguedUserDetails();  // SI NO ESTA LOGUEADO, SE REDIRIGE A LOGIN
 
-        this.refreshRegs(); // Obtiene data, la setea y grafica
+        spinnerPageSize = findViewById(R.id.spinnerPageSize);
+        pageSize = 5;
+        pageNumber = 0;
+        setSpinnerPageSize(pageSize.toString());
+        refreshRegsRequest(pageSize, pageNumber);   // actualiza array de regs, recicler y grafico
 
         // btn float add
         float_btn_add_reg_gly = findViewById(R.id.float_btn_add_reg_gly);
@@ -115,8 +130,35 @@ public class RegGlyActivity extends AppCompatActivity implements View.OnClickLis
         LinearLayoutManager linearLayoutManager_reg_gly = new LinearLayoutManager(this);
         rv1.setLayoutManager(linearLayoutManager_reg_gly);
 
-    }
+        adapterRegGly = new AdapterRegGly();
+        rv1.setAdapter(adapterRegGly);
 
+
+    }
+    public void setSpinnerPageSize(String elementoPreseleccionado){
+        List<String> opciones = new ArrayList<>();
+        opciones.add("5");
+        opciones.add("10");
+        opciones.add("15");
+        opciones.add("20");
+        opciones.add("30");
+        opciones.add("100");
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, opciones.toArray(new String[0])); // SE MUESTRA EN this ACTIVITY, dentro de un SIMPLE_SPINNER
+        spinnerPageSize.setAdapter(adapter); // mostrar spinner con el adapatador creado
+        spinnerPageSize.setSelection(adapter.getPosition(elementoPreseleccionado));
+
+        spinnerPageSize.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                refreshRegsRequest(Integer.parseInt(spinnerPageSize.getSelectedItem().toString()), pageNumber); // Obtiene data, la setea y grafica
+            }
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                // todo si no hubiese nada seleccionado...
+            }
+        });
+    }
 
     public class DateAxisValueFormatter extends IndexAxisValueFormatter {
         private List<String> mValues;
@@ -186,13 +228,19 @@ public class RegGlyActivity extends AppCompatActivity implements View.OnClickLis
         builder.setMessage("Agregar registro de glucemia");
         View popupAddReg = getLayoutInflater().inflate(R.layout.popup_form_add_reg_gly, null);
         builder.setView(popupAddReg); // ESTO ES PARA QUE PUEDA OBTENER LAS REFERENCIAS DESDE popupAddReg Y PODER OBTENER EL CONTROL DE LOS ELEMENTOS
-        add_value_gly = popupAddReg.findViewById(R.id.add_value_gly);
-        add_notes_gly = popupAddReg.findViewById(R.id.add_notes_gly);
-
-        add_date_gly = popupAddReg.findViewById(R.id.add_date_gly);
-        // add_date_gly = popupAddReg.findViewById(R.id.edit_date_gly_pickdater); // ESTE ES PARA EL PICKDATER
         // ESTA FORMA AGREGA A ESTA MISMA CLASE COMO LISTENER Y LUEGO EN UN SWITCH SE ELIJE EL EVENTO SEGUN SU ID..
         add_date_gly.setOnClickListener(this);
+        add_date_gly = popupAddReg.findViewById(R.id.add_date_gly);
+        add_value_gly = popupAddReg.findViewById(R.id.add_value_gly);
+        add_notes_gly = popupAddReg.findViewById(R.id.add_notes_gly);
+        recordDateBtn = popupAddReg.findViewById(R.id.recordDateBtn); // DATE PICKER
+        recordDateEditText = popupAddReg.findViewById(R.id.add_date_gly); // DATE PICKER
+        recordDateBtn.setOnClickListener(new View.OnClickListener() { // DATE PICKER
+            @Override
+            public void onClick(View v) {
+                showDatePickerDialogWithTime();
+            }
+        });
 
         builder.setPositiveButton("¡Agregar!", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
@@ -297,14 +345,14 @@ public class RegGlyActivity extends AppCompatActivity implements View.OnClickLis
         updateReciclerView();// actualizo recicler view
     }
     private void updateReciclerView(){
-        adapterRegGly = new AdapterRegGly();
-        rv1.setAdapter(adapterRegGly);
+        adapterRegGly.notifyDataSetChanged();
     }
     private String getStringDate(Long dateInMilli){
         Instant instant = Instant.ofEpochMilli(dateInMilli); // Crear un objeto Instant a partir de los milisegundos en Long
         ZonedDateTime fechaHoraZona = instant.atZone(ZoneId.systemDefault()); // Convertir el Instant a una fecha y hora en la zona horaria predeterminada del sistema
         DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("EE dd '-' HH:mm'hs'", Locale.ENGLISH); //Formatear la fecha y hora según el estilo // todo VERIFICAR IDIOMA DEL GRAFICO!!!
         return fechaHoraZona.format(dateFormatter);// Obtener la fecha y hora formateada como una cadena para el grafico
+
     }
     public void renderRegs(List recordsObjects){
         ArrayList<Integer> reg_ids = new ArrayList<Integer>();
@@ -364,30 +412,17 @@ public class RegGlyActivity extends AppCompatActivity implements View.OnClickLis
         lineChart.setTouchEnabled(true); // permite tactil
         lineChart.setPinchZoom(true); // permite zoom tactil
     }
-    public void refreshRegs(){
-        HttpLoggingInterceptor recordInterceptor = new HttpLoggingInterceptor();
-        recordInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
-        OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
-        httpClient.addInterceptor(recordInterceptor);
 
-        // todo el interceptor para agregar el token al header
-        httpClient.addInterceptor(chain -> {
-            Request originalRequest = chain.request();
-            Request.Builder builder = originalRequest.newBuilder();
-            if (token!= null &&!token.isEmpty()) {
-                builder.header("Authorization", "Bearer " + token);
-            }
-            return chain.proceed(builder.build());
-        }); //todo el interceptor para agregar el token al header
-
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(baseUrl) // +"/auth/register/"
-                .addConverterFactory(GsonConverterFactory.create())
-                .client(httpClient.build())
-                .build();
+    private void cleanEditTextFields(){
+        add_value_gly.setText("");
+        add_notes_gly.setText("");
+        add_date_gly.setText("");
+    }
+    private void refreshRegsRequest(Integer pageSize, Integer pageNumber){
+        Retrofit retrofit = retrofitHelper.getRetrofitHelperWithToken(); // inicializa retrofit, y agrega token de autorizacion
         RecordsRequest recordRequest = retrofit.create(RecordsRequest.class);
 
-        Call<RecordsPaginatedReadDtoArray> call = recordRequest.getAllGlycemiaRecordsByIdUser(loguedUser.getId());
+        Call<RecordsPaginatedReadDtoArray> call = recordRequest.getAllGlycemiaRecordsByIdUser(loguedUser.getId(), pageSize, pageNumber);
         call.enqueue(new Callback<RecordsPaginatedReadDtoArray>() {
             @Override
             public void onResponse(Call<RecordsPaginatedReadDtoArray> call, Response<RecordsPaginatedReadDtoArray> response) {
@@ -409,34 +444,91 @@ public class RegGlyActivity extends AppCompatActivity implements View.OnClickLis
             }
         });
     }
+    private void makeToast(String msg){
+        Toast.makeText(this,msg, Toast.LENGTH_SHORT).show();
+    }
+    // DATE PICKER
+    private void showDatePickerDialogWithTime() {
+        // Primero muestro fecha, y despues que seleciona fecha, muestra horario
+        DatePickerDialog datePickerDialog = new DatePickerDialog(RegGlyActivity.this,
+                new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+                        // Configurar el TimePickerDialog
+                        TimePickerDialog timePickerDialog = new TimePickerDialog(RegGlyActivity.this,
+                                new TimePickerDialog.OnTimeSetListener() {
+                                    @Override
+                                    public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+                                        // Formatear la fecha
+                                        String day = String.valueOf(dayOfMonth);
+                                        String month = String.valueOf(monthOfYear + 1);
+                                        if (dayOfMonth<10) day="0"+day;
+                                        if (monthOfYear<10) month="0"+month;
+                                        // Formatear la hora
+                                        String hour = String.format("%02d", hourOfDay);
+                                        String minuteStr = String.format("%02d", minute);
+                                        String time = hour + ":" + minuteStr;
+                                        String dateTime = year + "-" + month + "-" + day + "T" + time;
+
+                                        recordDateEditText.setText(dateTime); // Mostrar la fecha y hora
+                                    }
+                                }, c.get(Calendar.HOUR_OF_DAY), c.get(Calendar.MINUTE), false);
+                        timePickerDialog.show();// Mostrar el hora después de seleccionar la fecha
+                    }
+                }, c.get(Calendar.YEAR), c.get(Calendar.MONTH), c.get(Calendar.DAY_OF_MONTH));
+        datePickerDialog.show(); // Mostrar el fecha inicialmente
+    }
+    private void addNewRegRequest(String fecha, Double valor, String comentario){
+        Retrofit retrofit = retrofitHelper.getRetrofitHelperWithToken(); // inicializa retrofit, y agrega token de autorizacion
+        RecordsRequest recordRequest = retrofit.create(RecordsRequest.class);
+
+        AddNewRecordDto newRecordDto = new AddNewRecordDto(fecha, valor, comentario);
+        Call<RegistroReadDto> call = recordRequest.addNewGlycemiaRecord(loguedUser.getId(), newRecordDto);
+        call.enqueue(new Callback<RegistroReadDto>() {
+            @Override
+            public void onResponse(Call<RegistroReadDto> call, Response<RegistroReadDto> response) {
+                if(response.isSuccessful() && response.body() != null){
+                    cleanEditTextFields();
+                    refreshRegsRequest(pageSize, pageNumber);   // actualiza array de regs, recicler y grafico
+                    rv1.smoothScrollToPosition(reg_gly_ids.size()-1); // mueve la vista al ultimo elemento agregado
+                    makeToast("Se agrego registro de glucemia");
+                } else if (response.code()==400){
+                    // todo pendiente de manejar
+                    System.out.println(" DTOReadAllRegisters response.code()==400  *********");
+                    makeToast("Error agregando response.code()==400??");
+                    System.out.println(response.body());
+                    System.out.println(" DTOReadAllRegisters response.code()==400  *********");
+                }
+            }
+            @Override
+            public void onFailure(Call<RegistroReadDto> call, Throwable t) {
+                // todo pendiente de manejar
+                System.out.println("********* DTOReadAllRegisters Throwable t******");
+                makeToast("Error onFailure Throwable=> "+t);
+                System.out.println( t.getLocalizedMessage());
+                System.out.println( t.getCause());
+                System.out.println( t.getMessage());
+                System.out.println("********* DTOReadAllRegisters Throwable t******");
+            }
+        });
+    }
     public void addNewReg(){
-        // todo PENDIENTEEEEE
-        // todo PENDIENTEEEEE
-        // todo PENDIENTEEEEE
-        // todo PENDIENTEEEEE
         String newDate;
         if(add_date_gly.getText().toString().equals("") ){
+            // todo ACA DEBERIA TENER UN DATE PICKER!!!
+            // todo ACA DEBERIA TENER UN DATE PICKER!!!
+            // todo ACA DEBERIA TENER UN DATE PICKER!!!
+            // todo ACA DEBERIA TENER UN DATE PICKER!!!
             System.out.println("CREO NUEVA FECHA NOW PORQUE VINO VACIA");
             newDate = new Date().toString();
         } else {
             newDate = add_date_gly.getText().toString();
         }
-        DTORegister newReg = new DTORegister(newDate ,Double.valueOf(add_value_gly.getText().toString()) , add_notes_gly.getText().toString());
 
-        Boolean insertResult = true; // todo PENDIENTEEEEE admin.addReg(this.TABLE_NAME, newReg);
+        // DTORegister newReg = new DTORegister(newDate ,Double.valueOf(add_value_gly.getText().toString()) , add_notes_gly.getText().toString());
+        //Boolean insertResult = true;
 
-        if(insertResult){
-            add_value_gly.setText("");// limpio pantalla
-            add_notes_gly.setText("");
-            add_date_gly.setText("");
-            this.refreshRegs();
-            this.updateChartRegGly(reg_gly_ids,reg_gly_dates, reg_gly_values, reg_gly_notes); // sobreescribe chart
-            adapterRegGly.notifyDataSetChanged(); // refresca pantalla del recycler
-            rv1.smoothScrollToPosition(reg_gly_ids.size()-1); // mueve la vista al ultimo elemento agregado
-            Toast.makeText(this,"Se agrego registro de glucemia", Toast.LENGTH_SHORT).show();
-        }else {
-            Toast.makeText(this,"Error agregando registro!", Toast.LENGTH_SHORT).show();
-        }
+        addNewRegRequest(newDate, Double.valueOf(add_value_gly.getText().toString()), add_notes_gly.getText().toString());
     }
     public void deleteReg(int id){
         // todo PENDIENTEEEEE
@@ -445,9 +537,7 @@ public class RegGlyActivity extends AppCompatActivity implements View.OnClickLis
         // todo PENDIENTEEEEE
         Boolean deleteResult = true;// todo PENDIENTEEEEE admin.deleteReg(this.TABLE_NAME , id);
         if(deleteResult){
-            this.refreshRegs(); // actualiza array de reg
-            this.updateChartRegGly(reg_gly_ids,reg_gly_dates, reg_gly_values, reg_gly_notes); // sobreescribe chart
-            adapterRegGly.notifyDataSetChanged(); // refresca pantalla del recycler
+            refreshRegsRequest(pageSize, pageNumber);   // actualiza array de regs, recicler y grafico
             Toast.makeText(this, "Registro eliminado correctamente", Toast.LENGTH_LONG).show();
         } else {
             Toast.makeText(this, "Error eliminando registro", Toast.LENGTH_LONG).show();
@@ -474,9 +564,7 @@ public class RegGlyActivity extends AppCompatActivity implements View.OnClickLis
             edit_value_gly.setText("");// limpio pantalla
             edit_notes_gly.setText("");
             edit_date_gly.setText("");
-            this.refreshRegs(); // actualiza array de reg
-            this.updateChartRegGly(reg_gly_ids,reg_gly_dates, reg_gly_values, reg_gly_notes); // actualiza chart
-            adapterRegGly.notifyDataSetChanged(); // refresca pantalla del recycler
+            refreshRegsRequest(pageSize, pageNumber);   // actualiza array de regs, recicler y grafico
             Toast.makeText(this, "Registro actualizado!", Toast.LENGTH_LONG).show();
         } else {
             Toast.makeText(this, "Error al editar registro", Toast.LENGTH_LONG).show();
