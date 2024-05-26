@@ -6,8 +6,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.app.DatePickerDialog;
-import android.app.TimePickerDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
@@ -17,11 +15,9 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.example.one_drop_cruds.entities.DTORegister;
@@ -31,8 +27,11 @@ import com.example.one_drop_cruds.entities.user.LoguedUserDetails;
 import com.example.one_drop_cruds.entities.user.Record;
 import com.example.one_drop_cruds.entities.user.RecordsPaginatedReadDtoArray;
 import com.example.one_drop_cruds.request.RecordsRequest;
+import com.example.one_drop_cruds.utils.DateHelper;
+import com.example.one_drop_cruds.utils.DateTimePickerDialog;
 import com.example.one_drop_cruds.utils.RetrofitHelper;
 import com.example.one_drop_cruds.utils.SharedPrefManager;
+import com.example.one_drop_cruds.utils.ToastHelper;
 import com.example.one_drop_cruds.utils.UserSessionManager;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.XAxis;
@@ -45,16 +44,9 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.gson.Gson;
 
 import java.text.ParseException;
-import java.time.Instant;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.time.ZoneOffset;
-import java.time.ZonedDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
-import java.util.Locale;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -62,15 +54,13 @@ import retrofit2.Response;
 
 public class RegGlyActivity extends AppCompatActivity implements View.OnClickListener{
     final Calendar c = Calendar.getInstance(); // Obtener la instancia actual del calendario
+    DateTimePickerDialog datePicker;
     UserSessionManager userSessionManager;
     SharedPrefManager sharedPrefManager;
     String token;
     LoguedUserDetails loguedUser;
-    // todo eliminar AdminSQLiteOpenHelper admin;
-    // todo eliminar String TABLE_NAME = "glycemia";
     EditText add_value_gly, add_notes_gly, add_date_gly;
     EditText edit_value_gly, edit_notes_gly;
-    // Button btn_add_reg_gly;
     FloatingActionButton float_btn_add_reg_gly;
 
     // RECICLER VIEW
@@ -100,6 +90,9 @@ public class RegGlyActivity extends AppCompatActivity implements View.OnClickLis
     private Integer lastPage;
 
     RecordsRequest recordRequest;
+    DateHelper dateHelper;
+    ToastHelper toastHelper;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -114,6 +107,10 @@ public class RegGlyActivity extends AppCompatActivity implements View.OnClickLis
 
         // request, Crea helper con el jwt, inicializa retrofit y crea RecordsRequest, para hacer solicitudes
         recordRequest = new RetrofitHelper(token).getRetrofitHelperWithToken().create(RecordsRequest.class);
+
+        dateHelper = new DateHelper();
+        datePicker = new DateTimePickerDialog(RegGlyActivity.this);
+        toastHelper = new ToastHelper(RegGlyActivity.this);
 
         // paginado resultados
         spinnerPageSize = findViewById(R.id.spinnerPageSize);
@@ -183,7 +180,7 @@ public class RegGlyActivity extends AppCompatActivity implements View.OnClickLis
                 itemView.setOnClickListener(this);
             }
             public void printItem(int position) throws ParseException {
-                reg_date.setText(getStringShortDateForGraphs(reg_gly_dates.get(position)));// pasa fecha de String que representa a Long a Sun 23 - 06:40hs
+                reg_date.setText(dateHelper.getStringShortDateForGraphs(reg_gly_dates.get(position)));// pasa fecha de String que representa a Long a Sun 23 - 06:40hs
                 reg_value.setText(String.valueOf(reg_gly_values.get(position)));
                 reg_note.setText(reg_gly_notes.get(position));
 
@@ -196,7 +193,7 @@ public class RegGlyActivity extends AppCompatActivity implements View.OnClickLis
             }
             @Override
             public void onClick(View v) {
-                Toast.makeText(RegGlyActivity.this, String.valueOf(reg_gly_ids.get(getLayoutPosition())),Toast.LENGTH_SHORT).show();
+                toastHelper.showShort(String.valueOf(reg_gly_ids.get(getLayoutPosition())));
             }
             public void btnEditOnClick(int id){
                 openPopupBtnEdit(id);
@@ -213,18 +210,6 @@ public class RegGlyActivity extends AppCompatActivity implements View.OnClickLis
     // todo pendiente revisar y mejorar el RECICLER VIEW crear clase en UTILS, que sea reusable por todos los otros crudso!!!!!
 
 
-
-    public void addNewReg(){
-        String newDate;
-        if(add_date_gly.getText().toString().equals("") ){
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm");
-            LocalDateTime now = LocalDateTime.now();
-            newDate = now.format(formatter);
-        } else {
-            newDate = add_date_gly.getText().toString();
-        }
-        addNewRegRequest(newDate, Double.valueOf(add_value_gly.getText().toString()), add_notes_gly.getText().toString());
-    }
     private void renderRegs(List recordsObjects){
         ArrayList<Integer> reg_ids = new ArrayList<Integer>();
         ArrayList<Long> reg_dates = new ArrayList<>();
@@ -246,7 +231,7 @@ public class RegGlyActivity extends AppCompatActivity implements View.OnClickLis
         if (! reg_ids.isEmpty()){
             updateChartRegGly(reg_ids,reg_dates, reg_values, reg_notes);
         } else{
-            Toast.makeText(this, "Aun no hay registros guardados..", Toast.LENGTH_LONG).show();
+            toastHelper.showLong("Aun no hay registros guardados..");
         }
     }
 
@@ -276,8 +261,11 @@ public class RegGlyActivity extends AppCompatActivity implements View.OnClickLis
             }
         });
     }
-    private void addNewRegRequest(String fecha, Double valor, String comentario){
-        AddNewRecordDto newRecordDto = new AddNewRecordDto(fecha, valor, comentario);
+    private void addNewRegRequest(){
+        String newDate = add_date_gly.getText().toString();
+        if(newDate.equals("")) newDate = dateHelper.dateNowInBackendFormat();
+
+        AddNewRecordDto newRecordDto = new AddNewRecordDto(newDate, Double.valueOf(add_value_gly.getText().toString()), add_notes_gly.getText().toString());
         Call<RecordReadDto> call = recordRequest.addNewGlycemiaRecord(loguedUser.getId(), newRecordDto);
         call.enqueue(new Callback<RecordReadDto>() {
             @Override
@@ -286,11 +274,11 @@ public class RegGlyActivity extends AppCompatActivity implements View.OnClickLis
                     cleanEditTextFields();
                     refreshRegsRequest(pageSize, pageNumber);   // actualiza array de regs, recicler y grafico
                     rv1.smoothScrollToPosition(reg_gly_ids.size()-1); // mueve la vista al ultimo elemento agregado
-                    makeToast("Se agrego registro de glucemia");
+                    toastHelper.showLong("Se agrego registro de glucemia");
                 } else if (response.code()==400){
                     // todo pendiente de manejar
                     System.out.println(" DTOReadAllRegisters response.code()==400  *********");
-                    makeToast("Error agregando response.code()==400??");
+                    toastHelper.showLong("Error agregando response.code()==400??");
                     System.out.println(response.body());
                     System.out.println(" DTOReadAllRegisters response.code()==400  *********");
                 }
@@ -299,7 +287,7 @@ public class RegGlyActivity extends AppCompatActivity implements View.OnClickLis
             public void onFailure(Call<RecordReadDto> call, Throwable t) {
                 // todo pendiente de manejar
                 System.out.println("********* DTOReadAllRegisters Throwable t******");
-                makeToast("Error onFailure Throwable=> "+t);
+                toastHelper.showLong("Error onFailure Throwable=> "+t);
                 System.out.println( t.getLocalizedMessage());
                 System.out.println( t.getCause());
                 System.out.println( t.getMessage());
@@ -314,28 +302,22 @@ public class RegGlyActivity extends AppCompatActivity implements View.OnClickLis
             public void onResponse(Call<RecordReadDto> call, Response<RecordReadDto> response) {
                 if(response.isSuccessful()){
                     refreshRegsRequest(pageSize, pageNumber);   // actualiza array de regs, recicler y grafico
-                    makeToast("Registro eliminado correctamente");
+                    toastHelper.showLong("Registro eliminado correctamente");
                 }
             }
             @Override
             public void onFailure(Call<RecordReadDto> call, Throwable t) {
-                makeToast("Error eliminando registro");
+                toastHelper.showLong("Error eliminando registro");
             }
         });
     }
 
-    private String getFullDateForBackend(Integer idReg){
-        Long date = reg_gly_dates.get(reg_gly_ids.indexOf(idReg));
-        Instant instant = Instant.ofEpochMilli(date);
-        ZonedDateTime zonedDateTime = instant.atZone(ZoneOffset.UTC);
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm");
-        return zonedDateTime.format(formatter);
-    }
     private String validateDateForUpdateReg(Integer id){
         // El array de fechas guarda las fechas en Long, por lo que si la fecha no es actualizada, al querer actualizar el registro, debe ser cambiado de Long a yyyy-MM-dd'T'HH:mm.. Si la fecha es actualizada con el date picker, es enviada a actualizar con formato yyyy-MM-dd'T'HH:mm
-        String originalDateShort = getStringShortDateForGraphs(reg_gly_dates.get(reg_gly_ids.indexOf(id)));
+        Long originalDateLong = reg_gly_dates.get(reg_gly_ids.indexOf(id));
+        String originalDateShort = dateHelper.getStringShortDateForGraphs(originalDateLong);
         String updatedDate = edit_date_gly.getText().toString();
-        if( originalDateShort.equals(updatedDate)) return getFullDateForBackend(id);
+        if( originalDateShort.equals(updatedDate)) return dateHelper.getFullDateForBackend(originalDateLong);
         return updatedDate; // Si fecha fue cambiada, tiene el formato la actualizo, sino
     }
     public void updateRegRequest(int id){
@@ -348,11 +330,11 @@ public class RegGlyActivity extends AppCompatActivity implements View.OnClickLis
                 if(response.isSuccessful() && response.body() != null){
                     refreshRegsRequest(pageSize, pageNumber);   // actualiza array de regs, recicler y grafico
                     rv1.smoothScrollToPosition(reg_gly_ids.indexOf(id)); // mueve la vista al elemento editado
-                    makeToast("Se edito registro!");
+                    toastHelper.showLong("Se edito registro!");
                 } else if (response.code()==400){
                     // todo pendiente de manejar
                     System.out.println(" updateRegRequest response.code()==400  *********");
-                    makeToast("Error editando response.code()==400??");
+                    toastHelper.showLong("Error editando response.code()==400??");
                     System.out.println(response.body());
                     System.out.println(" updateRegRequest response.code()==400  *********");
                 }
@@ -361,7 +343,7 @@ public class RegGlyActivity extends AppCompatActivity implements View.OnClickLis
             public void onFailure(Call<RecordReadDto> call, Throwable t) {
                 // todo pendiente de manejar
                 System.out.println("********* updateRegRequest Throwable t******");
-                makeToast("Error onFailure Throwable=> "+t);
+                toastHelper.showLong("Error onFailure Throwable=> "+t);
                 System.out.println( t.getLocalizedMessage());
                 System.out.println( t.getCause());
                 System.out.println( t.getMessage());
@@ -375,43 +357,32 @@ public class RegGlyActivity extends AppCompatActivity implements View.OnClickLis
     // charts
     public class DateAxisValueFormatter extends IndexAxisValueFormatter {
         private List<String> mValues;
-        public DateAxisValueFormatter(List<String> values){
+
+        public DateAxisValueFormatter(List<String> values) {
             this.mValues = values;
         }
+
         @Override
         public String getFormattedValue(float value) {
             int index = (int) value;
-            if(index <0 || index>= mValues.size()){
+            if (index < 0 || index >= mValues.size()) {
                 return "";
             }
             return mValues.get(index);
         }
 
     }
-    private ArrayList<Entry> createLineChartDataSet(){
+    private ArrayList<Entry> createLineChartDataSet() {
         ArrayList<Entry> dataSet = new ArrayList<Entry>();
-        reg_gly_dates.forEach(date ->{
+        reg_gly_dates.forEach(date -> {
             Double value = reg_gly_values.get(reg_gly_dates.indexOf(date));
             int index = reg_gly_dates.indexOf(date);
-            dataSet.add(new Entry (index, Float.valueOf(String.valueOf(value))));
+            dataSet.add(new Entry(index, Float.valueOf(String.valueOf(value))));
         });
         return dataSet;
     }
 
 
-    // utils dates
-    private String getStringShortDateForGraphs(Long dateInMilli){
-        Instant instant = Instant.ofEpochMilli(dateInMilli); // Crear un objeto Instant a partir de los milisegundos en Long
-        ZonedDateTime fechaHoraZona = instant.atZone(ZoneId.systemDefault()); // Convertir el Instant a una fecha y hora en la zona horaria predeterminada del sistema
-        DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("EE dd '-' HH:mm'hs'", Locale.ENGLISH); //Formatear la fecha y hora según el estilo // todo VERIFICAR IDIOMA DEL GRAFICO!!!
-        return fechaHoraZona.format(dateFormatter);// Obtener la fecha y hora formateada como una cadena para el grafico
-    }
-    private ArrayList<String> getStringShortDateForGraphs(ArrayList<Long> reg_dates){
-        //Edito los datos de fecha al formato corto, solo para graficos estilo Sun 23 - 06:40hs
-        ArrayList<String> shortDates = new ArrayList<>();
-        reg_dates.forEach(date-> shortDates.add(getStringShortDateForGraphs(date)));
-        return shortDates;
-    }
     private void updateChartRegGly(ArrayList<Integer> reg_ids, ArrayList<Long> reg_dates, ArrayList<Double> reg_values, ArrayList<String> reg_notes){
         updateAllDataRegs(reg_ids,reg_dates, reg_values, reg_notes); // actualiza arrays de datos
         LineDataSet lineDataSet = new LineDataSet(createLineChartDataSet(), "Glucemia");
@@ -421,7 +392,7 @@ public class RegGlyActivity extends AppCompatActivity implements View.OnClickLis
         //Seteo el formateador para leyendas del eje X
         LineData lineData = new LineData(iLineDataSets);
         XAxis xAxis = lineChart.getXAxis();
-        xAxis.setValueFormatter(new DateAxisValueFormatter(getStringShortDateForGraphs(reg_dates)));
+        xAxis.setValueFormatter(new DateAxisValueFormatter(dateHelper.getStringShortDateForGraphs(reg_dates)));
 
         lineChart.setData(lineData);
         lineChart.invalidate();
@@ -442,11 +413,12 @@ public class RegGlyActivity extends AppCompatActivity implements View.OnClickLis
         lineChart.setPinchZoom(true); // permite zoom tactil
     }
 
+
     // popups
     public void setTextEditRegPopup(int id){
         // obtener posicion y con esa posicion buscar los valores almacenados en cada lista y setear datos de popup
         Integer indexById = reg_gly_ids.indexOf(id);
-        String date = getStringShortDateForGraphs(reg_gly_dates.get(indexById));
+        String date = dateHelper.getStringShortDateForGraphs(reg_gly_dates.get(indexById));
         Double value = reg_gly_values.get(indexById);
         String notes = reg_gly_notes.get(indexById);
         DTORegister regById = new DTORegister(date, value, notes);
@@ -475,7 +447,7 @@ public class RegGlyActivity extends AppCompatActivity implements View.OnClickLis
         edit_date_gly_btn.setOnClickListener(new View.OnClickListener() { // DATE PICKER
             @Override
             public void onClick(View v) {
-                showDatePickerDialogWithTime(edit_date_gly);
+                datePicker.showDatePickerDialogWithTime(edit_date_gly);
             }
         });
 
@@ -523,13 +495,13 @@ public class RegGlyActivity extends AppCompatActivity implements View.OnClickLis
         recordDateBtn.setOnClickListener(new View.OnClickListener() { // DATE PICKER
             @Override
             public void onClick(View v) {
-                showDatePickerDialogWithTime(recordDateEditText);
+                datePicker.showDatePickerDialogWithTime(recordDateEditText);
             }
         });
 
         builder.setPositiveButton("¡Agregar!", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
-                addNewReg();
+                addNewRegRequest();
                 dialog.dismiss();
             }
         });
@@ -567,41 +539,9 @@ public class RegGlyActivity extends AppCompatActivity implements View.OnClickLis
         });
     }
 
-    // date time picker
-    private void showDatePickerDialogWithTime(TextView editTextToSet) {
-        // Primero muestro fecha, y despues que seleciona fecha, muestra horario
-        DatePickerDialog datePickerDialog = new DatePickerDialog(RegGlyActivity.this,
-                new DatePickerDialog.OnDateSetListener() {
-                    @Override
-                    public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-                        // Configurar el TimePickerDialog
-                        TimePickerDialog timePickerDialog = new TimePickerDialog(RegGlyActivity.this,
-                                new TimePickerDialog.OnTimeSetListener() {
-                                    @Override
-                                    public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                                        // Formatear la fecha
-                                        String day = String.valueOf(dayOfMonth);
-                                        String month = String.valueOf(monthOfYear + 1);
-                                        if (dayOfMonth<10) day="0"+day;
-                                        if (monthOfYear<10) month="0"+month;
-                                        // Formatear la hora
-                                        String hour = String.format("%02d", hourOfDay);
-                                        String minuteStr = String.format("%02d", minute);
-                                        String time = hour + ":" + minuteStr;
-                                        String dateTime = year + "-" + month + "-" + day + "T" + time;
-                                        editTextToSet.setText(dateTime); // Mostrar la fecha y hora
-                                    }
-                                }, c.get(Calendar.HOUR_OF_DAY), c.get(Calendar.MINUTE), false);
-                        timePickerDialog.show();// Mostrar el hora después de seleccionar la fecha
-                    }
-                }, c.get(Calendar.YEAR), c.get(Calendar.MONTH), c.get(Calendar.DAY_OF_MONTH));
-        datePickerDialog.show(); // Mostrar el fecha inicialmente
-    }
 
     // metodos accesorios
-    private void makeToast(String msg){
-        Toast.makeText(this,msg, Toast.LENGTH_SHORT).show();
-    }
+
     private void cleanEditTextFields(){
         add_value_gly.setText("");
         add_notes_gly.setText("");
