@@ -1,13 +1,13 @@
 package com.example.one_drop_cruds.entities.dtos;
 
 
-public class RegistroReadDto {
+public class RecordReadDto {
     private Integer id;
     private Long fecha;
     private Double valor;
     private String comentario;
 
-    public RegistroReadDto(Integer id, Long fecha, Double valor, String comentario) {
+    public RecordReadDto(Integer id, Long fecha, Double valor, String comentario) {
         this.id = id;
         this.fecha = fecha;
         this.valor = valor;

@@ -25,8 +25,8 @@ import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.example.one_drop_cruds.entities.DTORegister;
-import com.example.one_drop_cruds.entities.dtos.RegistroReadDto;
-import com.example.one_drop_cruds.entities.requests.AddNewRecordDto;
+import com.example.one_drop_cruds.entities.dtos.RecordReadDto;
+import com.example.one_drop_cruds.entities.dtos.AddNewRecordDto;
 import com.example.one_drop_cruds.entities.user.LoguedUserDetails;
 import com.example.one_drop_cruds.entities.user.Record;
 import com.example.one_drop_cruds.entities.user.RecordsPaginatedReadDtoArray;
@@ -48,6 +48,7 @@ import java.text.ParseException;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -68,7 +69,7 @@ public class RegGlyActivity extends AppCompatActivity implements View.OnClickLis
     // todo eliminar AdminSQLiteOpenHelper admin;
     // todo eliminar String TABLE_NAME = "glycemia";
     EditText add_value_gly, add_notes_gly, add_date_gly;
-    EditText edit_value_gly, edit_notes_gly, edit_date_gly;
+    EditText edit_value_gly, edit_notes_gly;
     // Button btn_add_reg_gly;
     FloatingActionButton float_btn_add_reg_gly;
 
@@ -78,7 +79,7 @@ public class RegGlyActivity extends AppCompatActivity implements View.OnClickLis
 
     //DATA
     ArrayList<Integer> reg_gly_ids = new ArrayList<Integer>();
-    ArrayList<String> reg_gly_dates = new ArrayList<String>();
+    ArrayList<Long> reg_gly_dates = new ArrayList<Long>();
     ArrayList<Double> reg_gly_values = new ArrayList<Double>();
     ArrayList<String> reg_gly_notes = new ArrayList<String>();
 
@@ -87,11 +88,11 @@ public class RegGlyActivity extends AppCompatActivity implements View.OnClickLis
 
     // TODO DATE PICKER
     private Button recordDateBtn;
-    private TextView recordDateEditText;
+    private TextView recordDateEditText, edit_date_gly;
     // TODO DATE PICKER
 
     // paginado de resultados
-    private Button btn_first_page, btn_prev_page, btn_next_page, btn_last_page;
+    private Button btn_first_page, btn_prev_page, btn_next_page, btn_last_page, edit_date_gly_btn;
     private Spinner spinnerPageSize;
     private Integer pageSize;
     private Integer pageNumber;
@@ -182,7 +183,7 @@ public class RegGlyActivity extends AppCompatActivity implements View.OnClickLis
                 itemView.setOnClickListener(this);
             }
             public void printItem(int position) throws ParseException {
-                reg_date.setText(reg_gly_dates.get(position));
+                reg_date.setText(getStringShortDateForGraphs(reg_gly_dates.get(position)));// pasa fecha de String que representa a Long a Sun 23 - 06:40hs
                 reg_value.setText(String.valueOf(reg_gly_values.get(position)));
                 reg_note.setText(reg_gly_notes.get(position));
 
@@ -226,7 +227,7 @@ public class RegGlyActivity extends AppCompatActivity implements View.OnClickLis
     }
     private void renderRegs(List recordsObjects){
         ArrayList<Integer> reg_ids = new ArrayList<Integer>();
-        ArrayList<String> reg_dates = new ArrayList<String>();
+        ArrayList<Long> reg_dates = new ArrayList<>();
         ArrayList<Double> reg_values = new ArrayList<Double>();
         ArrayList<String> reg_notes = new ArrayList<String>();
 
@@ -235,7 +236,7 @@ public class RegGlyActivity extends AppCompatActivity implements View.OnClickLis
             try {
                 Record record = gson.fromJson( escapeBlankSpacesInComentario(recordsObjects.get(i).toString()), Record.class);
                 reg_ids.add(record.getId());
-                reg_dates.add( getStringDate(record.getFecha())); // obtiene fecha en milisegundos en un dato Long y lo convierte a un string del estilo Sun 02:44hs
+                reg_dates.add(record.getFecha()); // todo modifiiiiiii obtiene fecha en milisegundos en un dato Long y lo convierte a un string del estilo Sun 02:44hs
                 reg_values.add(record.getValor());
                 reg_notes.add(record.getComentario().replace("**", " "));
             } catch (Exception e){
@@ -277,10 +278,10 @@ public class RegGlyActivity extends AppCompatActivity implements View.OnClickLis
     }
     private void addNewRegRequest(String fecha, Double valor, String comentario){
         AddNewRecordDto newRecordDto = new AddNewRecordDto(fecha, valor, comentario);
-        Call<RegistroReadDto> call = recordRequest.addNewGlycemiaRecord(loguedUser.getId(), newRecordDto);
-        call.enqueue(new Callback<RegistroReadDto>() {
+        Call<RecordReadDto> call = recordRequest.addNewGlycemiaRecord(loguedUser.getId(), newRecordDto);
+        call.enqueue(new Callback<RecordReadDto>() {
             @Override
-            public void onResponse(Call<RegistroReadDto> call, Response<RegistroReadDto> response) {
+            public void onResponse(Call<RecordReadDto> call, Response<RecordReadDto> response) {
                 if(response.isSuccessful() && response.body() != null){
                     cleanEditTextFields();
                     refreshRegsRequest(pageSize, pageNumber);   // actualiza array de regs, recicler y grafico
@@ -295,7 +296,7 @@ public class RegGlyActivity extends AppCompatActivity implements View.OnClickLis
                 }
             }
             @Override
-            public void onFailure(Call<RegistroReadDto> call, Throwable t) {
+            public void onFailure(Call<RecordReadDto> call, Throwable t) {
                 // todo pendiente de manejar
                 System.out.println("********* DTOReadAllRegisters Throwable t******");
                 makeToast("Error onFailure Throwable=> "+t);
@@ -307,57 +308,68 @@ public class RegGlyActivity extends AppCompatActivity implements View.OnClickLis
         });
     }
     private void deleteRegRequest(int id){
-        Call<RegistroReadDto> call = recordRequest.deleteGlycemiaRecord(id);
-        call.enqueue(new Callback<RegistroReadDto>() {
+        Call<RecordReadDto> call = recordRequest.deleteGlycemiaRecord(id);
+        call.enqueue(new Callback<RecordReadDto>() {
             @Override
-            public void onResponse(Call<RegistroReadDto> call, Response<RegistroReadDto> response) {
+            public void onResponse(Call<RecordReadDto> call, Response<RecordReadDto> response) {
                 if(response.isSuccessful()){
                     refreshRegsRequest(pageSize, pageNumber);   // actualiza array de regs, recicler y grafico
                     makeToast("Registro eliminado correctamente");
                 }
             }
             @Override
-            public void onFailure(Call<RegistroReadDto> call, Throwable t) {
+            public void onFailure(Call<RecordReadDto> call, Throwable t) {
                 makeToast("Error eliminando registro");
             }
         });
     }
 
-    // todo PENDIENTEEEEE
-    // todo PENDIENTEEEEE
+    private String getFullDateForBackend(Integer idReg){
+        Long date = reg_gly_dates.get(reg_gly_ids.indexOf(idReg));
+        Instant instant = Instant.ofEpochMilli(date);
+        ZonedDateTime zonedDateTime = instant.atZone(ZoneOffset.UTC);
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm");
+        return zonedDateTime.format(formatter);
+    }
+    private String validateDateForUpdateReg(Integer id){
+        // El array de fechas guarda las fechas en Long, por lo que si la fecha no es actualizada, al querer actualizar el registro, debe ser cambiado de Long a yyyy-MM-dd'T'HH:mm.. Si la fecha es actualizada con el date picker, es enviada a actualizar con formato yyyy-MM-dd'T'HH:mm
+        String originalDateShort = getStringShortDateForGraphs(reg_gly_dates.get(reg_gly_ids.indexOf(id)));
+        String updatedDate = edit_date_gly.getText().toString();
+        if( originalDateShort.equals(updatedDate)) return getFullDateForBackend(id);
+        return updatedDate; // Si fecha fue cambiada, tiene el formato la actualizo, sino
+    }
     public void updateRegRequest(int id){
-        DTORegister dtoUpdated = new DTORegister(edit_date_gly.getText().toString(), Double.valueOf(edit_value_gly.getText().toString()) ,edit_notes_gly.getText().toString());
-        boolean updateResult = true;// todo PENDIENTEEEEE admin.updateRegById(this.TABLE_NAME,id,dtoUpdated);
-        if (updateResult){
-            edit_value_gly.setText("");// limpio pantalla
-            edit_notes_gly.setText("");
-            edit_date_gly.setText("");
-            refreshRegsRequest(pageSize, pageNumber);   // actualiza array de regs, recicler y grafico
-            Toast.makeText(this, "Registro actualizado!", Toast.LENGTH_LONG).show();
-        } else {
-            Toast.makeText(this, "Error al editar registro", Toast.LENGTH_LONG).show();
-        }
+        AddNewRecordDto updateRecordDto = new AddNewRecordDto(validateDateForUpdateReg(id), Double.valueOf(edit_value_gly.getText().toString()) ,edit_notes_gly.getText().toString());
+
+        Call<RecordReadDto> call = recordRequest.editGlycemiaRecord(id, updateRecordDto);
+        call.enqueue(new Callback<RecordReadDto>() {
+            @Override
+            public void onResponse(Call<RecordReadDto> call, Response<RecordReadDto> response) {
+                if(response.isSuccessful() && response.body() != null){
+                    refreshRegsRequest(pageSize, pageNumber);   // actualiza array de regs, recicler y grafico
+                    rv1.smoothScrollToPosition(reg_gly_ids.indexOf(id)); // mueve la vista al elemento editado
+                    makeToast("Se edito registro!");
+                } else if (response.code()==400){
+                    // todo pendiente de manejar
+                    System.out.println(" updateRegRequest response.code()==400  *********");
+                    makeToast("Error editando response.code()==400??");
+                    System.out.println(response.body());
+                    System.out.println(" updateRegRequest response.code()==400  *********");
+                }
+            }
+            @Override
+            public void onFailure(Call<RecordReadDto> call, Throwable t) {
+                // todo pendiente de manejar
+                System.out.println("********* updateRegRequest Throwable t******");
+                makeToast("Error onFailure Throwable=> "+t);
+                System.out.println( t.getLocalizedMessage());
+                System.out.println( t.getCause());
+                System.out.println( t.getMessage());
+                System.out.println("********* updateRegRequest Throwable t******");
+            }
+        });
+        // todo al apretar editar, si hubo algun cambio entre el valor seteado ( que podria obtenerlos de los arrays segun id) y el actual, mando a hacer un update
     }
-
-
-    // todo PENDIENTEEEEE
-    // todo PENDIENTEEEEE
-    public void setTextEditRegPopup(int id){
-        // todo PENDIENTEEEEE
-        // todo PENDIENTEEEEE
-        // todo PENDIENTEEEEE
-        // todo PENDIENTEEEEE
-        DTORegister regById = new DTORegister();// todo PENDIENTEEEEE admin.getRegById(this.TABLE_NAME, id);
-        if (regById != null){
-            edit_date_gly.setText(regById.getDate());
-            edit_value_gly.setText(String.valueOf(regById.getValue()));
-            edit_notes_gly.setText(regById.getNotes());
-        }else{
-            Toast.makeText(this,"Error editando registro", Toast.LENGTH_SHORT).show();
-        }
-    }
-
-
 
 
     // charts
@@ -385,21 +397,31 @@ public class RegGlyActivity extends AppCompatActivity implements View.OnClickLis
         });
         return dataSet;
     }
-    private void updateChartRegGly(ArrayList<Integer> reg_ids, ArrayList<String> reg_dates, ArrayList<Double> reg_values, ArrayList<String> reg_notes){
+
+
+    // utils dates
+    private String getStringShortDateForGraphs(Long dateInMilli){
+        Instant instant = Instant.ofEpochMilli(dateInMilli); // Crear un objeto Instant a partir de los milisegundos en Long
+        ZonedDateTime fechaHoraZona = instant.atZone(ZoneId.systemDefault()); // Convertir el Instant a una fecha y hora en la zona horaria predeterminada del sistema
+        DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("EE dd '-' HH:mm'hs'", Locale.ENGLISH); //Formatear la fecha y hora según el estilo // todo VERIFICAR IDIOMA DEL GRAFICO!!!
+        return fechaHoraZona.format(dateFormatter);// Obtener la fecha y hora formateada como una cadena para el grafico
+    }
+    private ArrayList<String> getStringShortDateForGraphs(ArrayList<Long> reg_dates){
+        //Edito los datos de fecha al formato corto, solo para graficos estilo Sun 23 - 06:40hs
+        ArrayList<String> shortDates = new ArrayList<>();
+        reg_dates.forEach(date-> shortDates.add(getStringShortDateForGraphs(date)));
+        return shortDates;
+    }
+    private void updateChartRegGly(ArrayList<Integer> reg_ids, ArrayList<Long> reg_dates, ArrayList<Double> reg_values, ArrayList<String> reg_notes){
         updateAllDataRegs(reg_ids,reg_dates, reg_values, reg_notes); // actualiza arrays de datos
         LineDataSet lineDataSet = new LineDataSet(createLineChartDataSet(), "Glucemia");
         ArrayList<ILineDataSet> iLineDataSets = new ArrayList<>();
         iLineDataSets.add(lineDataSet);
 
-        //Edito los datos de fecha al formato corto
-        ArrayList<String> formatedDates = new ArrayList<String>();
-        reg_gly_dates.forEach(date ->{ formatedDates.add(date);
-
-        });
         //Seteo el formateador para leyendas del eje X
         LineData lineData = new LineData(iLineDataSets);
         XAxis xAxis = lineChart.getXAxis();
-        xAxis.setValueFormatter(new DateAxisValueFormatter(formatedDates));
+        xAxis.setValueFormatter(new DateAxisValueFormatter(getStringShortDateForGraphs(reg_dates)));
 
         lineChart.setData(lineData);
         lineChart.invalidate();
@@ -420,8 +442,23 @@ public class RegGlyActivity extends AppCompatActivity implements View.OnClickLis
         lineChart.setPinchZoom(true); // permite zoom tactil
     }
 
-
     // popups
+    public void setTextEditRegPopup(int id){
+        // obtener posicion y con esa posicion buscar los valores almacenados en cada lista y setear datos de popup
+        Integer indexById = reg_gly_ids.indexOf(id);
+        String date = getStringShortDateForGraphs(reg_gly_dates.get(indexById));
+        Double value = reg_gly_values.get(indexById);
+        String notes = reg_gly_notes.get(indexById);
+        DTORegister regById = new DTORegister(date, value, notes);
+
+        if (regById != null){
+            edit_date_gly.setText(regById.getDate());
+            edit_value_gly.setText(String.valueOf(regById.getValue()));
+            edit_notes_gly.setText(regById.getNotes());
+        }else{
+            Toast.makeText(this,"Error cargando registro", Toast.LENGTH_SHORT).show();
+        }
+    }
     public void openPopupBtnEdit(int id_reg){
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setMessage("Editar registro de glucemia");
@@ -432,6 +469,16 @@ public class RegGlyActivity extends AppCompatActivity implements View.OnClickLis
         edit_date_gly = popupEditReg.findViewById(R.id.edit_date_gly);
 
         setTextEditRegPopup(id_reg); // esto es para setear los campos del popup con la info de la bd
+
+        edit_date_gly_btn = popupEditReg.findViewById(R.id.edit_date_gly_btn); // DATE PICKER
+        edit_date_gly = popupEditReg.findViewById(R.id.edit_date_gly); // DATE PICKER
+        edit_date_gly_btn.setOnClickListener(new View.OnClickListener() { // DATE PICKER
+            @Override
+            public void onClick(View v) {
+                showDatePickerDialogWithTime(edit_date_gly);
+            }
+        });
+
         builder.setPositiveButton("¡Editar!", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
                 updateRegRequest(id_reg); // toma los campos modificados y actualiza la bd
@@ -476,7 +523,7 @@ public class RegGlyActivity extends AppCompatActivity implements View.OnClickLis
         recordDateBtn.setOnClickListener(new View.OnClickListener() { // DATE PICKER
             @Override
             public void onClick(View v) {
-                showDatePickerDialogWithTime();
+                showDatePickerDialogWithTime(recordDateEditText);
             }
         });
 
@@ -521,7 +568,7 @@ public class RegGlyActivity extends AppCompatActivity implements View.OnClickLis
     }
 
     // date time picker
-    private void showDatePickerDialogWithTime() {
+    private void showDatePickerDialogWithTime(TextView editTextToSet) {
         // Primero muestro fecha, y despues que seleciona fecha, muestra horario
         DatePickerDialog datePickerDialog = new DatePickerDialog(RegGlyActivity.this,
                 new DatePickerDialog.OnDateSetListener() {
@@ -542,8 +589,7 @@ public class RegGlyActivity extends AppCompatActivity implements View.OnClickLis
                                         String minuteStr = String.format("%02d", minute);
                                         String time = hour + ":" + minuteStr;
                                         String dateTime = year + "-" + month + "-" + day + "T" + time;
-
-                                        recordDateEditText.setText(dateTime); // Mostrar la fecha y hora
+                                        editTextToSet.setText(dateTime); // Mostrar la fecha y hora
                                     }
                                 }, c.get(Calendar.HOUR_OF_DAY), c.get(Calendar.MINUTE), false);
                         timePickerDialog.show();// Mostrar el hora después de seleccionar la fecha
@@ -568,7 +614,7 @@ public class RegGlyActivity extends AppCompatActivity implements View.OnClickLis
         reg_gly_values.clear();
         reg_gly_notes.clear();
     }
-    private void updateAllDataRegs(ArrayList<Integer> reg_ids, ArrayList<String> reg_dates, ArrayList<Double> reg_values, ArrayList<String> reg_notes){
+    private void updateAllDataRegs(ArrayList<Integer> reg_ids, ArrayList<Long> reg_dates, ArrayList<Double> reg_values, ArrayList<String> reg_notes){
         cleanAllRegs();
         // SETEO DATA A LOS NUEVOS VALORES RECIBIDOS
         reg_gly_ids = reg_ids;
@@ -579,13 +625,6 @@ public class RegGlyActivity extends AppCompatActivity implements View.OnClickLis
     }
     private void updateReciclerView(){
         adapterRegGly.notifyDataSetChanged();
-    }
-    private String getStringDate(Long dateInMilli){
-        Instant instant = Instant.ofEpochMilli(dateInMilli); // Crear un objeto Instant a partir de los milisegundos en Long
-        ZonedDateTime fechaHoraZona = instant.atZone(ZoneId.systemDefault()); // Convertir el Instant a una fecha y hora en la zona horaria predeterminada del sistema
-        DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("EE dd '-' HH:mm'hs'", Locale.ENGLISH); //Formatear la fecha y hora según el estilo // todo VERIFICAR IDIOMA DEL GRAFICO!!!
-        return fechaHoraZona.format(dateFormatter);// Obtener la fecha y hora formateada como una cadena para el grafico
-
     }
     private String escapeBlankSpacesInComentario(String objectString){
         // por problemas para escapar espacios en blanco al serializar los comentarios, es que primero obtengo el string en guardado en comentario, reemplazo los espacios en blacos por **, luego serializo a clase Record y por ultimo elimino los **

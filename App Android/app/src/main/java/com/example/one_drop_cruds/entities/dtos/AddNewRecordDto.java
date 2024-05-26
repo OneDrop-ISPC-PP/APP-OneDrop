@@ -1,4 +1,4 @@
-package com.example.one_drop_cruds.entities.requests;
+package com.example.one_drop_cruds.entities.dtos;
 
 import java.util.Date;
 
