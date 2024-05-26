@@ -31,6 +31,7 @@ import com.example.one_drop_cruds.utils.DateHelper;
 import com.example.one_drop_cruds.utils.DateTimePickerDialog;
 import com.example.one_drop_cruds.utils.RetrofitHelper;
 import com.example.one_drop_cruds.utils.SharedPrefManager;
+import com.example.one_drop_cruds.utils.StringHelper;
 import com.example.one_drop_cruds.utils.ToastHelper;
 import com.example.one_drop_cruds.utils.UserSessionManager;
 import com.github.mikephil.charting.charts.LineChart;
@@ -53,21 +54,19 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class RegGlyActivity extends AppCompatActivity implements View.OnClickListener{
-    final Calendar c = Calendar.getInstance(); // Obtener la instancia actual del calendario
     DateTimePickerDialog datePicker;
     UserSessionManager userSessionManager;
     SharedPrefManager sharedPrefManager;
     String token;
     LoguedUserDetails loguedUser;
-    EditText add_value_gly, add_notes_gly, add_date_gly;
-    EditText edit_value_gly, edit_notes_gly;
+    EditText add_value_gly, add_notes_gly, add_date_gly, edit_value_gly, edit_notes_gly;
     FloatingActionButton float_btn_add_reg_gly;
 
     // RECICLER VIEW
     RecyclerView rv1;
     AdapterRegGly adapterRegGly;
 
-    //DATA
+    // DATA
     ArrayList<Integer> reg_gly_ids = new ArrayList<Integer>();
     ArrayList<Long> reg_gly_dates = new ArrayList<Long>();
     ArrayList<Double> reg_gly_values = new ArrayList<Double>();
@@ -76,10 +75,10 @@ public class RegGlyActivity extends AppCompatActivity implements View.OnClickLis
     // GRAPHS
     LineChart lineChart;
 
-    // TODO DATE PICKER
+    // DATE PICKER
     private Button recordDateBtn;
     private TextView recordDateEditText, edit_date_gly;
-    // TODO DATE PICKER
+
 
     // paginado de resultados
     private Button btn_first_page, btn_prev_page, btn_next_page, btn_last_page, edit_date_gly_btn;
@@ -219,11 +218,11 @@ public class RegGlyActivity extends AppCompatActivity implements View.OnClickLis
         Gson gson = new Gson();
         for (int i = 0; i <recordsObjects.size(); i++){
             try {
-                Record record = gson.fromJson( escapeBlankSpacesInComentario(recordsObjects.get(i).toString()), Record.class);
+                Record record = gson.fromJson( StringHelper.escapeBlankSpacesInComentario(recordsObjects.get(i).toString()), Record.class);
                 reg_ids.add(record.getId());
-                reg_dates.add(record.getFecha()); // todo modifiiiiiii obtiene fecha en milisegundos en un dato Long y lo convierte a un string del estilo Sun 02:44hs
+                reg_dates.add(record.getFecha());
                 reg_values.add(record.getValor());
-                reg_notes.add(record.getComentario().replace("**", " "));
+                reg_notes.add( StringHelper.restoreBlankSpacesInComentario(record.getComentario()));
             } catch (Exception e){
                 // todo pendiente de manejar
             }
@@ -565,11 +564,6 @@ public class RegGlyActivity extends AppCompatActivity implements View.OnClickLis
     }
     private void updateReciclerView(){
         adapterRegGly.notifyDataSetChanged();
-    }
-    private String escapeBlankSpacesInComentario(String objectString){
-        // por problemas para escapar espacios en blanco al serializar los comentarios, es que primero obtengo el string en guardado en comentario, reemplazo los espacios en blacos por **, luego serializo a clase Record y por ultimo elimino los **
-        String onlyComentario =  objectString.split("comentario=")[1].replace(" ", "**");
-        return objectString.split("comentario")[0]+"comentario="+ onlyComentario; //junto el string antes de serializar
     }
 
     // navegacion
