@@ -81,7 +81,7 @@
         <!-- DESCRIPCION SERVICIO -->  
           <div class="col-lg-12 bg-light ">
             <h5 class="text-center p-3">Descripcion</h5>
-            <input formControlName="descripcion" class="controls text-dark" type="text" name="nombres" id="nombres">
+            <textarea formControlName="descripcion" class="controls text-dark" type="tex" name="nombres" id="nombres"> </textarea>
           
                   <!-- verificacion -->  
                   <div *ngIf="descripcion_servicio_GET.invalid && (descripcion_servicio_GET.dirty || descripcion_servicio_GET.touched)"
@@ -98,7 +98,7 @@
         <!-- COMENTARIO SERVICIO -->  
           <div class="col-lg-12  bg-light ">
             <h5 class="text-center p-3">Comentarios</h5>
-            <input formControlName="comentarios" class="controls text-dark" type="text" name="nombres" id="nombres">
+            <textarea formControlName="comentarios" class="controls text-dark" type="text" name="nombres" id="nombres"></textarea>
           
                     <!-- verificacion   --> 
                     <div *ngIf="comentarios_servicio_GET.invalid && (comentarios_servicio_GET.dirty || comentarios_servicio_GET.touched)"

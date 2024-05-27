@@ -54,16 +54,14 @@ export class ModNotaUsuarioComponent implements OnInit {
   update(){
     this.serv_estadistica.UPDATE_NOTA_GLUCEMIA(this.nota,this.dataid).subscribe(
       (data)=>{
-      this.router.navigate(["auth/dash_user"])
+      this.router.navigate(["auth/dash_user/info_glucemia"])
       console.log("La nota se modifico con exito")
       console.log(data)},
 
       (error) => {
         console.log("La nota NO se modifico con exito")
         console.log(error)}
-      
     )
-
 
   }
 

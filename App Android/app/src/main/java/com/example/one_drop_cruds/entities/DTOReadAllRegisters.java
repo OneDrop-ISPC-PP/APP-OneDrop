@@ -42,4 +42,14 @@ public class DTOReadAllRegisters {
     public void setReg_notes(ArrayList<String> reg_notes) {
         this.reg_notes = reg_notes;
     }
+
+    @Override
+    public String toString() {
+        return "DTOReadAllRegisters{" +
+                "reg_ids=" + reg_ids +
+                ", reg_dates=" + reg_dates +
+                ", reg_values=" + reg_values +
+                ", reg_notes=" + reg_notes +
+                '}';
+    }
 }

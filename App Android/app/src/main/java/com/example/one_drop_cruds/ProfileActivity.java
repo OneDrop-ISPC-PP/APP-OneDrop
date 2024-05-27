@@ -108,6 +108,8 @@ public class ProfileActivity extends AppCompatActivity {
                 .client(httpClient.build())
                 .build();
         AuthRequests authRequest = retrofit.create(AuthRequests.class);
+
+
         Call<FichaMedicaUsuario> call = authRequest.getFichaMedicaUsuario(loguedUser.getId());
         call.enqueue(new Callback<FichaMedicaUsuario>() {
             @Override

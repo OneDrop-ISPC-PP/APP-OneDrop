@@ -1,0 +1,225 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version last-->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="ReporteOneDrop" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="7ff43bd8-8d37-4e3a-9a5a-74596c5fdaf4">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
+	<subDataset name="dataSetGlucemia" uuid="c3ea4a5c-d3a2-4caf-90ea-e87dac953e8a">
+		<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
+		<queryString>
+			<![CDATA[]]>
+		</queryString>
+		<field name="fecha" class="java.util.Date"/>
+		<field name="valor" class="java.lang.Double"/>
+	</subDataset>
+	<subDataset name="dataSetTension" uuid="e5c9f0d8-46bd-404d-ac22-147ac574f9bd">
+		<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
+		<queryString>
+			<![CDATA[]]>
+		</queryString>
+		<field name="fecha" class="java.util.Date">
+			<fieldDescription><![CDATA[fecha]]></fieldDescription>
+		</field>
+		<field name="diastolica" class="java.lang.Integer">
+			<fieldDescription><![CDATA[diastolica]]></fieldDescription>
+		</field>
+		<field name="sistolica" class="java.lang.Integer">
+			<fieldDescription><![CDATA[sistolica]]></fieldDescription>
+		</field>
+	</subDataset>
+	<subDataset name="dataSetPeso" uuid="e0842f60-3aa3-4b30-990a-be877889a266">
+		<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
+		<queryString>
+			<![CDATA[]]>
+		</queryString>
+		<field name="fecha" class="java.util.Date">
+			<fieldDescription><![CDATA[fecha]]></fieldDescription>
+		</field>
+		<field name="valor" class="java.lang.Double">
+			<fieldDescription><![CDATA[valor]]></fieldDescription>
+		</field>
+	</subDataset>
+	<parameter name="logoPrincipal" class="java.io.InputStream"/>
+	<parameter name="tituloPrincipal" class="java.lang.String"/>
+	<parameter name="textoFichaMedica" class="java.lang.String"/>
+	<parameter name="dataSetGlucemia" class="net.sf.jasperreports.engine.data.JRBeanCollectionDataSource"/>
+	<parameter name="dataSetTension" class="net.sf.jasperreports.engine.data.JRBeanCollectionDataSource"/>
+	<parameter name="dataSetPeso" class="net.sf.jasperreports.engine.data.JRBeanCollectionDataSource">
+		<parameterDescription><![CDATA[dataSetPeso]]></parameterDescription>
+	</parameter>
+	<queryString>
+		<![CDATA[]]>
+	</queryString>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="92" splitType="Stretch">
+			<rectangle radius="5">
+				<reportElement x="0" y="0" width="554" height="92" uuid="c1d5fcee-f215-4f17-8832-e3d292630c79"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="427" y="-10" width="49" height="20" uuid="cddf4a19-b456-4425-a7c5-ad8dd169aa90"/>
+				<textElement textAlignment="Center">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Impresion: ]]></text>
+			</staticText>
+			<textField pattern="MMMMM dd, yyyy">
+				<reportElement x="477" y="-10" width="78" height="20" uuid="c9646d73-32f5-49bb-a986-2cc22c4de111"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="10" y="30" width="417" height="54" uuid="0f3ac21e-c5a7-4a58-af67-27657458a6d4"/>
+				<box padding="5">
+					<topPen lineWidth="0.2" lineStyle="Solid" lineColor="#8F8C8C"/>
+					<leftPen lineWidth="0.2" lineStyle="Solid" lineColor="#8F8C8C"/>
+					<bottomPen lineWidth="0.2" lineStyle="Solid" lineColor="#8F8C8C"/>
+					<rightPen lineWidth="0.2" lineStyle="Solid" lineColor="#8F8C8C"/>
+				</box>
+				<textElement>
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{textoFichaMedica}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="10" y="10" width="417" height="20" uuid="9b3eff69-2771-4dca-a247-b462a22de126"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{tituloPrincipal}]]></textFieldExpression>
+			</textField>
+			<image scaleImage="FillFrame" hAlign="Center" vAlign="Middle" onErrorType="Blank">
+				<reportElement x="427" y="1" width="127" height="40" backcolor="rgba(191, 225, 255, 0.0)" uuid="97e79380-96b2-4fa7-b4ee-64e3debe72b7"/>
+				<box leftPadding="0">
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<imageExpression><![CDATA[$P{logoPrincipal}]]></imageExpression>
+			</image>
+		</band>
+	</title>
+	<detail>
+		<band height="455" splitType="Stretch">
+			<staticText>
+				<reportElement x="-1" y="12" width="556" height="20" uuid="5ae4f859-dcd0-4842-8022-9583c214ee03"/>
+				<textElement textAlignment="Left">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Registros de Glucemia]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="160" width="554" height="20" uuid="3690c987-10fe-4e20-a19d-ddc7f7f2461e"/>
+				<textElement textAlignment="Left">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Registros de Tension Arterial]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="290" width="556" height="20" uuid="ffb4c875-baca-418e-9ca2-2ff829f59d8f"/>
+				<textElement textAlignment="Left">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Registros de Peso]]></text>
+			</staticText>
+			<timeSeriesChart>
+				<chart evaluationTime="Report">
+					<reportElement x="-1" y="30" width="557" height="120" uuid="d3a14d7a-431a-43d8-956e-9d32f45a2427"/>
+					<chartTitle/>
+					<chartSubtitle/>
+					<chartLegend/>
+				</chart>
+				<timeSeriesDataset timePeriod="Minute">
+					<dataset>
+						<datasetRun subDataset="dataSetGlucemia" uuid="85b57863-e2a2-459c-b285-65a9b191c050">
+							<dataSourceExpression><![CDATA[$P{dataSetGlucemia}]]></dataSourceExpression>
+						</datasetRun>
+					</dataset>
+					<timeSeries>
+						<seriesExpression><![CDATA["Valor glucemia"]]></seriesExpression>
+						<timePeriodExpression><![CDATA[$F{fecha}]]></timePeriodExpression>
+						<valueExpression><![CDATA[$F{valor}]]></valueExpression>
+					</timeSeries>
+				</timeSeriesDataset>
+				<timeSeriesPlot>
+					<plot/>
+					<timeAxisFormat>
+						<axisFormat/>
+					</timeAxisFormat>
+					<valueAxisFormat>
+						<axisFormat/>
+					</valueAxisFormat>
+				</timeSeriesPlot>
+			</timeSeriesChart>
+			<timeSeriesChart>
+				<chart evaluationTime="Report">
+					<reportElement x="0" y="180" width="557" height="120" uuid="3041de36-84c0-4efd-a853-9dc7f30ae40d"/>
+					<chartTitle/>
+					<chartSubtitle/>
+					<chartLegend/>
+				</chart>
+				<timeSeriesDataset timePeriod="Hour">
+					<dataset>
+						<datasetRun subDataset="dataSetTension" uuid="55cf5d32-5b2a-4c33-bd19-88d7c63ef005">
+							<dataSourceExpression><![CDATA[$P{dataSetTension}]]></dataSourceExpression>
+						</datasetRun>
+					</dataset>
+					<timeSeries>
+						<seriesExpression><![CDATA["Sistolica"]]></seriesExpression>
+						<timePeriodExpression><![CDATA[$F{fecha}]]></timePeriodExpression>
+						<valueExpression><![CDATA[$F{sistolica}]]></valueExpression>
+					</timeSeries>
+					<timeSeries>
+						<seriesExpression><![CDATA["Diastolica"]]></seriesExpression>
+						<timePeriodExpression><![CDATA[$F{fecha}]]></timePeriodExpression>
+						<valueExpression><![CDATA[$F{diastolica}]]></valueExpression>
+					</timeSeries>
+				</timeSeriesDataset>
+				<timeSeriesPlot>
+					<plot/>
+					<timeAxisFormat>
+						<axisFormat/>
+					</timeAxisFormat>
+					<valueAxisFormat>
+						<axisFormat/>
+					</valueAxisFormat>
+				</timeSeriesPlot>
+			</timeSeriesChart>
+			<timeSeriesChart>
+				<chart evaluationTime="Report">
+					<reportElement x="-1" y="310" width="557" height="120" uuid="e3a713e0-22b1-42a1-a316-6aa0e27da20a"/>
+					<chartTitle/>
+					<chartSubtitle/>
+					<chartLegend/>
+				</chart>
+				<timeSeriesDataset timePeriod="Minute">
+					<dataset>
+						<datasetRun subDataset="dataSetPeso" uuid="f1b69b35-9161-40a4-aed5-d9bde38423f7">
+							<dataSourceExpression><![CDATA[$P{dataSetPeso}]]></dataSourceExpression>
+						</datasetRun>
+					</dataset>
+					<timeSeries>
+						<seriesExpression><![CDATA["Peso"]]></seriesExpression>
+						<timePeriodExpression><![CDATA[$F{fecha}]]></timePeriodExpression>
+						<valueExpression><![CDATA[$F{valor}]]></valueExpression>
+					</timeSeries>
+				</timeSeriesDataset>
+				<timeSeriesPlot>
+					<plot/>
+					<timeAxisFormat>
+						<axisFormat/>
+					</timeAxisFormat>
+					<valueAxisFormat>
+						<axisFormat/>
+					</valueAxisFormat>
+				</timeSeriesPlot>
+			</timeSeriesChart>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+</jasperReport>

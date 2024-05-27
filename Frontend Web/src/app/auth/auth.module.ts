@@ -25,6 +25,11 @@ import {MatButtonModule} from '@angular/material/button';
 import { ModPacienteAdminComponent } from './mod-paciente-admin/mod-paciente-admin.component';
 import { ModNotaPesoUsuarioComponent } from './mod-nota-peso-usuario/mod-nota-peso-usuario.component';
 import { ModNotaTensionUsuarioComponent } from './mod-nota-tension-usuario/mod-nota-tension-usuario.component';
+import { BienvenidaDashUserComponent } from './dashboard-usuario/bienvenida-dash-user/bienvenida-dash-user.component';
+import { InfoGlucemiaDashUserComponent } from './dashboard-usuario/info-glucemia-dash-user/info-glucemia-dash-user.component';
+import { InfoPesoDashUserComponent } from './dashboard-usuario/info-peso-dash-user/info-peso-dash-user.component';
+import { InfoTensionDashUserComponent } from './dashboard-usuario/info-tension-dash-user/info-tension-dash-user.component';
+import { ServiciosDashUserComponent } from './dashboard-usuario/servicios-dash-user/servicios-dash-user.component';
 
 
 
@@ -47,6 +52,11 @@ import { ModNotaTensionUsuarioComponent } from './mod-nota-tension-usuario/mod-n
     ModPacienteAdminComponent,
     ModNotaPesoUsuarioComponent,
     ModNotaTensionUsuarioComponent,
+    BienvenidaDashUserComponent,
+    InfoGlucemiaDashUserComponent,
+    InfoPesoDashUserComponent,
+    InfoTensionDashUserComponent,
+    ServiciosDashUserComponent,
 
   ],
   imports: [

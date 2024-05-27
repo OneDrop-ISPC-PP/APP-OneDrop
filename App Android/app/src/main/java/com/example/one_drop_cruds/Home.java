@@ -151,11 +151,6 @@ public class Home extends AppCompatActivity {
         startActivity(siguiente);
     }
 
-    public void aRegistrarAnalisis(View v){
-        Intent siguiente = new Intent(this, RegistoAnalisis.class);
-        startActivity(siguiente);
-    }
-
     public void toWeight(View v) {
         Intent weight = new Intent(this, RegWeightActivity.class);
         startActivity(weight);
