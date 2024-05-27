@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/linearLayout"
     android:layout_width="match_parent"
-    android:background="@color/white"
+    android:background="@drawable/fondosinlogo"
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".RegGlyActivity">
@@ -25,21 +25,26 @@
         <!-- ======================== -->
         <!--  Contenedor explicativo -->
 
+        <!-- ======================== -->
+
+
+        <!-- Nuevo Registro -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:paddingVertical="70dp"
-            android:background="@color/pinkonedrop2"
+
             >
 
             <!-- Titulo -->
+
+            <!-- Descripcion -->
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="150dp"
                 android:layout_weight="1"
-                android:orientation="vertical"
-                android:background="@color/pinkonedrop">
+                android:orientation="vertical">
 
                 <TextView
 
@@ -48,6 +53,7 @@
                     android:layout_height="match_parent"
                     android:layout_marginHorizontal="10dp"
                     android:layout_marginVertical="30dp"
+                    android:background="@color/pinkonedrop"
                     android:fontFamily="sans-serif-condensed"
                     android:gravity="center"
                     android:text="@string/title_crud_gly"
@@ -57,36 +63,40 @@
 
             </LinearLayout>
 
-            <!-- Descripcion -->
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="150dp"
                 android:layout_weight="1"
-                android:orientation="vertical"
-                android:background="@color/white">
+                android:orientation="vertical">
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginHorizontal="10dp"
                     android:layout_marginVertical="30dp"
+                    android:background="@color/pinkonedrop"
                     android:fontFamily="sans-serif-condensed"
                     android:gravity="center"
                     android:text="@string/description_gly"
-                    android:textColor="@color/blackonedrop"
-                    android:textSize="18dp" />
+                    android:textColor="@color/celeste_fondo"
+                    android:textSize="18dp"
+                    app:cornerRadius="5dp" />
             </LinearLayout>
 
         </LinearLayout>
-        <!-- ======================== -->
 
+        <ImageView
+            android:id="@+id/imageView6"
+            android:layout_width="match_parent"
+            android:layout_height="35dp"
+            app:srcCompat="@drawable/droplogocentrado" />
 
-        <!-- Nuevo Registro -->
         <com.github.mikephil.charting.charts.LineChart
             android:id="@+id/glyLineChart"
             android:layout_width="match_parent"
             android:layout_height="250dp"
-            android:layout_margin="10dp" />
+            android:layout_margin="10dp"
+            android:background="@color/celeste_fondo"/>
 
 
         <!-- botones paginacion -->
@@ -96,7 +106,7 @@
             android:layout_height="wrap_content"
             android:text="BOTONES DE PAGINACION DE RESULTADOOOOOS"
             android:textAlignment="center"
-            android:textColor="#F10C0C"
+            android:textColor="#3F51B5"
             android:textStyle="bold" />
 
         <LinearLayout
@@ -106,13 +116,14 @@
             android:orientation="horizontal"
             android:paddingStart="15dp">
 
-            <Button
+              <Button
                 android:id="@+id/btn_first_page"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:onClick="goToFirstPage"
                 android:padding="0dp"
-                android:text="1er" />
+                android:text="1er"
+                android:backgroundTint="@color/accent_blue"/>
 
             <Button
                 android:id="@+id/btn_prev_page"
@@ -120,14 +131,16 @@
                 android:layout_height="40dp"
                 android:onClick="goToPrevPage"
                 android:padding="0dp"
-                android:text="prev" />
+                android:text="prev"
+                android:backgroundTint="@color/accent_blue"/>
 
             <Spinner
                 android:id="@+id/spinnerPageSize"
                 android:layout_width="40dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:gravity="center_horizontal" />
+                android:gravity="center_horizontal"
+                android:background="@color/accent_pink"/>
 
             <Button
                 android:id="@+id/btn_next_page"
@@ -135,7 +148,8 @@
                 android:layout_height="40dp"
                 android:padding="0dp"
                 android:onClick="goToNextPage"
-                android:text="sig" />
+                android:text="sig"
+                android:backgroundTint="@color/accent_blue"/>
 
             <Button
                 android:id="@+id/btn_last_page"
@@ -143,7 +157,8 @@
                 android:layout_height="40dp"
                 android:padding="0dp"
                 android:onClick="goToLastPage"
-                android:text="Ult" />
+                android:text="Ult"
+                android:backgroundTint="@color/accent_blue"/>
         </LinearLayout>
 
         <!-- botones paginacion -->
@@ -152,14 +167,14 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:background="@color/pinkonedrop2"
+
             android:padding="10dp">
 
 
             <!-- BOTON FLOTANTE     -->
             <TextView
                 android:id="@+id/textView8"
-                android:layout_width="0dp"
+                android:layout_width="20dp"
                 android:layout_height="match_parent"
                 android:layout_weight="3"
                 android:fontFamily="sans-serif-condensed"
@@ -167,19 +182,21 @@
                 android:text="@string/new_crud_gly"
                 android:textColor="@color/white"
                 android:textSize="24dp"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:background="@color/pinkonedrop2"/>
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton
                 android:id="@+id/float_btn_add_reg_gly"
                 android:layout_width="0dp"
-                android:layout_weight="1"
                 android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:layout_margin="5dp"
                 android:clickable="true"
+                android:gravity="center"
                 android:onClick="openPopupAddReg"
-                app:background="@color/pinkonedrop2"
                 android:textAlignment="center"
-                app:srcCompat="@android:drawable/ic_input_add"
-                android:gravity="center"/>
+                app:backgroundTint="@color/ic_launcher_background"
+                app:srcCompat="@android:drawable/ic_input_add" />
 
         </LinearLayout>
 
@@ -252,13 +269,13 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:background="@color/blueonedroposcuro"
         android:layout_weight="1">
 
         <Button
             android:id="@+id/btn_home_pressure"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_margin="10dp"
             android:backgroundTint="@color/blueonedroposcuro"
             android:fontFamily="sans-serif-condensed"
             android:onClick="toHome"

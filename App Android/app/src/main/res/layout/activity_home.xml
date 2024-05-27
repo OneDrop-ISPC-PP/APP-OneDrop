@@ -209,10 +209,11 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginVertical="10dp"
-                        android:fontFamily="sans-serif-condensed" android:text="¿DUDAS?"
+                        android:layout_marginVertical="3dp"
+                        android:fontFamily="sans-serif-condensed"
+                        android:text="¿DUDAS?"
                         android:textColor="@color/blueonedroposcuro"
-                        android:textSize="20sp"
+                        android:textSize="22dp"
                         android:textStyle="bold" />
 
                     <LinearLayout
@@ -256,9 +257,8 @@
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_weight="1"
-
+        android:layout_margin="4dp"
         android:orientation="vertical"
-        android:background="@color/white"
         >
 
 
@@ -272,12 +272,12 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="20"
-            android:orientation="horizontal"
-            android:layout_marginHorizontal="20dp"
+            android:layout_height="wrap_content"
             android:layout_margin="10dp"
-            android:background="@color/white">
+            android:layout_marginHorizontal="20dp"
+            android:layout_weight="20"
+            android:background="@color/white"
+            android:orientation="horizontal">
 
             <Button
                 android:id="@+id/button3"
@@ -293,16 +293,18 @@
                 android:paddingVertical="0dp"
                 android:text="Mi Perfil"
                 android:textColor="@color/celeste_fondo"
-                android:textStyle="bold"
                 android:textSize="13sp"
+                android:textStyle="bold"
                 app:cornerRadius="10dp" />
 
-        <ImageView
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="2"
-
-            />
+            <Button
+                android:id="@+id/button2"
+                android:layout_width="0dp"
+                android:layout_height="70dp"
+                android:layout_margin="5dp"
+                android:layout_weight="1"
+                android:backgroundTint="@color/blueonedrop"
+                android:text="Ingresa a nuestra web" />
 
             <Button
                 android:id="@+id/button_logout"
@@ -317,14 +319,14 @@
                 android:layoutDirection="locale"
                 android:onClick="logout"
                 android:padding="0dp"
-                android:textStyle="bold"
                 android:text="Cerrar Sesión"
                 android:textColor="@color/celeste_fondo"
                 android:textSize="13sp"
+                android:textStyle="bold"
 
                 app:cornerRadius="10dp" />
 
-    </LinearLayout>
+        </LinearLayout>
     </LinearLayout>
 
 

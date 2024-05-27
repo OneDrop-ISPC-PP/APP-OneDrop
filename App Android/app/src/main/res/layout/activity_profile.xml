@@ -9,14 +9,12 @@
     tools:context=".RegWeightActivity">
 
 
-
-
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
 
-        android:orientation="vertical"
         android:layout_marginTop="120dp"
+        android:orientation="vertical"
         android:padding="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
         tools:context=".UserSignupActivity"
@@ -223,7 +221,6 @@
 
             <EditText
                 android:id="@+id/signup_comorbilidades"
-                android:inputType="textMultiLine|textNoSuggestions"
                 android:layout_width="280dp"
                 android:layout_height="51dp"
                 android:layout_gravity="center"
@@ -233,12 +230,11 @@
                 android:drawablePadding="8dp"
                 android:fontFamily="sans-serif-condensed"
                 android:hint="@string/f_m_comorbilidades"
+                android:inputType="textMultiLine|textNoSuggestions"
                 android:padding="8dp"
                 android:textColor="@color/blackonedrop"
                 android:textSize="20dp"
                 android:textStyle="bold" />
-
-
 
 
             <LinearLayout
