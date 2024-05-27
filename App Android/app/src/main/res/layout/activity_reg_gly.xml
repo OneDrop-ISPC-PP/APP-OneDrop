@@ -80,15 +80,16 @@
         </LinearLayout>
         <!-- ======================== -->
 
+
+        <!-- Nuevo Registro -->
         <com.github.mikephil.charting.charts.LineChart
             android:id="@+id/glyLineChart"
             android:layout_width="match_parent"
             android:layout_height="250dp"
-            android:layout_margin="10dp"/>
+            android:layout_margin="10dp" />
 
 
-
-        <!-- Nuevo Registro -->
+        <!-- botones paginacion -->
         <TextView
             android:id="@+id/textView3"
             android:layout_width="match_parent"
@@ -144,6 +145,8 @@
                 android:onClick="goToLastPage"
                 android:text="Ult" />
         </LinearLayout>
+
+        <!-- botones paginacion -->
 
         <LinearLayout
             android:layout_width="match_parent"

@@ -427,9 +427,10 @@ public class RegGlyActivity extends AppCompatActivity implements View.OnClickLis
             edit_value_gly.setText(String.valueOf(regById.getValue()));
             edit_notes_gly.setText(regById.getNotes());
         }else{
-            Toast.makeText(this,"Error cargando registro", Toast.LENGTH_SHORT).show();
+            toastHelper.showShort("Error cargando registro");
         }
     }
+
     public void openPopupBtnEdit(int id_reg){
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setMessage("Editar registro de glucemia");
@@ -463,6 +464,7 @@ public class RegGlyActivity extends AppCompatActivity implements View.OnClickLis
         });
         builder.create().show();
     }
+
     public void openPopupBtnDel(int id_reg){
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setMessage("¿Eliminar este registro?");

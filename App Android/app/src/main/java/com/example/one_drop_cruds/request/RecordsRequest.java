@@ -35,4 +35,19 @@ public interface RecordsRequest {
 
 
 
+    @GET("/registros/peso/usuario/{userId}")
+    Call<RecordsPaginatedReadDtoArray> getAllWeightRecordsByIdUser (
+            @Path("userId") int userId,
+            @Query("size") int pageSize,
+            @Query("page") int pageNumber);
+
+
+    @POST("/registros/peso/usuario/{userId}")
+    Call<RecordReadDto> addNewWeightRecord (@Path("userId") int userId, @Body AddNewRecordDto addNewRecordDto);
+    @PUT("/registros/peso/{id}")
+    Call<RecordReadDto> editWeightRecord (@Path("id") int idRegistro, @Body AddNewRecordDto updateRecordDto);
+
+    @DELETE("/registros/peso/{id}")
+    Call<RecordReadDto> deleteWeightRecord (@Path("id") int idRegistro);
+
 }
