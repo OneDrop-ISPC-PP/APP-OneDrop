@@ -287,4 +287,9 @@ public class Home extends AppCompatActivity {
         }
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
+    public void openWebUrl(View view) {
+        Uri uri = Uri.parse("https://www.onedrop.com");
+        Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+        startActivity(intent);
+    }
 }
