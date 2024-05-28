@@ -37,9 +37,11 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class UserSignupActivity extends AppCompatActivity {
     SharedPrefManager sharedPrefManager;
     ActivityUserSignupBinding binding;
-    AdminSQLiteOpenHelper adminBD;
     EditText signup_email, signup_password , signup_confirm, signup_username, signup_name, signup_last_name, signup_phone, signup_sex, signup_dni ;
     String baseUrl = new BackendUrl().getBackendUrl();
+
+    // todo eliminar esto saltar
+    public Button saltar;
 
 
     // TODO DATE PICKER
@@ -53,7 +55,7 @@ public class UserSignupActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = ActivityUserSignupBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-        adminBD = new AdminSQLiteOpenHelper(this, "bd_one_drop", null, 1); // version es para las futuras modificaciones de la estructura de la bd
+
         sharedPrefManager = new SharedPrefManager(getApplicationContext() , "oneDrop_shared_preferences");
 
         signup_email = findViewById(R.id.signup_email);
@@ -75,8 +77,14 @@ public class UserSignupActivity extends AppCompatActivity {
                 showDatePickerDialog();
             }
         });
-
     }
+
+    // todo eliminar esto
+    public void saltar(View v){
+        Intent weight = new Intent(this, UserMedicalData.class);
+        startActivity(weight);
+    }
+
     // DATE PICKER
     private void showDatePickerDialog() {
         final Calendar c = Calendar.getInstance();
@@ -126,7 +134,7 @@ public class UserSignupActivity extends AppCompatActivity {
                     // Obtener token de la resp y guardarlo en shared pref
                     String token = response.body().getToken();
                     sharedPrefManager.setUserToken(token);
-                    Intent intent = new Intent(getApplicationContext(), Home.class);
+                    Intent intent = new Intent(getApplicationContext(), UserMedicalData.class);
                     startActivity(intent);
                     Toast.makeText(getApplicationContext(), "Registro exitoso!", Toast.LENGTH_LONG).show();
                 } else if (response.errorBody()!= null){

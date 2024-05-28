@@ -1,6 +1,5 @@
 package com.pisis.oneDrop.model.dtos.fichaMedica;
 
-import com.pisis.oneDrop.auth.dtos.UserReadDto;
 import com.pisis.oneDrop.auth.entities.User;
 import com.pisis.oneDrop.model.entities.enums.*;
 import lombok.AllArgsConstructor;

@@ -260,15 +260,15 @@ public class RegWeightActivity extends AppCompatActivity implements View.OnClick
         if(newDate.equals("")) newDate = dateHelper.dateNowInBackendFormat();
 
         AddNewRecordDto newRecordDto = new AddNewRecordDto(newDate, Double.valueOf(add_value_weight.getText().toString()), add_notes_weight.getText().toString());
-        Call<RecordReadDto> call = recordRequest.addNewWeightRecord(loguedUser.getId(), newRecordDto);
+        Call<RecordReadDto> call = recordRequest.addNewWeightRecord(sharedPrefManager.getFichaMedicaUser().getId(), newRecordDto);
         call.enqueue(new Callback<RecordReadDto>() {
             @Override
             public void onResponse(Call<RecordReadDto> call, Response<RecordReadDto> response) {
                 if(response.isSuccessful() && response.body() != null){
                     cleanEditTextFields();
                     refreshRegsRequest(pageSize, pageNumber);   // actualiza array de regs, recicler y grafico
-                    rv1.smoothScrollToPosition(reg_weight_ids.size()-1); // mueve la vista al ultimo elemento agregado
-                    toastHelper.showLong("Se agrego registro de glucemia");
+                    rv1.smoothScrollToPosition(reg_weight_ids.size() != 0? reg_weight_ids.size()-1 : 0); // mueve la vista al ultimo elemento agregado
+                    toastHelper.showLong("Se agrego registro de peso");
                 } else if (response.code()==400){
                     // todo pendiente de manejar
                     System.out.println(" DTOReadAllRegisters response.code()==400  *********");

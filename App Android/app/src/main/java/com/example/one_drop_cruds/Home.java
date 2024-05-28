@@ -26,12 +26,16 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.one_drop_cruds.entities.user.AuthResponse;
+import com.example.one_drop_cruds.entities.user.FichaMedicaUsuario;
 import com.example.one_drop_cruds.entities.user.LoginRequest;
 import com.example.one_drop_cruds.entities.user.LoguedUserDetails;
 import com.example.one_drop_cruds.request.AuthRequests;
+import com.example.one_drop_cruds.request.RecordsRequest;
 import com.example.one_drop_cruds.utils.BackendUrl;
 import com.example.one_drop_cruds.utils.FilesManager;
+import com.example.one_drop_cruds.utils.RetrofitHelper;
 import com.example.one_drop_cruds.utils.SharedPrefManager; // Importa la clase SharedPrefManager
+import com.example.one_drop_cruds.utils.UserSessionManager;
 
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -44,34 +48,34 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 
 public class Home extends AppCompatActivity {
+    UserSessionManager userSessionManager;
     SharedPrefManager sharedPrefManager;
     TextView textView_welcome;
     FilesManager filesManager;
     WebView webview;
     String baseUrl = new BackendUrl().getBackendUrl();
+    String token;
+    LoguedUserDetails loguedUser;
+    AuthRequests authRequest;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
-
         webview = (WebView) findViewById(R.id.web_tip);
         webview.loadUrl("https://davidcosta92.github.io/noticias_one_drop/");
-
         textView_welcome = findViewById(R.id.textView_welcome);
-        sharedPrefManager = new SharedPrefManager(getApplicationContext(), "oneDrop_shared_preferences");
 
-        String token = sharedPrefManager.getUserToken();
+        // user sessions
+        userSessionManager = new UserSessionManager(Home.this);
+        sharedPrefManager = new SharedPrefManager(Home.this, "oneDrop_shared_preferences");
+        token = sharedPrefManager.getUserToken();
+        getLoguedUserDetails(token);
 
-        if (token == null) {
-            // Si el usuario no ha iniciado sesión, redirige a la actividad de inicio de sesión
-            Intent loginIntent = new Intent(this, UserLoginActivity.class);
-            startActivity(loginIntent);
-            finish(); // Cierra la actividad actual
-        } else {
-            getLoguedUserDetails(token);
-        }
+        // request, Crea helper con el jwt, inicializa retrofit y crea RecordsRequest, para hacer solicitudes
+        authRequest = new RetrofitHelper(token).getRetrofitHelperWithToken().create(AuthRequests.class);
 
-        filesManager = new FilesManager(getApplicationContext(), this);
+        filesManager = new FilesManager(Home.this, this);
         this.askForPermissionsStorage();
 
         // Agrega la funcionalidad para cerrar sesión
@@ -132,6 +136,8 @@ public class Home extends AppCompatActivity {
             public void onResponse(Call<LoguedUserDetails> call, Response<LoguedUserDetails> response) {
                 if(response.isSuccessful() && response.body() != null){
                     // Obtener datos del usuario de la resp y guardarlo en shared pref como un objeto json
+                    loguedUser = response.body();
+                    getFichaMedicaUsuario();
                     sharedPrefManager.setLoguedUser(response.body());
                     textView_welcome.setText("Bienvenido, " + response.body().getUsername());
                 } else if (response.code()==400){
@@ -144,7 +150,34 @@ public class Home extends AppCompatActivity {
             }
         });
     }
-
+    private void getFichaMedicaUsuario(){
+        Call<FichaMedicaUsuario> call = authRequest.getFichaMedicaUsuario(loguedUser.getId());
+        call.enqueue(new Callback<FichaMedicaUsuario>() {
+            @Override
+            public void onResponse(Call<FichaMedicaUsuario> call, Response<FichaMedicaUsuario> response) {
+                if(response.isSuccessful() && response.body() != null){
+                    sharedPrefManager.setFichaMedicaUser(response.body());// Obtener datos de ficha medica y guardarlo en shared
+                    System.out.println("******************** FICHA MEDICA ******************************************************");
+                } else if (response.code()==400){
+                    System.out.println(" FICHA MEDICA response.code()==400 SI NO ESTA CARGADA LA FICHA, SE DEBERIA REDIRIGIR A ACTIVIY DE CARGA DE FICHA MEDICA *********");
+                    System.out.println(response.body());
+                    // TODO SI NO ESTA CARGADA LA FICHA, SE DEBERIA REDIRIGIR A ACTIVIY DE CARGA DE FICHA MEDICA
+                    // TODO SI NO ESTA CARGADA LA FICHA, SE DEBERIA REDIRIGIR A ACTIVIY DE CARGA DE FICHA MEDICA
+                    // TODO SI NO ESTA CARGADA LA FICHA, SE DEBERIA REDIRIGIR A ACTIVIY DE CARGA DE FICHA MEDICA
+                    System.out.println(" FICHA MEDICA response.code()==400 SI NO ESTA CARGADA LA FICHA, SE DEBERIA REDIRIGIR A ACTIVIY DE CARGA DE FICHA MEDICA *********");
+                }
+            }
+            @Override
+            public void onFailure(Call<FichaMedicaUsuario> call, Throwable t) {
+                System.out.println("******************** FICHA MEDICA Throwable t*************************************************");
+                System.out.println( t);
+                // TODO SI NO ESTA CARGADA LA FICHA, SE DEBERIA REDIRIGIR A ACTIVIY DE CARGA DE FICHA MEDICA
+                // TODO SI NO ESTA CARGADA LA FICHA, SE DEBERIA REDIRIGIR A ACTIVIY DE CARGA DE FICHA MEDICA
+                // TODO SI NO ESTA CARGADA LA FICHA, SE DEBERIA REDIRIGIR A ACTIVIY DE CARGA DE FICHA MEDICA
+                System.out.println("******************** FICHA MEDICA Throwable t******************************************************");
+            }
+        });
+    }
 
     public void aRegistrarGlucemia(View v) {
         Intent siguiente = new Intent(this, RegGlyActivity.class);

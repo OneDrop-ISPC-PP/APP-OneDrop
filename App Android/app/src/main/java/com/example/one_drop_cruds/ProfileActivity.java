@@ -32,6 +32,7 @@ import com.example.one_drop_cruds.utils.UserSessionManager;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -144,18 +145,13 @@ public class ProfileActivity extends AppCompatActivity {
     // todo PENDIENTE EL MANEJO DE LOS CAMBIOS DEL INPUT
     public void setSpinner(FichaMedicaUsuario ficha, Class<?> enumerable, Spinner spinner ,  String elementoPreseleccionado){
         List<String> opciones = new ArrayList<>();
+        String primerOp =  "Elige una opcion de "+enumerable.getSimpleName().replace("_", " ").toLowerCase(Locale.ROOT);
+        opciones.add(primerOp);
 
-
-        // Usamos reflexión para obtener los valores de la enumeración
         Field[] opcionesEnum = enumerable.getDeclaredFields();
         for (Field field : opcionesEnum) {
-            try {
-                // Obtenemos el valor de cada campo de la enumeración
-                Object value = field.get(null); // pasar null al método get() de un objeto Field para obtener el valor del campo estático, sin que este inicializada, para trabajar con clases o interfaces desconocidas hasta tiempo de ejecució
-                // Convertimos el valor a String y lo agregamos a la lista de opciones
-                opciones.add(value.toString());
-            } catch (IllegalAccessException e) {
-                e.printStackTrace();
+            if(field.getName() != "$VALUES"){
+                opciones.add(field.getName()); // si funciona cambiar en ProfileActivity.java
             }
         }
 

@@ -1,13 +1,15 @@
 package com.pisis.oneDrop.model.mappers;
 
+import com.pisis.oneDrop.auth.UserMapper;
+import com.pisis.oneDrop.auth.entities.User;
 import com.pisis.oneDrop.model.dtos.fichaMedica.FichaMedicaAddDto;
 import com.pisis.oneDrop.model.dtos.fichaMedica.FichaMedicaReadDto;
 import com.pisis.oneDrop.model.entities.FichaMedica;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
 public class FichaMedicaMapper {
-
     public FichaMedica toEntity (FichaMedicaAddDto addDto){
         return FichaMedica.builder()
                 .tipo_diabetes(addDto.getTipo_diabetes())

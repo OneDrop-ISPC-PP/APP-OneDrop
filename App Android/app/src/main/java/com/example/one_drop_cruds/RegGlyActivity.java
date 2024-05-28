@@ -23,9 +23,11 @@ import android.widget.Toast;
 import com.example.one_drop_cruds.entities.DTORegister;
 import com.example.one_drop_cruds.entities.dtos.RecordReadDto;
 import com.example.one_drop_cruds.entities.dtos.AddNewRecordDto;
+import com.example.one_drop_cruds.entities.user.FichaMedicaUsuario;
 import com.example.one_drop_cruds.entities.user.LoguedUserDetails;
 import com.example.one_drop_cruds.entities.user.Record;
 import com.example.one_drop_cruds.entities.user.RecordsPaginatedReadDtoArray;
+import com.example.one_drop_cruds.request.AuthRequests;
 import com.example.one_drop_cruds.request.RecordsRequest;
 import com.example.one_drop_cruds.utils.DateHelper;
 import com.example.one_drop_cruds.utils.DateTimePickerDialog;
@@ -49,9 +51,14 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class RegGlyActivity extends AppCompatActivity implements View.OnClickListener{
     DateTimePickerDialog datePicker;
@@ -101,8 +108,8 @@ public class RegGlyActivity extends AppCompatActivity implements View.OnClickLis
         // user sessions
         userSessionManager = new UserSessionManager(getApplicationContext());
         sharedPrefManager = new SharedPrefManager(getApplicationContext(), "oneDrop_shared_preferences");
-        token = sharedPrefManager.getUserToken();
         loguedUser = userSessionManager.getLoguedUserDetails();  // SI NO ESTA LOGUEADO, SE REDIRIGE A LOGIN
+        token = sharedPrefManager.getUserToken();
 
         // request, Crea helper con el jwt, inicializa retrofit y crea RecordsRequest, para hacer solicitudes
         recordRequest = new RetrofitHelper(token).getRetrofitHelperWithToken().create(RecordsRequest.class);
@@ -265,14 +272,14 @@ public class RegGlyActivity extends AppCompatActivity implements View.OnClickLis
         if(newDate.equals("")) newDate = dateHelper.dateNowInBackendFormat();
 
         AddNewRecordDto newRecordDto = new AddNewRecordDto(newDate, Double.valueOf(add_value_gly.getText().toString()), add_notes_gly.getText().toString());
-        Call<RecordReadDto> call = recordRequest.addNewGlycemiaRecord(loguedUser.getId(), newRecordDto);
+        Call<RecordReadDto> call = recordRequest.addNewGlycemiaRecord(sharedPrefManager.getFichaMedicaUser().getId(), newRecordDto);
         call.enqueue(new Callback<RecordReadDto>() {
             @Override
             public void onResponse(Call<RecordReadDto> call, Response<RecordReadDto> response) {
                 if(response.isSuccessful() && response.body() != null){
                     cleanEditTextFields();
                     refreshRegsRequest(pageSize, pageNumber);   // actualiza array de regs, recicler y grafico
-                    rv1.smoothScrollToPosition(reg_gly_ids.size()-1); // mueve la vista al ultimo elemento agregado
+                    rv1.smoothScrollToPosition(reg_gly_ids.size() != 0? reg_gly_ids.size()-1 : 0); // mueve la vista al ultimo elemento agregado
                     toastHelper.showLong("Se agrego registro de glucemia");
                 } else if (response.code()==400){
                     // todo pendiente de manejar

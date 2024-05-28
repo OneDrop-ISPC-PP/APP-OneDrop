@@ -328,7 +328,7 @@ public class RegPressureActivity extends AppCompatActivity implements View.OnCli
             add_date_pressure.setText(""); this.refreshRegs();
             this.updateChartRegPressure(); // sobreescribe chart
             adapterRegPressure.notifyDataSetChanged(); // refresca pantalla del recycler
-            rv1.smoothScrollToPosition(reg_pressure_ids.size()-1); // mueve la vista al ultimo elemento agregado
+            rv1.smoothScrollToPosition(reg_pressure_ids.size() != 0? reg_pressure_ids.size()-1 : 0); // mueve la vista al ultimo elemento agregado
             Toast.makeText(this,"Se agrego registro de presion", Toast.LENGTH_SHORT).show();
         }else {
             Toast.makeText(this,"Error agregando registro!", Toast.LENGTH_SHORT).show();

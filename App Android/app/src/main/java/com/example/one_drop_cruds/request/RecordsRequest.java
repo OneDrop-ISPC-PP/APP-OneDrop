@@ -25,8 +25,8 @@ public interface RecordsRequest {
             @Query("page") int pageNumber);
 
 
-    @POST("/registros/glucemia/usuario/{userId}")
-    Call<RecordReadDto> addNewGlycemiaRecord (@Path("userId") int userId, @Body AddNewRecordDto addNewRecordDto);
+    @POST("/registros/glucemia/usuario/{fichaMedicaId}")
+    Call<RecordReadDto> addNewGlycemiaRecord (@Path("fichaMedicaId") int fichaMedicaId, @Body AddNewRecordDto addNewRecordDto);
     @PUT("/registros/glucemia/{id}")
     Call<RecordReadDto> editGlycemiaRecord (@Path("id") int idRegistro, @Body AddNewRecordDto updateRecordDto);
 
@@ -42,8 +42,8 @@ public interface RecordsRequest {
             @Query("page") int pageNumber);
 
 
-    @POST("/registros/peso/usuario/{userId}")
-    Call<RecordReadDto> addNewWeightRecord (@Path("userId") int userId, @Body AddNewRecordDto addNewRecordDto);
+    @POST("/registros/peso/usuario/{fichaMedicaId}")
+    Call<RecordReadDto> addNewWeightRecord (@Path("fichaMedicaId") int fichaMedicaId, @Body AddNewRecordDto addNewRecordDto);
     @PUT("/registros/peso/{id}")
     Call<RecordReadDto> editWeightRecord (@Path("id") int idRegistro, @Body AddNewRecordDto updateRecordDto);
 

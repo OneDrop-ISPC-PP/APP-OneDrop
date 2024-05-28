@@ -21,6 +21,13 @@
             android:layout_height="wrap_content"
             app:srcCompat="@drawable/droplogocentrado" />
 
+        <Button
+            android:id="@+id/saltar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="saltar"
+            android:text="Saltar" />
+
         <EditText
             android:id="@+id/signup_email"
             android:layout_width="330dp"
