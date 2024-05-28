@@ -12,6 +12,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import com.example.one_drop_cruds.entities.dtos.medicalRecords.AddNewMedicalRecordDto;
 import com.example.one_drop_cruds.entities.dtos.medicalRecords.MedicalRecordReadDto;
@@ -42,7 +43,8 @@ import retrofit2.Response;
 public class ProfileActivity extends AppCompatActivity {
     UserSessionManager userSessionManager;
     SharedPrefManager sharedPrefManager;
-    EditText signup_name, signup_last_name, signup_birth, signup_weight, signup_comorbilidades, signup_objetivo_glucosa;
+    TextView signup_name, signup_last_name, signup_birth;
+    EditText signup_weight, signup_comorbilidades, signup_objetivo_glucosa;
     private Spinner spinnerDiabetes, spinnerTerapiaInsulina, spinnerTerapiaPastillas, spinnerTipoGlucometro, spinnerTipoSensor;
     Button edit_medical_data_button, selectImageButton;
     ImageView profileImage;
@@ -74,6 +76,7 @@ public class ProfileActivity extends AppCompatActivity {
         signup_name = findViewById(R.id.signup_name);
         signup_last_name = findViewById(R.id.signup_last_name);
         signup_birth = findViewById(R.id.signup_birth);
+
         signup_weight = findViewById(R.id.signup_weight);
         signup_comorbilidades = findViewById(R.id.signup_comorbilidades);
         signup_objetivo_glucosa = findViewById(R.id.signup_objetivo_glucosa);
@@ -87,7 +90,6 @@ public class ProfileActivity extends AppCompatActivity {
 
         setTextsForm();
     }
-
     private void getFichaMedicaUsuarioRequest(){
         Call<FichaMedicaUsuario> call = authRequests.getFichaMedicaUsuario(loguedUser.getId());
         call.enqueue(new Callback<FichaMedicaUsuario>() {
@@ -167,8 +169,6 @@ public class ProfileActivity extends AppCompatActivity {
     }
     public void setTextsForm() {
         getFichaMedicaUsuarioRequest(); // Carga datos en fichaMedicaUsuario, o inicia activity para cargar datos de ficha medica
-
-        // DTOmedicalRecord medicalRecord = // admin.getMedicalRecord(loguedUser.getUsername());
         signup_name.setText(loguedUser.getNombre());
         signup_last_name.setText(loguedUser.getApellido());
 
@@ -218,12 +218,7 @@ public class ProfileActivity extends AppCompatActivity {
         return true;
     }
 
-    private void updateUserProfile(){
-        System.out.println(">>>>>>>>>>>>>>>>> CAMBIOS EN USUARIO >>>>>");
-        // todo  si hay en perfil, le pego a endpoint de edit user, nombre, apellido, fecha nacimiento
-
-    }
-    private void updateMedicalRecord(){
+    private void updateMedicalRecordRequest(){
         Double peso = Double.valueOf(signup_weight.getText().toString());
         String comorbilidad = signup_comorbilidades.getText().toString();
         String glucosa = signup_objetivo_glucosa.getText().toString();
@@ -240,11 +235,7 @@ public class ProfileActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<MedicalRecordReadDto> call, Response<MedicalRecordReadDto> response) {
                 if(response.isSuccessful() && response.body() != null){
-                    // Obtener datos de ficha medica y guardarlo en shared
-                    System.out.println("******************** updateMedicalRecord ********************");
-                    System.out.println(response.body());
                     toastHelper.showLong("Datos modificados!");
-                    System.out.println("******************** updateMedicalRecord ********************");
                 } else if (response.code()==400){
                     System.out.println(" updateMedicalRecord response.code()==400 SI NO ESTA CARGADA LA FICHA, SE DEBERIA REDIRIGIR A ACTIVIY DE CARGA DE FICHA MEDICA *********");
                     toastHelper.showLong("Error modificando datos!");
@@ -267,55 +258,22 @@ public class ProfileActivity extends AppCompatActivity {
             }
         });
     }
-    public void updateMedicalRecord(View v) {
+    public void updateUserData(View v) {
         FichaMedicaUsuario fichaGuardada = sharedPrefManager.getFichaMedicaUser();
         if(changesInMedicalRecords(fichaGuardada)){
-            updateMedicalRecord();
+            updateMedicalRecordRequest();
         }
-        if(changesInUserProfile()){
-            updateUserProfile();
+        if(changesInUserProfile()){// solo modificable desde web, por el momento
+            toastHelper.showLong("No esta permitido modificar este dato desde la App");
         }
-
-        /*
-        String name = signup_name.getText().toString();
-        String last_name = signup_last_name.getText().toString();
-        int age = Integer.parseInt(signup_age.getText().toString());
-        String birth = signup_birth.getText().toString();
-        double weight = Double.parseDouble(signup_weight.getText().toString());
-        String db_type = signup_db_type.getText().toString();
-        String username = userSessionManager.getLoguedUsername();
-
-        if (name.isEmpty() || last_name.isEmpty() || birth.isEmpty() || age <= 0 || weight <= 0 || db_type.isEmpty() || db_therapy.isEmpty()) {
-            Toast.makeText(this, "Todos los campos son obligatorios. Edad y peso deben ser mayor a 0", Toast.LENGTH_SHORT).show();
-        } else {
-            DTOmedicalRecord updateDtoMedical = new DTOmedicalRecord(username, name, last_name, age, birth, weight, db_type, db_therapy);
-
-            // Luego de actualizar los datos médicos, verifica si hay una imagen seleccionada
-            if (selectedImageUri != null) {
-                // Convierte la URI a un String
-                String imageUriString = selectedImageUri.toString();
-                // Guarda la URI de la imagen en la base de datos local
-                if (admin.updateImageUri(username, imageUriString)) {
-                    Toast.makeText(this, "URI de imagen guardada con éxito", Toast.LENGTH_SHORT).show();
-                } else {
-                    Toast.makeText(this, "Error al guardar la URI de imagen", Toast.LENGTH_SHORT).show();
-                }
-            }
-            boolean insertResult = admin.updateMedicalRecord(updateDtoMedical);
-            if (insertResult) {
-                Toast.makeText(this, "Datos modificados exitosamente", Toast.LENGTH_SHORT).show();
-                Intent homeAct = new Intent(this, Home.class);
-                startActivity(homeAct);
-            } else {
-                Toast.makeText(this, "Error actualizando datos ficha medica", Toast.LENGTH_SHORT).show();
-            }
-        }
-
-         */
     }
 
     public void toHome(View v) {
         Intent home = new Intent(this, Home.class);
         startActivity(home);
+    }
+
+    public void updateNotValid(View v){
+        toastHelper.showLong("Este campo no es editable en la app movil");
     }
 }

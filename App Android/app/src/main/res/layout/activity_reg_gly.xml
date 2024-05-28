@@ -152,7 +152,7 @@
                 android:id="@+id/float_btn_add_reg_gly"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_margin="0dpdp"
+                android:layout_margin="0dp"
                 android:layout_weight="1"
                 android:clickable="true"
                 android:gravity="center"

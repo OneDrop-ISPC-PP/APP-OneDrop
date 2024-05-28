@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@drawable/fondodos"
-    tools:context=".RegWeightActivity">
+    tools:context=".ProfileActivity">
 
 
     <ScrollView
@@ -63,7 +63,7 @@
             </LinearLayout>
 
 
-            <EditText
+            <TextView
                 android:id="@+id/signup_name"
                 android:layout_width="280dp"
                 android:layout_height="51dp"
@@ -73,13 +73,14 @@
                 android:drawableLeft="@drawable/baseline_how_to_reg_24"
                 android:drawablePadding="8dp"
                 android:fontFamily="sans-serif-condensed"
-                android:hint="@string/f_m_last_name"
+                android:hint="@string/f_m_name"
+                android:onClick="updateNotValid"
                 android:padding="0dp"
                 android:textColor="@color/blackonedrop"
                 android:textSize="20dp"
                 android:textStyle="bold" />
 
-            <EditText
+            <TextView
                 android:id="@+id/signup_last_name"
                 android:layout_width="280dp"
                 android:layout_height="51dp"
@@ -89,13 +90,14 @@
                 android:drawableLeft="@drawable/baseline_how_to_reg_24"
                 android:drawablePadding="8dp"
                 android:fontFamily="sans-serif-condensed"
-                android:hint="@string/f_m_name"
+                android:hint="@string/f_m_last_name"
+                android:onClick="updateNotValid"
                 android:padding="8dp"
                 android:textColor="@color/blackonedrop"
                 android:textSize="20dp"
                 android:textStyle="bold" />
 
-            <EditText
+            <TextView
                 android:id="@+id/signup_birth"
                 android:layout_width="280dp"
                 android:layout_height="51dp"
@@ -106,6 +108,7 @@
                 android:drawablePadding="8dp"
                 android:fontFamily="sans-serif-condensed"
                 android:hint="@string/f_m_birthday"
+                android:onClick="updateNotValid"
                 android:padding="8dp"
                 android:textColor="@color/blackonedrop"
                 android:textSize="20dp"
@@ -285,7 +288,7 @@
                     android:drawableTint="@color/celeste_fondo"
                     android:fontFamily="sans-serif-condensed"
                     android:layoutDirection="locale"
-                    android:onClick="updateMedicalRecord"
+                    android:onClick="updateUserData"
                     android:padding="0dp"
                     android:text="Modificar datos"
                     android:textColor="@color/celeste_fondo"
