@@ -182,7 +182,8 @@
                     android:fontFamily="sans-serif-condensed"
                     android:padding="10dp"
                     android:text="Seleccionar"
-                    android:textSize="18dp" />
+                    android:textSize="18dp"
+                    android:backgroundTint="@color/pinkonedrop"/>
             </LinearLayout>
 
             <EditText
