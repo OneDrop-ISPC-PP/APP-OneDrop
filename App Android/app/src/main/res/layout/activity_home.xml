@@ -303,7 +303,7 @@
                 <ImageView
                     android:id="@+id/button_web"
                     android:layout_width="wrap_content"
-                    android:layout_height="50dp"
+                    android:layout_height="40dp"
                     android:src="@drawable/gotalogo"
                     android:contentDescription="Ingresa a nuestra web"
                     android:onClick="openWebUrl"
@@ -314,7 +314,7 @@
                     android:layout_height="wrap_content"
                     android:text="onedrop web"
                     android:textColor="@color/blueonedrop"
-                    android:textSize="12sp"
+                    android:textSize="14sp"
                     android:textStyle="bold"
                     />
 
