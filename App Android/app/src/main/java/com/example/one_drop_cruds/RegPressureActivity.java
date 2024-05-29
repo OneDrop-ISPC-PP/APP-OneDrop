@@ -19,14 +19,10 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-import com.example.one_drop_cruds.entities.DTORegister;
-import com.example.one_drop_cruds.entities.dtos.records.AddNewRecordDto;
 import com.example.one_drop_cruds.entities.dtos.records.AddPressureRecord;
 import com.example.one_drop_cruds.entities.dtos.records.PressureRecordReadDto;
-import com.example.one_drop_cruds.entities.dtos.records.RecordReadDto;
 import com.example.one_drop_cruds.entities.user.LoguedUserDetails;
 import com.example.one_drop_cruds.entities.user.PressureRecord;
-import com.example.one_drop_cruds.entities.user.Record;
 import com.example.one_drop_cruds.entities.user.RecordsPaginatedReadDtoArray;
 import com.example.one_drop_cruds.request.RecordsRequest;
 import com.example.one_drop_cruds.utils.DateHelper;
@@ -48,7 +44,6 @@ import com.google.gson.Gson;
 
 import java.text.ParseException;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import retrofit2.Call;
@@ -377,13 +372,21 @@ public class RegPressureActivity extends AppCompatActivity implements View.OnCli
         }
 
     }
-    private ArrayList<Entry> createLineChartDataSet(){
+    private ArrayList<Entry> createLineChartDataSetDiastolica(){
         // TODO SOLO GRAFICO PARA DIASTOLICA... TENGO QUE HACER PARECIDO PARA SISTOLICA!
         ArrayList<Entry> dataSet = new ArrayList<Entry>();
         reg_pressure_dates.forEach(date ->{
-            System.out.println(date);
-            System.out.println(reg_pressure_dates.indexOf(date));
             Integer value = reg_pressure_diastolica.get(reg_pressure_dates.indexOf(date));
+            int index = reg_pressure_dates.indexOf(date);
+            dataSet.add(new Entry (index, Float.valueOf(String.valueOf(value))));
+        });
+        return dataSet;
+    }
+    private ArrayList<Entry> createLineChartDataSetSistolica(){
+        // TODO SOLO GRAFICO PARA DIASTOLICA... TENGO QUE HACER PARECIDO PARA SISTOLICA!
+        ArrayList<Entry> dataSet = new ArrayList<Entry>();
+        reg_pressure_dates.forEach(date ->{
+            Integer value = reg_pressure_sistolica.get(reg_pressure_dates.indexOf(date));
             int index = reg_pressure_dates.indexOf(date);
             dataSet.add(new Entry (index, Float.valueOf(String.valueOf(value))));
         });
@@ -391,9 +394,13 @@ public class RegPressureActivity extends AppCompatActivity implements View.OnCli
     }
     private void updateChartRegPressure(ArrayList<Integer> reg_ids, ArrayList<Long> reg_dates, ArrayList<Integer> reg_values_diastolica, ArrayList<Integer> reg_values_sistolica, ArrayList<String> reg_notes){
         updateAllDataRegs(reg_ids,reg_dates, reg_values_diastolica, reg_values_sistolica, reg_notes); // actualiza arrays de datos
-        LineDataSet lineDataSet = new LineDataSet(createLineChartDataSet(), "Presion");
+        LineDataSet lineDataSet = new LineDataSet(createLineChartDataSetDiastolica(), "Presion");
+        LineDataSet lineDataSet2= new LineDataSet(createLineChartDataSetSistolica(), "Presion sistolica");
+
         ArrayList<ILineDataSet> iLineDataSets = new ArrayList<>();
         iLineDataSets.add(lineDataSet);
+
+        iLineDataSets.add(lineDataSet2); // todo sistolica
 
         //Seteo el formateador para leyendas del eje X
         LineData lineData = new LineData(iLineDataSets);
@@ -403,18 +410,30 @@ public class RegPressureActivity extends AppCompatActivity implements View.OnCli
         lineChart.setData(lineData);
         lineChart.invalidate();
         // PERSONALIZACION
-        lineDataSet.setColor(R.color.pinkonedrop2); // COLOR LINEA
-        lineDataSet.setCircleColor(R.color.pinkonedrop); // COLOR PUNTOS?
+        lineDataSet.setColor(R.color.green); // COLOR LINEA
+        lineDataSet.setCircleColor(R.color.green); // COLOR PUNTOS?
         lineDataSet.setDrawCircles(true); // HABILITA QUE SE MUESTRE LOS PUNTOS
         // lineDataSet.setDrawCircleHole(true); // LOS PUNTOS LOS MUESTRA COMO ARANDELAS
-        lineDataSet.setLineWidth(4); // GROSOR LINEA
-        lineDataSet.setCircleRadius(5); // diametro ext de punto
-        lineDataSet.setCircleHoleRadius(1); // diam interno punto
-        lineDataSet.setValueTextSize(2); // tamaño texxto valot
-        lineDataSet.setValueTextColor(Color.BLACK); // COLOR TEXTO
+        lineDataSet.setLineWidth(3); // GROSOR LINEA
+        lineDataSet.setCircleRadius(3); // diametro ext de punto
+        lineDataSet.setCircleHoleRadius(0); // diam interno punto
+        lineDataSet.setValueTextSize(10); // tamaño texxto valot
+        lineDataSet.setValueTextColor(R.color.green); // COLOR TEXTO
+
+        // SISTOLICA
+        lineDataSet2.setColor(R.color.red); // COLOR LINEA
+        lineDataSet2.setCircleColor(R.color.red); // COLOR PUNTOS?
+        lineDataSet2.setDrawCircles(true); // HABILITA QUE SE MUESTRE LOS PUNTOS
+        // lineDataSet2.setDrawCircleHole(true); // LOS PUNTOS LOS MUESTRA COMO ARANDELAS
+        lineDataSet2.setLineWidth(3); // GROSOR LINEA
+        lineDataSet2.setCircleRadius(3); // diametro ext de punto
+        lineDataSet2.setCircleHoleRadius(0); // diam interno punto
+        lineDataSet2.setValueTextSize(10); // tamaño texxto valot
+        lineDataSet2.setValueTextColor(R.color.red); // COLOR TEXTO
+
         lineChart.setBackgroundColor(getResources().getColor(R.color.celeste_fondo)); // COLOR FONDO OPCION
         lineChart.setNoDataText("Aun no hay registros guardados.."); // TEXTO SI NO HAY INFO
-        lineChart.setNoDataTextColor(R.color.pinkonedrop); // TEXTO SI NO HAY INFO
+        lineChart.setNoDataTextColor(R.color.red); // TEXTO SI NO HAY INFO
         lineChart.setTouchEnabled(true); // permite tactil
         lineChart.setPinchZoom(true); // permite zoom tactil
     }
