@@ -172,7 +172,6 @@
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:layout_margin="4dp"
-
                             android:backgroundTint="@color/accent_blue"
                             android:fontFamily="sans-serif-condensed"
                             android:onClick="btn_export_data"

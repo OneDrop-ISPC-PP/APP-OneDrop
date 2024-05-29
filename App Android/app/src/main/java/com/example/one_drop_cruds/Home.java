@@ -10,6 +10,7 @@ import androidx.core.content.ContextCompat;
 
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -18,6 +19,7 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
 import android.util.Log;
 import android.view.View;
 import android.webkit.WebView;
@@ -30,15 +32,25 @@ import com.example.one_drop_cruds.entities.user.FichaMedicaUsuario;
 import com.example.one_drop_cruds.entities.user.LoginRequest;
 import com.example.one_drop_cruds.entities.user.LoguedUserDetails;
 import com.example.one_drop_cruds.request.AuthRequests;
+import com.example.one_drop_cruds.request.FileRequest;
 import com.example.one_drop_cruds.request.RecordsRequest;
 import com.example.one_drop_cruds.utils.BackendUrl;
 import com.example.one_drop_cruds.utils.FilesManager;
 import com.example.one_drop_cruds.utils.RetrofitHelper;
 import com.example.one_drop_cruds.utils.SharedPrefManager; // Importa la clase SharedPrefManager
+import com.example.one_drop_cruds.utils.ToastHelper;
 import com.example.one_drop_cruds.utils.UserSessionManager;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.InputStream;
+import java.io.IOException;
+import java.io.OutputStream;
 
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
+import okhttp3.ResponseBody;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -57,6 +69,8 @@ public class Home extends AppCompatActivity {
     String token;
     LoguedUserDetails loguedUser;
     AuthRequests authRequest;
+    ToastHelper toastHelper;
+    FileRequest fileRequest;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,8 +86,11 @@ public class Home extends AppCompatActivity {
         token = sharedPrefManager.getUserToken();
         getLoguedUserDetails(token);
 
+        toastHelper= new ToastHelper(Home.this);
+
         // request, Crea helper con el jwt, inicializa retrofit y crea RecordsRequest, para hacer solicitudes
         authRequest = new RetrofitHelper(token).getRetrofitHelperWithToken().create(AuthRequests.class);
+        fileRequest = new RetrofitHelper(token).getRetrofitHelperWithToken().create(FileRequest.class);
 
         filesManager = new FilesManager(Home.this, this);
         this.askForPermissionsStorage();
@@ -205,12 +222,72 @@ public class Home extends AppCompatActivity {
     }
 
     public void btn_export_data(View v) {
+        /*
         Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.onedrop); // solo para enviar el logo de oneDrop a PDF
         Uri uri = filesManager.exportPdfFileReport(bitmap);
         if (uri != null) {
-            Toast.makeText(this, "Se creó el PDF correctamente", Toast.LENGTH_SHORT).show();
+            toastHelper.showLong("Se creó el PDF correctamente");
         } else {
-            Toast.makeText(this, "Error en la creación del PDF", Toast.LENGTH_LONG).show();
+            toastHelper.showLong("Error en la creación del PDF");
+        }
+         */
+
+        Call<ResponseBody> call = fileRequest.getFullResume(loguedUser.getId());
+        call.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                String fileName = "resume_" + loguedUser.getId() + ".pdf";
+                    // FileOutputStream outputStream = openFileOutput(fileName, Context.MODE_PRIVATE);
+                    // response.body().byteStream().writeTo(outputStream);
+                    /*
+                    try {
+                        InputStream inputStream = response.body().byteStream();
+                        OutputStream outputStream = openFileOutput(fileName, Context.MODE_PRIVATE);
+                        byte[] buffer = new byte[1024];
+                        int bytesRead;
+                        while ((bytesRead = inputStream.read(buffer))!= -1) {
+                            outputStream.write(buffer, 0, bytesRead);
+                        }
+                        outputStream.flush();
+                        outputStream.close();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    */
+                    // outputStream.close();
+                try {
+                    savePdfToFile(response.body().bytes(), fileName);
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+                System.out.println("SE CREO EL ARCHIVO!");
+                toastHelper.showLong("SE CREO EL ARCHIVO!!");
+            }
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                System.out.println("Error creando archivo! >>>>>>>>");
+                System.out.println(t.getMessage());
+                // toastHelper.showLong("Ocurrio un error creando el archivo! "+t.getMessage());
+            }
+        });
+    }
+    public void savePdfToFile(byte[] pdfBytes, String fileName) {
+        // Obtener el directorio de descargas
+        File downloadsDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
+
+        // Crear el archivo en el directorio de descargas
+        File pdfFile = new File(downloadsDir, fileName);
+
+        try {
+            FileOutputStream fos = new FileOutputStream(pdfFile);
+            fos.write(pdfBytes);
+            fos.close();
+
+            // Notificar al usuario que el archivo ha sido guardado
+            toastHelper.showLong("SE CREO EL ARCHIVO!!");
+        } catch (IOException e) {
+            e.printStackTrace();
+            toastHelper.showLong("Ocurrio un error creando el archivo! "+e.getMessage());
         }
     }
 

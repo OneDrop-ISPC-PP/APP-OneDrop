@@ -44,13 +44,11 @@ public class SharedPrefManager {
         // serializar user details a json y guardarlo como cadena en shared pref..
         Gson gsonSerializer = new Gson();
         String userJson = gsonSerializer.toJson(userDetails);
-        System.out.println("sahred pref manager guardandop setLoguedUser ====> "+userJson);
         this.sharedPrefEditor.putString("loguedUser", userJson);
         sharedPrefEditor.apply();
     }
     public LoguedUserDetails getLoguedUser() {
         String userJson = this.sharedPref.getString("loguedUser", null);
-        System.out.println("sahred pref manager getLoguedUser ====> "+userJson);
         Gson gsonSerializer = new Gson();
         LoguedUserDetails loguedUserDetails = gsonSerializer.fromJson(userJson, LoguedUserDetails.class);
         return loguedUserDetails;
