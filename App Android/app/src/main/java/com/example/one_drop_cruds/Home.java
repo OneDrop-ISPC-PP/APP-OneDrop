@@ -222,69 +222,31 @@ public class Home extends AppCompatActivity {
     }
 
     public void btn_export_data(View v) {
-        /*
-        Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.onedrop); // solo para enviar el logo de oneDrop a PDF
-        Uri uri = filesManager.exportPdfFileReport(bitmap);
-        if (uri != null) {
-            toastHelper.showLong("Se creó el PDF correctamente");
-        } else {
-            toastHelper.showLong("Error en la creación del PDF");
-        }
-         */
-
         Call<ResponseBody> call = fileRequest.getFullResume(loguedUser.getId());
         call.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                String fileName = "resume_" + loguedUser.getId() + ".pdf";
-                    // FileOutputStream outputStream = openFileOutput(fileName, Context.MODE_PRIVATE);
-                    // response.body().byteStream().writeTo(outputStream);
-                    /*
-                    try {
-                        InputStream inputStream = response.body().byteStream();
-                        OutputStream outputStream = openFileOutput(fileName, Context.MODE_PRIVATE);
-                        byte[] buffer = new byte[1024];
-                        int bytesRead;
-                        while ((bytesRead = inputStream.read(buffer))!= -1) {
-                            outputStream.write(buffer, 0, bytesRead);
-                        }
-                        outputStream.flush();
-                        outputStream.close();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                    */
-                    // outputStream.close();
                 try {
-                    savePdfToFile(response.body().bytes(), fileName);
+                    savePdfToFile(response.body().bytes());
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
-                System.out.println("SE CREO EL ARCHIVO!");
-                toastHelper.showLong("SE CREO EL ARCHIVO!!");
             }
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
-                System.out.println("Error creando archivo! >>>>>>>>");
-                System.out.println(t.getMessage());
-                // toastHelper.showLong("Ocurrio un error creando el archivo! "+t.getMessage());
+                toastHelper.showLong("Ocurrio un error creando el archivo! "+t.getMessage());
             }
         });
     }
-    public void savePdfToFile(byte[] pdfBytes, String fileName) {
-        // Obtener el directorio de descargas
-        File downloadsDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
-
-        // Crear el archivo en el directorio de descargas
-        File pdfFile = new File(downloadsDir, fileName);
-
+    public void savePdfToFile(byte[] pdfBytes) {
+        String fileName = "resume_" + loguedUser.getId() + ".pdf";
+        File downloadsDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS); // Obtener el directorio de descargas
+        File pdfFile = new File(downloadsDir, fileName);// Crear el archivo en el directorio de descargas
         try {
             FileOutputStream fos = new FileOutputStream(pdfFile);
             fos.write(pdfBytes);
             fos.close();
-
-            // Notificar al usuario que el archivo ha sido guardado
-            toastHelper.showLong("SE CREO EL ARCHIVO!!");
+            toastHelper.showLong("Se creo el PDF correctamente, revisa las Descargas");
         } catch (IOException e) {
             e.printStackTrace();
             toastHelper.showLong("Ocurrio un error creando el archivo! "+e.getMessage());
