@@ -14,8 +14,8 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-import com.example.one_drop_cruds.entities.dtos.medicalRecords.AddNewMedicalRecordDto;
-import com.example.one_drop_cruds.entities.dtos.medicalRecords.MedicalRecordReadDto;
+import com.example.one_drop_cruds.entities.dtos.medicalRecord.AddNewMedicalRecordDto;
+import com.example.one_drop_cruds.entities.dtos.medicalRecord.MedicalRecordReadDto;
 import com.example.one_drop_cruds.entities.user.FichaMedicaUsuario;
 import com.example.one_drop_cruds.entities.user.LoguedUserDetails;
 import com.example.one_drop_cruds.entities.user.enums.Terapia_insulina;

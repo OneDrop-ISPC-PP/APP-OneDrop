@@ -1,7 +1,9 @@
 package com.example.one_drop_cruds.request;
 
-import com.example.one_drop_cruds.entities.dtos.RecordReadDto;
-import com.example.one_drop_cruds.entities.dtos.AddNewRecordDto;
+import com.example.one_drop_cruds.entities.dtos.records.AddPressureRecord;
+import com.example.one_drop_cruds.entities.dtos.records.PressureRecordReadDto;
+import com.example.one_drop_cruds.entities.dtos.records.RecordReadDto;
+import com.example.one_drop_cruds.entities.dtos.records.AddNewRecordDto;
 import com.example.one_drop_cruds.entities.user.RecordsPaginatedReadDtoArray;
 
 import retrofit2.Call;
@@ -58,12 +60,12 @@ public interface RecordsRequest {
 
 
     @POST("/registros/tensionArterial/usuario/{fichaMedicaId}")
-    Call<RecordReadDto> addNewPresureRecord (@Path("fichaMedicaId") int fichaMedicaId, @Body AddNewRecordDto addNewRecordDto);
+    Call<PressureRecordReadDto> addNewPresureRecord (@Path("fichaMedicaId") int fichaMedicaId, @Body AddPressureRecord addDto);
     @PUT("/registros/tensionArterial/{id}")
-    Call<RecordReadDto> editPresureRecord (@Path("id") int idRegistro, @Body AddNewRecordDto updateRecordDto);
+    Call<PressureRecordReadDto> editPresureRecord (@Path("id") int idRegistro, @Body AddPressureRecord updateDto);
 
     @DELETE("/registros/tensionArterial/{id}")
-    Call<RecordReadDto> deletePresureRecord (@Path("id") int idRegistro);
+    Call<PressureRecordReadDto> deletePresureRecord (@Path("id") int idRegistro);
 
 
 }

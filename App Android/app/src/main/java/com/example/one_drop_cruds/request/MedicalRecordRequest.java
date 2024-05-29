@@ -1,7 +1,7 @@
 package com.example.one_drop_cruds.request;
 
-import com.example.one_drop_cruds.entities.dtos.medicalRecords.AddNewMedicalRecordDto;
-import com.example.one_drop_cruds.entities.dtos.medicalRecords.MedicalRecordReadDto;
+import com.example.one_drop_cruds.entities.dtos.medicalRecord.AddNewMedicalRecordDto;
+import com.example.one_drop_cruds.entities.dtos.medicalRecord.MedicalRecordReadDto;
 
 import retrofit2.Call;
 import retrofit2.http.Body;

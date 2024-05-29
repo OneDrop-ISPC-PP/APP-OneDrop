@@ -8,7 +8,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
@@ -22,14 +21,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.one_drop_cruds.entities.DTORegister;
-import com.example.one_drop_cruds.entities.DTOReadAllRegisters;
-import com.example.one_drop_cruds.entities.dtos.AddNewRecordDto;
-import com.example.one_drop_cruds.entities.dtos.RecordReadDto;
+import com.example.one_drop_cruds.entities.dtos.records.AddNewRecordDto;
+import com.example.one_drop_cruds.entities.dtos.records.RecordReadDto;
 import com.example.one_drop_cruds.entities.user.LoguedUserDetails;
 import com.example.one_drop_cruds.entities.user.Record;
 import com.example.one_drop_cruds.entities.user.RecordsPaginatedReadDtoArray;
 import com.example.one_drop_cruds.request.RecordsRequest;
-import com.example.one_drop_cruds.utils.AdminSQLiteOpenHelper;
 import com.example.one_drop_cruds.utils.DateHelper;
 import com.example.one_drop_cruds.utils.DateTimePickerDialog;
 import com.example.one_drop_cruds.utils.RetrofitHelper;
@@ -48,11 +45,8 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.gson.Gson;
 
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 
 import retrofit2.Call;
 import retrofit2.Callback;

@@ -18,17 +18,17 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.example.one_drop_cruds.entities.DTOReadAllRegisters;
 import com.example.one_drop_cruds.entities.DTORegister;
-import com.example.one_drop_cruds.entities.dtos.AddNewRecordDto;
-import com.example.one_drop_cruds.entities.dtos.RecordReadDto;
+import com.example.one_drop_cruds.entities.dtos.records.AddNewRecordDto;
+import com.example.one_drop_cruds.entities.dtos.records.AddPressureRecord;
+import com.example.one_drop_cruds.entities.dtos.records.PressureRecordReadDto;
+import com.example.one_drop_cruds.entities.dtos.records.RecordReadDto;
 import com.example.one_drop_cruds.entities.user.LoguedUserDetails;
+import com.example.one_drop_cruds.entities.user.PressureRecord;
 import com.example.one_drop_cruds.entities.user.Record;
 import com.example.one_drop_cruds.entities.user.RecordsPaginatedReadDtoArray;
 import com.example.one_drop_cruds.request.RecordsRequest;
-import com.example.one_drop_cruds.utils.AdminSQLiteOpenHelper;
 import com.example.one_drop_cruds.utils.DateHelper;
 import com.example.one_drop_cruds.utils.DateTimePickerDialog;
 import com.example.one_drop_cruds.utils.RetrofitHelper;
@@ -47,11 +47,9 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.gson.Gson;
 
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -63,7 +61,7 @@ public class RegPressureActivity extends AppCompatActivity implements View.OnCli
     SharedPrefManager sharedPrefManager;
     String token;
     LoguedUserDetails loguedUser;
-    EditText add_value_pressure, add_notes_pressure, add_date_pressure, edit_value_pressure, edit_notes_pressure;
+    EditText add_value_diastolica,add_value_sistolica, add_notes_pressure, add_date_pressure, edit_value_diastolica,edit_value_sistolica, edit_notes_pressure;
     FloatingActionButton float_btn_add_reg_pressure;
 
     // RECICLER VIEW
@@ -73,7 +71,8 @@ public class RegPressureActivity extends AppCompatActivity implements View.OnCli
     // DATA
     ArrayList<Integer> reg_pressure_ids = new ArrayList<Integer>();
     ArrayList<Long> reg_pressure_dates = new ArrayList<Long>();
-    ArrayList<Double> reg_pressure_values = new ArrayList<Double>();
+    ArrayList<Integer> reg_pressure_diastolica = new ArrayList<>();
+    ArrayList<Integer> reg_pressure_sistolica = new ArrayList<>();
     ArrayList<String> reg_pressure_notes = new ArrayList<String>();
 
     // GRAPHS
@@ -139,11 +138,6 @@ public class RegPressureActivity extends AppCompatActivity implements View.OnCli
         rv1.setAdapter(adapterRegPressure);
     }
 
-    // todo ==>>>>> FALTA CREAR LAS NUEVAS ENTIDADES DE PRESION
-    // todo ==>>>>> FALTA CREAR LAS NUEVAS ENTIDADES DE PRESION
-    // todo ==>>>>> FALTA CREAR LAS NUEVAS ENTIDADES DE PRESION
-    // todo ==>>>>> FALTA CREAR LAS NUEVAS ENTIDADES DE PRESION
-
     // todo **** VERIFICAR QUE FUNCIONE  EL CRUD COMPLETO DE REGISTROS DE TENSION! ******************
     // todo **** VERIFICAR QUE FUNCIONE  EL CRUD COMPLETO DE REGISTROS DE TENSION! ******************
     // todo **** VERIFICAR QUE FUNCIONE  EL CRUD COMPLETO DE REGISTROS DE TENSION! ******************
@@ -177,13 +171,15 @@ public class RegPressureActivity extends AppCompatActivity implements View.OnCli
         private class AdapterRegPressureHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
             TextView reg_date;
-            TextView reg_value;
+            TextView reg_diastolica_value;
+            TextView reg_sistolica_value;
             TextView reg_note;
             Button btn_edit_reg_Pressure, btn_delete_reg_Pressure;
             public AdapterRegPressureHolder(@NonNull View itemView) {
                 super(itemView);
                 reg_date = itemView.findViewById(R.id.recycler_reg_pressure_date);
-                reg_value = itemView.findViewById(R.id.recycler_reg_pressure_value);
+                reg_diastolica_value = itemView.findViewById(R.id.recycler_reg_pressure_diastolica_value);
+                reg_sistolica_value = itemView.findViewById(R.id.recycler_reg_pressure_sistolica_value);
                 reg_note = itemView.findViewById(R.id.recycler_reg_pressure_note);
                 btn_edit_reg_Pressure = itemView.findViewById(R.id.recycler_btn_edit_reg_pressure);
                 btn_delete_reg_Pressure = itemView.findViewById(R.id.recycler_btn_delete_reg_pressure);
@@ -191,7 +187,8 @@ public class RegPressureActivity extends AppCompatActivity implements View.OnCli
             }
             public void printItem(int position) throws ParseException {
                 reg_date.setText(dateHelper.getStringShortDateForGraphs(reg_pressure_dates.get(position)));// pasa fecha de String que representa a Long a Sun 23 - 06:40hs
-                reg_value.setText(String.valueOf(reg_pressure_values.get(position)));
+                reg_diastolica_value.setText(String.valueOf(reg_pressure_diastolica.get(position)));
+                reg_sistolica_value.setText(String.valueOf(reg_pressure_sistolica.get(position)));
                 reg_note.setText(reg_pressure_notes.get(position));
 
                 btn_edit_reg_Pressure.setOnClickListener(view -> {
@@ -218,23 +215,26 @@ public class RegPressureActivity extends AppCompatActivity implements View.OnCli
     private void renderRegs(List recordsObjects){
         ArrayList<Integer> reg_ids = new ArrayList<Integer>();
         ArrayList<Long> reg_dates = new ArrayList<>();
-        ArrayList<Double> reg_values = new ArrayList<Double>();
+        ArrayList<Integer> reg_values_diastolica = new ArrayList<>();
+        ArrayList<Integer> reg_values_sistolica = new ArrayList<>();
         ArrayList<String> reg_notes = new ArrayList<String>();
 
         Gson gson = new Gson();
         for (int i = 0; i <recordsObjects.size(); i++){
             try {
-                Record record = gson.fromJson( StringHelper.escapeBlankSpacesInComentario(recordsObjects.get(i).toString()), Record.class);
+                PressureRecord record = gson.fromJson( StringHelper.escapeBlankSpacesInComentario(recordsObjects.get(i).toString()), PressureRecord.class);
                 reg_ids.add(record.getId());
                 reg_dates.add(record.getFecha());
-                reg_values.add(record.getValor());
+                reg_values_diastolica.add(record.getDiastolica());
+                reg_values_sistolica.add(record.getSistolica());
                 reg_notes.add( StringHelper.restoreBlankSpacesInComentario(record.getComentario()));
             } catch (Exception e){
                 // todo pendiente de manejar
             }
         }
+
         if (! reg_ids.isEmpty()){
-            updateChartRegPressure(reg_ids,reg_dates, reg_values, reg_notes);
+            updateChartRegPressure(reg_ids,reg_dates, reg_values_diastolica,reg_values_sistolica, reg_notes);
         } else{
             toastHelper.showLong("Aun no hay registros guardados..");
         }
@@ -269,11 +269,11 @@ public class RegPressureActivity extends AppCompatActivity implements View.OnCli
         String newDate = add_date_pressure.getText().toString();
         if(newDate.equals("")) newDate = dateHelper.dateNowInBackendFormat();
 
-        AddNewRecordDto newRecordDto = new AddNewRecordDto(newDate, Double.valueOf(add_value_pressure.getText().toString()), add_notes_pressure.getText().toString());
-        Call<RecordReadDto> call = recordRequest.addNewGlycemiaRecord(sharedPrefManager.getFichaMedicaUser().getId(), newRecordDto);
-        call.enqueue(new Callback<RecordReadDto>() {
+        AddPressureRecord newRecordDto = new AddPressureRecord(null, newDate, Integer.valueOf(add_value_diastolica.getText().toString()), Integer.valueOf(add_value_sistolica.getText().toString()), add_notes_pressure.getText().toString());
+        Call<PressureRecordReadDto> call = recordRequest.addNewPresureRecord(sharedPrefManager.getFichaMedicaUser().getId(), newRecordDto);
+        call.enqueue(new Callback<PressureRecordReadDto>() {
             @Override
-            public void onResponse(Call<RecordReadDto> call, Response<RecordReadDto> response) {
+            public void onResponse(Call<PressureRecordReadDto> call, Response<PressureRecordReadDto> response) {
                 if(response.isSuccessful() && response.body() != null){
                     cleanEditTextFields();
                     refreshRegsRequest(pageSize, pageNumber);   // actualiza array de regs, recicler y grafico
@@ -288,7 +288,7 @@ public class RegPressureActivity extends AppCompatActivity implements View.OnCli
                 }
             }
             @Override
-            public void onFailure(Call<RecordReadDto> call, Throwable t) {
+            public void onFailure(Call<PressureRecordReadDto> call, Throwable t) {
                 // todo pendiente de manejar
                 System.out.println("********* DTOReadAllRegisters Throwable t******");
                 toastHelper.showLong("Error onFailure Throwable=> "+t);
@@ -300,17 +300,17 @@ public class RegPressureActivity extends AppCompatActivity implements View.OnCli
         });
     }
     private void deleteRegRequest(int id){
-        Call<RecordReadDto> call = recordRequest.deletePresureRecord(id);
-        call.enqueue(new Callback<RecordReadDto>() {
+        Call<PressureRecordReadDto> call = recordRequest.deletePresureRecord(id);
+        call.enqueue(new Callback<PressureRecordReadDto>() {
             @Override
-            public void onResponse(Call<RecordReadDto> call, Response<RecordReadDto> response) {
+            public void onResponse(Call<PressureRecordReadDto> call, Response<PressureRecordReadDto> response) {
                 if(response.isSuccessful()){
                     refreshRegsRequest(pageSize, pageNumber);   // actualiza array de regs, recicler y grafico
                     toastHelper.showLong("Registro eliminado correctamente");
                 }
             }
             @Override
-            public void onFailure(Call<RecordReadDto> call, Throwable t) {
+            public void onFailure(Call<PressureRecordReadDto> call, Throwable t) {
                 toastHelper.showLong("Error eliminando registro");
             }
         });
@@ -324,12 +324,16 @@ public class RegPressureActivity extends AppCompatActivity implements View.OnCli
         return updatedDate; // Si fecha fue cambiada, tiene el formato la actualizo, sino
     }
     public void updateRegRequest(int id){
-        AddNewRecordDto updateRecordDto = new AddNewRecordDto(validateDateForUpdateReg(id), Double.valueOf(edit_value_pressure.getText().toString()) ,edit_notes_pressure.getText().toString());
+        String fecha = validateDateForUpdateReg(id);
+        Integer diastolica = Integer.valueOf(edit_value_diastolica.getText().toString());
+        Integer sistolica = Integer.valueOf(edit_value_sistolica.getText().toString());
+        String comentario = edit_notes_pressure.getText().toString();
+        AddPressureRecord updateRecordDto = new AddPressureRecord(id,fecha,diastolica, sistolica, comentario );
 
-        Call<RecordReadDto> call = recordRequest.editPresureRecord(id, updateRecordDto);
-        call.enqueue(new Callback<RecordReadDto>() {
+        Call<PressureRecordReadDto> call = recordRequest.editPresureRecord(id, updateRecordDto);
+        call.enqueue(new Callback<PressureRecordReadDto>() {
             @Override
-            public void onResponse(Call<RecordReadDto> call, Response<RecordReadDto> response) {
+            public void onResponse(Call<PressureRecordReadDto> call, Response<PressureRecordReadDto> response) {
                 if(response.isSuccessful() && response.body() != null){
                     refreshRegsRequest(pageSize, pageNumber);   // actualiza array de regs, recicler y grafico
                     rv1.smoothScrollToPosition(reg_pressure_ids.indexOf(id)); // mueve la vista al elemento editado
@@ -343,7 +347,7 @@ public class RegPressureActivity extends AppCompatActivity implements View.OnCli
                 }
             }
             @Override
-            public void onFailure(Call<RecordReadDto> call, Throwable t) {
+            public void onFailure(Call<PressureRecordReadDto> call, Throwable t) {
                 // todo pendiente de manejar
                 System.out.println("********* updateRegRequest Throwable t******");
                 toastHelper.showLong("Error onFailure Throwable=> "+t);
@@ -374,16 +378,19 @@ public class RegPressureActivity extends AppCompatActivity implements View.OnCli
 
     }
     private ArrayList<Entry> createLineChartDataSet(){
+        // TODO SOLO GRAFICO PARA DIASTOLICA... TENGO QUE HACER PARECIDO PARA SISTOLICA!
         ArrayList<Entry> dataSet = new ArrayList<Entry>();
         reg_pressure_dates.forEach(date ->{
-            Double value = reg_pressure_values.get(reg_pressure_dates.indexOf(date));
+            System.out.println(date);
+            System.out.println(reg_pressure_dates.indexOf(date));
+            Integer value = reg_pressure_diastolica.get(reg_pressure_dates.indexOf(date));
             int index = reg_pressure_dates.indexOf(date);
             dataSet.add(new Entry (index, Float.valueOf(String.valueOf(value))));
         });
         return dataSet;
     }
-    private void updateChartRegPressure(ArrayList<Integer> reg_ids, ArrayList<Long> reg_dates, ArrayList<Double> reg_values, ArrayList<String> reg_notes){
-        updateAllDataRegs(reg_ids,reg_dates, reg_values, reg_notes); // actualiza arrays de datos
+    private void updateChartRegPressure(ArrayList<Integer> reg_ids, ArrayList<Long> reg_dates, ArrayList<Integer> reg_values_diastolica, ArrayList<Integer> reg_values_sistolica, ArrayList<String> reg_notes){
+        updateAllDataRegs(reg_ids,reg_dates, reg_values_diastolica, reg_values_sistolica, reg_notes); // actualiza arrays de datos
         LineDataSet lineDataSet = new LineDataSet(createLineChartDataSet(), "Presion");
         ArrayList<ILineDataSet> iLineDataSets = new ArrayList<>();
         iLineDataSets.add(lineDataSet);
@@ -417,24 +424,22 @@ public class RegPressureActivity extends AppCompatActivity implements View.OnCli
         // obtener posicion y con esa posicion buscar los valores almacenados en cada lista y setear datos de popup
         Integer indexById = reg_pressure_ids.indexOf(id);
         String date = dateHelper.getStringShortDateForGraphs(reg_pressure_dates.get(indexById));
-        Double value = reg_pressure_values.get(indexById);
+        Integer diastolica = reg_pressure_diastolica.get(indexById);
+        Integer sistolica = reg_pressure_sistolica.get(indexById);
         String notes = reg_pressure_notes.get(indexById);
-        DTORegister regById = new DTORegister(date, value, notes);
+        edit_date_pressure.setText(date);
+        edit_value_diastolica.setText(String.valueOf(diastolica));
+        edit_value_sistolica.setText(String.valueOf(sistolica));
+        edit_notes_pressure.setText(notes);
 
-        if (regById != null){
-            edit_date_pressure.setText(regById.getDate());
-            edit_value_pressure.setText(String.valueOf(regById.getValue()));
-            edit_notes_pressure.setText(regById.getNotes());
-        }else{
-            toastHelper.showShort("Error cargando registro");
-        }
     }
     public void openPopupBtnEdit(int id_reg){
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setMessage("Editar registro de presion");
         View popupEditReg = getLayoutInflater().inflate(R.layout.popup_form_edit_reg_pressure, null);
         builder.setView(popupEditReg); // ESTO ES PARA QUE PUEDA OBTENER LAS REFERENCIAS DESDE popupEditReg Y PODER OBTENER EL CONTROL DE LOS ELEMENTOS
-        edit_value_pressure = popupEditReg.findViewById(R.id.edit_value_pressure);
+        edit_value_diastolica = popupEditReg.findViewById(R.id.edit_value_diastolica);
+        edit_value_sistolica = popupEditReg.findViewById(R.id.edit_value_sistolica);
         edit_notes_pressure = popupEditReg.findViewById(R.id.edit_notes_pressure);
         edit_date_pressure = popupEditReg.findViewById(R.id.edit_date_pressure);
 
@@ -484,7 +489,8 @@ public class RegPressureActivity extends AppCompatActivity implements View.OnCli
         View popupAddReg = getLayoutInflater().inflate(R.layout.popup_form_add_reg_pressure, null);
         builder.setView(popupAddReg); // ESTO ES PARA QUE PUEDA OBTENER LAS REFERENCIAS DESDE popupAddReg Y PODER OBTENER EL CONTROL DE LOS ELEMENTOS
 
-        add_value_pressure = popupAddReg.findViewById(R.id.add_value_pressure);
+        add_value_diastolica = popupAddReg.findViewById(R.id.add_value_diastolica);
+        add_value_sistolica = popupAddReg.findViewById(R.id.add_value_sistolica);
         add_notes_pressure = popupAddReg.findViewById(R.id.add_notes_pressure);
         add_date_pressure = popupAddReg.findViewById(R.id.add_date_pressure);
         add_date_pressure.setOnClickListener(this); // ESTA FORMA AGREGA A ESTA MISMA CLASE COMO LISTENER Y LUEGO EN UN SWITCH SE ELIJE EL EVENTO SEGUN SU ID..
@@ -539,7 +545,8 @@ public class RegPressureActivity extends AppCompatActivity implements View.OnCli
 
     // metodos accesorios
     private void cleanEditTextFields(){
-        add_value_pressure.setText("");
+        add_value_diastolica.setText("");
+        add_value_sistolica.setText("");
         add_notes_pressure.setText("");
         add_date_pressure.setText("");
     }
@@ -547,15 +554,17 @@ public class RegPressureActivity extends AppCompatActivity implements View.OnCli
         // limpio arrays para recibir los datos nuevos..
         reg_pressure_ids.clear();
         reg_pressure_dates.clear();
-        reg_pressure_values.clear();
+        reg_pressure_diastolica.clear();
+        reg_pressure_sistolica.clear();
         reg_pressure_notes.clear();
     }
-    private void updateAllDataRegs(ArrayList<Integer> reg_ids, ArrayList<Long> reg_dates, ArrayList<Double> reg_values, ArrayList<String> reg_notes){
+    private void updateAllDataRegs(ArrayList<Integer> reg_ids, ArrayList<Long> reg_dates, ArrayList<Integer> reg_values_diastolica, ArrayList<Integer> reg_values_sistolica, ArrayList<String> reg_notes){
         cleanAllRegs();
         // SETEO DATA A LOS NUEVOS VALORES RECIBIDOS
         reg_pressure_ids = reg_ids;
         reg_pressure_dates = reg_dates;
-        reg_pressure_values = reg_values;
+        reg_pressure_diastolica = reg_values_diastolica;
+        reg_pressure_sistolica = reg_values_sistolica;
         reg_pressure_notes = reg_notes;
         updateReciclerView();// actualizo recicler view
     }

@@ -4,20 +4,15 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
-import android.widget.Toast;
 
-import com.example.one_drop_cruds.databinding.ActivityUserSignupBinding;
-import com.example.one_drop_cruds.entities.DTOmedicalRecord;
-import com.example.one_drop_cruds.entities.dtos.medicalRecords.AddNewMedicalRecordDto;
-import com.example.one_drop_cruds.entities.dtos.medicalRecords.MedicalRecordReadDto;
-import com.example.one_drop_cruds.entities.user.FichaMedicaUsuario;
+import com.example.one_drop_cruds.entities.dtos.medicalRecord.AddNewMedicalRecordDto;
+import com.example.one_drop_cruds.entities.dtos.medicalRecord.MedicalRecordReadDto;
 import com.example.one_drop_cruds.entities.user.LoguedUserDetails;
 import com.example.one_drop_cruds.entities.user.enums.Terapia_insulina;
 import com.example.one_drop_cruds.entities.user.enums.Terapia_pastillas;
@@ -26,8 +21,6 @@ import com.example.one_drop_cruds.entities.user.enums.Tipo_glucometro;
 import com.example.one_drop_cruds.entities.user.enums.Tipo_sensor;
 import com.example.one_drop_cruds.request.AuthRequests;
 import com.example.one_drop_cruds.request.MedicalRecordRequest;
-import com.example.one_drop_cruds.request.RecordsRequest;
-import com.example.one_drop_cruds.utils.AdminSQLiteOpenHelper;
 import com.example.one_drop_cruds.utils.RetrofitHelper;
 import com.example.one_drop_cruds.utils.SharedPrefManager;
 import com.example.one_drop_cruds.utils.ToastHelper;
@@ -38,14 +31,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 public class UserMedicalData extends AppCompatActivity {
     UserSessionManager userSessionManager;

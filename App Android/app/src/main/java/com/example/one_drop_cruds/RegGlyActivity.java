@@ -18,16 +18,13 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.one_drop_cruds.entities.DTORegister;
-import com.example.one_drop_cruds.entities.dtos.RecordReadDto;
-import com.example.one_drop_cruds.entities.dtos.AddNewRecordDto;
-import com.example.one_drop_cruds.entities.user.FichaMedicaUsuario;
+import com.example.one_drop_cruds.entities.dtos.records.RecordReadDto;
+import com.example.one_drop_cruds.entities.dtos.records.AddNewRecordDto;
 import com.example.one_drop_cruds.entities.user.LoguedUserDetails;
 import com.example.one_drop_cruds.entities.user.Record;
 import com.example.one_drop_cruds.entities.user.RecordsPaginatedReadDtoArray;
-import com.example.one_drop_cruds.request.AuthRequests;
 import com.example.one_drop_cruds.request.RecordsRequest;
 import com.example.one_drop_cruds.utils.DateHelper;
 import com.example.one_drop_cruds.utils.DateTimePickerDialog;
@@ -48,17 +45,11 @@ import com.google.gson.Gson;
 
 import java.text.ParseException;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 public class RegGlyActivity extends AppCompatActivity implements View.OnClickListener{
     DateTimePickerDialog datePicker;

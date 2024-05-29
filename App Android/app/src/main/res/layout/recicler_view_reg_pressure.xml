@@ -37,14 +37,27 @@
                 android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/recycler_reg_pressure_value"
+                android:id="@+id/recycler_reg_pressure_diastolica_value"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:fontFamily="sans-serif-condensed"
                 android:gravity="center"
                 android:paddingEnd="20dp"
-                android:text="160/80"
+                android:text="80"
+                android:textAlignment="center"
+                android:textSize="30sp"
+                android:textColor="@color/blackonedrop"
+                android:textStyle="bold"/>
+            <TextView
+                android:id="@+id/recycler_reg_pressure_sistolica_value"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:fontFamily="sans-serif-condensed"
+                android:gravity="center"
+                android:paddingEnd="20dp"
+                android:text="160"
                 android:textAlignment="center"
                 android:textSize="30sp"
                 android:textColor="@color/blackonedrop"

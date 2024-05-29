@@ -1,7 +1,8 @@
-package com.example.one_drop_cruds.entities.dtos.medicalRecords;
+package com.example.one_drop_cruds.entities.dtos.medicalRecord;
 
-public class AddNewMedicalRecordDto {
-    private Integer id_paciente;
+public class MedicalRecordReadDto {
+    private Integer id;
+    // private Integer id_paciente; // todo esto es una ENTIDAD USER =>  private User paciente;
     private String tipo_diabetes;
     private String terapia_insulina;
     private String terapia_pastillas;
@@ -11,11 +12,8 @@ public class AddNewMedicalRecordDto {
     private String comorbilidades;
     private Double peso;
 
-    public AddNewMedicalRecordDto() {
-    }
-
-    public AddNewMedicalRecordDto(Integer id_paciente, String tipo_diabetes, String terapia_insulina, String terapia_pastillas, String tipo_glucometro, String tipo_sensor, String objetivo_glucosa, String comorbilidades, Double peso) {
-        this.id_paciente = id_paciente;
+    public MedicalRecordReadDto(Integer id, String tipo_diabetes, String terapia_insulina, String terapia_pastillas, String tipo_glucometro, String tipo_sensor, String objetivo_glucosa, String comorbilidades, Double peso) {
+        this.id = id;
         this.tipo_diabetes = tipo_diabetes;
         this.terapia_insulina = terapia_insulina;
         this.terapia_pastillas = terapia_pastillas;
@@ -26,46 +24,82 @@ public class AddNewMedicalRecordDto {
         this.peso = peso;
     }
 
-    public Integer getId_paciente() {
-        return id_paciente;
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public String getTipo_diabetes() {
         return tipo_diabetes;
     }
 
+    public void setTipo_diabetes(String tipo_diabetes) {
+        this.tipo_diabetes = tipo_diabetes;
+    }
+
     public String getTerapia_insulina() {
         return terapia_insulina;
+    }
+
+    public void setTerapia_insulina(String terapia_insulina) {
+        this.terapia_insulina = terapia_insulina;
     }
 
     public String getTerapia_pastillas() {
         return terapia_pastillas;
     }
 
+    public void setTerapia_pastillas(String terapia_pastillas) {
+        this.terapia_pastillas = terapia_pastillas;
+    }
+
     public String getTipo_glucometro() {
         return tipo_glucometro;
+    }
+
+    public void setTipo_glucometro(String tipo_glucometro) {
+        this.tipo_glucometro = tipo_glucometro;
     }
 
     public String getTipo_sensor() {
         return tipo_sensor;
     }
 
+    public void setTipo_sensor(String tipo_sensor) {
+        this.tipo_sensor = tipo_sensor;
+    }
+
     public String getObjetivo_glucosa() {
         return objetivo_glucosa;
+    }
+
+    public void setObjetivo_glucosa(String objetivo_glucosa) {
+        this.objetivo_glucosa = objetivo_glucosa;
     }
 
     public String getComorbilidades() {
         return comorbilidades;
     }
 
+    public void setComorbilidades(String comorbilidades) {
+        this.comorbilidades = comorbilidades;
+    }
+
     public Double getPeso() {
         return peso;
     }
 
+    public void setPeso(Double peso) {
+        this.peso = peso;
+    }
+
     @Override
     public String toString() {
-        return "AddNewMedicalRecordDto{" +
-                "id_paciente=" + id_paciente +
+        return "MedicalRecordReadDto{" +
+                "id=" + id +
                 ", tipo_diabetes='" + tipo_diabetes + '\'' +
                 ", terapia_insulina='" + terapia_insulina + '\'' +
                 ", terapia_pastillas='" + terapia_pastillas + '\'' +
@@ -75,41 +109,5 @@ public class AddNewMedicalRecordDto {
                 ", comorbilidades='" + comorbilidades + '\'' +
                 ", peso=" + peso +
                 '}';
-    }
-
-    public void setId_paciente(Integer id_paciente) {
-        this.id_paciente = id_paciente;
-    }
-
-    public void setTipo_diabetes(String tipo_diabetes) {
-        this.tipo_diabetes = tipo_diabetes;
-    }
-
-    public void setTerapia_insulina(String terapia_insulina) {
-        this.terapia_insulina = terapia_insulina;
-    }
-
-    public void setTerapia_pastillas(String terapia_pastillas) {
-        this.terapia_pastillas = terapia_pastillas;
-    }
-
-    public void setTipo_glucometro(String tipo_glucometro) {
-        this.tipo_glucometro = tipo_glucometro;
-    }
-
-    public void setTipo_sensor(String tipo_sensor) {
-        this.tipo_sensor = tipo_sensor;
-    }
-
-    public void setObjetivo_glucosa(String objetivo_glucosa) {
-        this.objetivo_glucosa = objetivo_glucosa;
-    }
-
-    public void setComorbilidades(String comorbilidades) {
-        this.comorbilidades = comorbilidades;
-    }
-
-    public void setPeso(Double peso) {
-        this.peso = peso;
     }
 }
