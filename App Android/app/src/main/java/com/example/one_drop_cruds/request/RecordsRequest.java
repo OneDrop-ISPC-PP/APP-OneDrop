@@ -18,13 +18,12 @@ public interface RecordsRequest {
     @GET("/registros/glucemia/usuario/{userId}")
     Call<DTOReadAllRegisters> getAllGlycemiaRecordsByIdUser (@Path("userId") int userId);
      */
+    // registros glucemia
     @GET("/registros/glucemia/usuario/{userId}")
     Call<RecordsPaginatedReadDtoArray> getAllGlycemiaRecordsByIdUser (
             @Path("userId") int userId,
             @Query("size") int pageSize,
             @Query("page") int pageNumber);
-
-
     @POST("/registros/glucemia/usuario/{fichaMedicaId}")
     Call<RecordReadDto> addNewGlycemiaRecord (@Path("fichaMedicaId") int fichaMedicaId, @Body AddNewRecordDto addNewRecordDto);
     @PUT("/registros/glucemia/{id}")
@@ -34,14 +33,12 @@ public interface RecordsRequest {
     Call<RecordReadDto> deleteGlycemiaRecord (@Path("id") int idRegistro);
 
 
-
+    // registros peso
     @GET("/registros/peso/usuario/{userId}")
     Call<RecordsPaginatedReadDtoArray> getAllWeightRecordsByIdUser (
             @Path("userId") int userId,
             @Query("size") int pageSize,
             @Query("page") int pageNumber);
-
-
     @POST("/registros/peso/usuario/{fichaMedicaId}")
     Call<RecordReadDto> addNewWeightRecord (@Path("fichaMedicaId") int fichaMedicaId, @Body AddNewRecordDto addNewRecordDto);
     @PUT("/registros/peso/{id}")
@@ -49,5 +46,24 @@ public interface RecordsRequest {
 
     @DELETE("/registros/peso/{id}")
     Call<RecordReadDto> deleteWeightRecord (@Path("id") int idRegistro);
+
+
+
+    // registros tension
+    @GET("/registros/tensionArterial/usuario/{userId}")
+    Call<RecordsPaginatedReadDtoArray> getAllPresureRecordsByIdUser (
+            @Path("userId") int userId,
+            @Query("size") int pageSize,
+            @Query("page") int pageNumber);
+
+
+    @POST("/registros/tensionArterial/usuario/{fichaMedicaId}")
+    Call<RecordReadDto> addNewPresureRecord (@Path("fichaMedicaId") int fichaMedicaId, @Body AddNewRecordDto addNewRecordDto);
+    @PUT("/registros/tensionArterial/{id}")
+    Call<RecordReadDto> editPresureRecord (@Path("id") int idRegistro, @Body AddNewRecordDto updateRecordDto);
+
+    @DELETE("/registros/tensionArterial/{id}")
+    Call<RecordReadDto> deletePresureRecord (@Path("id") int idRegistro);
+
 
 }
