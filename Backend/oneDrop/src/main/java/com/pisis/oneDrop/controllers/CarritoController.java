@@ -41,6 +41,10 @@ public class CarritoController {
     public ResponseEntity<CarritoReadDto> findById (@PathVariable Integer id){
         return new ResponseEntity<>(carritoService.findById(id) , HttpStatus.OK);
     }
+    @GetMapping("user/{id}")
+    public ResponseEntity<CarritoReadDto> findByIdUser (@PathVariable Integer id){
+        return new ResponseEntity<>(carritoService.findByIdUser(id) , HttpStatus.OK);
+    }
     // agregar servicios
     @PostMapping("{idCarrito}/{idServicio}")
     public ResponseEntity<CarritoReadDto> addServicioACarrito (@PathVariable Integer idCarrito,

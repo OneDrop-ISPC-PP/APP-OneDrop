@@ -45,7 +45,6 @@
     <string name="add_reg_weight_notes_placeholder">Tome esta muestra 30 minutos despues de desayunar un cafe con leche..</string>
 
 
-
     // Strings de registro de Presion
     <string name="title_crud_pressure">Presion Arterial</string>
     <string name="add_reg_pressure">Agregar Nuevo Registro </string>
@@ -82,11 +81,6 @@
     <string name="second_fragment_label">Second Fragment</string>
     <string name="next">Next</string>
     <string name="previous">Previous</string>
-
-
-
-
-
 
 
     <string name="lorem_ipsum">

@@ -220,6 +220,10 @@ public class Home extends AppCompatActivity {
         Intent pressure = new Intent(this, RegPressureActivity.class);
         startActivity(pressure);
     }
+    public void toServices(View v) {
+        Intent services = new Intent(this, services.class);
+        startActivity(services);
+    }
 
     public void btn_export_data(View v) {
         Call<ResponseBody> call = fileRequest.getFullResume(loguedUser.getId());

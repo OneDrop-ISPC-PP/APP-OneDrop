@@ -169,13 +169,26 @@
 
                         <Button
                             android:id="@+id/btn_export_data"
-                            android:layout_width="match_parent"
                             android:layout_height="match_parent"
+                            android:layout_width="wrap_content"
                             android:layout_margin="4dp"
                             android:backgroundTint="@color/accent_blue"
                             android:fontFamily="sans-serif-condensed"
                             android:onClick="btn_export_data"
                             android:text="Exportar Datos"
+                            android:textColor="@color/blueonedroposcuro"
+                            android:textSize="20dp"
+
+                            android:textStyle="bold" />
+                        <Button
+                            android:id="@+id/btn_services"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_margin="4dp"
+                            android:backgroundTint="@color/accent_pink"
+                            android:fontFamily="sans-serif-condensed"
+                            android:onClick="toServices"
+                            android:text="Servicios"
                             android:textColor="@color/blueonedroposcuro"
                             android:textSize="20dp"
 
