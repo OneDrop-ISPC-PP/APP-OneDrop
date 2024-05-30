@@ -22,6 +22,9 @@ import { InfoPesoDashUserComponent } from './dashboard-usuario/info-peso-dash-us
 import { BienvenidaDashUserComponent } from './dashboard-usuario/bienvenida-dash-user/bienvenida-dash-user.component';
 import { InfoTensionDashUserComponent } from './dashboard-usuario/info-tension-dash-user/info-tension-dash-user.component';
 import { ServiciosDashUserComponent } from './dashboard-usuario/servicios-dash-user/servicios-dash-user.component';
+import { ResumenCarritoDashUserComponent } from './dashboard-usuario/resumen-carrito-dash-user/resumen-carrito-dash-user.component';
+import { MasInfoServicioDashUserComponent } from './dashboard-usuario/mas-info-servicio-dash-user/mas-info-servicio-dash-user.component';
+
 
 
 
@@ -53,6 +56,10 @@ const routes:Routes=[
           {path:'info_peso', component:InfoPesoDashUserComponent},
           {path:'info_tension', component:InfoTensionDashUserComponent},
           {path:'servicios_user', component:ServiciosDashUserComponent},
+          {path:'mas_info_serv', component:MasInfoServicioDashUserComponent},
+          {path:'resumen_compra', component:ResumenCarritoDashUserComponent},
+
+
 
           {path:'**', redirectTo:'bienvenida_user'}
 

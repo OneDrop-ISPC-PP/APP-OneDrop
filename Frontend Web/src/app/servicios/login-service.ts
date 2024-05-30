@@ -140,11 +140,25 @@ public getUserRole(){
 
 }
 
+// CAPTURA EL ID DEL USUARIO
 public getUserId(){
   let user = this.getUser();
   return user.id;
-
 }
+
+// CAPTURA EL NOMBRE DEL USUARIO
+public getNameUser(){
+  let user = this.getUser();
+  return user.nombre;
+}
+
+// CAPTURA EL APELLIDO DEL USUARIO
+public getSurnameUser(){
+  let user = this.getUser();
+  return user.apellido;
+}
+
+
 
 // GET DE USUARIOS ACTUAL (CONSULTAR EL FINAL DE LA RUTA) // NO FUNCIONA
 public getCurrentUser(){
