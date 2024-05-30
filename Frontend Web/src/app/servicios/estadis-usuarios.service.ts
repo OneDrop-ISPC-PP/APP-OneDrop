@@ -43,9 +43,15 @@ export class EstadisUsuariosService {
   url_SERVICIOS: string = 'http://localhost:8080/servicios/';
 
 
-  // -------- CARRITO----------
+  // -------- CARRITO ----------
   url_CARRITO_GET: string = 'http://localhost:8080/carrito/';
   url_CARRITO_POST: string = 'http://localhost:8080/carrito/';
+
+  // -------- CARRITO SERVICIOS ----------
+  url_CARRITO_SERVICIOS_GET: string = 'http://localhost:8080/carrito/';
+  url_CARRITO_SERVICIOS_POST: string = 'http://localhost:8080/carrito/1/';
+
+
 
 
   ////////////////// GET FICHA MEDICA ///////////////////
@@ -109,9 +115,9 @@ export class EstadisUsuariosService {
   // GET_NOTA_TENSION POR ID
   public GET_NOTA_TENSION_POR_ID(id:any){
     return this.http.get(this.url_NOTA_TENSION_GET+id)
-  } 
+  }
   // AGREGA NOTAS DE TENSION
-  nuevaNotaTension(datos: any, id:any) {
+  nuevaNotaTension(datos: any, id:any){
     return this.http.post(this.url_NOTA_TENSION_POST+id, datos);
   }
   // ELIMINAR_NOTAS_GLUCEMIA
@@ -124,17 +130,46 @@ export class EstadisUsuariosService {
   }
 
 
-  ////////////////// CODIGO SERVICIOS (FUNCIONAL) ///////////////////
-  public GET_SERVICIOS(id:any){
-    return this.http.get(this.url_SERVICIOS)
-  }
-
-  ////////////////// CODIGO CARRITO (FUNCIONAL) ///////////////////
-public nuevoCarrito24(){
-  return this.http.get(this.url_CARRITO_POST)
+////////////////// CODIGO SERVICIOS (FUNCIONAL) ///////////////////
+public GET_SERVICIOS(id:any){
+  return this.http.get(this.url_SERVICIOS)
 }
 
 
+////////////////// CODIGO CARRITO (FUNCIONAL) ////////////////////
+public nuevoCarrito24(datos:any,id:any){
+  return this.http.post(this.url_CARRITO_POST+id,datos)
+}
+
+
+////////////////// CODIGO CARRITO (FUNCIONAL) /////////////////////
+
+// METODO GET DEL CARRITO POR ID
+public getCarritoPorIdCarrito(id:any){
+  return this.http.get(this.url_CARRITO_GET+id)
+}
+
+// METODO GET DE SERVICIO POR ID - SIRVE PARA TRAER SERVICIO DE LA LISTA
+// PARA LUEGO LLEVARLO AL CARRITO
+public getServicioPorId(id:any){
+  return this.http.get(this.url_SERVICIOS+id)
+}
+
+// METODO POST PARA AGREGAR UN SERVIVIO AL CARRITO
+public postServicioEnCarrito(data:any, id_Serv:any){
+  return this.http.post(this.url_CARRITO_SERVICIOS_POST+id_Serv, data)
+}
+// METODO POST PARA ELIMINAR UN SERVIVIO DEL CARRITO
+
+public delServicioEnCarrito( id_Serv:any){
+  return this.http.delete(this.url_CARRITO_SERVICIOS_POST+id_Serv)
+}
+
+
+
+////////////////////////////////////////////////////
+////////////////////////////////////////////////////
+////////////////////////////////////////////////////
 
   // MUESTRA LAS NOTAS DE GLUCEMIA (BORRAR SI ANDA EL DE ARRIBA)
   muestraNotasUsuario() {
