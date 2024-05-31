@@ -174,7 +174,7 @@ public class services extends AppCompatActivity {
         }
         @Override
         public int getItemCount() {
-            return servicio_ids.size(); // debe retornar la cantidad de registros..
+            return servicio_ids_by_user.size(); // debe retornar la cantidad de registros..
         }
         // Clase que se encargara de IMPRIMIR todos los elementos
         private class AdapterServicioHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
@@ -232,7 +232,6 @@ public class services extends AppCompatActivity {
             @Override
             public void onResponse(Call<ServicesPaginatedReadDtoArray> call, Response<ServicesPaginatedReadDtoArray> response) {
                 if(response.isSuccessful() && response.body() != null){
-                    System.out.println(" getServiciosDataRequest  ** >>" + response.body().getServices());
                     setDataServices(response.body().getServices());
                 } else if (response.code()==400){
                     // todo pendiente de manejar
@@ -309,7 +308,6 @@ public class services extends AppCompatActivity {
         }
     }
     public void setDataServicesByUser(List services){
-
         Gson gson = new Gson();
         if(services.size()>0){
             for (int i = 0; i <services.size(); i++){
@@ -325,7 +323,7 @@ public class services extends AppCompatActivity {
                     // todo pendiente de manejar
                 }
             }
-            if (servicio_ids.isEmpty()){
+            if (servicio_ids_by_user.isEmpty()){
                 toastHelper.showLong("Aun no hay servicios comprados");
             } else{
                 adapterRVServiciosByUsuario.notifyDataSetChanged();
