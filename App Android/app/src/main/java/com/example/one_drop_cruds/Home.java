@@ -174,24 +174,24 @@ public class Home extends AppCompatActivity {
             public void onResponse(Call<FichaMedicaUsuario> call, Response<FichaMedicaUsuario> response) {
                 if(response.isSuccessful() && response.body() != null){
                     sharedPrefManager.setFichaMedicaUser(response.body());// Obtener datos de ficha medica y guardarlo en shared
-                    System.out.println("******************** FICHA MEDICA ******************************************************");
+                    System.out.println("******* FICHA MEDICA *******************");
                 } else if (response.code()==400){
-                    System.out.println(" FICHA MEDICA response.code()==400 SI NO ESTA CARGADA LA FICHA, SE DEBERIA REDIRIGIR A ACTIVIY DE CARGA DE FICHA MEDICA *********");
+                    System.out.println(" FICHA MEDICA response.code()==400 SI NO ESTA CARGADA LA FICHA, SE DEBERIA REDIRIGIR A ACTIVIY DE CARGA DE FICHA MEDICA ***");
                     System.out.println(response.body());
                     // TODO SI NO ESTA CARGADA LA FICHA, SE DEBERIA REDIRIGIR A ACTIVIY DE CARGA DE FICHA MEDICA
                     // TODO SI NO ESTA CARGADA LA FICHA, SE DEBERIA REDIRIGIR A ACTIVIY DE CARGA DE FICHA MEDICA
                     // TODO SI NO ESTA CARGADA LA FICHA, SE DEBERIA REDIRIGIR A ACTIVIY DE CARGA DE FICHA MEDICA
-                    System.out.println(" FICHA MEDICA response.code()==400 SI NO ESTA CARGADA LA FICHA, SE DEBERIA REDIRIGIR A ACTIVIY DE CARGA DE FICHA MEDICA *********");
+                    System.out.println(" FICHA MEDICA response.code()==400 SI NO ESTA CARGADA LA FICHA, SE DEBERIA REDIRIGIR A ACTIVIY DE CARGA DE FICHA MEDICA ***");
                 }
             }
             @Override
             public void onFailure(Call<FichaMedicaUsuario> call, Throwable t) {
-                System.out.println("******************** FICHA MEDICA Throwable t*************************************************");
+                System.out.println("******* FICHA MEDICA Throwable t****************");
                 System.out.println( t);
                 // TODO SI NO ESTA CARGADA LA FICHA, SE DEBERIA REDIRIGIR A ACTIVIY DE CARGA DE FICHA MEDICA
                 // TODO SI NO ESTA CARGADA LA FICHA, SE DEBERIA REDIRIGIR A ACTIVIY DE CARGA DE FICHA MEDICA
                 // TODO SI NO ESTA CARGADA LA FICHA, SE DEBERIA REDIRIGIR A ACTIVIY DE CARGA DE FICHA MEDICA
-                System.out.println("******************** FICHA MEDICA Throwable t******************************************************");
+                System.out.println("******* FICHA MEDICA Throwable t*******************");
             }
         });
     }
@@ -265,14 +265,14 @@ public class Home extends AppCompatActivity {
         shareIntent.putExtra(Intent.EXTRA_STREAM, uri);
         shareIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
 
-        Log.i("TAG", "************* COMPARTIENDO POR WHATSAPP => URI ****");
-        Log.i("TAG", "***" + uri.toString());
-        Log.i("TAG", "************* COMPARTIENDO POR WHATSAPP => URI ****");
+        Log.i("TAG", "***** COMPARTIENDO POR WHATSAPP => URI **");
+        Log.i("TAG", "*" + uri.toString());
+        Log.i("TAG", "***** COMPARTIENDO POR WHATSAPP => URI **");
 
         try {
             startActivity(Intent.createChooser(shareIntent, "Compartir a través de"));
         } catch (Exception ex) {
-            Log.e("TAG", "************* COMPARTIENDO POR WHATSAPP => Exception ****" + ex.getCause().toString() + "***");
+            Log.e("TAG", "***** COMPARTIENDO POR WHATSAPP => Exception *" + ex.getCause().toString() + "**");
         }
     }
 
