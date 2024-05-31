@@ -103,6 +103,13 @@ public class UserLoginActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+        binding.restoreRedirectText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(UserLoginActivity.this, RestorePassword.class);
+                startActivity(intent);
+            }
+        });
     }
     /*
     private boolean isEmailValid(String email) {
