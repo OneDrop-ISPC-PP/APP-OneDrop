@@ -23,7 +23,7 @@ public class Servicio {
     @NotNull
     private String descripcion;
     @NotNull
-    private Double precio;
+    private Integer precio;
     @NotNull
     private String comentarios;
 }

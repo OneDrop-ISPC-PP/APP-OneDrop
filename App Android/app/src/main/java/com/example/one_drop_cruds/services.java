@@ -3,7 +3,6 @@ package com.example.one_drop_cruds;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -11,13 +10,27 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.one_drop_cruds.entities.Service;
+import com.example.one_drop_cruds.entities.dtos.services.ServicesPaginatedReadDtoArray;
 import com.example.one_drop_cruds.entities.user.LoguedUserDetails;
+import com.example.one_drop_cruds.entities.user.Record;
+import com.example.one_drop_cruds.request.CarritoRequest;
+import com.example.one_drop_cruds.utils.RetrofitHelper;
 import com.example.one_drop_cruds.utils.SharedPrefManager;
+import com.example.one_drop_cruds.utils.StringHelper;
 import com.example.one_drop_cruds.utils.ToastHelper;
 import com.example.one_drop_cruds.utils.UserSessionManager;
+import com.google.gson.Gson;
 
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class services extends AppCompatActivity {
     UserSessionManager userSessionManager;
@@ -29,14 +42,14 @@ public class services extends AppCompatActivity {
     ArrayList<Integer> servicio_ids = new ArrayList<>();
     ArrayList<String> sevicio_nombres = new ArrayList<>();
     ArrayList<String> sevicio_descripciones = new ArrayList<>();
-    ArrayList<Double> sevicio_precios = new ArrayList<>();
+    ArrayList<Integer> sevicio_precios = new ArrayList<>();
     ArrayList<String> sevicio_comentarios = new ArrayList<>();
 
     // DATA SERVICIOS COMPRADOS
     ArrayList<Integer> servicio_ids_by_user = new ArrayList<>();
     ArrayList<String> sevicio_nombres_by_user = new ArrayList<>();
     ArrayList<String> sevicio_descripciones_by_user = new ArrayList<>();
-    ArrayList<Double> sevicio_precios_by_user = new ArrayList<>();
+    ArrayList<Integer> sevicio_precios_by_user = new ArrayList<>();
     ArrayList<String> sevicio_comentarios_by_user = new ArrayList<>();
 
     // RECICLER VIEW
@@ -45,6 +58,8 @@ public class services extends AppCompatActivity {
     AdapterServicio adapterRVServicios;
     AdapterServicio_by_user adapterRVServiciosByUsuario;
     ToastHelper toastHelper;
+
+    CarritoRequest carritoRequest;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState); setContentView(R.layout.activity_services);
@@ -55,6 +70,8 @@ public class services extends AppCompatActivity {
         sharedPrefManager = new SharedPrefManager(getApplicationContext(), "oneDrop_shared_preferences");
         loguedUser = userSessionManager.getLoguedUserDetails();  // SI NO ESTA LOGUEADO, SE REDIRIGE A LOGIN
         token = sharedPrefManager.getUserToken();
+
+        carritoRequest = new RetrofitHelper(token).getRetrofitHelperWithToken().create(CarritoRequest.class);
 
         // RECICLER VIEW
         reciclerViewServicios = findViewById(R.id.recyclerView_services);
@@ -70,8 +87,8 @@ public class services extends AppCompatActivity {
         reciclerViewServiciosByUsuario.setAdapter(adapterRVServiciosByUsuario);
 
         toastHelper = new ToastHelper(services.this);
-        getServiciosData();
-        getServiciosDataByUser(loguedUser.getId());
+        getServiciosDataRequest();
+        // todo falta terminar implementacion => getServiciosDataRequestByUser(loguedUser.getId());
     }
 
     // este es para todos los servicios
@@ -222,60 +239,155 @@ public class services extends AppCompatActivity {
     // sevicio_descripciones String
     // sevicio_precios Double
     // sevicio_comentarios String
-    public void getServiciosData(){
 
-        servicio_ids.add(1);
-        servicio_ids.add(2);
-        servicio_ids.add(3);
 
-        sevicio_nombres.add("primer");
-        sevicio_nombres.add("segundo");
-        sevicio_nombres.add("tercero");
 
-        sevicio_descripciones.add("primer descripcion");
-        sevicio_descripciones.add("segundo descripcion");
-        sevicio_descripciones.add("tercero descripcion");
 
-        sevicio_precios.add(1550.0);
-        sevicio_precios.add(700.0);
-        sevicio_precios.add(1500.0);
+    public void setDataServicesByUser(List services){
+        Gson gson = new Gson();
+        for (int i = 0; i <services.size(); i++){
+            try {
+                Service service = gson.fromJson(gson.toJson(services.get(i)) , Service.class);  // todo gson.toJson(), debo usarlo porque previamente ya habia deserializado el objeto serviciosPaginados, que incluye la lista de servicios, pero la lista de servicios quedo como un objeto plano.. services.get(i) entoces no es un json valido, por lo que luego lo debo transformar en una cadena Json valida para usar gson.fromJson() y que funcione correctamente
 
-        sevicio_comentarios.add("primer comentario");
-        sevicio_comentarios.add("segundo comentario");
-        sevicio_comentarios.add("tercero comentario");
+                servicio_ids_by_user.add(service.getId());
+                sevicio_nombres_by_user.add(service.getNombre());
+                sevicio_descripciones_by_user.add(service.getDescripcion());
+                sevicio_precios_by_user.add(service.getPrecio());
+                sevicio_comentarios_by_user.add(service.getComentarios());
+            } catch (Exception e){
+                // todo pendiente de manejar
+            }
+        }
+        if (servicio_ids.isEmpty()){
+            toastHelper.showLong("Aun no hay servicios comprados");
+        } else{
+            updateReciclerViews();
+        }
+    }
+    public void getServiciosDataRequestByUser(Integer userId){
+        // todo => aca hay un error, debo obtener carritos, dentro del cual, estaran los servicios adquiridos! Osea que debo crean entidad carrito, con todos sus atributos, y luego a ese obj carrito.getServicios() => y eso madnarlo al recicler view!
+            /*
+    // todo debo crear clase que represente a :
+
+    "id": 1,
+    "paciente": {
+        "id": 1,
+        "username": "davidcst",
+        "dni": "35924420",
+        "telefono": "2644647572",
+        "nombre": "david",
+        "apellido": "costa",
+        "email": "davidcst2991@gmail.com",
+        "nacimiento": [
+            1992,
+            12,
+            2
+        ],
+        "sexo": "masculino",
+        "role": "USUARIO"
+    },
+    "servicios": [],
+    "historialCompras": [
+        {
+            "id": 3,
+            "importe": 11000.0,
+            "fecha": 1715876693576,
+            "servicios": [
+                {
+                    "id": 2,
+                    "nombre": "Segundo servicio",
+                    "descripcion": "Holter",
+                    "precio": 3500.0,
+                    "comentarios": "UN POCOo mas caro"
+                },
+                {
+                    "id": 3,
+                    "nombre": "UN tercer servicio",
+                    "descripcion": "ergometria",
+                    "precio": 7500.0,
+                    "comentarios": "solo los cardio"
+                }
+            ],
+            "metodoDePago": "EFECTIVO"
+        }
+    ]
+} y recibir esto desde el endpoint
+        /*
+        Call<ServicesPaginatedReadDtoArray> call= carritoRequest.getAllServices();
+        call.enqueue(new Callback<ServicesPaginatedReadDtoArray>() {
+            @Override
+            public void onResponse(Call<ServicesPaginatedReadDtoArray> call, Response<ServicesPaginatedReadDtoArray> response) {
+                if(response.isSuccessful() && response.body() != null){
+                    setDataServices(response.body().getServices());
+                } else if (response.code()==400){
+                    // todo pendiente de manejar
+                    System.out.println(" DTOReadAllRegisters response.code()==400  *********");
+                    System.out.println(response.body());
+                    System.out.println(" DTOReadAllRegisters response.code()==400  *********");
+                }
+            }
+            @Override
+            public void onFailure(Call<ServicesPaginatedReadDtoArray> call, Throwable t) {
+                // todo pendiente de manejar
+                System.out.println("******************** DTOReadAllRegisters Throwable t*************************************************");
+                System.out.println( t);
+                System.out.println("******************** DTOReadAllRegisters Throwable t******************************************************");
+            }
+        });
+
+         */
 
     }
 
+    public void setDataServices(List services){
+        Gson gson = new Gson();
+        for (int i = 0; i <services.size(); i++){
+            try {
+                Service service = gson.fromJson( gson.toJson(services.get(i)) , Service.class);  // todo gson.toJson(), debo usarlo porque previamente ya habia deserializado el objeto serviciosPaginados, que incluye la lista de servicios, pero la lista de servicios quedo como un objeto plano.. services.get(i) entoces no es un json valido, por lo que luego lo debo transformar en una cadena Json valida para usar gson.fromJson() y que funcione correctamente
 
-    // todo *****************************************************************************
-    // todo *****************************************************************************
-
-        public void getServiciosDataByUser (Integer userId){
-
-            // TODO BUSCAR TODOS LOS SERVICIOS COMPRADOS POR USUARIO
-            // TODO BUSCAR TODOS LOS SERVICIOS COMPRADOS POR USUARIO
-            // TODO BUSCAR TODOS LOS SERVICIOS COMPRADOS POR USUARIO
-
-        servicio_ids_by_user.add(1);
-        servicio_ids_by_user.add(2);
-        servicio_ids_by_user.add(3);
-
-        sevicio_nombres_by_user.add("primer _by_user");
-        sevicio_nombres_by_user.add("segundo _by_user");
-        sevicio_nombres_by_user.add("tercero _by_user");
-
-        sevicio_descripciones_by_user.add("primer descripcion _by_user");
-        sevicio_descripciones_by_user.add("segundo descripcion _by_user");
-        sevicio_descripciones_by_user.add("tercero descripcion _by_user");
-
-        sevicio_precios_by_user.add(1550.0);
-        sevicio_precios_by_user.add(700.0);
-        sevicio_precios_by_user.add(1500.0);
-
-        sevicio_comentarios_by_user.add("primer comentario _by_user");
-        sevicio_comentarios_by_user.add("segundo comentario _by_user");
-        sevicio_comentarios_by_user.add("tercero comentario _by_user");
-
+                servicio_ids.add(service.getId());
+                sevicio_nombres.add(service.getNombre());
+                sevicio_descripciones.add(service.getDescripcion());
+                sevicio_precios.add(service.getPrecio());
+                sevicio_comentarios.add(service.getComentarios());
+            } catch (Exception e){
+                System.out.println("ERROR >> "+e.getMessage());
+                // todo pendiente de manejar
+            }
+        }
+        if (servicio_ids.isEmpty()){
+            toastHelper.showLong("Aun no hay servicios");
+        } else{
+            updateReciclerViews();
+        }
     }
 
+    private void updateReciclerViews(){
+        adapterRVServicios.notifyDataSetChanged();
+        adapterRVServiciosByUsuario.notifyDataSetChanged();
+    }
+    public void getServiciosDataRequest(){
+        Call<ServicesPaginatedReadDtoArray> call= carritoRequest.getAllServices();
+        call.enqueue(new Callback<ServicesPaginatedReadDtoArray>() {
+            @Override
+            public void onResponse(Call<ServicesPaginatedReadDtoArray> call, Response<ServicesPaginatedReadDtoArray> response) {
+                if(response.isSuccessful() && response.body() != null){
+                    setDataServices(response.body().getServices());
+                } else if (response.code()==400){
+                    // todo pendiente de manejar
+                    System.out.println(" DTOReadAllRegisters response.code()==400  *********");
+                    System.out.println(response.body());
+                    System.out.println(" DTOReadAllRegisters response.code()==400  *********");
+                }
+            }
+            @Override
+            public void onFailure(Call<ServicesPaginatedReadDtoArray> call, Throwable t) {
+                // todo pendiente de manejar
+                System.out.println("******************** DTOReadAllRegisters Throwable t*************************************************");
+                System.out.println( t);
+                System.out.println("******************** DTOReadAllRegisters Throwable t******************************************************");
+            }
+        });
+
+    }
 }

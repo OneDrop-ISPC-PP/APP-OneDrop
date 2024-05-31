@@ -13,7 +13,7 @@ public class ServicioReadDto {
     private Integer id;
     private String nombre;
     private String descripcion;
-    private Double precio;
+    private Integer precio;
     private String comentarios;
 }
 

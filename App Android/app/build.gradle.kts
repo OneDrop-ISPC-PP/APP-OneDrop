@@ -53,5 +53,6 @@ dependencies {
     implementation("com.squareup.okhttp3:logging-interceptor:4.10.0")
     implementation ("com.squareup.retrofit2:retrofit:2.9.0") // para peticiones HTTP
     implementation ("com.squareup.retrofit2:converter-gson:2.6.4") // aca deberia ser converter-jackson QUE ES EL QUE USO EN BACK.. AVERIGUAR VERSION!
+    implementation ("com.google.code.gson:gson:2.8.9")
 
 }
