@@ -60,7 +60,8 @@ public class services extends AppCompatActivity {
     CarritoRequest carritoRequest;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState); setContentView(R.layout.activity_services);
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_services);
 
 
         // user sessions
