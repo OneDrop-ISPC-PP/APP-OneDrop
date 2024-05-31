@@ -18,6 +18,7 @@
         android:theme="@style/Theme.One_drop_cruds"
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
+
         <activity
             android:name=".services"
             android:exported="false" />
