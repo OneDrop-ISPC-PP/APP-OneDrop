@@ -18,6 +18,7 @@ import com.example.one_drop_cruds.entities.user.enums.ErrorResponse;
 import com.example.one_drop_cruds.request.AuthRequests;
 import com.example.one_drop_cruds.utils.AdminSQLiteOpenHelper;
 import com.example.one_drop_cruds.utils.BackendUrl;
+import com.example.one_drop_cruds.utils.RetrofitHelper;
 import com.example.one_drop_cruds.utils.SharedPrefManager;
 import com.google.gson.Gson;
 
@@ -40,8 +41,7 @@ public class UserSignupActivity extends AppCompatActivity {
     EditText signup_email, signup_password , signup_confirm, signup_username, signup_name, signup_last_name, signup_phone, signup_sex, signup_dni ;
     String baseUrl = new BackendUrl().getBackendUrl();
 
-    // todo eliminar esto saltar
-    public Button saltar;
+    AuthRequests authRequests;
 
 
     // TODO DATE PICKER
@@ -57,6 +57,7 @@ public class UserSignupActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
 
         sharedPrefManager = new SharedPrefManager(getApplicationContext() , "oneDrop_shared_preferences");
+        authRequests = new RetrofitHelper().getRetrofitHelper().create(AuthRequests.class);
 
         signup_email = findViewById(R.id.signup_email);
         signup_password = findViewById(R.id.signup_password);
@@ -112,20 +113,8 @@ public class UserSignupActivity extends AppCompatActivity {
     }
 
     public void registerUser(String email , String  password , String  confirmPassword , String  sex , String  username , String  name , String  lastName , String  phone , String  dni  , String birth){
-        HttpLoggingInterceptor registerInterceptor = new HttpLoggingInterceptor();
-        registerInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
-        OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
-        httpClient.addInterceptor(registerInterceptor);
-
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(baseUrl) // +"/auth/register/"
-                .addConverterFactory(GsonConverterFactory.create())
-                .client(httpClient.build())
-                .build();
-        AuthRequests authRequest = retrofit.create(AuthRequests.class);
-
         RegisterRequest registerRequest = new RegisterRequest(username, password, confirmPassword, name, lastName, dni, phone, email, sex, birth);
-        Call<AuthResponse> call = authRequest.registerRequest(registerRequest);
+        Call<AuthResponse> call = authRequests.registerRequest(registerRequest);
         call.enqueue(new Callback<AuthResponse>() {
             // todo verificar error: CUANDO INTENTO REGISTRAR UN USUARIO, Y ESTE TIENE INFO QUE YA EXISTE, POR EJ EL DNI, LUEGO INTENTO EDITANDO EL DNI Y PONGO UNO QUE ESTA BIEN, INTENTO EL REGISTRO Y ESTE FUNCIONA, PERO NO ME SALE NINGUN TOAST NI CREA LA NUEVA ACTIVITY.. PERO SI QUIERO LOGUEARME LUEGO SI FUNCIONA CORRECTAMENTE.. PARECE QUE POR ALGUNA RAZON, LA LLAMADA LA EJECUTA CADA VEZ, PERO NO VUELVE A INGRESAR A "OnResponse" como si fuera una llamada exitosa, sino como que volviese siempre a caer en el "onFailure".. por?? como solucionarlo???
             @Override
@@ -187,25 +176,6 @@ public class UserSignupActivity extends AppCompatActivity {
 */
                 registerUser(email,  password,  confirmPassword,  sex,  username,  name,  lastName,  phone,  dni,  birth);
 
-            // todo LOGICA DE REGISTRO VIEJA, BORRAR!
-                /*
-                Boolean checkUserEmail = adminBD.checkEmail(email);
-                if (!checkUserEmail) {
-                    Boolean insert = adminBD.createUser(email, password);
-                    if (insert) {
-                        Toast.makeText(UserSignupActivity.this, "¡Registro exitoso!", Toast.LENGTH_SHORT).show();
-                        // todo => aqui se debe guardar un user details y no solo el email!!!!!  sharedPrefManager.setLoguedUser(email);
-                        Intent intent = new Intent(getApplicationContext(), UserMedicalData.class);
-                        startActivity(intent);
-                    } else {
-                        Toast.makeText(UserSignupActivity.this, "Error durante el registro!", Toast.LENGTH_SHORT).show();
-                    }
-                } else {
-                    Toast.makeText(UserSignupActivity.this, "¡Ya estás registrado!", Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent(getApplicationContext(), UserLoginActivity.class);
-                    startActivity(intent);
-                }
-            */
             } else {
                 Toast.makeText(UserSignupActivity.this, "¡Las contraseñas no concuerdan!", Toast.LENGTH_SHORT).show();
             }

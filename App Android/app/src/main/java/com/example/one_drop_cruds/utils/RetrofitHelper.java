@@ -19,7 +19,21 @@ public class RetrofitHelper {
         this.token = token;
     }
 
+    public RetrofitHelper() {
+    }
 
+    public Retrofit getRetrofitHelper(){
+        HttpLoggingInterceptor recordInterceptor = new HttpLoggingInterceptor();
+        recordInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+        OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
+        httpClient.addInterceptor(recordInterceptor);
+
+        return new Retrofit.Builder()
+                .baseUrl(baseUrl) // +"/auth/register/"
+                .addConverterFactory(GsonConverterFactory.create())
+                .client(httpClient.build())
+                .build();
+    }
     public Retrofit getRetrofitHelperWithToken(){
         HttpLoggingInterceptor recordInterceptor = new HttpLoggingInterceptor();
         recordInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
