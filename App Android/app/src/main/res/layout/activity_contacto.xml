@@ -43,6 +43,7 @@
         android:drawablePadding="8dp"
         android:gravity="center_vertical"
         android:text="info@onedrop.com"
+        android:textStyle="bold"
         android:textColor="@color/blueonedrop"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -60,6 +61,7 @@
         android:drawablePadding="8dp"
         android:gravity="center_vertical"
         android:text="+54 9 113200-4403"
+        android:textStyle="bold"
         android:textColor="@color/blueonedrop"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -116,6 +118,7 @@
             android:layout_marginTop="2dp"
             android:fontFamily="sans-serif-condensed"
             android:text="VOLVER"
+            android:textStyle="bold"
             android:textColor="@color/blueonedrop"
             android:textSize="16sp" />
     </LinearLayout>
