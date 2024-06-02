@@ -47,10 +47,16 @@ export class EstadisUsuariosService {
   url_CARRITO_GET: string = 'http://localhost:8080/carrito/';
   url_CARRITO_POST: string = 'http://localhost:8080/carrito/';
 
+  // -------- CARRITO ----------
+  url_CARRITO_ID_USER_GET: string = 'http://localhost:8080/carrito/user/';
+  url_CARRITO_ID_USER_POST: string = 'http://localhost:8080/carrito/user/';
+
   // -------- CARRITO SERVICIOS ----------
   url_CARRITO_SERVICIOS_GET: string = 'http://localhost:8080/carrito/';
-  url_CARRITO_SERVICIOS_POST: string = 'http://localhost:8080/carrito/1/';
+  url_CARRITO_SERVICIOS_POST: string = 'http://localhost:8080/carrito/';
 
+  // -------- PDF ----------
+  url_PDF_GET: string = 'http://localhost:8080/reportes/';
 
 
 
@@ -58,6 +64,8 @@ export class EstadisUsuariosService {
   getFichaMedicaIdUser(id:any){
     return this.http.get(this.url_GET_FICHA_MEDICA+id)
   }
+
+
 
   ////////////////// CODIGO NOTAS GLUCEMIA (FUNCIONAL) ///////////////////
   // GET_NOTAS_GLUCEMIA
@@ -141,13 +149,15 @@ public nuevoCarrito24(datos:any,id:any){
   return this.http.post(this.url_CARRITO_POST+id,datos)
 }
 
-
-////////////////// CODIGO CARRITO (FUNCIONAL) /////////////////////
-
 // METODO GET DEL CARRITO POR ID
 public getCarritoPorIdCarrito(id:any){
   return this.http.get(this.url_CARRITO_GET+id)
 }
+
+////////////////// GET FICHA MEDICA ///////////////////
+getCarritoPorIdUser(id:any){
+  return this.http.get(this.url_CARRITO_ID_USER_GET+id)
+}  
 
 // METODO GET DE SERVICIO POR ID - SIRVE PARA TRAER SERVICIO DE LA LISTA
 // PARA LUEGO LLEVARLO AL CARRITO
@@ -156,13 +166,21 @@ public getServicioPorId(id:any){
 }
 
 // METODO POST PARA AGREGAR UN SERVIVIO AL CARRITO
-public postServicioEnCarrito(data:any, id_Serv:any){
-  return this.http.post(this.url_CARRITO_SERVICIOS_POST+id_Serv, data)
+public postServicioEnCarrito(data:any,id_car:any, id_Serv:any){
+  return this.http.post(this.url_CARRITO_SERVICIOS_POST+id_car+"/"+id_Serv, data)
 }
 // METODO POST PARA ELIMINAR UN SERVIVIO DEL CARRITO
 
-public delServicioEnCarrito( id_Serv:any){
-  return this.http.delete(this.url_CARRITO_SERVICIOS_POST+id_Serv)
+public delServicioEnCarrito(id_carr:any, id_Serv:any){
+  return this.http.delete(this.url_CARRITO_SERVICIOS_POST+id_carr+"/"+id_Serv)
+}
+
+////////// DESCARGAR PDF //////////
+////////// DESCARGAR PDF //////////
+
+public descargarDPF(id:any){
+  return this.http.get(this.url_PDF_GET+id, {responseType:'blob'});
+
 }
 
 

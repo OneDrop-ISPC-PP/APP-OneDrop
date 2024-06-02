@@ -1,3 +1,10 @@
+/*  PALETA DE COLORES DEL NUEVO LOGO
+#FC5880 rosa
+#16BBEB celeste
+#0870AA azul
+#03476D azul oscuro
+*/
+
 .menu_text{
     text-align: center;
   }
@@ -6,6 +13,11 @@
     height: 100%;
   
     border: #2845d6 1px solid;
+  }
+
+  .sub_sidebar_sin_b{
+    margin: 2rem 0rem;
+    height: 100%;  
   }
   .selec{
     border: #2845d6 1px solid;
@@ -19,3 +31,48 @@
   .text_center{
     text-align: center;
   }
+
+  .secciones{
+    background-color: white;
+    height: 7rem;
+    width: 100%;
+    border-radius: 0px;
+    border: 1px solid #fc588163 ;
+
+  }
+
+  .secciones2{
+    background-color:#FC5880;
+    height: 7rem;
+    width: 100%;
+    border-radius: 0px;
+    border: 1px solid #FC5880 ;
+  }
+
+  .secciones:hover{
+    border: 2px solid #FC5880;
+  }
+
+
+  .texto_blanco{
+    color:white;
+  }
+
+  .texto_rosa{
+    color: #FC5880;
+  }
+
+  .borde{
+    border: 1px solid black;
+  }
+
+  .m_botom{
+
+    margin-bottom: 4rem;
+
+  }
+
+  .seccion_ofr{
+    background-color: #fc5881c1;
+  }
+

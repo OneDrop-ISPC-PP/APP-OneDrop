@@ -10,8 +10,6 @@ import { LoginService } from 'src/app/servicios/login-service';
   styleUrls: ['./dashboard-usuario.component.css']
 })
 export class DashboardUsuarioComponent implements OnInit {
-// VARIABLES CARRITO
-  veracidadCarrito:boolean = false;
 // VARIABLES DE INFO USUARIO Y FICHA MEDICA
   getIdUser: any;
   getIdFichaMedica: any;
@@ -60,10 +58,10 @@ export class DashboardUsuarioComponent implements OnInit {
     const user = this.serv_login.getUser();
     if (this.getIdFichaMedica != undefined){
       //console.log("La ficha medica ya fue cargada")
-      this.message = `Bienvenido ${user.username}, ¿Que notas tenés pensadas registrar hoy? `
+      this.message = `Bienvenido ${user.username}!`
       return false
     }else{
-      this.message = `Bienvenido ${user.username}, recordá completar la ficha medica para ingresar registros `
+      this.message = `Bienvenido ${user.username}!`
       //console.log("La ficha medica aun NO fue cargada")
       return true
     }
@@ -93,6 +91,34 @@ export class DashboardUsuarioComponent implements OnInit {
       })
     }
 
+
+    descargarPDF(){
+      this.paciente.descargarDPF(1).subscribe(
+        (data)=>{
+          let downloadURL = window.URL.createObjectURL(data);
+          let link = document.createElement('a');
+          link.href=downloadURL;
+          link.download="TusDatos_OneDrop"
+          link.click
+
+          console.log("Se descargo exitosamente")
+          console.log("El ID del User para el PDF es:")
+          console.log(this.getIdUser)
+
+        },
+        (error)=>{
+
+          console.log("Hubo un error en la descarga")
+          console.log("El ID del User para el PDF es:")
+          console.log(this.getIdUser)
+
+
+
+        }
+
+      )
+
+    }
 
 
 }

@@ -22,8 +22,10 @@ import { InfoPesoDashUserComponent } from './dashboard-usuario/info-peso-dash-us
 import { BienvenidaDashUserComponent } from './dashboard-usuario/bienvenida-dash-user/bienvenida-dash-user.component';
 import { InfoTensionDashUserComponent } from './dashboard-usuario/info-tension-dash-user/info-tension-dash-user.component';
 import { ServiciosDashUserComponent } from './dashboard-usuario/servicios-dash-user/servicios-dash-user.component';
-import { ResumenCarritoDashUserComponent } from './dashboard-usuario/resumen-carrito-dash-user/resumen-carrito-dash-user.component';
-import { MasInfoServicioDashUserComponent } from './dashboard-usuario/mas-info-servicio-dash-user/mas-info-servicio-dash-user.component';
+import { MasInfoServicioDashUserComponent } from './mas-info-servicio-dash-user/mas-info-servicio-dash-user.component';
+import { Resumen2CarritoUserComponent } from './resumen2-carrito-user/resumen2-carrito-user.component';
+Resumen2CarritoUserComponent
+
 
 
 
@@ -56,23 +58,23 @@ const routes:Routes=[
           {path:'info_peso', component:InfoPesoDashUserComponent},
           {path:'info_tension', component:InfoTensionDashUserComponent},
           {path:'servicios_user', component:ServiciosDashUserComponent},
-          {path:'mas_info_serv', component:MasInfoServicioDashUserComponent},
-          {path:'resumen_compra', component:ResumenCarritoDashUserComponent},
-
-
 
           {path:'**', redirectTo:'bienvenida_user'}
-
-          
         ]
         },
         {path:'registro2usuario', component:Registro2usuarioComponent},
         {path:'registro3usuario', component:Registro3usuarioComponent},
+
         {path:'edit_nota_glucemia/:id', component:ModNotaUsuarioComponent},
         {path:'edit_nota_peso/:id', component:ModNotaPesoUsuarioComponent},
         {path:'edit_nota_tension/:id', component:ModNotaTensionUsuarioComponent},
         {path:'edit_servicio/:id', component:ModServicioAdminComponent},
         {path:'edit_paciente/:id', component:ModPacienteAdminComponent},
+        {path:'mas_info_serv/:id', component:MasInfoServicioDashUserComponent},
+        {path:'resumen2_carrito/:id', component:Resumen2CarritoUserComponent},
+
+
+
 
 
 

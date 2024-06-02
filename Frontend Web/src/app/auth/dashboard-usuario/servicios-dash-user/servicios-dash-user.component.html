@@ -23,7 +23,7 @@
                       <button  class="btn bg_btn_edit px-4 p-2 m-1 col-lg-6" (click)="servicioAlCarrito(s.id)">
                       Agregar al Carrito</button>
 
-                      <button  class="btn bg_btn_edit px-4 p-2 m-1 col-lg-6"  >
+                      <button  class="btn bg_btn_edit px-4 p-2 m-1 col-lg-6"  routerLink="/auth/mas_info_serv/{{s.id}}" >
                        Mas Info</button>
                     </div>
 
@@ -35,8 +35,13 @@
               <!-- MUESTRA CARRITO -->
               <section class="col-lg-4 borde_servicios my-4 ">
                 <h3 class="text_center "  >Carrito</h3>
+
+                <div *ngIf="!veracidadSiguiente">
+                    <p>Para empezar a comprar agrega un servicio al carrito</p>
+
+                </div>
     
-                <div  >
+                <div *ngIf="veracidadSiguiente">
 
                   <!--  TITULARES -->
                   <div class="container-fluid" >
@@ -69,11 +74,8 @@
                     </div>
                   </div>
 
-
-
-
-                  <div  *ngIf="veracidadSiguiente">
-                  <button  class="btn bg_btn_edit px-4 p-2 m-1 col-lg-10" (click)="siguienteCarrito()" >
+                  <div  >
+                  <button  class="btn bg_btn_edit px-4 p-2 m-1 col-lg-10" routerLink="/auth/resumen2_carrito/{{idCarrito}}" >
                     Siguiente</button>
 
                   </div>

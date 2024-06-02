@@ -1,47 +1,48 @@
 <div class="bootstrap-wrapped m-0">
   <div class="container-fluid m-0 ">
-    <div class="row m-0">
+    <div class="row m-0 ">
 
       <!-- SIDEBAR -->
-      <div class="col-lg-2  py-3">
+      <div class="col-lg-12  py-3">
         
-        <div class=" container bg-light  sub_sidebar ">
+        <div class=" container-fluid  sub_sidebar_sin_b ">
           
-          <div class="row m-0">
+          <div class="row m-0 d-flex align-items-center ">
 
-              <div>
-                <h2 class="menu_text p-4 col-lg-12 menu_text text_center">Menú</h2>
+              <div class=" col secciones2 d-flex justify-content-center d-flex align-items-center">
+                <h2 class="menu_text  menu_text text_center texto_blanco">Menú</h2>
               </div>
 
 
 
-              <div class="p-2" *ngIf="toggleFicheMedica()">          
-                <button  (click)="aFormFichaMedica()" class="btn btn-light p-2 col-lg-12" >
-                Ficha Medica
+              <div class=" col-lg-8 " *ngIf="toggleFicheMedica()">          
+                <button  (click)="aFormFichaMedica()" class="btn btn-light secciones" >
+                  <h4 class="texto_rosa">Ficha Médica</h4>
+
                 </button>
               </div>
 
-              <div class="p-2"  *ngIf="!toggleFicheMedica()">
-                <button    routerLink = "info_glucemia" class="btn btn-light p-2 col-lg-12">
-                  Glucemia
+              <div class="col"  *ngIf="!toggleFicheMedica()">
+                <button    routerLink = "info_glucemia" class="btn btn-light secciones">
+                  <h4 class="texto_rosa">Glucemia</h4>
                 </button>
               </div>
 
-              <div class="p-2"  *ngIf="!toggleFicheMedica()">
-                <button  routerLink = "info_peso" class="btn btn-light p-2 col-lg-12">
-                  Peso
+              <div class=" col"  *ngIf="!toggleFicheMedica()">
+                <button  routerLink = "info_peso" class="btn btn-light secciones">
+                  <h4 class="texto_rosa">Peso</h4>
                 </button>
               </div>
 
-              <div class="p-2"  *ngIf="!toggleFicheMedica()">
-                <button  routerLink = "info_tension" class="btn btn-light p-2 col-lg-12">
-                  Presion Arterial
+              <div class=" col"  *ngIf="!toggleFicheMedica()">
+                <button  routerLink = "info_tension" class="btn btn-light secciones">
+                  <h4 class="texto_rosa">Presion Arterial</h4>
                 </button>
               </div>
 
-              <div class="p-2"  *ngIf="!toggleFicheMedica()">
-                <button  routerLink = "servicios_user"  class="btn btn-light p-2 col-lg-12">
-                  Nuestros Servicios
+              <div class=" col"  *ngIf="!toggleFicheMedica()">
+                <button  routerLink = "servicios_user"  class="btn btn-light secciones">
+                  <h4 class="texto_rosa">Servicios</h4>
                 </button>
               </div>
 
@@ -51,16 +52,66 @@
 
       </div>
 
-      <section class="col-lg-10  px-2 py-1">
-        <div *ngIf="getIdFichaMedica">
-            <h3 class="text_center message">{{message}} </h3>
+      <section class="col-lg-12  container-fluid ">
+        <!-- SI TIENE LA FICHA MEDICA -->
+
+        <div *ngIf="getIdFichaMedica" class="container-fluid row ">
+
+            <h2 class="text_center message">{{message}} esperamos te encuentres bien. </h2>
 
         </div>
 
-        <div>
+        <!-- NO TIENE LA FICHA MEDICA -->
+        <div class="row container-fluid"  *ngIf="!getIdFichaMedica">
+          
+          <div class="col p-4" ><h2 class="text_center message text_center p-4 ">{{message}}</h2></div>
 
+
+          <div class="col-lg-8 p-4" ><h4 class="text_center message text_center p-4">Antes de acceder a las funcionalidades que ofrecemos en OneDrop necesitamos que completes la ficha medica la ficha medica.</h4></div>
+
+
+
+
+          <section class="seccion_ofr container-fluid m_botom">
+
+          <div class="col-lg-12 my-4 py-4">
+            <h2 class="text_center texto_blanco">¿Qué te ofrecemos en OneDrop?</h2>
+          </div>
+
+          <div class="col-lg-12 m_botom row container-fluid">
+
+            <div class="col-lg-12">
+                <h5 class="p-2 text_center texto_blanco">. Vas a poder registrar notas diarias de glucemia y tension arterial para guardar tus datos y llevar un control de ellos. Tambien podras hacer notas de peso.</h5>
+            </div>
+
+            <div class="col-lg-12">
+              <h5 class="p-2 text_center texto_blanco">. Consultar estadisticas de los datos que lleves guardando hasta el momento y descargar un PDF con toda la informacion, para llevarla a donde necesites.</h5>
+            </div>
+
+            <div class="col-lg-12">
+              <h5 class="p-2 text_center texto_blanco">. Podras consultar nuestros servicios y contratarlos si los necesitas.</h5>
+            </div>
+
+
+
+          </div>
+
+        </section>
         </div>
           <router-outlet></router-outlet>
+
+          <div *ngIf="getIdFichaMedica" class="container-fluid row ">
+
+
+
+            <div class="col-lg-10 my-4 p-4"><h4 class="text_center"> Recordá que podes descargar toda tu info en un PDF</h4></div>
+            <div class="col-lg-2 my-4 p-4">
+              
+              <button (click)="descargarPDF()" >Descargar</button>
+
+            </div>
+
+        </div>
 
       </section> 
 

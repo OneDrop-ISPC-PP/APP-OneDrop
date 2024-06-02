@@ -30,8 +30,10 @@ import { InfoGlucemiaDashUserComponent } from './dashboard-usuario/info-glucemia
 import { InfoPesoDashUserComponent } from './dashboard-usuario/info-peso-dash-user/info-peso-dash-user.component';
 import { InfoTensionDashUserComponent } from './dashboard-usuario/info-tension-dash-user/info-tension-dash-user.component';
 import { ServiciosDashUserComponent } from './dashboard-usuario/servicios-dash-user/servicios-dash-user.component';
-import { MasInfoServicioDashUserComponent } from './dashboard-usuario/mas-info-servicio-dash-user/mas-info-servicio-dash-user.component';
+
 import { ResumenCarritoDashUserComponent } from './dashboard-usuario/resumen-carrito-dash-user/resumen-carrito-dash-user.component';
+import { MasInfoPacienteDashAdminComponent } from './mas-info-paciente-dash-admin/mas-info-paciente-dash-admin.component';
+import { Resumen2CarritoUserComponent } from './resumen2-carrito-user/resumen2-carrito-user.component';
 
 
 
@@ -59,8 +61,9 @@ import { ResumenCarritoDashUserComponent } from './dashboard-usuario/resumen-car
     InfoPesoDashUserComponent,
     InfoTensionDashUserComponent,
     ServiciosDashUserComponent,
-    MasInfoServicioDashUserComponent,
     ResumenCarritoDashUserComponent,
+    MasInfoPacienteDashAdminComponent,
+    Resumen2CarritoUserComponent,
 
   ],
   imports: [
