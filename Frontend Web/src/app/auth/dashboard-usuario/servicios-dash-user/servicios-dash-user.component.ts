@@ -22,7 +22,7 @@ veracidadSiguiente:boolean = false;
 
   // VARIABLES DE CARRITO
   serviciosEnCarrito: any[] = [];
-  idCarrito:any = 1; // hardcodeado!!
+  idCarrito:any;
   longCarrito:any
 
 
@@ -53,23 +53,22 @@ veracidadSiguiente:boolean = false;
     this.getApellidoUser= this.serv_login.getSurnameUser();
     this.getIdUser = this.serv_login.getUserId();
 
+    
 
 
     // GET ON INIT DE LA FICHA MEDICA
     this.getFichaMedica();
 
+    // INICIALIZAMOS PARA QUE SE CREE UN CARRITO
+    this.getCarritoPorIdUser()
+    this.nuevoCarrito24();
+
+
     // GET ON INIT DE LA FICHA MEDICA
     this.getServicios();
-    this.getCarritoPorId();
-    this.idCarrito;
-    console.log("Valor FINAL")
-    console.log(this.idCarrito)
+    this.idCarrito
 
-   
-
-
-    
-
+    this.serviciosEnCarrito
 
   } // CIERRA ON INIT
 
@@ -86,7 +85,10 @@ veracidadSiguiente:boolean = false;
         //console.log("Y EL ID DE LA FICHA MEDICA ES:") 
         //console.log(data.id);
         // COMO FUNCIONA BIEN GUARDAMOS EL ID DE LA FICHA MEDICA EN UNA VARIABLE
+        console.log("EL ID DE LA FICHA MEDICA ES:");
         this.getIdFichaMedica = data.id;
+        console.log(this.getIdFichaMedica);
+
         // A ESTE ID LO PASAMOS COMO PARAMETRO DEL METODO agregarNotaGlucemia()
         // PERO NO POR ACA, SINO POR EL HTML
       },
@@ -96,6 +98,12 @@ veracidadSiguiente:boolean = false;
       })
 
     }
+
+
+
+
+
+
 
 
 // -----  METODOS PARA SERVICIOS -----
@@ -156,8 +164,8 @@ public nuevoCarrito24(){
 }
 
 // METODO GET PARA TRAER TODOS LOS CARRITOS, LUEGO LOS FILTRAMOS POR PACIENTE
-getCarritoPorId(){             // FALTA SOUCIONAR COMO GUARDAR EL ID DEL CARRITO
-  this.paciente.getCarritoPorIdCarrito(this.idCarrito).subscribe(
+getCarritoPorIdUser(){             // FALTA SOUCIONAR COMO GUARDAR EL ID DEL CARRITO
+  this.paciente.getCarritoPorIdUser(this.getIdUser).subscribe(
     (data:any)=>{
       console.log("Los datos del carrito por ID son :");
       console.log(data);
@@ -165,6 +173,8 @@ getCarritoPorId(){             // FALTA SOUCIONAR COMO GUARDAR EL ID DEL CARRITO
       this.longCarrito = this.serviciosEnCarrito.length
       console.log("La cantidad de servicios son:");
       console.log(this.longCarrito);
+      this.idCarrito = data.id
+
       if(this.longCarrito != 0){
       this.veracidadSiguiente=true;
       }else{
@@ -182,17 +192,18 @@ getCarritoPorId(){             // FALTA SOUCIONAR COMO GUARDAR EL ID DEL CARRITO
 
 // METODO PARA INSERTAR SERVICIOS EN EL CARRITO
 servicioAlCarrito(id:any){
+  // CREAMOS EL CARRITO (SE QUE ESTA MAL QUE INTENTE CREARLO DE NUEVO, TENGO QUE CAMBIARLO)
   this.paciente.getServicioPorId(id).subscribe(
     (data)=>{
       console.log("El servicio es");
       console.log(data);
       console.log("Ahora lo agregamos al carrito");
       // UNA VEZ QUE TENEMOS EL SERVICIO LO PONEMOS EN EL CARRITO
-      this.paciente.postServicioEnCarrito(data,id).subscribe(
+      this.paciente.postServicioEnCarrito(data,this.idCarrito,id).subscribe(
         (data)=>{ // QUEDAMOS ACA. QUEDAMOS EN SUBIR LOS SERVICIOS POR ID
           console.log("El servicio se puso en el carrito");
           console.log(data);
-          this.getCarritoPorId();
+          this.getCarritoPorIdUser();
         },
         (error)=>{
           console.log("El servicio NO se puso en el carrito");
@@ -207,10 +218,11 @@ servicioAlCarrito(id:any){
   )
 }
 
+// METODO PARA ELIMINAR SERVICIO DEL CARRITO
 eliminarServicioDelCarrito(id:string){
-  this.paciente.delServicioEnCarrito(id).subscribe((data)=>{
+  this.paciente.delServicioEnCarrito(this.idCarrito,id).subscribe((data)=>{
     alert("Servicio Eliminado")
-    this.getCarritoPorId();
+    this.getCarritoPorIdUser();
 
   },
     (error) =>{
@@ -238,28 +250,6 @@ masInfo(){
 
 
 
-
-//////// HARDDOOOOOODE////////////
-getCarrito(): void {
-  this.paciente.muestraCarritoAUsuario().subscribe(
-    (servicios_C: any) => {
-      this.serviciosEnCarrito = servicios_C as any[];
-    },
-    (errorData: any) => {
-      console.error(errorData);
-    }
-  );
-}
-
-agregarAlCarrito(precio:any, nombre:any): void {
-  const nuevoItem = [precio, nombre];
-  this.serviciosEnCarrito.push(nuevoItem);
-  console.log("Servicio carrito");
-  console.log(nuevoItem);
-  console.log(this.serviciosEnCarrito);
-
-
-}
 
 
 

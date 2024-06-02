@@ -1,0 +1,94 @@
+
+<div class="container bg-light row margin_h d-flex align-items-center d-flex justify-content-center">
+    
+    <div class="col-lg-12 text_center my-4">
+        <h1>Carrito de compras</h1>
+    </div>
+
+    <!--   INFO USUARIO   -->
+    <div class="col-lg-12 my-4 py-4 borde">
+        <div class="row d-flex align-items-center">
+            <div class="col-lg-4 "> <h3 class="  " >Informacion Personal</h3></div>
+           
+            <div class="col-lg-8 row">
+                <div class="col-lg-2" ><h5 class="">Nombre:</h5></div>
+                <div class="col-lg-2" ><h5 class=""> {{infoUser.nombre}}</h5></div>
+
+                <div class="col-lg-2" ><h5 class="">Apellido:</h5></div>
+                <div class="col-lg-2" ><h5 class="">{{infoUser.apellido}}</h5></div>
+
+                <div class="col-lg-2" ><h5 class="">Telefono:</h5></div>
+                <div class="col-lg-2" ><h5 class="">{{infoUser.telefono}}</h5></div>
+
+            </div>
+        </div>
+
+    </div>
+
+
+    <!--   INFO CARRITO   -->
+    <div class="col-lg-12 my-4 py-4 borde">
+        <div class="row">
+            <div class="col-lg-4 "> <h3 class=" " >Lista de servicios</h3></div>
+           
+            <div class="col-lg-8 row">
+                <table class="table p-4">
+                    <thead>
+                      <tr>
+                        <th scope="col">Servicio</th>
+                        <th scope="col">Descripcion</th>
+                        <th scope="col">Valor</th>
+          
+          
+                      </tr>
+                    </thead>
+                    <tbody  *ngFor="let s of infoCompra">
+                      <tr  >
+                        <td class=" py-4 ">{{s.nombre}}</td>
+                        <td class=" py-4 ">{{s.descripcion}}</td>
+                        <td class=" py-4 ">${{s.precio}}</td>
+                      </tr>
+                    </tbody>
+                  </table>
+            <div class="col-lg-12 row text_center my-2">
+                <h5>Total: ${{monto}}</h5>
+            </div>
+
+            </div>
+        </div>
+
+    </div>
+
+    <!-- FORMAS DE PAGO -->
+    <div class="col-lg-12 my-4 py-4 borde row" >
+
+        <div class="col-lg-12"> <h3 class="text_center" >Formas de pago</h3></div>
+
+
+        <div class="col-lg-8 text_center my-4">
+            <div class="formas_pago" ></div>
+        </div>
+
+        <div class="col-lg-4 text_center my-4 row">
+            
+            <button (click)="volver()" type="submit" class="m-4 botones col-lg-4 btn bg_btn_edit col-lg-12">Volver</button>
+            <button (click)="comprar()" type="submit" class="m-4 botones col-lg-4 btn bg_btn_edit col-lg-12 ">Comprar</button>
+
+        </div>
+    </div>
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+

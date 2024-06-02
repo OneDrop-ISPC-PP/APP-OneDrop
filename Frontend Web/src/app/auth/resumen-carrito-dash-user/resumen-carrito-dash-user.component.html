@@ -1,0 +1,50 @@
+
+<div class="container-fluid bg-light row">
+    
+    <div class="col-lg-12">
+        <h3>Carrito de compras</h3>
+    </div>
+
+    <div class="col-lg-12">
+        <table class="table p-4">
+            <thead>
+              <tr>
+                <th scope="col">Fecha</th>
+                <th scope="col">Comentario</th>
+                <th scope="col">Valor</th>
+  
+  
+              </tr>
+            </thead>
+            <tbody  *ngFor="let s of infoMontos">
+              <tr  >
+                <td class=" py-4 ">{{s.fecha}}</td>
+                <td class=" py-4 ">{{s.comentario}}</td>
+                <td class=" py-4 ">{{s.valor}}</td>
+                
+              </tr>
+            </tbody>
+          </table>
+
+
+    </div>
+
+
+</div>
+
+
+<p>{{this.infoUser.nombre}}</p>
+<p>{{this.infoUser.apellido}}</p>
+
+<p>{{this.monto}}</p>
+
+
+<button (click)="volver()" type="submit" class="m-4 col-lg-4 btn bg_btn_elim">Volver</button>
+
+
+
+
+
+
+
+
