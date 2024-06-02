@@ -50,7 +50,7 @@
                     android:layout_height="200dp"
                     android:layout_marginVertical="10dp"
                     android:padding="10dp"
-                    app:srcCompat="@drawable/onedrop"
+                    app:srcCompat="@drawable/droplogocentrado"
                     tools:srcCompat="@drawable/droplogocentrado" />
 
                 <TextView
