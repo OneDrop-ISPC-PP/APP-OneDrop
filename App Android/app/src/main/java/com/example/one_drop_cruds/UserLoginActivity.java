@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 import com.example.one_drop_cruds.databinding.ActivityUserLoginBinding;
 import com.example.one_drop_cruds.entities.user.AuthResponse;
@@ -20,8 +21,8 @@ import retrofit2.Response;
 public class UserLoginActivity extends AppCompatActivity {
     SharedPrefManager sharedPrefManager;
     ActivityUserLoginBinding binding;
-    String baseUrl = new BackendUrl().getBackendUrl();
     AuthRequests authRequests;
+    ProgressBar progressBarRequest;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,6 +30,8 @@ public class UserLoginActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
         sharedPrefManager = new SharedPrefManager(getApplicationContext(), "oneDrop_shared_preferences");
         authRequests = new RetrofitHelper().getRetrofitHelper().create(AuthRequests.class);
+        progressBarRequest = findViewById(R.id.progressBarRequest);
+        progressBarRequest.setVisibility(View.GONE);
         binding.loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -60,6 +63,8 @@ public class UserLoginActivity extends AppCompatActivity {
         });
     }
     private void loginUserRequest(String username, String password){
+        binding.loginButton.setVisibility(View.GONE);
+        progressBarRequest.setVisibility(View.VISIBLE);
         LoginRequest loginRequest = new LoginRequest(username, password);
         Call<AuthResponse> call = authRequests.loginRequest(loginRequest);
         call.enqueue(new Callback<AuthResponse>() {
@@ -69,6 +74,8 @@ public class UserLoginActivity extends AppCompatActivity {
                     // limpiar edit texts!
                     binding.loginUsername.setText("");
                     binding.loginPassword.setText("");
+                    progressBarRequest.setVisibility(View.GONE);
+                    binding.loginButton.setVisibility(View.VISIBLE);
                     // Obtener token de la resp y guardarlo en shared pref
                     String token = response.body().getToken();
                     sharedPrefManager.setUserToken(token);
@@ -76,11 +83,15 @@ public class UserLoginActivity extends AppCompatActivity {
                     startActivity(intent);
                     Toast.makeText(getApplicationContext(), "Login exitoso!", Toast.LENGTH_LONG).show();
                 } else if (response.code()==400){
+                    progressBarRequest.setVisibility(View.GONE);
+                    binding.loginButton.setVisibility(View.VISIBLE);
                     Toast.makeText(getApplicationContext(), "Login erroneo, revisa las credenciales!", Toast.LENGTH_LONG).show();
                 }
             }
             @Override
             public void onFailure(Call<AuthResponse> call, Throwable t) {
+                progressBarRequest.setVisibility(View.GONE);
+                binding.loginButton.setVisibility(View.VISIBLE);
                 Toast.makeText(getApplicationContext(), "Error, intenta nuevamente por favor", Toast.LENGTH_LONG).show();
             }
         });

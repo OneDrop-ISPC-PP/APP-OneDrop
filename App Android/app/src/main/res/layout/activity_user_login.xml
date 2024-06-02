@@ -58,19 +58,35 @@
             android:textSize="20dp"
             android:textStyle="bold" />
 
-        <Button
-            android:id="@+id/login_button"
-            android:layout_width="330dp"
-            android:layout_height="70dp"
-            android:layout_gravity="center"
-            android:layout_marginTop="30dp"
-            android:backgroundTint="@color/pinkonedrop"
-            android:fontFamily="sans-serif-condensed"
-            android:text="Ingresar"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            app:cornerRadius="30dp" />
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="40dp"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <ProgressBar
+                android:id="@+id/progressBarRequest"
+                style="?android:attr/progressBarStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="70dp"
+                android:layout_weight="1"
+                android:indeterminateTint="@color/accent_blue"
+                />
+            <Button
+                android:id="@+id/login_button"
+                android:layout_width="330dp"
+                android:layout_height="70dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="30dp"
+                android:backgroundTint="@color/pinkonedrop"
+                android:fontFamily="sans-serif-condensed"
+                android:text="Ingresar"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                app:cornerRadius="30dp" />
+        </LinearLayout>
         <TextView
             android:id="@+id/signupRedirectText"
             android:layout_width="wrap_content"

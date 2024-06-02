@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.example.one_drop_cruds.databinding.ActivityUserSignupBinding;
@@ -35,6 +36,7 @@ public class UserSignupActivity extends AppCompatActivity {
     EditText signup_email, signup_password , signup_confirm, signup_username, signup_name, signup_last_name, signup_phone, signup_sex, signup_dni ;
 
     AuthRequests authRequests;
+    ProgressBar progressBarRequest;
 
 
     // TODO DATE PICKER
@@ -52,6 +54,9 @@ public class UserSignupActivity extends AppCompatActivity {
 
         sharedPrefManager = new SharedPrefManager(getApplicationContext() , "oneDrop_shared_preferences");
         authRequests = new RetrofitHelper().getRetrofitHelper().create(AuthRequests.class);
+
+        progressBarRequest = findViewById(R.id.progressBarRequest);
+        progressBarRequest.setVisibility(View.GONE);
 
         signup_email = findViewById(R.id.signup_email);
         signup_password = findViewById(R.id.signup_password);
@@ -98,13 +103,16 @@ public class UserSignupActivity extends AppCompatActivity {
     }
 
     public void registerUser(String email , String  password , String  confirmPassword , String  sex , String  username , String  name , String  lastName , String  phone , String  dni  , String birth){
+        binding.signupButton.setVisibility(View.GONE);
+        progressBarRequest.setVisibility(View.VISIBLE);
         RegisterRequest registerRequest = new RegisterRequest(username, password, confirmPassword, name, lastName, dni, phone, email, sex, birth);
         Call<AuthResponse> call = authRequests.registerRequest(registerRequest);
         call.enqueue(new Callback<AuthResponse>() {
             // todo verificar error: CUANDO INTENTO REGISTRAR UN USUARIO, Y ESTE TIENE INFO QUE YA EXISTE, POR EJ EL DNI, LUEGO INTENTO EDITANDO EL DNI Y PONGO UNO QUE ESTA BIEN, INTENTO EL REGISTRO Y ESTE FUNCIONA, PERO NO ME SALE NINGUN TOAST NI CREA LA NUEVA ACTIVITY.. PERO SI QUIERO LOGUEARME LUEGO SI FUNCIONA CORRECTAMENTE.. PARECE QUE POR ALGUNA RAZON, LA LLAMADA LA EJECUTA CADA VEZ, PERO NO VUELVE A INGRESAR A "OnResponse" como si fuera una llamada exitosa, sino como que volviese siempre a caer en el "onFailure".. por?? como solucionarlo???
             @Override
             public void onResponse(Call<AuthResponse> call, Response<AuthResponse> response) {
-                System.out.println("response >>  "+response);
+                binding.signupButton.setVisibility(View.VISIBLE);
+                progressBarRequest.setVisibility(View.GONE);
                 if(response.isSuccessful() && response.body() != null){
                     // Obtener token de la resp y guardarlo en shared pref
                     String token = response.body().getToken();
@@ -125,8 +133,8 @@ public class UserSignupActivity extends AppCompatActivity {
             }
             @Override
             public void onFailure(Call<AuthResponse> call, Throwable t) {
-                Throwable error = t;
-                toastHelper.showLong("Error, intenta nuevamente por favor"+t.getMessage());
+                binding.signupButton.setVisibility(View.VISIBLE);
+                progressBarRequest.setVisibility(View.GONE);
                 System.out.println("Error, intenta nuevamente por favor"+t.getMessage());
             }
         });
