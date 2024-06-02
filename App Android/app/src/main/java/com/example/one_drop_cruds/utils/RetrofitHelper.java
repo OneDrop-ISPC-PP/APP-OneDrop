@@ -4,6 +4,8 @@ import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.util.concurrent.TimeUnit;
+
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.logging.HttpLoggingInterceptor;
@@ -25,7 +27,10 @@ public class RetrofitHelper {
     public Retrofit getRetrofitHelper(){
         HttpLoggingInterceptor recordInterceptor = new HttpLoggingInterceptor();
         recordInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
-        OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
+        OkHttpClient.Builder httpClient = new OkHttpClient.Builder()
+                .connectTimeout(90, TimeUnit.SECONDS)
+                .readTimeout(90, TimeUnit.SECONDS)
+                .writeTimeout(90, TimeUnit.SECONDS);
         httpClient.addInterceptor(recordInterceptor);
 
         return new Retrofit.Builder()
@@ -37,7 +42,10 @@ public class RetrofitHelper {
     public Retrofit getRetrofitHelperWithToken(){
         HttpLoggingInterceptor recordInterceptor = new HttpLoggingInterceptor();
         recordInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
-        OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
+        OkHttpClient.Builder httpClient = new OkHttpClient.Builder()
+                .connectTimeout(90, TimeUnit.SECONDS)
+                .readTimeout(90, TimeUnit.SECONDS)
+                .writeTimeout(90, TimeUnit.SECONDS);
         httpClient.addInterceptor(recordInterceptor);
 
         // interceptor para agregar el token al header

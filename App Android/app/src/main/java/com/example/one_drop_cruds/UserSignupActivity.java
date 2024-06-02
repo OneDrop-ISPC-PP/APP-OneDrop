@@ -18,6 +18,7 @@ import com.example.one_drop_cruds.entities.user.enums.ErrorResponse;
 import com.example.one_drop_cruds.request.AuthRequests;
 import com.example.one_drop_cruds.utils.RetrofitHelper;
 import com.example.one_drop_cruds.utils.SharedPrefManager;
+import com.example.one_drop_cruds.utils.ToastHelper;
 import com.google.gson.Gson;
 
 import java.io.IOException;
@@ -41,6 +42,7 @@ public class UserSignupActivity extends AppCompatActivity {
     private TextView signup_birthdate;
     // TODO DATE PICKER
 
+    ToastHelper toastHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,6 +67,8 @@ public class UserSignupActivity extends AppCompatActivity {
         btnFecha = findViewById(R.id.btn_fecha);
         signup_birthdate = findViewById(R.id.signup_birthdate);
         btnFecha.setOnClickListener(v -> showDatePickerDialog());
+
+        toastHelper= new ToastHelper(UserSignupActivity.this);
     }
 
     // DATE PICKER
@@ -100,18 +104,20 @@ public class UserSignupActivity extends AppCompatActivity {
             // todo verificar error: CUANDO INTENTO REGISTRAR UN USUARIO, Y ESTE TIENE INFO QUE YA EXISTE, POR EJ EL DNI, LUEGO INTENTO EDITANDO EL DNI Y PONGO UNO QUE ESTA BIEN, INTENTO EL REGISTRO Y ESTE FUNCIONA, PERO NO ME SALE NINGUN TOAST NI CREA LA NUEVA ACTIVITY.. PERO SI QUIERO LOGUEARME LUEGO SI FUNCIONA CORRECTAMENTE.. PARECE QUE POR ALGUNA RAZON, LA LLAMADA LA EJECUTA CADA VEZ, PERO NO VUELVE A INGRESAR A "OnResponse" como si fuera una llamada exitosa, sino como que volviese siempre a caer en el "onFailure".. por?? como solucionarlo???
             @Override
             public void onResponse(Call<AuthResponse> call, Response<AuthResponse> response) {
+                System.out.println("response >>  "+response);
                 if(response.isSuccessful() && response.body() != null){
                     // Obtener token de la resp y guardarlo en shared pref
                     String token = response.body().getToken();
                     sharedPrefManager.setUserToken(token);
                     Intent intent = new Intent(getApplicationContext(), UserMedicalData.class);
                     startActivity(intent);
-                    Toast.makeText(getApplicationContext(), "Registro exitoso!", Toast.LENGTH_LONG).show();
+                    toastHelper.showLong("Registro exitoso!");
                 } else if (response.errorBody()!= null){
                     try {
                         Gson gson = new Gson();
                         ErrorResponse errorResponse = gson.fromJson(response.errorBody().string(), ErrorResponse.class); // obtengo el body de error, y lo serializo en ErrorResponse
-                        Toast.makeText(getApplicationContext(), "Registro erroneo: "+errorResponse.getMessage(), Toast.LENGTH_LONG).show();
+                        toastHelper.showLong("Registro erroneo: "+errorResponse.getMessage());
+                        System.out.println("Registro erroneo: "+errorResponse.getMessage());
                     } catch (IOException e) {
                         throw new RuntimeException(e);
                     }
@@ -119,7 +125,9 @@ public class UserSignupActivity extends AppCompatActivity {
             }
             @Override
             public void onFailure(Call<AuthResponse> call, Throwable t) {
-                Toast.makeText(getApplicationContext(), "Error, intenta nuevamente por favor", Toast.LENGTH_LONG).show();
+                Throwable error = t;
+                toastHelper.showLong("Error, intenta nuevamente por favor"+t.getMessage());
+                System.out.println("Error, intenta nuevamente por favor"+t.getMessage());
             }
         });
     }

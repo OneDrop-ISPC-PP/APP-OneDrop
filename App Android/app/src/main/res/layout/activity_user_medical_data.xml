@@ -49,11 +49,6 @@
                     android:layout_marginTop="25dp"
                     android:orientation="vertical"
                     android:padding="20dp">
-
-                    <!-- PENDIENTES DE HACER EN  UserMedicalData.java -->
-                    <!-- PENDIENTES DE HACER EN  UserMedicalData.java -->
-                    <!-- PENDIENTES DE HACER EN  UserMedicalData.java -->
-                    <!-- PENDIENTES DE HACER EN  UserMedicalData.java -->
                     <Spinner
                         android:id="@+id/spinnerDiabetes"
                         android:layout_width="match_parent"
@@ -172,18 +167,25 @@
                         android:textSize="20dp"
                         android:inputType="number"
                         android:textStyle="bold" />
-                    <!-- PENDIENTES DE HACER EN  UserMedicalData.java -->
-                    <!-- PENDIENTES DE HACER EN  UserMedicalData.java -->
-                    <!-- PENDIENTES DE HACER EN  UserMedicalData.java -->
-                    <!-- PENDIENTES DE HACER EN  UserMedicalData.java -->
 
-
+                    <Button
+                        android:id="@+id/signupButton"
+                        android:layout_width="match_parent"
+                        android:layout_height="70dp"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="30dp"
+                        android:backgroundTint="@color/blueonedrop"
+                        android:onClick="submitMedicalRecord"
+                        android:text="Guardar datos"
+                        android:textSize="20sp"
+                        app:cornerRadius="30dp" />
                 </LinearLayout>
 
             </LinearLayout>
 
         </ScrollView>
 
+        <!--
         <Button
             android:id="@+id/signupButton"
             android:layout_width="match_parent"
@@ -195,6 +197,8 @@
             android:text="Guardar datos"
             android:textSize="20sp"
             app:cornerRadius="30dp" />
+
+            -->
 
     </LinearLayout>
 
