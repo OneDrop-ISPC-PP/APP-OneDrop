@@ -10,24 +10,12 @@ import com.example.one_drop_cruds.databinding.ActivityUserLoginBinding;
 import com.example.one_drop_cruds.entities.user.AuthResponse;
 import com.example.one_drop_cruds.entities.user.LoginRequest;
 import com.example.one_drop_cruds.request.AuthRequests;
-import com.example.one_drop_cruds.request.RecordsRequest;
-import com.example.one_drop_cruds.utils.AdminSQLiteOpenHelper;
 import com.example.one_drop_cruds.utils.BackendUrl;
 import com.example.one_drop_cruds.utils.RetrofitHelper;
 import com.example.one_drop_cruds.utils.SharedPrefManager;
-
-import java.util.concurrent.TimeUnit;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
-import okhttp3.OkHttpClient;
-import okhttp3.RequestBody;
-import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 public class UserLoginActivity extends AppCompatActivity {
     SharedPrefManager sharedPrefManager;

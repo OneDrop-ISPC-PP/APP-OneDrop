@@ -16,8 +16,6 @@ import com.example.one_drop_cruds.entities.user.AuthResponse;
 import com.example.one_drop_cruds.entities.user.RegisterRequest;
 import com.example.one_drop_cruds.entities.user.enums.ErrorResponse;
 import com.example.one_drop_cruds.request.AuthRequests;
-import com.example.one_drop_cruds.utils.AdminSQLiteOpenHelper;
-import com.example.one_drop_cruds.utils.BackendUrl;
 import com.example.one_drop_cruds.utils.RetrofitHelper;
 import com.example.one_drop_cruds.utils.SharedPrefManager;
 import com.google.gson.Gson;
@@ -26,20 +24,14 @@ import java.io.IOException;
 import java.util.Calendar;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import okhttp3.OkHttpClient;
-import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 public class UserSignupActivity extends AppCompatActivity {
     SharedPrefManager sharedPrefManager;
     ActivityUserSignupBinding binding;
     EditText signup_email, signup_password , signup_confirm, signup_username, signup_name, signup_last_name, signup_phone, signup_sex, signup_dni ;
-    String baseUrl = new BackendUrl().getBackendUrl();
 
     AuthRequests authRequests;
 
@@ -72,18 +64,7 @@ public class UserSignupActivity extends AppCompatActivity {
         // DATE PICKER
         btnFecha = findViewById(R.id.btn_fecha);
         signup_birthdate = findViewById(R.id.signup_birthdate);
-        btnFecha.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showDatePickerDialog();
-            }
-        });
-    }
-
-    // todo eliminar esto
-    public void saltar(View v){
-        Intent weight = new Intent(this, UserMedicalData.class);
-        startActivity(weight);
+        btnFecha.setOnClickListener(v -> showDatePickerDialog());
     }
 
     // DATE PICKER
