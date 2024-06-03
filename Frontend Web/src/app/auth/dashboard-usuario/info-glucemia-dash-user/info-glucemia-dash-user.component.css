@@ -725,15 +725,19 @@
   }
   
   /* CONTENEDOR*/
+  .altura_cont{
+    height: 28rem;
+  }
   
   .contenedor_servicios{
-    height: 20rem;
+    height: 25rem;
     width: 100%;
     overflow-y: scroll;
     overflow-x: scroll;
   
   
   }
+
   .text_center{
     text-align: center;
     padding: 2rem 0rem;
@@ -770,3 +774,18 @@
         height: 18rem;
         background-size: cover; /* Ajusta automáticamente el tamaño de la imagen */
         }
+
+.slide_img{
+    background-image: url('../../../../assets/images/serv_endoc.jpg');
+
+    height: 30rem;
+    background-size: cover; /* Ajusta automáticamente el tamaño de la imagen */
+}
+
+.alt{
+    height: 30rem;
+}
+
+.m_botom{
+    margin-bottom: 4rem;
+}
