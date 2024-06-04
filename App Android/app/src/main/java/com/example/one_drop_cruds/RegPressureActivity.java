@@ -352,7 +352,6 @@ public class RegPressureActivity extends AppCompatActivity implements View.OnCli
                 System.out.println("********* updateRegRequest Throwable t******");
             }
         });
-        // todo al apretar editar, si hubo algun cambio entre el valor seteado ( que podria obtenerlos de los arrays segun id) y el actual, mando a hacer un update
     }
 
 

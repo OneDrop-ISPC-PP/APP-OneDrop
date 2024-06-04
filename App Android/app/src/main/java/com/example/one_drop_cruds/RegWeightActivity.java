@@ -135,8 +135,6 @@ public class RegWeightActivity extends AppCompatActivity implements View.OnClick
         rv1.setAdapter(adapterRegWeight);
     }
 
-    // todo pendiente revisar y mejorar el RECICLER VIEW crear clase en UTILS, que sea reusable por todos los otros crudso!!!!!
-    // todo pendiente revisar y mejorar el RECICLER VIEW crear clase en UTILS, que sea reusable por todos los otros crudso!!!!!
     private class AdapterRegWeight extends RecyclerView.Adapter<AdapterRegWeight.AdapterRegWeightHolder> {
         @NonNull
         @Override
@@ -195,8 +193,6 @@ public class RegWeightActivity extends AppCompatActivity implements View.OnClick
             }
         }
     }
-    // todo pendiente revisar y mejorar el RECICLER VIEW crear clase en UTILS, que sea reusable por todos los otros crudso!!!!!
-    // todo pendiente revisar y mejorar el RECICLER VIEW crear clase en UTILS, que sea reusable por todos los otros crudso!!!!!
 
     private void renderRegs(List recordsObjects){
         ArrayList<Integer> reg_ids = new ArrayList<Integer>();
@@ -337,7 +333,6 @@ public class RegWeightActivity extends AppCompatActivity implements View.OnClick
                 System.out.println("********* updateRegRequest Throwable t******");
             }
         });
-        // todo al apretar editar, si hubo algun cambio entre el valor seteado ( que podria obtenerlos de los arrays segun id) y el actual, mando a hacer un update
     }
 
     // charts

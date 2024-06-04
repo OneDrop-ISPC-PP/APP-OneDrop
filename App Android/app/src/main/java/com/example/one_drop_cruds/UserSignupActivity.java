@@ -163,16 +163,7 @@ public class UserSignupActivity extends AppCompatActivity {
             Toast.makeText(UserSignupActivity.this, "¡La contraseña debe tener al menos 8 caracteres!", Toast.LENGTH_SHORT).show();
         } else {
             if (password.equals(confirmPassword)) {
-                // todo LOGICA DE REGISTRO!!!
-
-                // Definir el formato de fecha
-                /*
-                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-                // Parsear la cadena de texto a LocalDate usando el formato definido
-                LocalDate birtDate = LocalDate.parse(birth, formatter);
-*/
                 registerUser(email,  password,  confirmPassword,  sex,  username,  name,  lastName,  phone,  dni,  birth);
-
             } else {
                 Toast.makeText(UserSignupActivity.this, "¡Las contraseñas no concuerdan!", Toast.LENGTH_SHORT).show();
             }

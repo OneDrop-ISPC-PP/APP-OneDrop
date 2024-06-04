@@ -63,13 +63,11 @@ public class services extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_services);
 
-
         // user sessions
         userSessionManager = new UserSessionManager(getApplicationContext());
         sharedPrefManager = new SharedPrefManager(getApplicationContext(), "oneDrop_shared_preferences");
         loguedUser = userSessionManager.getLoguedUserDetails();  // SI NO ESTA LOGUEADO, SE REDIRIGE A LOGIN
         token = sharedPrefManager.getUserToken();
-
         carritoRequest = new RetrofitHelper(token).getRetrofitHelperWithToken().create(CarritoRequest.class);
 
         // RECICLER VIEW
@@ -132,29 +130,11 @@ public class services extends AppCompatActivity {
                 recycler_servicio_descripcion.setText(sevicio_descripciones.get(position));
                 recycler_servicio_precio.setText(String.valueOf(sevicio_precios.get(position)));
                 recycler_servicio_comentarios.setText(sevicio_comentarios.get(position));
-                /*
-                todo btn_comprar, btn_ver_mas_detalles = itemView.findViewById(R.id.);
-                btn_edit_reg_gly.setOnClickListener(view -> {
-                    btnEditOnClick(servicio_ids.get(getLayoutPosition()));
-                });
-                btn_delete_reg_gly.setOnClickListener(view -> {
-                    btnDeleteOnClick(servicio_ids.get(getLayoutPosition()));
-                });
-                 */
             }
             @Override
             public void onClick(View v) {
                 toastHelper.showShort("Para adquirir servicios dirigete a la pagina web por favor!");
             }
-            /*
-            todo btn_comprar, btn_ver_mas_detalles = itemView.findViewById(R.id.);
-            public void btnEditOnClick(int id){
-                openPopupBtnEdit(id);
-            }
-            public void btnDeleteOnClick(int id){
-                openPopupBtnDel(id);
-            }
-             */
         }
     }
 
@@ -200,29 +180,11 @@ public class services extends AppCompatActivity {
                 recycler_servicio_descripcion.setText(sevicio_descripciones_by_user.get(position));
                 recycler_servicio_precio.setText(String.valueOf(sevicio_precios_by_user.get(position)));
                 recycler_servicio_comentarios.setText(sevicio_comentarios_by_user.get(position));
-                /*
-                todo btn_comprar, btn_ver_mas_detalles = itemView.findViewById(R.id.);
-                btn_edit_reg_gly.setOnClickListener(view -> {
-                    btnEditOnClick(servicio_ids.get(getLayoutPosition()));
-                });
-                btn_delete_reg_gly.setOnClickListener(view -> {
-                    btnDeleteOnClick(servicio_ids.get(getLayoutPosition()));
-                });
-                 */
             }
             @Override
             public void onClick(View v) {
                 toastHelper.showShort(String.valueOf(servicio_ids_by_user.get(getLayoutPosition())));
             }
-            /*
-            todo btn_comprar, btn_ver_mas_detalles = itemView.findViewById(R.id.);
-            public void btnEditOnClick(int id){
-                openPopupBtnEdit(id);
-            }
-            public void btnDeleteOnClick(int id){
-                openPopupBtnDel(id);
-            }
-             */
         }
     }
 
@@ -276,11 +238,6 @@ public class services extends AppCompatActivity {
         });
 
     }
-
-
-
-
-
 
     public void setDataServices(List services){
         Gson gson = new Gson();
