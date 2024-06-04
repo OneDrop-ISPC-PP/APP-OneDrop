@@ -1,13 +1,64 @@
+<section class="row container-fluid">
+
+<!-- ////////////// CARRUSEEEELLLL /////////////// -->
+<div id="carouselExampleCaptions" class="carousel slide m_botom">
+  <div class="carousel-indicators">
+    <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+    <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="1" aria-label="Slide 2"></button>
+    <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="2" aria-label="Slide 3"></button>
+  </div>
+  <div class="carousel-inner  ">
+    <div class="carousel-item active alt p-4 ">
+      <div class="slide_img"></div>
+      <div class="carousel-caption d-none d-md-block">
+        <h5>First slide label</h5>
+        <p>Some representative placeholder content for the first slide.</p>
+      </div>
+    </div>
+    <div class="carousel-item alt p-4">
+      <div class="slide_img"></div>
+      <div class="carousel-caption d-none d-md-block">
+        <h5>Second slide label</h5>
+        <p>Some representative placeholder content for the second slide.</p>
+      </div>
+    </div>
+    <div class="carousel-item alt p-4">
+      <div class="slide_img"></div>
+      <div class="carousel-caption d-none d-md-block">
+        <h5>Third slide label</h5>
+        <p>Some representative placeholder content for the third slide.</p>
+      </div>
+    </div>
+  </div>
+  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Previous</span>
+  </button>
+  <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Next</span>
+  </button>
+</div>
+
+
+
+
+
+
+
+
+
 
 <!-- ////////////////// SECCION GLUCEMIA /////////////////  -->
-  <section class="bg-light  " >
+  <section class="m-0 p-2 col-lg-6" >
 
-    <div class=" my-3 mx-0 p-4 borde_servicios">
+    <div class="m-1 borde_servicios">
+
     <div >
         <h3 class="text_center">Historial de Glucemia</h3>
     </div>
     
-          <div class="my-4 contenedor_servicios">
+          <div class="my-4 p-2 contenedor_servicios ">
             <table class="table p-4">
               <thead>
                 <tr>
@@ -34,31 +85,33 @@
           </div>
         </div>
 
-
+      </section> 
   <!-- ////////// FORMULARIO ////////////  --> 
-  <section class="bg-light my-3 mx-0 p-4 borde_servicios " >
+  <section class="m-0 p-2  col-lg-6 " >
+    <div class="m-1 borde_servicios">
+
     <div>
       <h3 class="text_center">Nueva nota de glucemia</h3>
     </div>
-          <form class="container" [formGroup]="formNotasGlucemia"  (submit)="agregarNotaGlucemia(getIdFichaMedica)">
+          <form class="container altura_cont" [formGroup]="formNotasGlucemia"  (submit)="agregarNotaGlucemia(getIdFichaMedica)">
 
-          <div class="row  bg-light justify-content-evenly align-items-center p-4" >
+          <div class="row   justify-content-evenly align-items-center p-4" >
 
           <!-- FECHA SERVICIO --> 
-            <div class="col-lg-4 bg-light">
+            <div class="col-lg-4">
               <h5 class="text-center p-3" >Fecha</h5>
               <input formControlName="fecha" type="datetime-local" class="form-control" id="fecha-registro" aria-describedby="emailHelp">
             </div>
       
 
           <!-- VALOR GLUCEMIA --> 
-          <div class="col-lg-4 bg-light">
+          <div class="col-lg-4">
             <h5 class="text-center p-3" >valor</h5>
             <input formControlName="valor" type="number" class="form-control" id="valor-glucemia">
           </div>
  
           <!-- COMENTARIO DEL REGISTRO  --> 
-          <div class="col-lg-10 bg-light">
+          <div class="col-lg-10">
             <h5 class="text-center p-3" >Comentario</h5>
             <textarea formControlName="comentario" name="" id="" cols="30" rows="5" class="form-control"></textarea>
           </div>
@@ -66,7 +119,11 @@
         </div>
     </form>
 
-
-</section>
+  </div>
 
 </section> 
+
+
+
+
+</section>

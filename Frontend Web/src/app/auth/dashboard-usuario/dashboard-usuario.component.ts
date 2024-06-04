@@ -1,3 +1,4 @@
+import { HttpErrorResponse, HttpEvent } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -91,15 +92,26 @@ export class DashboardUsuarioComponent implements OnInit {
       })
     }
 
-
+    // METODO PARA DESCARGAR PDF
     descargarPDF(){
-      this.paciente.descargarDPF(1).subscribe(
-        (data)=>{
+      this.paciente.descargarDPF(this.getIdUser).subscribe(
+        (data:Blob)=>{
+          var file = new Blob([data], { type: 'application/pdf' })
+          var fileURL = URL.createObjectURL(file);
           let downloadURL = window.URL.createObjectURL(data);
           let link = document.createElement('a');
           link.href=downloadURL;
           link.download="TusDatos_OneDrop"
           link.click
+
+          // if you want to open PDF in new tab
+          window.open(fileURL); 
+          var a         = document.createElement('a');
+          a.href        = fileURL; 
+          a.target      = '_blank';
+          a.download    = 'MisDatosOneDrop.pdf';
+          document.body.appendChild(a);
+          a.click();
 
           console.log("Se descargo exitosamente")
           console.log("El ID del User para el PDF es:")
@@ -111,14 +123,11 @@ export class DashboardUsuarioComponent implements OnInit {
           console.log("Hubo un error en la descarga")
           console.log("El ID del User para el PDF es:")
           console.log(this.getIdUser)
-
-
-
         }
-
       )
-
     }
+
+///////////////////////////////////////////////////
 
 
 }

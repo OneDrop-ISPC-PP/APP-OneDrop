@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpEvent, HttpHeaders } from '@angular/common/http';
 
 // INTERFACE DE NOTAS USUARIO
 import { NotasGlucemia } from './interfaces/notas-glucemia';
+import { Observable, map } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -177,7 +178,6 @@ public delServicioEnCarrito(id_carr:any, id_Serv:any){
 
 ////////// DESCARGAR PDF //////////
 ////////// DESCARGAR PDF //////////
-
 public descargarDPF(id:any){
   return this.http.get(this.url_PDF_GET+id, {responseType:'blob'});
 
