@@ -12,6 +12,6 @@ import lombok.NoArgsConstructor;
 public class ServicioUpdateDto {
     private String nombre;
     private String descripcion;
-    private Double precio;
+    private Integer precio;
     private String comentarios;
 }

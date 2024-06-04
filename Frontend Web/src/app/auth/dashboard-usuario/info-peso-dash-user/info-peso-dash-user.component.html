@@ -1,0 +1,80 @@
+
+<!-- ////////////////// SECCION PESO ///////////////// -->
+      <section class="bg-light " >
+
+        <div class=" my-3 mx-0 p-4 borde_servicios">
+        <div >
+            <h3 class="text_center">Historial de Peso</h3>
+        </div>
+        
+              <div class="my-4 contenedor_servicios">
+                <table class="table p-4">
+                  <thead>
+                    <tr>
+                      <th scope="col">Fecha</th>
+                      <th scope="col">Comentario</th>
+                      <th scope="col">Valor</th>
+        
+        
+                    </tr>
+                  </thead>
+                  <tbody  *ngFor="let s of listaNotasPeso">
+                    <tr  >
+                      <td class=" py-4 ">{{s.fecha}}</td>
+                      <td class=" py-4 ">{{s.comentario}}</td>
+                      <td class=" py-4 ">{{s.valor}}</td>
+                      <td> 
+                        <button  class="btn bg_btn_edit px-4 p-2 m-2"  routerLink="/auth/edit_nota_peso/{{s.id}}">
+                          Editar</button>
+                        <button  class="btn bg_btn_elim px-4 p-2 m-2" (click)="eliminarNotaPeso(s.id)" >Eliminar</button>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+
+      <!-- ////////// FORMULARIO //////////// -->
+      <section class="bg-light my-3 mx-0 p-4 borde_servicios">
+        <div>
+          <h3 class="text_center">Nueva nota de Peso</h3>
+        </div>
+              <form class="container" [formGroup]="formRegistroPeso"  (submit)="agregarNotaRegistroPeso(getIdFichaMedica)">
+
+              <div class="row  bg-light justify-content-evenly align-items-center p-4" >
+
+              <!-- FECHA SERVICIO -->
+                <div class="col-lg-4 bg-light">
+                  <h5 class="text-center p-3" >Fecha</h5>
+                  <input formControlName="fecha" type="datetime-local" class="form-control" id="fecha-registro" aria-describedby="emailHelp">
+                </div>
+          
+
+              <!-- VALOR GLUCEMIA -->  
+              <div class="col-lg-4 bg-light">
+                <h5 class="text-center p-3" >valor</h5>
+                <input formControlName="valor" type="number" class="form-control" id="valor-glucemia">
+              </div>
+
+              <!-- COMENTARIO DEL REGISTRO -->  
+              <div class="col-lg-10 bg-light">
+                <h5 class="text-center p-3" >Comentario</h5>
+                <textarea formControlName="comentario" name="" id="" cols="30" rows="5" class="form-control"></textarea>
+              </div>
+
+
+
+
+            <button  class="btn bg_btn_edit m-2 col-lg-3 py-2 px-4">Registrar Nota de Peso</button>
+                
+            </div>
+
+        </form>
+    
+
+</section>
+
+</section> 
+
+<!-- ////////////////// CIERRA SECCION PESO ///////////////// -->

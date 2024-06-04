@@ -1,0 +1,51 @@
+<form class=" m-2 p-4 borde_servicios">
+
+
+    <div>
+      <h2 class="text_center my-4">Editar Registro de Tension</h2>
+    </div>
+  
+    <div class="container  bg-light">
+  
+      <div class="row  bg-light justify-content-evenly align-items-center p-4 ">
+  
+          <!-- Valor Diastolica -->  
+        <div class="col-lg-4 bg-light">
+          <h5 class="text-center ">Valor Diastolica</h5>
+          <input  [(ngModel)]="nota.diastolica"  [ngModelOptions]="{standalone: true}" class="controls col-lg-12 text-dark" type="text" name="nombres" id="nombres">
+        </div>
+  
+          <!-- Valor Sistolica-->  
+          <div class="col-lg-4 bg-light">
+            <h5 class="text-center">Valor Sistolica</h5>
+            <input  [(ngModel)]="nota.sistolica"  [ngModelOptions]="{standalone: true}" class="controls col-lg-12 text-dark" type="text" name="nombres" id="nombres">
+          </div>
+
+          <!-- Fecha -->  
+        <div class="col-lg-4 bg-light">
+          <h5 class="text-center">Fecha Nota</h5>
+          <input  [(ngModel)]="nota.fecha"  [ngModelOptions]="{standalone: true}" class="controls col-lg-12 text-dark" type="text" name="nombres" id="nombres">
+        </div>
+  
+          <!-- Comentario -->  
+        <div class="col-lg-12 bg-light m-4">
+          <h5 class="text-center">Comentario de la nota</h5>
+          <textarea [(ngModel)]="nota.comentario"  [ngModelOptions]="{standalone: true}" name="" id="" cols="30" rows="5"
+            class="form-control"></textarea>
+        </div>
+  
+        
+        
+            <button (click)="update()" type="submit" class="m-4 col-lg-4 btn bg_btn_edit">Modificar Nota</button>
+            <button routerLink="/auth/dash_user/info_tension" type="submit" class="m-4 col-lg-4 btn bg_btn_elim">Volver</button>
+      </div>
+  
+     
+    </div>
+  </form>
+  
+  
+  
+  
+  
+  

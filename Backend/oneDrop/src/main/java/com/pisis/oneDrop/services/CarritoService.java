@@ -66,6 +66,13 @@ public class CarritoService {
         return carrito.get();
     }
     public CarritoReadDto findById (Integer id){
+        User paciente = authService.getUserById(id);
+        Optional<Carrito> carrito = carritoRepository.findByPaciente(paciente);
+        if(carrito.isEmpty()) throw new NotFoundException("No se encontro carrito por ID:" +id);
+        return  carritoMapper.toReadDto(carrito.get());
+    }
+
+    public CarritoReadDto findByIdUser(Integer id){
         return  carritoMapper.toReadDto(getById(id));
     }
     public CarritoReadDto addServicioACarrito (Integer idCarrito, Integer idServicio){

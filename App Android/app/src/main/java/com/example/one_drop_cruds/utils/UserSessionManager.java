@@ -18,10 +18,12 @@ public class UserSessionManager {
     }
     public LoguedUserDetails getLoguedUserDetails (){
         LoguedUserDetails user = sharedPrefManager.getLoguedUser();
+        /*
         if(user == null ){
             Toast.makeText(this.context, "Debes estar logueado!", Toast.LENGTH_LONG).show();
             this.context.startActivity(new Intent(this.context, UserLoginActivity.class));
         }
+         */
         return user;
     }
     public String getLoguedUsername(){

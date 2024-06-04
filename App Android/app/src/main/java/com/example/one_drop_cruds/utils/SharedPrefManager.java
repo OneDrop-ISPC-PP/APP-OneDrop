@@ -26,13 +26,6 @@ public class SharedPrefManager {
         return this.sharedPref.getString("token", null);
     }
 
-    public void setLoguedUser(LoguedUserDetails userDetails) {
-        // serializar user details a json y guardarlo como cadena en shared pref..
-        Gson gsonSerializer = new Gson();
-        String userJson = gsonSerializer.toJson(userDetails);
-        this.sharedPrefEditor.putString("loguedUser", userJson);
-        sharedPrefEditor.apply();
-    }
     public void setFichaMedicaUser(FichaMedicaUsuario ficha) {
         // serializar a json y guardarlo como cadena en shared pref..
         Gson gsonSerializer = new Gson();
@@ -45,6 +38,14 @@ public class SharedPrefManager {
         Gson gsonSerializer = new Gson();
         FichaMedicaUsuario fichaMedica = gsonSerializer.fromJson(userJson, FichaMedicaUsuario.class);
         return fichaMedica;
+    }
+
+    public void setLoguedUser(LoguedUserDetails userDetails) {
+        // serializar user details a json y guardarlo como cadena en shared pref..
+        Gson gsonSerializer = new Gson();
+        String userJson = gsonSerializer.toJson(userDetails);
+        this.sharedPrefEditor.putString("loguedUser", userJson);
+        sharedPrefEditor.apply();
     }
     public LoguedUserDetails getLoguedUser() {
         String userJson = this.sharedPref.getString("loguedUser", null);

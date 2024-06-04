@@ -27,7 +27,7 @@ public class ServicioAddDto {
 
     @NotNull(message = "Precio no puede ser nulo")
     @PositiveOrZero(message = "El precio debe ser mayor a 0")
-    private Double precio;
+    private Integer precio;
 
     private String comentarios;
 }

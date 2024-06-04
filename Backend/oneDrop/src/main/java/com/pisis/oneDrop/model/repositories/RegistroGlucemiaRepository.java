@@ -7,7 +7,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
 public interface RegistroGlucemiaRepository extends JpaRepository<RegistroGlucemia , Integer> {
-    @Query("SELECT r FROM FichaMedica f JOIN f.registros_glucemia r WHERE f.paciente.id = :idUser")
+    @Query("SELECT r FROM FichaMedica f JOIN f.registros_glucemia r WHERE f.paciente.id = :idUser ORDER BY r.fecha ASC")
     Page<RegistroGlucemia> findAllRegistrosByIdUser(Integer idUser, Pageable pageable);
+    //  [SELECT r FROM FichaMedica f JOIN f.registros_glucemia r WHERE f.paciente.id = :idUser order by f.fecha asc]
 
 }

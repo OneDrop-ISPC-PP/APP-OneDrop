@@ -38,18 +38,36 @@
             android:textSize="24dp"
             android:textStyle="bold" />
 
-        <EditText
-            android:id="@+id/add_date_pressure"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:layout_marginEnd="10dp"
-            android:ems="10"
-            android:textColor="@color/blackonedrop"
-            android:textStyle="bold"
-            android:hint="(Opcional)"
-            android:inputType="datetime"
-            android:paddingBottom="30dp" />
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:orientation="horizontal">
+
+            <EditText
+                android:id="@+id/add_date_pressure"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                android:clickable="false"
+                android:ems="10"
+                android:hint="(Opcional)"
+                android:inputType="datetime"
+                android:paddingBottom="30dp"
+                android:textColor="@color/blackonedrop"
+                android:textStyle="bold" />
+
+            <Button
+                android:id="@+id/recordDateBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="60dp"
+                android:layout_gravity=""
+                android:fontFamily="sans-serif-condensed"
+                android:padding="10dp"
+                android:text="Seleccionar"
+                android:textSize="18dp" />
+        </LinearLayout>
 
         <TextView
             android:id="@+id/add_reg_pressure_value"
@@ -64,18 +82,73 @@
             android:textSize="24dp"
             android:textStyle="bold" />
 
-        <EditText
-            android:id="@+id/add_value_pressure"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:layout_marginEnd="10dp"
-            android:ems="10"
-            android:textColor="@color/blackonedrop"
-            android:textStyle="bold"
-            android:hint="@string/add_reg_pressure_value_placeholder"
-            android:inputType="numberDecimal"
-            android:paddingBottom="30dp" />
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/textView3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:fontFamily="sans-serif-condensed"
+                    android:text="Diastolica"
+                    android:textColor="@color/blueonedrop"
+                    android:textSize="16dp"
+                    android:textStyle="bold" />
+
+                <EditText
+                    android:id="@+id/add_value_diastolica"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:ems="10"
+                    android:hint="@string/add_reg_pressure_value_placeholder"
+                    android:inputType="numberDecimal"
+                    android:paddingBottom="30dp"
+                    android:textColor="@color/blackonedrop"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/textView9"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:fontFamily="sans-serif-condensed"
+                    android:text="Sistolica"
+                    android:textColor="@color/blueonedrop"
+                    android:textSize="16dp"
+                    android:textStyle="bold" />
+
+                <EditText
+                    android:id="@+id/add_value_sistolica"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:ems="10"
+                    android:hint="@string/add_reg_pressure_value_placeholder"
+                    android:inputType="numberDecimal"
+                    android:paddingBottom="30dp"
+                    android:textColor="@color/blackonedrop"
+                    android:textStyle="bold" />
+            </LinearLayout>
+        </LinearLayout>
 
         <TextView
             android:id="@+id/textView6"

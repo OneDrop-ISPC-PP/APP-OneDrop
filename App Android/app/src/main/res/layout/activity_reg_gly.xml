@@ -4,13 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/linearLayout"
     android:layout_width="match_parent"
-    android:background="@color/white"
+    android:background="@drawable/fondosinlogo"
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".RegGlyActivity">
 
 
     <!--  Contenedor del scroll -->
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -25,102 +26,140 @@
         <!-- ======================== -->
         <!--  Contenedor explicativo -->
 
-        <LinearLayout
+        <!-- ======================== -->
+
+
+        <!-- Nuevo Registro -->
+        <ImageView
+            android:id="@+id/imageView6"
+            android:layout_width="match_parent"
+            android:layout_height="58dp"
+            app:srcCompat="@drawable/droplogocentrado" />
+
+        <TextView
+
+            android:id="@+id/textView2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:paddingVertical="70dp"
-            android:background="@color/pinkonedrop2"
-            >
+            android:layout_marginHorizontal="10dp"
+            android:layout_marginVertical="10dp"
+            android:fontFamily="sans-serif-condensed"
+            android:gravity="center"
+            android:text="@string/title_crud_gly"
+            android:textColor="@color/blueonedrop3"
+            android:textSize="40dp"
+            android:textStyle="bold" />
 
-            <!-- Titulo -->
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="150dp"
-                android:layout_weight="1"
-                android:orientation="vertical"
-                android:background="@color/pinkonedrop">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginHorizontal="10dp"
+            android:layout_marginVertical="0dp"
 
-                <TextView
-
-                    android:id="@+id/textView2"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginHorizontal="10dp"
-                    android:layout_marginVertical="30dp"
-                    android:fontFamily="sans-serif-condensed"
-                    android:gravity="center"
-                    android:text="@string/title_crud_gly"
-                    android:textColor="@color/white"
-                    android:textSize="24dp"
-                    android:textStyle="bold" />
-
-            </LinearLayout>
-
-            <!-- Descripcion -->
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="150dp"
-                android:layout_weight="1"
-                android:orientation="vertical"
-                android:background="@color/white">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginHorizontal="10dp"
-                    android:layout_marginVertical="30dp"
-                    android:fontFamily="sans-serif-condensed"
-                    android:gravity="center"
-                    android:text="@string/description_gly"
-                    android:textColor="@color/blackonedrop"
-                    android:textSize="18dp" />
-            </LinearLayout>
-
-        </LinearLayout>
-        <!-- ======================== -->
+            android:fontFamily="sans-serif-condensed"
+            android:gravity="center"
+            android:text="@string/description_gly"
+            android:textColor="@color/blueonedrop"
+            android:textSize="20dp" />
 
         <com.github.mikephil.charting.charts.LineChart
             android:id="@+id/glyLineChart"
             android:layout_width="match_parent"
             android:layout_height="250dp"
-            android:layout_margin="10dp"/>
+            android:layout_margin="10dp"
+            android:background="#C4F2DCE8"/>
 
 
+        <!-- botones paginacion -->
 
-        <!-- Nuevo Registro -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginHorizontal="5dp"
+            android:orientation="horizontal"
+            android:paddingStart="15dp">
+
+              <Button
+                android:id="@+id/btn_first_page"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:onClick="goToFirstPage"
+                android:padding="0dp"
+                android:text="1er"
+                android:backgroundTint="@color/accent_blue"/>
+
+            <Button
+                android:id="@+id/btn_prev_page"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:onClick="goToPrevPage"
+                android:padding="0dp"
+                android:text="prev"
+                android:backgroundTint="@color/accent_blue"/>
+
+            <Spinner
+                android:id="@+id/spinnerPageSize"
+                android:layout_width="40dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center_horizontal"
+                android:background="@color/accent_pink"/>
+
+            <Button
+                android:id="@+id/btn_next_page"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:padding="0dp"
+                android:onClick="goToNextPage"
+                android:text="sig"
+                android:backgroundTint="@color/accent_blue"/>
+
+            <Button
+                android:id="@+id/btn_last_page"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:padding="0dp"
+                android:onClick="goToLastPage"
+                android:text="Ult"
+                android:backgroundTint="@color/accent_blue"/>
+        </LinearLayout>
+
+        <!-- botones paginacion -->
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:background="@color/pinkonedrop2"
+
             android:padding="10dp">
 
 
             <!-- BOTON FLOTANTE     -->
             <TextView
                 android:id="@+id/textView8"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
+                android:layout_width="20dp"
+                android:layout_height="55dp"
                 android:layout_weight="3"
+                android:background="@color/pinkonedrop2"
                 android:fontFamily="sans-serif-condensed"
                 android:gravity="center"
                 android:text="@string/new_crud_gly"
                 android:textColor="@color/white"
-                android:textSize="24dp"
+                android:textSize="20dp"
                 android:textStyle="bold" />
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton
                 android:id="@+id/float_btn_add_reg_gly"
                 android:layout_width="0dp"
-                android:layout_weight="1"
                 android:layout_height="match_parent"
+                android:layout_margin="0dp"
+                android:layout_weight="1"
                 android:clickable="true"
+                android:gravity="center"
                 android:onClick="openPopupAddReg"
-                app:background="@color/pinkonedrop2"
                 android:textAlignment="center"
-                app:srcCompat="@android:drawable/ic_input_add"
-                android:gravity="center"/>
+                app:backgroundTint="@color/ic_launcher_background"
+                app:srcCompat="@android:drawable/ic_input_add" />
 
         </LinearLayout>
 
@@ -133,7 +172,7 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:gravity="center"
-            android:paddingVertical="40dp">
+            android:paddingVertical="20dp">
 
 
             <TextView
@@ -154,7 +193,7 @@
                 android:fontFamily="sans-serif-condensed"
                 android:gravity="center"
                 android:text="@string/description_pressure_2"
-                android:textColor="@color/blackonedrop"
+                android:textColor="@color/blueonedrop3"
                 android:textSize="20dp" />
 
         </LinearLayout>
@@ -193,13 +232,13 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:background="@color/blueonedroposcuro"
         android:layout_weight="1">
 
         <Button
             android:id="@+id/btn_home_pressure"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_margin="10dp"
             android:backgroundTint="@color/blueonedroposcuro"
             android:fontFamily="sans-serif-condensed"
             android:onClick="toHome"
@@ -207,11 +246,4 @@
             android:textSize="24dp"
             android:textStyle="bold" />
     </LinearLayout>
-
-
-
-
-
-
-
 </LinearLayout>

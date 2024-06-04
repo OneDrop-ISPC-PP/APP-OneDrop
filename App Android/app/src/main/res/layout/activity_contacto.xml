@@ -9,15 +9,15 @@
 
     <ImageView
         android:id="@+id/imageView"
-        android:layout_width="154dp"
-        android:layout_height="161dp"
+        android:layout_width="384dp"
+        android:layout_height="164dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.247"
-        app:srcCompat="@drawable/onedrop" />
+        tools:srcCompat="@drawable/droplogocentrado" />
 
     <TextView
         android:id="@+id/contactUsTextView"
@@ -43,6 +43,7 @@
         android:drawablePadding="8dp"
         android:gravity="center_vertical"
         android:text="info@onedrop.com"
+        android:textStyle="bold"
         android:textColor="@color/blueonedrop"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -60,6 +61,7 @@
         android:drawablePadding="8dp"
         android:gravity="center_vertical"
         android:text="+54 9 113200-4403"
+        android:textStyle="bold"
         android:textColor="@color/blueonedrop"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -67,6 +69,30 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/emailTextView" />
 
+    <!-- Agregar enlace a la web de OneDrop -->
+    <ImageView
+        android:id="@+id/button_web"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:src="@drawable/gotalogo"
+        android:contentDescription="Ingresa a nuestra web"
+        android:onClick="openWebUrl"
+        android:clickable="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/phoneTextView" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="onedrop web"
+        android:textColor="@color/blueonedrop"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="@+id/button_web"
+        app:layout_constraintStart_toStartOf="@+id/button_web"
+        app:layout_constraintTop_toBottomOf="@+id/button_web" />
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -83,7 +109,7 @@
             android:id="@+id/backButton"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:layout_marginTop="80dp"
+            android:layout_marginTop="520dp"
             android:background="@drawable/baseline_home_24" />
 
         <TextView
@@ -92,6 +118,7 @@
             android:layout_marginTop="2dp"
             android:fontFamily="sans-serif-condensed"
             android:text="VOLVER"
+            android:textStyle="bold"
             android:textColor="@color/blueonedrop"
             android:textSize="16sp" />
     </LinearLayout>

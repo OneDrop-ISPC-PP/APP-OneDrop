@@ -16,9 +16,15 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.One_drop_cruds"
-        tools:targetApi="31"
         android:usesCleartextTraffic="true"
-        >
+        tools:targetApi="31">
+
+        <activity
+            android:name=".RestorePassword"
+            android:exported="false" />
+        <activity
+            android:name=".services"
+            android:exported="false" />
         <activity
             android:name=".UserLoginActivity"
             android:exported="false" />

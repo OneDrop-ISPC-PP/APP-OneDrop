@@ -1,0 +1,31 @@
+.text_center{
+    text-align: center;
+}
+
+.margin_h{
+    margin: 2rem 4rem;
+    padding: 4rem;
+}
+
+.borde{
+    border: 1px solid black;
+}
+
+
+.formas_pago{
+    background-image: url('../../../assets/images/formas-pago.png');
+    height: 14rem;
+    background-repeat: no-repeat;
+    background-size: contain; /* Ajusta automáticamente el tamaño de la imagen */
+}
+
+
+.bg_btn_edit{
+    background-color:  #3155e7;
+    color: #ffffff;
+  }
+
+  .botones{
+    height: 3rem;
+    width: 80%;
+  }

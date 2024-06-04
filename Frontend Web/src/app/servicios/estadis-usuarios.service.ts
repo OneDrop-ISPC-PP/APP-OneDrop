@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpEvent, HttpHeaders } from '@angular/common/http';
 
 // INTERFACE DE NOTAS USUARIO
 import { NotasGlucemia } from './interfaces/notas-glucemia';
+import { Observable, map } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -24,29 +25,48 @@ export class EstadisUsuariosService {
 
   // -------- PESO ----------
   url_NOTAS_PESO_GET: string = 'http://localhost:8080/registros/peso/usuario/';
+  url_NOTA_PESO_GET: string = 'http://localhost:8080/registros/peso/';
   url_NOTA_PESO_POST: string = 'http://localhost:8080/registros/peso/usuario/';
+  url_NOTA_PESO_PUT: string = 'http://localhost:8080/registros/peso/';
+  url_NOTA_PESO_DEL: string = 'http://localhost:8080/registros/peso/';
 
 
-
-  // TENSION
-  // URL DE NOTAS DE GLUCEMIA:
+  // -------- TENSION ----------
   url_NOTAS_TENSION_GET: string = 'http://localhost:8080/registros/tensionArterial/usuario/';
-  
-  // URL DE NOTAS DE GLUCEMIA:
+  url_NOTA_TENSION_GET: string = 'http://localhost:8080/registros/tensionArterial/';
   url_NOTA_TENSION_POST: string = 'http://localhost:8080/registros/tensionArterial/usuario/';
+  url_NOTA_TENSION_PUT: string = 'http://localhost:8080/registros/tensionArterial/';
+  url_NOTA_TENSION_DEL: string = 'http://localhost:8080/registros/tensionArterial/';
 
 
 
-  // URL DE SERVICIOS:
+  // -------- SERVICIOS ----------
   url_SERVICIOS: string = 'http://localhost:8080/servicios/';
 
-  // URL DE CARRITO:
-  url_CARRITO: string = 'http://localhost:3000/CARRITO/';
+
+  // -------- CARRITO ----------
+  url_CARRITO_GET: string = 'http://localhost:8080/carrito/';
+  url_CARRITO_POST: string = 'http://localhost:8080/carrito/';
+
+  // -------- CARRITO ----------
+  url_CARRITO_ID_USER_GET: string = 'http://localhost:8080/carrito/user/';
+  url_CARRITO_ID_USER_POST: string = 'http://localhost:8080/carrito/user/';
+
+  // -------- CARRITO SERVICIOS ----------
+  url_CARRITO_SERVICIOS_GET: string = 'http://localhost:8080/carrito/';
+  url_CARRITO_SERVICIOS_POST: string = 'http://localhost:8080/carrito/';
+
+  // -------- PDF ----------
+  url_PDF_GET: string = 'http://localhost:8080/reportes/';
+
+
 
   ////////////////// GET FICHA MEDICA ///////////////////
   getFichaMedicaIdUser(id:any){
     return this.http.get(this.url_GET_FICHA_MEDICA+id)
   }
+
+
 
   ////////////////// CODIGO NOTAS GLUCEMIA (FUNCIONAL) ///////////////////
   // GET_NOTAS_GLUCEMIA
@@ -72,34 +92,102 @@ export class EstadisUsuariosService {
 
 
   ////////////////// CODIGO NOTAS PESO (FUNCIONAL) ///////////////////
-  // AGREGA NOTAS DE GLUCEMIA
-  nuevaNotaPeso(datos: any, id:any) {
-    return this.http.post(this.url_NOTA_PESO_POST+id, datos);
-  }
 
-  // GET_NOTAS_GLUCEMIA
+  // GET_NOTAS_PESO
   public GET_NOTAS_PESO(id:any){
     return this.http.get(this.url_NOTAS_PESO_GET+id)
   }
-
-  ////////////////// CODIGO NOTAS TENSION ARTERIAL ///////////////////
-  // AGREGA NOTAS DE GLUCEMIA
-  nuevaNotaTension(datos: any, id:any) {
-    return this.http.post(this.url_NOTA_TENSION_POST+id, datos);
+ // GET_NOTA_PESO POR ID
+  public GET_NOTA_PESO_POR_ID(id:any){
+    return this.http.get(this.url_NOTA_PESO_GET+id)
+  } 
+  // AGREGAR NOTA PESO
+  nuevaNotaPeso(datos: any, id:any) {
+    return this.http.post(this.url_NOTA_PESO_POST+id, datos);
+  }
+  // ELIMINA NOTA PESO
+  public DELETE_NOTA_PESO(id:any){
+    return this.http.delete(this.url_NOTA_PESO_DEL+id) 
+  }
+  // ACTUALIZAR NOTA PESO
+  public UPDATE_NOTA_PESO(datos:any, id:any){
+    return this.http.put(this.url_NOTA_PESO_PUT+id,datos)
   }
 
+
+
+  ////////////////// CODIGO NOTAS TENSION ARTERIAL ///////////////////
   // GET_NOTAS_GLUCEMIA
   public GET_NOTAS_TENSION(id:any){
     return this.http.get(this.url_NOTAS_TENSION_GET+id)
   }
+  // GET_NOTA_TENSION POR ID
+  public GET_NOTA_TENSION_POR_ID(id:any){
+    return this.http.get(this.url_NOTA_TENSION_GET+id)
+  }
+  // AGREGA NOTAS DE TENSION
+  nuevaNotaTension(datos: any, id:any){
+    return this.http.post(this.url_NOTA_TENSION_POST+id, datos);
+  }
+  // ELIMINAR_NOTAS_GLUCEMIA
+  public DELETE_NOTA_TENSION( id:any){
+    return this.http.delete(this.url_NOTA_TENSION_DEL+id) 
+  }
+  // ACTUALIZAR NOTA TENSION
+  public UPDATE_NOTA_TENSION(datos:any, id:any){
+    return this.http.put(this.url_NOTA_TENSION_PUT+id,datos)
+  }
+
+
+////////////////// CODIGO SERVICIOS (FUNCIONAL) ///////////////////
+public GET_SERVICIOS(id:any){
+  return this.http.get(this.url_SERVICIOS)
+}
+
+
+////////////////// CODIGO CARRITO (FUNCIONAL) ////////////////////
+public nuevoCarrito24(datos:any,id:any){
+  return this.http.post(this.url_CARRITO_POST+id,datos)
+}
+
+// METODO GET DEL CARRITO POR ID
+public getCarritoPorIdCarrito(id:any){
+  return this.http.get(this.url_CARRITO_GET+id)
+}
+
+////////////////// GET FICHA MEDICA ///////////////////
+getCarritoPorIdUser(id:any){
+  return this.http.get(this.url_CARRITO_ID_USER_GET+id)
+}  
+
+// METODO GET DE SERVICIO POR ID - SIRVE PARA TRAER SERVICIO DE LA LISTA
+// PARA LUEGO LLEVARLO AL CARRITO
+public getServicioPorId(id:any){
+  return this.http.get(this.url_SERVICIOS+id)
+}
+
+// METODO POST PARA AGREGAR UN SERVIVIO AL CARRITO
+public postServicioEnCarrito(data:any,id_car:any, id_Serv:any){
+  return this.http.post(this.url_CARRITO_SERVICIOS_POST+id_car+"/"+id_Serv, data)
+}
+// METODO POST PARA ELIMINAR UN SERVIVIO DEL CARRITO
+
+public delServicioEnCarrito(id_carr:any, id_Serv:any){
+  return this.http.delete(this.url_CARRITO_SERVICIOS_POST+id_carr+"/"+id_Serv)
+}
+
+////////// DESCARGAR PDF //////////
+////////// DESCARGAR PDF //////////
+public descargarDPF(id:any){
+  return this.http.get(this.url_PDF_GET+id, {responseType:'blob'});
+
+}
 
 
 
-
-
-
-
-
+////////////////////////////////////////////////////
+////////////////////////////////////////////////////
+////////////////////////////////////////////////////
 
   // MUESTRA LAS NOTAS DE GLUCEMIA (BORRAR SI ANDA EL DE ARRIBA)
   muestraNotasUsuario() {
@@ -125,8 +213,8 @@ export class EstadisUsuariosService {
   ////////////////// CODIGO TENSION ARTERIAL ///////////////////
   
   // Método para agregar registro de tensión arterial
-  agregarTensionArterial(datos: any) {
-    return this.http.post('http://localhost:8080/registros/tensionArterial/usuario/1', datos, { withCredentials: true });
+  agregarTensionArterial(datos: any, id:any) {
+    return this.http.post('http://localhost:8080/registros/tensionArterial/usuario/'+id, datos, { withCredentials: true });
   }
 
   // Método para obtener registros de tensión arterial de un usuario específico
@@ -180,16 +268,16 @@ eliminarRegistroPeso(idRegistro: number) {
 
   // MUESTRA CARRITO USUARIOS
   muestraCarritoAUsuario() {
-    return this.http.get(this.url_CARRITO, { withCredentials: true });
+    return this.http.get(this.url_CARRITO_GET, { withCredentials: true });
   }
 
   // AGREGA SERVICIO AL CARRITO
   agregaAlCarrito(servicio: any) {
-    return this.http.post(this.url_CARRITO, servicio, { withCredentials: true });
+    return this.http.post(this.url_CARRITO_POST, servicio, { withCredentials: true });
   }
 
   // ELIMINA SERVICIO AL CARRITO
   DELETE_SERV(id: string) {
-    return this.http.delete(this.url_CARRITO + id, { withCredentials: true });
+    return this.http.delete(this.url_CARRITO_GET+ id, { withCredentials: true });
   }
 }

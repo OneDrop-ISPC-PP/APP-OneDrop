@@ -1,0 +1,88 @@
+      <!-- ////////////////// SECCION SERVICIOS ///////////////// -->
+      <section class="bg-light container-fluid"  >
+
+        <div class=" my-3 mx-0 p-4 borde_servicios row">
+
+              <!-- MUESTRA SERVICIOS -->
+              <section class="my-4  container-fluid col-lg-8">
+                
+                <div >
+                  <h3 class="text_center">Nuestros Servicios</h3>
+                </div>
+                <div class="row">
+
+
+                  <div class="tarjeta_s col-lg-6 p-3" *ngFor="let s of servicios"> 
+                    <div class="tarjeta_img_{{s.id}}" ></div>
+                      
+                    <h5 class="text_center py-0 my-1">{{s.nombre}}</h5>
+                    <h3 class="text_center py-0 my-1">${{s.precio}}</h3>
+
+
+                    <div class="d-flex justify-content-center" >
+                      <button  class="btn bg_btn_edit px-4 p-2 m-1 col-lg-6" (click)="servicioAlCarrito(s.id)">
+                      Agregar al Carrito</button>
+
+                      <button  class="btn bg_btn_edit px-4 p-2 m-1 col-lg-6"  routerLink="/auth/mas_info_serv/{{s.id}}" >
+                       Mas Info</button>
+                    </div>
+
+                  </div>
+                </div>
+        
+              </section>
+
+              <!-- MUESTRA CARRITO -->
+              <section class="col-lg-4 borde_servicios my-4 ">
+                <h3 class="text_center "  >Carrito</h3>
+
+                <div *ngIf="!veracidadSiguiente">
+                    <p>Para empezar a comprar agrega un servicio al carrito</p>
+
+                </div>
+    
+                <div *ngIf="veracidadSiguiente">
+
+                  <!--  TITULARES -->
+                  <div class="container-fluid" >
+                    <div class="row" >
+                      <div class="col-lg-3">
+                        <h6>precio</h6>
+                      </div>
+                      <div class="col-lg-6">
+                        <h6>Servicio</h6>
+                      </div>
+                      <div class="col-lg-2">
+                        <h6>Servicio</h6>
+                      </div>
+                    </div>
+                  </div>
+                  <!--  LISTA DE SERVICIOS -->
+                  <div class="container-fluid" >
+                    <div class="row" *ngFor="let s of serviciosEnCarrito">
+                      <div class="col-lg-3">
+                        <h6>{{s.precio}}</h6>
+                      </div>
+                      <div class="col-lg-6">
+                        <h6>{{s.nombre}}</h6>
+                      </div>
+                      <div class="col-lg-2">
+                        <button  class="btn bg_btn_edit px-4 p-2 m-1 col-lg-10" (click)="eliminarServicioDelCarrito(s.id)" >
+                    Eliminar</button>
+
+                      </div>
+                    </div>
+                  </div>
+
+                  <div  >
+                  <button  class="btn bg_btn_edit px-4 p-2 m-1 col-lg-10" routerLink="/auth/resumen2_carrito/{{idCarrito}}" >
+                    Siguiente</button>
+
+                  </div>
+                </div>
+              </section>
+
+            </div>
+
+</section> 
+

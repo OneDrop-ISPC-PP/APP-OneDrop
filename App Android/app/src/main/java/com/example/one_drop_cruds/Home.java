@@ -10,6 +10,7 @@ import androidx.core.content.ContextCompat;
 
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -18,6 +19,7 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
 import android.util.Log;
 import android.view.View;
 import android.webkit.WebView;
@@ -26,15 +28,29 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.one_drop_cruds.entities.user.AuthResponse;
+import com.example.one_drop_cruds.entities.user.FichaMedicaUsuario;
 import com.example.one_drop_cruds.entities.user.LoginRequest;
 import com.example.one_drop_cruds.entities.user.LoguedUserDetails;
 import com.example.one_drop_cruds.request.AuthRequests;
+import com.example.one_drop_cruds.request.FileRequest;
+import com.example.one_drop_cruds.request.RecordsRequest;
 import com.example.one_drop_cruds.utils.BackendUrl;
 import com.example.one_drop_cruds.utils.FilesManager;
+import com.example.one_drop_cruds.utils.RetrofitHelper;
 import com.example.one_drop_cruds.utils.SharedPrefManager; // Importa la clase SharedPrefManager
+import com.example.one_drop_cruds.utils.ToastHelper;
+import com.example.one_drop_cruds.utils.UserSessionManager;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.InputStream;
+import java.io.IOException;
+import java.io.OutputStream;
 
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
+import okhttp3.ResponseBody;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -44,34 +60,39 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 
 public class Home extends AppCompatActivity {
+    UserSessionManager userSessionManager;
     SharedPrefManager sharedPrefManager;
     TextView textView_welcome;
     FilesManager filesManager;
     WebView webview;
     String baseUrl = new BackendUrl().getBackendUrl();
+    String token;
+    LoguedUserDetails loguedUser;
+    AuthRequests authRequest;
+    ToastHelper toastHelper;
+    FileRequest fileRequest;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
-
         webview = (WebView) findViewById(R.id.web_tip);
         webview.loadUrl("https://davidcosta92.github.io/noticias_one_drop/");
-
         textView_welcome = findViewById(R.id.textView_welcome);
-        sharedPrefManager = new SharedPrefManager(getApplicationContext(), "oneDrop_shared_preferences");
 
-        String token = sharedPrefManager.getUserToken();
+        // user sessions
+        userSessionManager = new UserSessionManager(Home.this);
+        sharedPrefManager = new SharedPrefManager(Home.this, "oneDrop_shared_preferences");
+        token = sharedPrefManager.getUserToken();
+        getLoguedUserDetails(token);
 
-        if (token == null) {
-            // Si el usuario no ha iniciado sesión, redirige a la actividad de inicio de sesión
-            Intent loginIntent = new Intent(this, UserLoginActivity.class);
-            startActivity(loginIntent);
-            finish(); // Cierra la actividad actual
-        } else {
-            getLoguedUserDetails(token);
-        }
+        toastHelper= new ToastHelper(Home.this);
 
-        filesManager = new FilesManager(getApplicationContext(), this);
+        // request, Crea helper con el jwt, inicializa retrofit y crea RecordsRequest, para hacer solicitudes
+        authRequest = new RetrofitHelper(token).getRetrofitHelperWithToken().create(AuthRequests.class);
+        fileRequest = new RetrofitHelper(token).getRetrofitHelperWithToken().create(FileRequest.class);
+
+        filesManager = new FilesManager(Home.this, this);
         this.askForPermissionsStorage();
 
         // Agrega la funcionalidad para cerrar sesión
@@ -132,6 +153,8 @@ public class Home extends AppCompatActivity {
             public void onResponse(Call<LoguedUserDetails> call, Response<LoguedUserDetails> response) {
                 if(response.isSuccessful() && response.body() != null){
                     // Obtener datos del usuario de la resp y guardarlo en shared pref como un objeto json
+                    loguedUser = response.body();
+                    getFichaMedicaUsuario();
                     sharedPrefManager.setLoguedUser(response.body());
                     textView_welcome.setText("Bienvenido, " + response.body().getUsername());
                 } else if (response.code()==400){
@@ -144,15 +167,37 @@ public class Home extends AppCompatActivity {
             }
         });
     }
-
+    private void getFichaMedicaUsuario(){
+        Call<FichaMedicaUsuario> call = authRequest.getFichaMedicaUsuario(loguedUser.getId());
+        call.enqueue(new Callback<FichaMedicaUsuario>() {
+            @Override
+            public void onResponse(Call<FichaMedicaUsuario> call, Response<FichaMedicaUsuario> response) {
+                if(response.isSuccessful() && response.body() != null){
+                    sharedPrefManager.setFichaMedicaUser(response.body());// Obtener datos de ficha medica y guardarlo en shared
+                    System.out.println("******* FICHA MEDICA *******************");
+                } else if (response.code()==400){
+                    System.out.println(" FICHA MEDICA response.code()==400 SI NO ESTA CARGADA LA FICHA, SE DEBERIA REDIRIGIR A ACTIVIY DE CARGA DE FICHA MEDICA ***");
+                    System.out.println(response.body());
+                    // TODO SI NO ESTA CARGADA LA FICHA, SE DEBERIA REDIRIGIR A ACTIVIY DE CARGA DE FICHA MEDICA
+                    // TODO SI NO ESTA CARGADA LA FICHA, SE DEBERIA REDIRIGIR A ACTIVIY DE CARGA DE FICHA MEDICA
+                    // TODO SI NO ESTA CARGADA LA FICHA, SE DEBERIA REDIRIGIR A ACTIVIY DE CARGA DE FICHA MEDICA
+                    System.out.println(" FICHA MEDICA response.code()==400 SI NO ESTA CARGADA LA FICHA, SE DEBERIA REDIRIGIR A ACTIVIY DE CARGA DE FICHA MEDICA ***");
+                }
+            }
+            @Override
+            public void onFailure(Call<FichaMedicaUsuario> call, Throwable t) {
+                System.out.println("******* FICHA MEDICA Throwable t****************");
+                System.out.println( t);
+                // TODO SI NO ESTA CARGADA LA FICHA, SE DEBERIA REDIRIGIR A ACTIVIY DE CARGA DE FICHA MEDICA
+                // TODO SI NO ESTA CARGADA LA FICHA, SE DEBERIA REDIRIGIR A ACTIVIY DE CARGA DE FICHA MEDICA
+                // TODO SI NO ESTA CARGADA LA FICHA, SE DEBERIA REDIRIGIR A ACTIVIY DE CARGA DE FICHA MEDICA
+                System.out.println("******* FICHA MEDICA Throwable t*******************");
+            }
+        });
+    }
 
     public void aRegistrarGlucemia(View v) {
         Intent siguiente = new Intent(this, RegGlyActivity.class);
-        startActivity(siguiente);
-    }
-
-    public void aRegistrarAnalisis(View v){
-        Intent siguiente = new Intent(this, RegistoAnalisis.class);
         startActivity(siguiente);
     }
 
@@ -175,14 +220,40 @@ public class Home extends AppCompatActivity {
         Intent pressure = new Intent(this, RegPressureActivity.class);
         startActivity(pressure);
     }
+    public void toServices(View v) {
+        Intent services = new Intent(this, services.class);
+        startActivity(services);
+    }
 
     public void btn_export_data(View v) {
-        Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.onedrop); // solo para enviar el logo de oneDrop a PDF
-        Uri uri = filesManager.exportPdfFileReport(bitmap);
-        if (uri != null) {
-            Toast.makeText(this, "Se creó el PDF correctamente", Toast.LENGTH_SHORT).show();
-        } else {
-            Toast.makeText(this, "Error en la creación del PDF", Toast.LENGTH_LONG).show();
+        Call<ResponseBody> call = fileRequest.getFullResume(loguedUser.getId());
+        call.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                try {
+                    savePdfToFile(response.body().bytes());
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                toastHelper.showLong("Ocurrio un error creando el archivo! "+t.getMessage());
+            }
+        });
+    }
+    public void savePdfToFile(byte[] pdfBytes) {
+        String fileName = "resume_" + loguedUser.getId() + ".pdf";
+        File downloadsDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS); // Obtener el directorio de descargas
+        File pdfFile = new File(downloadsDir, fileName);// Crear el archivo en el directorio de descargas
+        try {
+            FileOutputStream fos = new FileOutputStream(pdfFile);
+            fos.write(pdfBytes);
+            fos.close();
+            toastHelper.showLong("Se creo el PDF correctamente, revisa las Descargas");
+        } catch (IOException e) {
+            e.printStackTrace();
+            toastHelper.showLong("Ocurrio un error creando el archivo! "+e.getMessage());
         }
     }
 
@@ -194,14 +265,14 @@ public class Home extends AppCompatActivity {
         shareIntent.putExtra(Intent.EXTRA_STREAM, uri);
         shareIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
 
-        Log.i("TAG", "************* COMPARTIENDO POR WHATSAPP => URI ****");
-        Log.i("TAG", "***" + uri.toString());
-        Log.i("TAG", "************* COMPARTIENDO POR WHATSAPP => URI ****");
+        Log.i("TAG", "***** COMPARTIENDO POR WHATSAPP => URI **");
+        Log.i("TAG", "*" + uri.toString());
+        Log.i("TAG", "***** COMPARTIENDO POR WHATSAPP => URI **");
 
         try {
             startActivity(Intent.createChooser(shareIntent, "Compartir a través de"));
         } catch (Exception ex) {
-            Log.e("TAG", "************* COMPARTIENDO POR WHATSAPP => Exception ****" + ex.getCause().toString() + "***");
+            Log.e("TAG", "***** COMPARTIENDO POR WHATSAPP => Exception *" + ex.getCause().toString() + "**");
         }
     }
 
@@ -258,5 +329,10 @@ public class Home extends AppCompatActivity {
             }
         }
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+    }
+    public void openWebUrl(View view) {
+        Uri uri = Uri.parse("https://www.onedrop.com");
+        Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+        startActivity(intent);
     }
 }

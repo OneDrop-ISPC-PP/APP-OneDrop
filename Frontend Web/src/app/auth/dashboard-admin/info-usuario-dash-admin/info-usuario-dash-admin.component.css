@@ -1,7 +1,12 @@
 .bg_c_primary{
     background-color: var(--primary-dark);
   }
+  .sub_sidebar{
+    height: 100%;
   
+    border: #2845d6 1px solid;
+  }
+
   .text_center{
     text-align: center;
   }
