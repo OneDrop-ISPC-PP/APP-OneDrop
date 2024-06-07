@@ -12,7 +12,7 @@
 .sub_sidebar{
     height: 100%;
   
-    border: #2845d6 1px solid;
+    border: #03476D 1px solid;
   }
 
 .sub_sidebar_sin_b{
@@ -20,7 +20,7 @@
     height: 100%;  
   }
 .selec{
-    border: #2845d6 1px solid;
+    border:#03476D 1px solid;
   }
 
 .message{
@@ -33,25 +33,41 @@
   }
 
 .secciones{
-    background-color: white;
+    background-color: #fc588115;
     height: 7rem;
     width: 100%;
-    border-radius: 0px;
     border: 1px solid #fc588163 ;
+    border-radius: 5px;
+
+  }
+  .secciones_azul{
+    background-color: #0871aa0c;
+    height: 7rem;
+    width: 100%;
+    border: 1px solid #0871aa6f ;
+    border-radius: 5px;
 
   }
 
 .secciones2{
-    background-color:#FC5880;
+    background-color: #03476D;
     height: 7rem;
     width: 100%;
     border-radius: 0px;
-    border: 1px solid #FC5880 ;
+    border: 1px solid #03476D ;
+    border-radius: 5px;
+
   }
 
 .secciones:hover{
     border: 2px solid #FC5880;
+    border-radius: 5px;
   }
+.secciones_azul:hover{
+  border: 2px solid  #03476D ;
+  border-radius: 5px;
+
+}
 
 
 .texto_blanco{
@@ -60,6 +76,10 @@
 
 .texto_rosa{
     color: #FC5880;
+  }
+
+  .texto_azul{
+    color:#03476D;
   }
 
 .borde{
@@ -77,7 +97,7 @@
   }
 
 .bg_btn_edit{
-    background-color:  #3155e7;
+    background-color: #03476D;
     color: #ffffff;
   }
 
@@ -88,3 +108,4 @@
 .m_top2{
   margin-top: 6rem;
 }
+

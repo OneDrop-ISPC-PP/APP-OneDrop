@@ -99,7 +99,10 @@ export class LoginComponent implements OnInit{
                           
                       })
                     },
-                    (error:any) => {console.log("Ocurrio un error");console.log(error);}
+                    (error:any) => {console.log("Ocurrio un error");console.log(error)
+                      alert("No se reconoce al usuario en el sistema");
+
+                 }
                 );  
                   //this.router.navigateByUrl("/auth/dash_user")
                   //this.profileForm.reset(); // SI VALIDA CORRECTAMENTE SE REINICIAN LOS VALORES DE LOS CAMPOS
@@ -107,9 +110,23 @@ export class LoginComponent implements OnInit{
         else{
 
           // SI NO VALIDA TODOS LOS CAMPOS QUEDAN MARCADO EN ROJO
-          this.profileForm.markAllAsTouched();
-          alert("No se ingresaron correctamente los datos o no se reconoce el usuario")
-        
+          if(this.profileForm.value.password=="" &&  this.profileForm.value.username=="" ){
+            alert("Porfavor ingrese sus datos");
+          }
+         else if(this.profileForm.value.username==""){
+            alert("Porfavor ingrese un username");
+            }
+         else if(this.profileForm.value.password==""){
+              alert("Porfavor ingrese una contaseña");
+            }
+          else{
+            alert("No se reconoce al usuario en el sistema");
+
+
+          }
+              
+              this.profileForm.markAllAsTouched();
+
         }
     }
 
