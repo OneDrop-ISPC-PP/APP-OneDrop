@@ -1,3 +1,9 @@
+/*  PALETA DE COLORES DEL NUEVO LOGO
+#FC5880 rosa
+#16BBEB celeste
+#0870AA azul
+#03476D azul oscuro
+*/
 /* ///////////// 2 0 2 4 ///////////// */
 .bg_c_primary{
     background-color: var(--primary-dark);
@@ -12,7 +18,7 @@
   }
   
   .bg_btn_edit{
-    background-color:  #3155e7;
+    background-color:#03476D;
     color: #ffffff;
   }
   

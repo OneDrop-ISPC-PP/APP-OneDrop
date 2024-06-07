@@ -53,13 +53,13 @@ public getUser(){
 public redireccionUsername(){
   let user = this.getUser();
   if(user.role == "ADMIN"){
-    this.router.navigateByUrl("auth/dash_admin");
+    this.router.navigateByUrl("auth/dash_admin/info_users");
   }
   if(user.role == "MEDICO"){
-    this.router.navigateByUrl("auth/dash_admin");
+    this.router.navigateByUrl("auth/dash_admin/info_users");
   }
   if(user.role == "USUARIO"){
-  this.router.navigateByUrl("auth/dash_user");
+  this.router.navigateByUrl("auth/dash_user/info_glucemia");
   }
 
 }
