@@ -80,13 +80,29 @@ ngOnInit(): void {
 
 // -----  METODOS PARA TENSION ARTERIAL -----
 // -----  METODOS PARA TENSION ARTERIAL -----
+// cambiar fecha de timestamp a Sáb 25, 02:50hs
+timestampToDate(timestamp: string): string {
+  // Convertir el timestamp a una fecha
+  const date = new Date(timestamp);
+  const dayOfWeek = ['Dom', 'Lun', 'Martes', 'Mié', 'Jue', 'Vie', 'Sáb'][date.getDay()];
+  const dayOfMonth = String(date.getDate()).padStart(2, '0');
+  const hours = String(date.getHours()).padStart(2, '0');
+  const minutes = String(date.getMinutes()).padStart(2, '0');
+  return `${dayOfWeek} ${dayOfMonth}, ${hours}:${minutes}hs`;
+}
+
 // GET NOTAS DE TENSION
 getNotasTension(): void {
   this.paciente.GET_NOTAS_TENSION(this.getIdUser).subscribe(
     (data:any)=>{
       console.log("CARGA DE NOTAS DE TENSION EXITOSA, LOS DATOS SON:")
       console.log(data.registros);
-      this.listaNotasTension = data.registros;
+      // cambiar fecha de timestamp a Sáb 25, 02:50hs
+      let listaModif = data.registros.map( (el: any) =>({
+        ...el,
+        fecha: this.timestampToDate(el.fecha)        
+      }));       
+      this.listaNotasTension = listaModif;
       
     },
     (error:any) => {
