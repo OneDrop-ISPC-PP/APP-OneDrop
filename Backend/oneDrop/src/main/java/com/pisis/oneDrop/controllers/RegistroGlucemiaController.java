@@ -25,7 +25,7 @@ public class RegistroGlucemiaController {
     @GetMapping("usuario/{id}")
     public ResponseEntity<RegistrosPaginadosReadDtoArray> findAllRegistrosByIdUser (@PathVariable Integer id,
                                                                           @RequestParam(required = false, defaultValue = "0") Integer page,
-                                                                          @RequestParam(required = false, defaultValue = "10") Integer size){
+                                                                          @RequestParam(required = false, defaultValue = "100") Integer size){
         return new ResponseEntity<>(registroGlucemiaService.findAllRegistrosByIdUser(id, page, size), HttpStatus.OK);
     }
     @GetMapping("{id}")
