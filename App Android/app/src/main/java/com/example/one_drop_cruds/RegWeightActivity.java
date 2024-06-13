@@ -20,7 +20,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.one_drop_cruds.entities.DTORegister;
+import com.example.one_drop_cruds.entities.dtos.records.DTORegister;
 import com.example.one_drop_cruds.entities.dtos.records.AddNewRecordDto;
 import com.example.one_drop_cruds.entities.dtos.records.RecordReadDto;
 import com.example.one_drop_cruds.entities.user.LoguedUserDetails;

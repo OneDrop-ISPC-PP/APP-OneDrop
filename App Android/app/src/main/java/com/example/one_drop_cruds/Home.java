@@ -10,12 +10,9 @@ import androidx.core.content.ContextCompat;
 
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -27,26 +24,19 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.one_drop_cruds.entities.user.AuthResponse;
 import com.example.one_drop_cruds.entities.user.FichaMedicaUsuario;
-import com.example.one_drop_cruds.entities.user.LoginRequest;
 import com.example.one_drop_cruds.entities.user.LoguedUserDetails;
 import com.example.one_drop_cruds.request.AuthRequests;
 import com.example.one_drop_cruds.request.FileRequest;
-import com.example.one_drop_cruds.request.RecordsRequest;
 import com.example.one_drop_cruds.utils.BackendUrl;
-import com.example.one_drop_cruds.utils.FilesManager;
 import com.example.one_drop_cruds.utils.RetrofitHelper;
 import com.example.one_drop_cruds.utils.SharedPrefManager; // Importa la clase SharedPrefManager
 import com.example.one_drop_cruds.utils.ToastHelper;
 import com.example.one_drop_cruds.utils.UserSessionManager;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.io.InputStream;
 import java.io.IOException;
-import java.io.OutputStream;
 
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -63,7 +53,6 @@ public class Home extends AppCompatActivity {
     UserSessionManager userSessionManager;
     SharedPrefManager sharedPrefManager;
     TextView textView_welcome;
-    FilesManager filesManager;
     WebView webview;
     String baseUrl = new BackendUrl().getBackendUrl();
     String token;
@@ -92,7 +81,6 @@ public class Home extends AppCompatActivity {
         authRequest = new RetrofitHelper(token).getRetrofitHelperWithToken().create(AuthRequests.class);
         fileRequest = new RetrofitHelper(token).getRetrofitHelperWithToken().create(FileRequest.class);
 
-        filesManager = new FilesManager(Home.this, this);
         this.askForPermissionsStorage();
 
         // Agrega la funcionalidad para cerrar sesión

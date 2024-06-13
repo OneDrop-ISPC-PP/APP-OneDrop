@@ -19,7 +19,7 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-import com.example.one_drop_cruds.entities.DTORegister;
+import com.example.one_drop_cruds.entities.dtos.records.DTORegister;
 import com.example.one_drop_cruds.entities.dtos.records.RecordReadDto;
 import com.example.one_drop_cruds.entities.dtos.records.AddNewRecordDto;
 import com.example.one_drop_cruds.entities.user.LoguedUserDetails;
@@ -136,11 +136,6 @@ public class RegGlyActivity extends AppCompatActivity implements View.OnClickLis
 
     }
 
-    // todo pendiente revisar y mejorar el RECICLER VIEW crear clase en UTILS, que sea reusable por todos los otros crudso!!!!!
-    // todo pendiente revisar y mejorar el RECICLER VIEW crear clase en UTILS, que sea reusable por todos los otros crudso!!!!!
-    // todo pendiente revisar y mejorar el RECICLER VIEW crear clase en UTILS, que sea reusable por todos los otros crudso!!!!!
-    // todo pendiente revisar y mejorar el RECICLER VIEW crear clase en UTILS, que sea reusable por todos los otros crudso!!!!!
-
     // RECICLER VIEW Clase que se encargara de CREAR todos los elementos de lista
     private class AdapterRegGly extends RecyclerView.Adapter<AdapterRegGly.AdapterRegGlyHolder> {
         @NonNull
@@ -201,12 +196,7 @@ public class RegGlyActivity extends AppCompatActivity implements View.OnClickLis
         }
     }
 
-    // todo pendiente revisar y mejorar el RECICLER VIEW crear clase en UTILS, que sea reusable por todos los otros crudso!!!!!
-    // todo pendiente revisar y mejorar el RECICLER VIEW crear clase en UTILS, que sea reusable por todos los otros crudso!!!!!
-    // todo pendiente revisar y mejorar el RECICLER VIEW crear clase en UTILS, que sea reusable por todos los otros crudso!!!!!
-    // todo pendiente revisar y mejorar el RECICLER VIEW crear clase en UTILS, que sea reusable por todos los otros crudso!!!!!
-
-
+    // todo pendiente revisar y mejorar el RECICLER VIEW crear clase en UTILS, que sea reusable por todos los otros
     private void renderRegs(List recordsObjects){
         ArrayList<Integer> reg_ids = new ArrayList<Integer>();
         ArrayList<Long> reg_dates = new ArrayList<>();

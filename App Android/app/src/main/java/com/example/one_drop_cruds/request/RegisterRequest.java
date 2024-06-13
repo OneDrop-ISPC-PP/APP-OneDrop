@@ -1,4 +1,4 @@
-package com.example.one_drop_cruds.entities.user;
+package com.example.one_drop_cruds.request;
 
 public class RegisterRequest {
     String username;

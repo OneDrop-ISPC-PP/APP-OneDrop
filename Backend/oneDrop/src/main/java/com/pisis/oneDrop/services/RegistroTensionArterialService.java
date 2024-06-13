@@ -40,22 +40,11 @@ public class RegistroTensionArterialService {
     }
 
 
-    public RegistrosPaginadosReadDtoArray findAllRegistrosByIdUser(Integer id, Integer page, Integer size , String sortBy ){
+    public RegistrosPaginadosReadDtoArray findAllRegistrosByIdUser(Integer id, Integer page, Integer size){
 
         Page<RegistroTensionArterial> results;
-        Sort sort = Sort.by(sortBy);
-        Pageable pageable = PageRequest.of(page, size /* , sort */);
-
-        //todo PEDIENTEEEE
-        //todo PEDIENTEEEE
-        //todo PEDIENTEEEE
-
-
+        Pageable pageable = PageRequest.of(page, size);
         results = registroTensionArterialRepository.findAllRegistrosByIdUser(id, pageable);
-        //todo PEDIENTEEEE
-        //todo PEDIENTEEEE
-        //todo PEDIENTEEEE
-
         Page pagedResults = results.map(entity -> registroTensionArterialMapper.toReadDto(entity));
         return RegistrosPaginadosReadDtoArray.builder()
                 .registros(pagedResults.getContent())

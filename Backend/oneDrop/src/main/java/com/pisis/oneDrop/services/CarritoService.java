@@ -102,25 +102,4 @@ public class CarritoService {
         return resumenCompraMapper.toReadDto(resumenCompra);
     }
 
-    /*
-
-    public RegistrosPaginadosReadDtoArray findAll(Integer page, Integer size, String sortBy ){
-        Page<Carrio> results;
-        Sort sort = Sort.by(sortBy);
-        Pageable pageable = PageRequest.of(page, size, sort);
-        results = servicioRepository.findAll(pageable);
-
-        Page pagedResults = results.map(entity -> servicioMapper.toReadDto(entity));
-        return RegistrosPaginadosReadDtoArray.builder()
-                .registros(pagedResults.getContent())
-                .total_results(pagedResults.getTotalElements())
-                .results_per_page(size)
-                .current_page(page)
-                .pages(pagedResults.getTotalPages())
-                .sort_by("sortBy")
-                .build();
-    }*/
-
-
-
 }

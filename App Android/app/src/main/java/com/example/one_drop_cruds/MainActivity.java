@@ -17,13 +17,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void irARegistro(View view) {
-        // Abre la actividad de registro al hacer clic en el botón "Registrarse"
         Intent intent = new Intent(this, UserSignupActivity.class);
         startActivity(intent);
     }
 
     public void irAIngreso(View view) {
-        // Abre la actividad de ingreso al hacer clic en el botón "Ingresar"
         Intent intent = new Intent(this, UserLoginActivity.class);
         startActivity(intent);
     }

@@ -97,17 +97,10 @@ public class ProfileActivity extends AppCompatActivity {
             public void onResponse(Call<FichaMedicaUsuario> call, Response<FichaMedicaUsuario> response) {
                 if(response.isSuccessful() && response.body() != null){
                     // Obtener datos de ficha medica y guardarlo en shared
-                    System.out.println("******************** FICHA MEDICA ********************");
-                    System.out.println(response.body());
                     setFichaMedica(response.body());
-                    System.out.println("******************** FICHA MEDICA ********************");
                 } else if (response.code()==400){
                     System.out.println(" FICHA MEDICA response.code()==400 SI NO ESTA CARGADA LA FICHA, SE DEBERIA REDIRIGIR A ACTIVIY DE CARGA DE FICHA MEDICA *********");
-                    System.out.println(response.body());
                     // TODO SI NO ESTA CARGADA LA FICHA, SE DEBERIA REDIRIGIR A ACTIVIY DE CARGA DE FICHA MEDICA
-                    // TODO SI NO ESTA CARGADA LA FICHA, SE DEBERIA REDIRIGIR A ACTIVIY DE CARGA DE FICHA MEDICA
-                    // TODO SI NO ESTA CARGADA LA FICHA, SE DEBERIA REDIRIGIR A ACTIVIY DE CARGA DE FICHA MEDICA
-                    System.out.println(" FICHA MEDICA response.code()==400 SI NO ESTA CARGADA LA FICHA, SE DEBERIA REDIRIGIR A ACTIVIY DE CARGA DE FICHA MEDICA *********");
                 }
             }
             @Override

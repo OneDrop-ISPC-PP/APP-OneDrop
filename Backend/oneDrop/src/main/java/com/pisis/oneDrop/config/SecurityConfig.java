@@ -30,11 +30,8 @@ public class SecurityConfig {
                 .csrf(csrf-> csrf.disable())//.headers().disable()
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/auth/**").permitAll()
-                        // .requestMatchers("auth/restorePassword").permitAll() TODO deberia estar incluido ("/auth/**").permitAll()
-                        // .requestMatchers("auth/setNewPassword").permitAll() TODO deberia estar incluido ("/auth/**").permitAll()
                         .requestMatchers("/docs/**").permitAll()
                         .requestMatchers("/api-docs/**").permitAll()
-
                         .anyRequest().authenticated() )
                 .sessionManagement( sessionManagment -> sessionManagment.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authenticationProvider(authProvider)

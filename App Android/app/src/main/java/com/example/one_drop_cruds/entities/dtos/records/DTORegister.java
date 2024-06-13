@@ -1,4 +1,4 @@
-package com.example.one_drop_cruds.entities;
+package com.example.one_drop_cruds.entities.dtos.records;
 
 public class DTORegister {
     String date;
