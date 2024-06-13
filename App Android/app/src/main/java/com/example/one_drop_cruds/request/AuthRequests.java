@@ -1,10 +1,7 @@
 package com.example.one_drop_cruds.request;
 
-import com.example.one_drop_cruds.entities.user.AuthResponse;
 import com.example.one_drop_cruds.entities.user.FichaMedicaUsuario;
-import com.example.one_drop_cruds.entities.user.LoginRequest;
 import com.example.one_drop_cruds.entities.user.LoguedUserDetails;
-import com.example.one_drop_cruds.entities.user.RegisterRequest;
 
 import retrofit2.Call;
 import retrofit2.http.Body;

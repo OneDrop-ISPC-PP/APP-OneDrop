@@ -24,9 +24,8 @@ public class RegistroTensionArterialController {
     @GetMapping("usuario/{id}")
     public ResponseEntity<RegistrosPaginadosReadDtoArray> findAllRegistrosByIdUser (@PathVariable Integer id,
                                                                                     @RequestParam(required = false, defaultValue = "0") Integer page,
-                                                                                    @RequestParam(required = false, defaultValue = "10") Integer size,
-                                                                                    @RequestParam(required = false, defaultValue = "fecha_registro") String sortBy){
-        return new ResponseEntity<>(registroTensionArterialService.findAllRegistrosByIdUser(id, page, size,sortBy), HttpStatus.OK);
+                                                                                    @RequestParam(required = false, defaultValue = "100") Integer size){
+        return new ResponseEntity<>(registroTensionArterialService.findAllRegistrosByIdUser(id, page, size), HttpStatus.OK);
     }
     @GetMapping("{id}")
     public ResponseEntity<RegistroTensionReadDto> findRegistrobyId (@PathVariable Integer id){

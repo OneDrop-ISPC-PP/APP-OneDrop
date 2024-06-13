@@ -86,14 +86,31 @@ ngOnInit(): void {
 // -----  METODOS PARA GLUCEMIA -----
 // -----  METODOS PARA GLUCEMIA -----
 
+// cambiar fecha de timestamp a Sáb 25, 02:50hs
+timestampToDate(timestamp: string): string {
+  // Convertir el timestamp a una fecha
+  const date = new Date(timestamp);
+  const dayOfWeek = ['Dom', 'Lun', 'Martes', 'Mié', 'Jue', 'Vie', 'Sáb'][date.getDay()];
+  const dayOfMonth = String(date.getDate()).padStart(2, '0');
+  const hours = String(date.getHours()).padStart(2, '0');
+  const minutes = String(date.getMinutes()).padStart(2, '0');
+
+  return `${dayOfWeek} ${dayOfMonth}, ${hours}:${minutes}hs`;
+}
+
   // GET NOTAS DE GLUCEMIA
   getNotas(): void {
     this.paciente.GET_NOTAS_GLUCEMIA(this.getIdUser).subscribe(
       (data:any)=>{
         console.log("CARGA DE NOTAS DE GLUCEMIA EXITOSA, LOS DATOS SON:")
-        console.log(data.registros);
-        this.listaNotasGlucemia = data.registros;
         
+      // cambiar fecha de timestamp a Sáb 25, 02:50hs
+        let listaModif = data.registros.map( (el: any) =>({
+          ...el,
+          fecha: this.timestampToDate(el.fecha)        
+        }));       
+
+        this.listaNotasGlucemia = listaModif          
       },
       (error:any) => {
         console.log("ERROR EN LA CARGA DE LAS NOTAS DE GLUCEMIA");

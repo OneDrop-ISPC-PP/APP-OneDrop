@@ -46,7 +46,7 @@ const routes:Routes=[
             {path:'info_users', component:InfoUsuarioDashAdminComponent},
             {path:'info_services', component:InfoServicioDashAdminComponent},
             {path:'bienvenida_admin', component:BienvenidaDashAdminComponent},
-            {path:'**', redirectTo:'bienvenida_admin'}
+            {path:'**', redirectTo:'info_users'}
             
           ]
         },
@@ -59,7 +59,7 @@ const routes:Routes=[
           {path:'info_tension', component:InfoTensionDashUserComponent},
           {path:'servicios_user', component:ServiciosDashUserComponent},
 
-          {path:'**', redirectTo:'bienvenida_user'}
+          {path:'**', redirectTo:'info_glucemia'}
         ]
         },
         {path:'registro2usuario', component:Registro2usuarioComponent},

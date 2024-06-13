@@ -208,6 +208,8 @@ servicioAlCarrito(id:any){
         (error)=>{
           console.log("El servicio NO se puso en el carrito");
           console.log(error);
+      alert("Este servicio ya se encuentra en el carrito")
+
         }
       )
     },

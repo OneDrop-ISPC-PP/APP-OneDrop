@@ -1,22 +1,13 @@
 package com.example.one_drop_cruds;
 
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
 
-import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 
-import com.example.one_drop_cruds.entities.user.AuthResponse;
-import com.example.one_drop_cruds.entities.user.LoginRequest;
 import com.example.one_drop_cruds.request.AuthRequests;
 import com.example.one_drop_cruds.utils.BackendUrl;
 import com.example.one_drop_cruds.utils.ToastHelper;

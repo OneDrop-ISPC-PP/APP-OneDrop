@@ -1,14 +1,59 @@
+<section class="row container-fluid">
+
+<!-- ////////////// CARRUSEEEELLLL /////////////// -->
+<div id="carouselExampleCaptions" class="carousel slide m_botom">
+  <div class="carousel-indicators">
+    <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+    <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="1" aria-label="Slide 2"></button>
+    <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="2" aria-label="Slide 3"></button>
+  </div>
+  <div class="carousel-inner  ">
+    <div class="carousel-item active alt p-4 ">
+      <div class="slide_img "></div>
+      <div class="carousel-caption d-none d-md-block ">
+        <h3  class="texto_negro">First slide label</h3>
+        <h4 class="texto_negro">Some representative placeholder content for the first slide.</h4>
+      </div>
+    </div>
+    <div class="carousel-item alt p-4">
+      <div class="slide_img_2 "></div>
+      <div class="carousel-caption d-none d-md-block">
+        <h3 class="texto_negro">Second slide label</h3>
+        <h4 class="texto_negro">Some representative placeholder content for the second slide.</h4>
+      </div>
+    </div>
+    <div class="carousel-item alt p-4">
+      <div class="slide_img_3 "></div>
+      <div class="carousel-caption d-none d-md-block">
+        <h3 class="texto_negro">Third slide label</h3>
+        <h4 class="texto_negro">Some representative placeholder content for the third slide.</h4>
+      </div>
+    </div>
+  </div>
+  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Previous</span>
+  </button>
+  <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Next</span>
+  </button>
+</div>
+
+
+
+
 
 <!-- ////////////////// SECCION PESO ///////////////// -->
-      <section class="bg-light " >
+<section class="m-0 p-2 my-2 col-lg-6 fondo_azul">
 
-        <div class=" my-3 mx-0 p-4 borde_servicios">
-        <div >
-            <h3 class="text_center">Historial de Peso</h3>
-        </div>
+  <div class=" borde_servicios fondo_blanco">
+
+
+
         
-              <div class="my-4 contenedor_servicios">
-                <table class="table p-4">
+              <div class="my-4 p-2 contenedor_servicios   ">
+                <table class="table p-4  border_radius ">
                   <thead>
                     <tr>
                       <th scope="col">Fecha</th>
@@ -33,32 +78,61 @@
                 </table>
               </div>
             </div>
+        </section> 
+      <!-- ////////// DESC HISTORIAL //////////// -->
 
 
-      <!-- ////////// FORMULARIO //////////// -->
-      <section class="bg-light my-3 mx-0 p-4 borde_servicios">
-        <div>
-          <h3 class="text_center">Nueva nota de Peso</h3>
+        <section class="m-0 p-2 my-2  col-lg-6 fondo_azul" >
+
+          <div >
+            <h3 class="text_center texto_blanco">Historial de Peso</h3>
         </div>
-              <form class="container" [formGroup]="formRegistroPeso"  (submit)="agregarNotaRegistroPeso(getIdFichaMedica)">
+        <div >
+          <h5 class="text_center texto_blanco">Mantente al día con tu progreso de salud. Revisa y analiza tus registros de peso para alcanzar tus metas.</h5>
+      </div>
+
+
+        </section>
+
+
+      <!-- ////////// DESC FORMULARIO //////////// -->
+
+        <section class="m-0 my-2 p-2  col-lg-6 fondo_rosa" >
+
+          <div >
+            <h3 class="text_center texto_blanco">¡Registra tu peso!</h3>
+        </div>
+        <div >
+          <h5 class="text_center texto_blanco">Completa tu formulario de registro de peso para llevar un control preciso de tu progreso y alcanzar tus metas de salud.</h5>
+      </div>
+
+
+        </section>
+      <!-- ////////// FORMULARIO //////////// -->
+      <section class="m-0 p-2 my-2  col-lg-6 fondo_rosa " >
+    <div class="m-1">
+
+
+
+              <form class="container altura_cont" [formGroup]="formRegistroPeso"  (submit)="agregarNotaRegistroPeso(getIdFichaMedica)">
 
               <div class="row  bg-light justify-content-evenly align-items-center p-4" >
 
               <!-- FECHA SERVICIO -->
-                <div class="col-lg-4 bg-light">
+                <div class="col-lg-4 ">
                   <h5 class="text-center p-3" >Fecha</h5>
                   <input formControlName="fecha" type="datetime-local" class="form-control" id="fecha-registro" aria-describedby="emailHelp">
                 </div>
           
 
               <!-- VALOR GLUCEMIA -->  
-              <div class="col-lg-4 bg-light">
+              <div class="col-lg-4 ">
                 <h5 class="text-center p-3" >valor</h5>
                 <input formControlName="valor" type="number" class="form-control" id="valor-glucemia">
               </div>
 
               <!-- COMENTARIO DEL REGISTRO -->  
-              <div class="col-lg-10 bg-light">
+              <div class="col-lg-10 ">
                 <h5 class="text-center p-3" >Comentario</h5>
                 <textarea formControlName="comentario" name="" id="" cols="30" rows="5" class="form-control"></textarea>
               </div>
@@ -66,12 +140,13 @@
 
 
 
-            <button  class="btn bg_btn_edit m-2 col-lg-3 py-2 px-4">Registrar Nota de Peso</button>
+            <button  class="btn bg_btn_edit m-2 col-lg-10 py-2 px-4">Registrar Nota de Peso</button>
                 
             </div>
 
         </form>
     
+      </div>
 
 </section>
 

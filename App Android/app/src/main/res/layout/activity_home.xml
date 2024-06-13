@@ -176,7 +176,6 @@
                 </LinearLayout>
 
                 <!-- TIPS -->
-
                 <WebView
                     android:id="@+id/web_tip"
                     android:layout_width="match_parent"

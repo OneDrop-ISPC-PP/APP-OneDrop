@@ -715,7 +715,7 @@
   }
   
   .bg_btn_edit{
-    background-color:  #3155e7;
+    background-color: #03476D;
     color: #ffffff;
   }
   
@@ -738,7 +738,12 @@
     text-align: center;
     padding: 2rem 0rem;
   }
+  
+  .text_center2{
+    text-align: center;
+    padding: 1rem;
 
+  }
 
   .tarjeta_img_1{
   background-image: url('../../../../assets/images/serv_bioq.jpg');
@@ -769,4 +774,42 @@
         background-image: url('../../../../assets/images/serv_endoc.jpg');
         height: 18rem;
         background-size: cover; /* Ajusta automáticamente el tamaño de la imagen */
+        }
+
+        .texto_negro{
+            color: black;
+        }
+        .texto_blanco{
+            color: white;
+        }
+        
+        .borde_negro{
+            border: 1px solid black;
+        }
+        
+        
+        .fondo_azul{
+            background-color:#03476D;
+        }
+        
+        .fondo_rosa{
+            background-color: #03466d69;
+        }
+        
+        .fondo_blanco{
+            background-color: white;
+        }
+        
+        .border_radius{
+            border-radius: 5px;
+        }
+        .borde_carrito{
+            border: 1px solid #03476D;
+        }
+
+
+        .car_eliminar{
+            background-color: #03466d69;
+            border: 1px solid #03476D;
+
         }
