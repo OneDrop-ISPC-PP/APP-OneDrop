@@ -160,15 +160,15 @@
 
 
             <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="20dp"
-                    android:fontFamily="sans-serif-condensed"
-                    android:gravity="center"
-                    android:text="Lista de servicios adquiridos"
-                    android:textColor="@color/pinkonedrop2"
-                    android:textSize="24dp"
-                    android:textStyle="bold" />
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"
+                android:fontFamily="sans-serif-condensed"
+                android:gravity="center"
+                android:text="Carrito"
+                android:textColor="@color/pinkonedrop2"
+                android:textSize="24dp"
+                android:textStyle="bold" />
             <LinearLayout
                 android:id="@+id/layout_view_services_by_user"
                 android:layout_width="match_parent"
