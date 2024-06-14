@@ -20,7 +20,7 @@
 
 /* ///////////// 2 0 2 4 ///////////// */
 .borde{
-    border:#2845d6 1px solid;
+    border:#03476D 1px solid;
 }
 
 .bg_c_primary{
@@ -32,7 +32,7 @@
   }
   
   .borde_servicios{
-    border: 1px solid #2845d6;
+    border: 1px solid #03476D;
   
   }
   
@@ -123,4 +123,8 @@
 
 .border_radius{
     border-radius: 5px;
+}
+
+.fondo_transp{
+    background-color: rgba(255, 255, 255, 0.464);
 }

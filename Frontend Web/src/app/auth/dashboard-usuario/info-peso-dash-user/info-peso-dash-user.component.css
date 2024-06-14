@@ -24,7 +24,7 @@
 }
 
 .bg_c_primary{
-    background-color: var(--primary-dark);
+    background-color: #03476D;
   }
   
   .text_center{
@@ -32,7 +32,7 @@
   }
   
   .borde_servicios{
-    border: 1px solid #2845d6;
+    border: 1px solid #03476D;
   
   }
   
@@ -123,4 +123,7 @@
 
 .border_radius{
     border-radius: 5px;
+}
+.fondo_transp{
+    background-color: rgba(255, 255, 255, 0.464);
 }

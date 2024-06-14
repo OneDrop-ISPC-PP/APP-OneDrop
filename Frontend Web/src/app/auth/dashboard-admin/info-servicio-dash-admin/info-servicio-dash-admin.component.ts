@@ -37,20 +37,7 @@ export class InfoServicioDashAdminComponent implements OnInit{
       })
 
     // SUSCRIPCION A LA LISTA DE SERVICIOS
-      this.estad_admin.GET_SERVICIOS().subscribe(
-        (data:any)=>{
-          this.listaDeServicios = data.registros;
-          console.log("CARGA DE SERVICIOS EXITOSA LOS DATOS SON:")
-          console.log(data.registros);
-
-        },
-        (error) => {
-          console.log("ERROR EN LA CARGA DE LOS SERVICIOS")
-          console.log(error);
-
-        }
-
-      )
+      this.get_servicios()
 
     } //  CIERRA ON INIT
 
@@ -66,6 +53,24 @@ get precio_servicio_GET(){
 }
 get comentarios_servicio_GET(){
   return this.FormRegistroServicios.controls['comentarios'];
+}
+
+////////////////// GET SERVICIOS ////////////////////////
+get_servicios(){
+this.estad_admin.GET_SERVICIOS().subscribe(
+  (data:any)=>{
+    this.listaDeServicios = data.registros;
+    console.log("CARGA DE SERVICIOS EXITOSA LOS DATOS SON:")
+    console.log(data.registros);
+
+  },
+  (error) => {
+    console.log("ERROR EN LA CARGA DE LOS SERVICIOS")
+    console.log(error);
+
+  }
+
+)
 }
 
 
@@ -91,10 +96,11 @@ enviarDatosDeServicio(){
             */
 
           })
-          .subscribe((respuesta: any) => {
-            alert("Servicio Registrado")
+          .subscribe(
+            (data: any) => {alert("Servicio Registrado"), this.get_servicios()},
+            (error: any) => {alert("No se registro el servicio")},
 
-          })
+          )
         }
 
         else{
@@ -109,6 +115,7 @@ enviarDatosDeServicio(){
   eliminarServicio(id:string){
     this.estad_admin.DELETE_SERVICIO(id).subscribe(
       (data)=>{
+        this.get_servicios(),
       alert("Servicio Eliminado")
     
     },
