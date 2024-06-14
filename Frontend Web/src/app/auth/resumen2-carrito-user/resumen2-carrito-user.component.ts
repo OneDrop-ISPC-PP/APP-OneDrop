@@ -126,7 +126,7 @@ export class Resumen2CarritoUserComponent implements OnInit {
           }
         )
 
-        this.serv_estadistica.delServicioEnCarrito(1,4).subscribe(
+        this.serv_estadistica.delServicioEnCarrito(1,3).subscribe(
           (data)=>{
             console.log(data);
           },
@@ -136,7 +136,16 @@ export class Resumen2CarritoUserComponent implements OnInit {
           }
         )
 
-        this.serv_estadistica.delServicioEnCarrito(1,5).subscribe(
+        this.serv_estadistica.delServicioEnCarrito(1,2).subscribe(
+          (data)=>{
+            console.log(data);
+          },
+          (error)=>{
+            console.log(error);
+
+          }
+        )
+        this.serv_estadistica.delServicioEnCarrito(1,1).subscribe(
           (data)=>{
             console.log(data);
           },
