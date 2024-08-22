@@ -4,6 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable, Subject } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Router } from '@angular/router';
+import { BACKEND_URL } from '../app.config';
 
 
 import { userInterface } from './interfaces/userInterface';
@@ -41,7 +42,7 @@ public loginStatusSubject = new Subject<boolean>();
 
 ///////////////////   REGISTRO LOGIN OOKK /////////////////////////////
   POST_LOGIN(body: any){
-    return this.http.post('http://localhost:8080/auth/login',body)
+    return this.http.post(BACKEND_URL+'/auth/login',body)
   } 
 
 // CUANDO NOS LOGEAMOS Y ESTABLECEMOS EL TOKEN EN EL LOCAL STORAGE
@@ -162,7 +163,7 @@ public getSurnameUser(){
 
 // GET DE USUARIOS ACTUAL (CONSULTAR EL FINAL DE LA RUTA) // NO FUNCIONA
 public getCurrentUser(){
-    return this.http.get('http://localhost:8080/auth/userDetails')
+    return this.http.get(BACKEND_URL+'/auth/userDetails')
 }
 
 

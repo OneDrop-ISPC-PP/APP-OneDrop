@@ -4,6 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { CookieService } from 'ngx-cookie-service';
+import { BACKEND_URL } from '../app.config';
 @Injectable({
   providedIn: 'root'
 })
@@ -26,7 +27,7 @@ export class AuthService {
 
 
       // La idea seria que los envie con el metodo POST
-        return this.http.post("http://localhost:3000/USUARIOS",credenciales)
+        return this.http.post(BACKEND_URL+'/USUARIOS',credenciales)
     }
 
 
@@ -49,13 +50,13 @@ login(credenciales:loginInterface):Observable<any>{
 
   const {email, pass} = credenciales;
   const bodyyy = {email: email, password : pass}
-  const url = 'http://127.0.0.1:8000/api/auth/login/'
+  const url = BACKEND_URL+'auth/login/'
   // return this.http.get("http://localhost:3000/USUARIOS")
 
   return this.http.post(url,bodyyy)
 }
 
-url:string='http://127.0.0.1:8000/api/paciente/servicios/';
+url:string=BACKEND_URL+'paciente/servicios/';
 
 muestraservicioausuario( ){
 

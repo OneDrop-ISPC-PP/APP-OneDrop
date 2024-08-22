@@ -3,6 +3,7 @@ import { loginInterface } from './interfaces/loginInterface';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { BACKEND_URL } from '../app.config';
 
 import { userInterface } from './interfaces/userInterface';
 import { Token } from '@angular/compiler';
@@ -22,7 +23,7 @@ export class RegistroService {
 
 ///////////////////   REGISTRO INICIAL OOKK /////////////////////////////
 POST_REG_INICIAL( body: any){
-  return this.http.post('http://localhost:8080/auth/register',body)
+  return this.http.post(BACKEND_URL+'/auth/register',body)
 }
 
 // CUANDO NOS REGISTRAMOS Y ESTABLECEMOS EL TOKEN EN EL LOCAL STORAGE
@@ -75,7 +76,7 @@ public getUserRole(){
 // 
 
 /*public getCurrentUser(){
-    return this.http.get('http://localhost:8080/auth/actual-usuario')
+    return this.http.get(BACKEND_URL+'/auth/actual-usuario')
 }
 */
 

@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { BACKEND_URL } from '../app.config';
 
 @Injectable({
   providedIn: 'root'
@@ -10,7 +11,7 @@ export class FormPagoService {
   constructor( private http:HttpClient ) { }
   
   
-  url_PAGO:string="http://localhost:3000/datos_pago/"
+  url_PAGO:string=BACKEND_URL+'/datos_pago/';
 
   /////////////////////////////////////
   //          SERVICIO POST          //

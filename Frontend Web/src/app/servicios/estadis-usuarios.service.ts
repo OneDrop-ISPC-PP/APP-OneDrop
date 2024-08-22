@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpEvent, HttpHeaders } from '@angular/common/http';
+import { BACKEND_URL } from '../app.config';
 
 // INTERFACE DE NOTAS USUARIO
 import { NotasGlucemia } from './interfaces/notas-glucemia';
@@ -13,51 +14,51 @@ export class EstadisUsuariosService {
   constructor(private http: HttpClient) { }
 
   // URL GET PARA FICHA MEDICA POR UD USER:
-  url_GET_FICHA_MEDICA: string = 'http://localhost:8080/fichaMedica/user/';
+  url_GET_FICHA_MEDICA: string = BACKEND_URL+'/fichaMedica/user/';
 
   // -------- GLUCEMIA ----------
-  url_NOTAS_GLUCEMIA_GET: string = 'http://localhost:8080/registros/glucemia/usuario/';
-  url_NOTA_GLUCEMIA_GET: string = 'http://localhost:8080/registros/glucemia/';
-  url_NOTA_GLUCEMIA_POST: string = 'http://localhost:8080/registros/glucemia/usuario/';
-  url_NOTA_GLUCEMIA_PUT: string = 'http://localhost:8080/registros/glucemia/';
-  url_NOTA_GLUCEMIA_DEL: string = 'http://localhost:8080/registros/glucemia/';
+  url_NOTAS_GLUCEMIA_GET: string = BACKEND_URL+'/registros/glucemia/usuario/';
+  url_NOTA_GLUCEMIA_GET: string = BACKEND_URL+'/registros/glucemia/';
+  url_NOTA_GLUCEMIA_POST: string = BACKEND_URL+'/registros/glucemia/usuario/';
+  url_NOTA_GLUCEMIA_PUT: string = BACKEND_URL+'/registros/glucemia/';
+  url_NOTA_GLUCEMIA_DEL: string = BACKEND_URL+'/registros/glucemia/';
 
 
   // -------- PESO ----------
-  url_NOTAS_PESO_GET: string = 'http://localhost:8080/registros/peso/usuario/';
-  url_NOTA_PESO_GET: string = 'http://localhost:8080/registros/peso/';
-  url_NOTA_PESO_POST: string = 'http://localhost:8080/registros/peso/usuario/';
-  url_NOTA_PESO_PUT: string = 'http://localhost:8080/registros/peso/';
-  url_NOTA_PESO_DEL: string = 'http://localhost:8080/registros/peso/';
+  url_NOTAS_PESO_GET: string = BACKEND_URL+'/registros/peso/usuario/';
+  url_NOTA_PESO_GET: string = BACKEND_URL+'/registros/peso/';
+  url_NOTA_PESO_POST: string = BACKEND_URL+'/registros/peso/usuario/';
+  url_NOTA_PESO_PUT: string = BACKEND_URL+'/registros/peso/';
+  url_NOTA_PESO_DEL: string = BACKEND_URL+'/registros/peso/';
 
 
   // -------- TENSION ----------
-  url_NOTAS_TENSION_GET: string = 'http://localhost:8080/registros/tensionArterial/usuario/';
-  url_NOTA_TENSION_GET: string = 'http://localhost:8080/registros/tensionArterial/';
-  url_NOTA_TENSION_POST: string = 'http://localhost:8080/registros/tensionArterial/usuario/';
-  url_NOTA_TENSION_PUT: string = 'http://localhost:8080/registros/tensionArterial/';
-  url_NOTA_TENSION_DEL: string = 'http://localhost:8080/registros/tensionArterial/';
+  url_NOTAS_TENSION_GET: string = BACKEND_URL+'/registros/tensionArterial/usuario/';
+  url_NOTA_TENSION_GET: string = BACKEND_URL+'/registros/tensionArterial/';
+  url_NOTA_TENSION_POST: string = BACKEND_URL+'/registros/tensionArterial/usuario/';
+  url_NOTA_TENSION_PUT: string = BACKEND_URL+'/registros/tensionArterial/';
+  url_NOTA_TENSION_DEL: string = BACKEND_URL+'/registros/tensionArterial/';
 
 
 
   // -------- SERVICIOS ----------
-  url_SERVICIOS: string = 'http://localhost:8080/servicios/';
+  url_SERVICIOS: string = BACKEND_URL+'/servicios/';
 
 
   // -------- CARRITO ----------
-  url_CARRITO_GET: string = 'http://localhost:8080/carrito/';
-  url_CARRITO_POST: string = 'http://localhost:8080/carrito/';
+  url_CARRITO_GET: string = BACKEND_URL+'/carrito/';
+  url_CARRITO_POST: string = BACKEND_URL+'/carrito/';
 
   // -------- CARRITO ----------
-  url_CARRITO_ID_USER_GET: string = 'http://localhost:8080/carrito/user/';
-  url_CARRITO_ID_USER_POST: string = 'http://localhost:8080/carrito/user/';
+  url_CARRITO_ID_USER_GET: string = BACKEND_URL+'/carrito/user/';
+  url_CARRITO_ID_USER_POST: string = BACKEND_URL+'/carrito/user/';
 
   // -------- CARRITO SERVICIOS ----------
-  url_CARRITO_SERVICIOS_GET: string = 'http://localhost:8080/carrito/';
-  url_CARRITO_SERVICIOS_POST: string = 'http://localhost:8080/carrito/';
+  url_CARRITO_SERVICIOS_GET: string = BACKEND_URL+'/carrito/';
+  url_CARRITO_SERVICIOS_POST: string = BACKEND_URL+'/carrito/';
 
   // -------- PDF ----------
-  url_PDF_GET: string = 'http://localhost:8080/reportes/';
+  url_PDF_GET: string = BACKEND_URL+'/reportes/';
 
 
 
@@ -214,31 +215,31 @@ public descargarDPF(id:any){
   
   // Método para agregar registro de tensión arterial
   agregarTensionArterial(datos: any, id:any) {
-    return this.http.post('http://localhost:8080/registros/tensionArterial/usuario/'+id, datos, { withCredentials: true });
+    return this.http.post(BACKEND_URL+'/registros/tensionArterial/usuario/'+id, datos, { withCredentials: true });
   }
 
   // Método para obtener registros de tensión arterial de un usuario específico
   obtenerRegistrosTensionArterial(idUsuario: number) {
-    return this.http.get(`http://localhost:8080/registros/tensionArterial/usuario/${idUsuario}`, { withCredentials: true });
+    return this.http.get(`${BACKEND_URL}/registros/tensionArterial/usuario/${idUsuario}`, { withCredentials: true });
   }
 
   // Método para actualizar un registro de tensión arterial existente
   actualizarRegistroTensionArterial(idRegistro: number, datosActualizados: any) {
-    return this.http.put(`http://localhost:8080/registros/tensionArterial/${idRegistro}`, datosActualizados, { withCredentials: true });
+    return this.http.put(`${BACKEND_URL}/registros/tensionArterial/${idRegistro}`, datosActualizados, { withCredentials: true });
   }
 
   // Método para eliminar un registro de tensión arterial
   eliminarRegistroTensionArterial(idRegistro: number) {
-    return this.http.delete(`http://localhost:8080/registros/tensionArterial/${idRegistro}`, { withCredentials: true });
+    return this.http.delete(`${BACKEND_URL}/registros/tensionArterial/${idRegistro}`, { withCredentials: true });
   }
 
   ////////////////// CODIGO PESO ///////////////////
 // URL de los registros de peso
-urlRegistrosPeso: string = 'http://localhost:8080/registros/peso/usuario/1';
+urlRegistrosPeso: string = BACKEND_URL+'/registros/peso/usuario/1';
 
 // Método para obtener los registros de peso de un usuario específico
 obtenerRegistrosPeso(idUsuario: number) {
-  return this.http.get(`http://localhost:8080/registros/peso/usuario/${idUsuario}`, { withCredentials: true });
+  return this.http.get(`${BACKEND_URL}/registros/peso/usuario/${idUsuario}`, { withCredentials: true });
 }
 
 // Método para agregar un nuevo registro de peso
@@ -248,12 +249,12 @@ agregarRegistroPeso(registroPeso: any) {
 
 // Método para actualizar un registro de peso existente
 actualizarRegistroPeso(idRegistro: number, datosActualizados: any) {
-  return this.http.put(`http://localhost:8080/registros/peso/${idRegistro}`, datosActualizados, { withCredentials: true });
+  return this.http.put(`${BACKEND_URL}/registros/peso/${idRegistro}`, datosActualizados, { withCredentials: true });
 }
 
 // Método para eliminar un registro de peso
 eliminarRegistroPeso(idRegistro: number) {
-  return this.http.delete(`http://localhost:8080/registros/peso/${idRegistro}`, { withCredentials: true });
+  return this.http.delete(`${BACKEND_URL}/registros/peso/${idRegistro}`, { withCredentials: true });
 }
 
 

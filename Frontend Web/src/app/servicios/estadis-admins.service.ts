@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { BACKEND_URL } from '../app.config';
 
 
 @Injectable({
@@ -15,20 +16,20 @@ export class EstadisAdminsService {
   //////////   URLS  --  solo hay que descomentar una y comentar la otra  //////////
     
   // URL DE SERVICIOS:
-  url_SERVICIOS:string="http://localhost:8080/servicios/";
+  url_SERVICIOS:string=BACKEND_URL+'/servicios/';
   //url_SERVICIOS:string="http://localhost:3000/SERVICIOS/";
 
   // URL DE PACIENTES:
-  url_USUARIOS:string='http://localhost:8080/auth/users/';
-  url_PACIENTES:string='http://localhost:8080/auth/users/pacientes';
+  url_USUARIOS:string=BACKEND_URL+'/auth/users/';
+  url_PACIENTES:string=BACKEND_URL+'/auth/users/pacientes';
 
 
-  url_MEDICOS:string='http://localhost:8080/auth/users/medicos';
+  url_MEDICOS:string=BACKEND_URL+'/auth/users/medicos';
 
 
   //url_PACIENTES:string="http://localhost:3000/REGISTRO_DATOS_PERSONALES/"
 
-  // URL GENERAL DEL FRONT (TRANQUI DAVID):
+  // URL GENERAL DEL FRONT:
   url:string="http://localhost:3000/"
 
 
