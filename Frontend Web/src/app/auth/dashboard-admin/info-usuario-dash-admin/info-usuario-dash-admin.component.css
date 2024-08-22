@@ -1,10 +1,10 @@
 .bg_c_primary{
-    background-color: var(--primary-dark);
+    background-color: #03476D;
   }
   .sub_sidebar{
     height: 100%;
   
-    border: #2845d6 1px solid;
+    border: #0870AA 1px solid;
   }
 
   .text_center{
@@ -12,11 +12,11 @@
   }
   
   .borde_servicios{
-    border: 1px solid #2845d6;
+    border: 1px solid #0870AA;
   }
   
   .bg_btn_edit{
-    background-color:  #3155e7;
+    background-color:  #0870AA;
     color: #ffffff;
   }
   

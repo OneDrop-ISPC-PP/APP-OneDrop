@@ -17,13 +17,20 @@ veracidadSiguiente:boolean = false;
   getIdFichaMedica: any;
   getUser: any;
 
+  infoMontos:number[] = []
+  monto:number=0
+
   // VARIABLES DE SERVICIO
   servicios: any;
 
   // VARIABLES DE CARRITO
   serviciosEnCarrito: any[] = [];
+  serviciosAdquiridos: any[] = this.serviciosEnCarrito;
+
   idCarrito:any;
-  longCarrito:any
+  longCarrito:any;
+
+  
 
 
   // VARIABLES DE INFO DE USER CARRITO
@@ -53,7 +60,7 @@ veracidadSiguiente:boolean = false;
     this.getApellidoUser= this.serv_login.getSurnameUser();
     this.getIdUser = this.serv_login.getUserId();
 
-    
+    this.infoMontos
 
 
     // GET ON INIT DE LA FICHA MEDICA
@@ -69,6 +76,9 @@ veracidadSiguiente:boolean = false;
     this.idCarrito
 
     this.serviciosEnCarrito
+  
+
+
 
   } // CIERRA ON INIT
 
@@ -170,6 +180,7 @@ getCarritoPorIdUser(){             // FALTA SOUCIONAR COMO GUARDAR EL ID DEL CAR
       console.log("Los datos del carrito por ID son :");
       console.log(data);
       this.serviciosEnCarrito = data.servicios;
+
       this.longCarrito = this.serviciosEnCarrito.length
       console.log("La cantidad de servicios son:");
       console.log(this.longCarrito);
@@ -203,7 +214,8 @@ servicioAlCarrito(id:any){
         (data)=>{ // QUEDAMOS ACA. QUEDAMOS EN SUBIR LOS SERVICIOS POR ID
           console.log("El servicio se puso en el carrito");
           console.log(data);
-          this.getCarritoPorIdUser();
+         this.getCarritoPorIdUser();
+
         },
         (error)=>{
           console.log("El servicio NO se puso en el carrito");

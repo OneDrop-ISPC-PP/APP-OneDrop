@@ -345,7 +345,7 @@ input{
     display: block;
     width: 100%;
     border: none;
-    border-bottom: 1px solid var(--colorTextos);
+    border-bottom: 1px solid #03476D;
 }
 
 input:focus{ 
@@ -354,7 +354,7 @@ input:focus{
 }
 
 label{
-    color: var(--colorTextos);
+    color:#03476D;
     font-size: 16px;
     position: absolute;
     left: 5px;
